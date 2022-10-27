@@ -19,6 +19,7 @@ def login(request):
             body = request.body.decode()
             id = json.loads(body)['id']
             password = json.loads(body)['password']
+            print("test")
         except (KeyError, JSONDecodeError) as e:
             print(e)
             return HttpResponseBadRequest()
@@ -29,6 +30,7 @@ def login(request):
             else: return HttpResponseBadRequest()
         else:
             return HttpResponseBadRequest()
+        
     else:
         return HttpResponseNotAllowed(['POST'])
 
