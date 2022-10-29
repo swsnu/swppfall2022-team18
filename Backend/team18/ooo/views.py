@@ -1,53 +1,71 @@
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.http.response import HttpResponseNotAllowed
-
+from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 import json
 from .token import *
 
-
-from .models import User
 
 # Create your views here.
 
 def index(request):
     return HttpResponse("Hello, world")
 
-
-@ensure_csrf_cookie
-def login(request):
+@csrf_exempt
+def signin(request):
     if request.method == 'POST':
-        try:
-            body = json.loads(request.body.decode())
-            id = body['id']
-            password = body['password']
-        except (KeyError, json.JSONDecodeError) as e:
-            print(e)
-            return HttpResponseBadRequest()
-        if User.objects.filter('username' == id).exists :
-            userObj = User.objects.get('username' == id)
-            if userObj.password == password:
-                payload_value = id
-                payload = {
-                    "subject": payload_value
-                }
-                access_token = generate_token(payload, "access")
-                refresh_token = generate_token(payload, "refresh")
-                data = {
-                    "results": {
-                        "access_token": access_token,
-                        "refresh_token": refresh_token
-                    }
-                }
-                return HttpResponse(data = data, status=200)
-            else: return HttpResponse('', status= 201)
-            # else: return HttpResponseBadRequest()
+        body = json.loads(request.body.decode('utf-8'))
+        body_data = body['body']
+        print(body)
+        data = json.loads(body_data)
+        username = data['username']
+        password = data['password']
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return HttpResponse(status=200)
         else:
-            return HttpResponse('', status= 202)
-            # return HttpResponseBadRequest()
-    elif request.method == 'GET':
-        users = User.objects.all()
-        return HttpResponse(data = users, status=200)
+            return HttpResponse(status=401)
     else:
         return HttpResponseNotAllowed(['POST'])
+    
+
+def signup(request):
+    if request.method == 'POST':
+        body = json.loads(request.body.decode('utf-8'))
+        body_data = body['body']
+        print(body)
+        data = json.loads(body_data)
+        username = data['username']
+        password = data['password']
+        User.objects.create_user(username=username, password=password)
+        return HttpResponse(status = 201)
+    else:
+        return HttpResponseNotAllowed(['POST'])
+
+
+def logout(request):
+    if request.method == 'GET':
+        # body = json.loads(request.body.decode('utf-8'))
+        # body_data = body['body']
+        # print(body)
+        # data = json.loads(body_data)
+        # username = data['username']
+        if request.user.is_authenticated:
+            logout(request)
+            return HttpResponse(status=204)
+        else:
+            return HttpResponse(status=401)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
+@ensure_csrf_cookie
+def token(request):
+    if request.method == 'GET':
+        return HttpResponse(request, status=204)
+    else:
+        return HttpResponseNotAllowed(["GET"])
 
