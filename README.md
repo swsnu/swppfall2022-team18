@@ -5,8 +5,6 @@
 ## oOo v0.0.1
 ### Frontend
   * /login Page 초안 작성
-  * logoutUser api 재작성 필요
-  * test code 작성 필요
 
 ### Backend
   * login 관련 view 작성완료
