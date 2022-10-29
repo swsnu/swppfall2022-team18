@@ -4,10 +4,10 @@
 
 ## oOo v0.0.1
 ### Frontend
-  * /login Page 초안 작성
+  * /login Page 추가
 
 ### Backend
-  * login 관련 view 작성완료
+  * login 관련 view 추가
 
 ## How to Run(Front)
 ``` 
