@@ -2,7 +2,7 @@
 
 # swppfall2022-team18
 
-## v0.0.1
+## oOo v0.0.1
 ### Frontend
   * /login Page 초안 작성
   * logoutUser api 재작성 필요
