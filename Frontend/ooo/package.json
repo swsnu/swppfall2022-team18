@@ -50,12 +50,5 @@
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
     "eslint-plugin-react": "^7.31.10"
-  },
-  "type": "module",
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/index.tsx"
-    ]
   }
 }
