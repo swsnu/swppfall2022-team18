@@ -1,28 +1,37 @@
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
+'''
+views of ooo
+'''
+import json
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http import HttpResponse
 from django.http.response import HttpResponseNotAllowed
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-import json
-from .token import *
-from .models import *
+# from .models import UserCloth, SampleCloth, Closet, LabelSet
 
-def index(request):
+def index():
+    '''
+    test
+    '''
     return HttpResponse("Hello, world")
 
 
 def signup(request):
+    '''
+    signup : django default user
+    '''
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
         username = req_data['username']
         password = req_data['password']
         User.objects.create_user(username=username, password=password)
         return HttpResponse(status=201)
-    else:
-        return HttpResponseNotAllowed(['POST'], status=405)
+    return HttpResponseNotAllowed(['POST'], status=405)
 
 def signin(request):
+    '''
+    signin : django default user
+    '''
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
         username = req_data['username']
@@ -31,32 +40,29 @@ def signin(request):
         if user is not None:
             login(request, user)
             return HttpResponse(status=204)
-        else:
-            return HttpResponse(status=401)
-    else:
-        return HttpResponseNotAllowed(['POST'], status=405)
+
+        return HttpResponse(status=401)
+    return HttpResponseNotAllowed(['POST'], status=405)
 
 def signout(request):
+    '''
+    signout : django default user
+    '''
     if request.method == 'GET':
         if request.user.is_authenticated:
             logout(request)
             return HttpResponse(status=204)
-        else:
-            return HttpResponse('Unauthorized', status=401)
-    else:
-        return HttpResponseNotAllowed(['GET'], status=405)
+        return HttpResponse('Unauthorized', status=401)
+    return HttpResponseNotAllowed(['GET'], status=405)
 
 @ensure_csrf_cookie
 def token(request):
+    '''
+    get csrf token
+    '''
     if request.method == 'GET':
         return HttpResponse(status=204)
-    else:
-        return HttpResponseNotAllowed(['GET'], status=405)
+    return HttpResponseNotAllowed(['GET'], status=405)
 
 #outfit part start
-
-
-
 #outfit part end
-
-
