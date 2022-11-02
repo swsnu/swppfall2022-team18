@@ -39,5 +39,3 @@ python3 manage.py test
 
 [![Coverage Status](https://coveralls.io/repos/github/swsnu/swpp2021-team18/badge.svg?branch=main)](https://coveralls.io/github/swsnu/swpp2021-team18branch=main)
 
-## version
-[v0.0.2](https://github.com/swsnu/swppfall2022-team18/tree/v0.0.2)
