@@ -9,10 +9,7 @@ import neet from '../../assets/images/neet.jpg'
 export default function Home(){
 
     const navigate = useNavigate()
-    useEffect(() => {
-        console.log(neet)
-    },[])
-    
+
     return(
         <div className='Home'>
             <Header 
@@ -21,15 +18,19 @@ export default function Home(){
             clickHeaderHandler={() => {navigate('/home')}}
             ></Header>
             <div className='HomeTop'>
-                <div className='ClosetDiv' onClick={() => {navigate('/closet')}}>
+                <div className='ClosetDiv'>
                     <text id='Closet-text' >Closet</text>
                     <div className='Closet-image'>
-                        <text>test</text>
+                        <img id='img1' src={neet}></img>
+                        <img id='img2' src={neet}></img>
+                        {/* <ClosetItem source_url={neet}/> */}
+                        {/* <ClosetItem source_url={'../../assets/images/neet.jpg'}></ClosetItem> */}
                         {/* <ClosetItem source_url={neet}></ClosetItem>
-                        <ClosetItem source_url={neet}></ClosetItem>
                         <ClosetItem source_url={neet}></ClosetItem> */}
                     </div>
-                    
+                    <div className='Closet-button'>
+                    <button id='closet-more-button' onClick={() => {navigate('/closet')}}>More</button>
+                    </div>
                 </div>
                 <div className='CenterDiv'>
 

@@ -1,6 +1,7 @@
 import "./ClosetItem.css"
 import React from "react"
 
+
 export interface IProps {
     source_url: string,
     clickClothDetailPopupHandler ?: () => void,

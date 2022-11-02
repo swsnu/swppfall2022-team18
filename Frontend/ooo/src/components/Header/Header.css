@@ -20,36 +20,36 @@
 }
 
 #appName {
-    font-size: 130px;
+    font-size: 9vh;
     color: white;
 }
 
 #detailAppName {
-    font-size: 50px;
+    font-size: 3vh;
     color: white;
 }
 
 #infoButton {
     position: absolute;
-    right: 7.5%;
+    right: 12vh;
     flex-direction: row;
     top: 2%;
     background-color: white;
     border:none;
     border-radius: 20px;
-    padding:10px;
+    padding:1vh;
     font-size: 20px;
 }
 
 #logoutButton {
     position: absolute;
-    right: 3%;
+    right: 3vh;
     flex-direction: row;
     top: 2%;
     border:none;
     background-color: white;
     border-radius: 20px;
-    padding:10px;
+    padding:1vh;
     font-size: 20px;
 }
 
