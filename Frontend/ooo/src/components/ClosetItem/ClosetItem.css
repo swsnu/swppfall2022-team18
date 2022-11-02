@@ -1,0 +1,15 @@
+.ClosetItem {
+    width: 30%;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    background-color: white;
+}
+
+.ClosetItem .ClothImage {
+    object-fit: cover;
+}
+
+.ClosetItem .ClothLabel {
+    width: 10%;
+}

@@ -1,0 +1,66 @@
+.Header {
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    background-color: black;
+    opacity: 0.8;
+}
+
+.Header .headerText {
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
+    padding-bottom: 60px;
+}
+
+.Header .headerButton {
+    display: flex;
+}
+
+#appName {
+    font-size: 9vh;
+    color: white;
+}
+
+#detailAppName {
+    font-size: 3vh;
+    color: white;
+}
+
+#infoButton {
+    position: absolute;
+    right: 12vh;
+    flex-direction: row;
+    top: 2%;
+    background-color: white;
+    border:none;
+    border-radius: 20px;
+    padding:1vh;
+    font-size: 20px;
+}
+
+#logoutButton {
+    position: absolute;
+    right: 3vh;
+    flex-direction: row;
+    top: 2%;
+    border:none;
+    background-color: white;
+    border-radius: 20px;
+    padding:1vh;
+    font-size: 20px;
+}
+
+#infoButton:hover {
+    background-color: black;
+    opacity: 0.8;
+    color: white;
+}
+
+#logoutButton:hover {
+    background-color: black;
+    opacity: 0.8;
+    color: white;
+}

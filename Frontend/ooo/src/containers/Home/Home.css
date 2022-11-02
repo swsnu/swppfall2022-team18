@@ -1,0 +1,115 @@
+@font-face {
+    font-family:"Kreon" ;
+    src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf") format("opentype");
+}
+* {
+    font-family: "Kreon";
+}
+
+.Home {
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
+}
+
+.Home .HomeTop {
+    display: flex;
+    flex-direction: row;
+    }
+/*cashing?*/
+.Home .HomeTop .ClosetDiv {
+    display: flex;
+    width: 42.5%;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-top: 2%;
+    /* border-color: black; */
+    border-radius: 40px;
+    box-shadow: gray;
+    box-shadow: 1px 1px 10px 0px;
+}
+
+#Closet-text {
+    font-size: 5vh;
+    color: black;
+    padding-right: 70%;
+}
+
+.Home .HomeTop .Closet-image {
+    display: flex;
+    flex-direction: row;
+    height: 60%;
+}
+
+.Home .HomeTop .Closet-button {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin-top: 3vh;
+}
+
+#closet-more-button {
+    background-color: black;
+    color: white;
+    border:none;
+    border-radius: 20px;
+    padding: 1vh;
+    font-size: 3vh;
+    opacity: 0.7;
+}
+
+#closet-more-button:hover {
+    opacity: 1;
+}
+
+#img1 {
+    margin-right: 1vh;
+}
+
+#img2 {
+    margin-right: 1vh;
+}
+
+
+
+.Home .HomeTop .TodayOutfit {
+    display: flex;
+    width: 42.5%;
+    flex-direction: column;
+    margin-top: 2%;
+    margin-left: 5%;
+    border-radius: 40px;
+    box-shadow: gray;
+    box-shadow: 1px 1px 10px 0px;
+}
+
+#TodayOutfit-text {
+    font-size: 5vh;
+    color: black;
+    padding-right: 38%
+}
+
+.Home .HomeBottom {
+    display: flex;
+    flex-direction: row;
+}
+
+.Home .HomeBottom .OutfitDiv {
+    display: flex;
+    width: 90%;
+    padding-bottom: 30%;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-top: 2%;
+    border-radius: 40px;
+    box-shadow: gray;
+    box-shadow: 1px 1px 10px 0px;
+}
+
+#Outfit-text {
+    font-size: 5vh;
+    color: black;
+    padding-right: 86%;
+}
+
+
