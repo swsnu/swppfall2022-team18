@@ -1,6 +1,6 @@
+import json
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.postgres.fields import ArrayField
 
 class LabelSet(models.Model):
   type = models.CharField(max_length=100, blank=False)
@@ -23,17 +23,18 @@ class UserCloth(models.Model):
   type = models.CharField(max_length=100, blank=False)
   color = models.CharField(max_length=100, blank=False)
   pattern = models.CharField(max_length=100, blank=False)
-  
+
   label_set = models.ForeignKey(
     LabelSet,
     on_delete=models.CASCADE,
     null=False,
     related_name='user_cloth'
   )
+  dates = models.TextField(default=json.dumps("[]"))
 
 class Outfit(models.Model):
   outfit_info = models.CharField(max_length=200, blank=True)
-  popularity = models.IntegerField(black=False)
+  popularity = models.IntegerField(blank=False)
   image_id = models.IntegerField(blank=False)
   purchase_link = models.CharField(max_length=500, blank=False)
 
