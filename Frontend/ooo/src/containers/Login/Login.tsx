@@ -16,7 +16,8 @@ export default function Login(){
 
     const checkLoginned = () => {
         // console.log(localStorage.getItem('token'))
-        return ((localStorage.getItem('username') !== null) && (localStorage.getItem('token') !== null || localStorage.getItem('token') !== undefined))
+        // return ((localStorage.getItem('username') !== null) && (localStorage.getItem('token') !== null || localStorage.getItem('token') !== undefined))
+        return false
     }
 
     useEffect(() => {
