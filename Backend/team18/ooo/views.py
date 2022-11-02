@@ -6,9 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 import json
 from .token import *
-
-
-# Create your views here.
+from .models import *
 
 def index(request):
     return HttpResponse("Hello, world")
@@ -68,4 +66,12 @@ def token(request):
         return HttpResponse(request, status=204)
     else:
         return HttpResponseNotAllowed(["GET"])
+
+
+#outfit part start
+
+
+
+#outfit part end
+
 
