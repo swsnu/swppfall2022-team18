@@ -11,62 +11,47 @@ from .models import *
 def index(request):
     return HttpResponse("Hello, world")
 
-@csrf_exempt
-def signin(request):
-    if request.method == 'POST':
-        body = json.loads(request.body.decode('utf-8'))
-        body_data = body['body']
-        print(body)
-        data = json.loads(body_data)
-        username = data['username']
-        password = data['password']
-        user = authenticate(request, username=username, password=password)
-        
-        if user is not None:
-            login(request, user)
-            return HttpResponse(status=200)
-        else:
-            return HttpResponse(status=401)
-    else:
-        return HttpResponseNotAllowed(['POST'])
-    
 
 def signup(request):
     if request.method == 'POST':
-        body = json.loads(request.body.decode('utf-8'))
-        body_data = body['body']
-        print(body)
-        data = json.loads(body_data)
-        username = data['username']
-        password = data['password']
+        req_data = json.loads(request.body.decode())
+        username = req_data['username']
+        password = req_data['password']
         User.objects.create_user(username=username, password=password)
-        return HttpResponse(status = 201)
+        return HttpResponse(status=201)
     else:
-        return HttpResponseNotAllowed(['POST'])
+        return HttpResponseNotAllowed(['POST'], status=405)
 
-
-def logout(request):
-    if request.method == 'GET':
-        # body = json.loads(request.body.decode('utf-8'))
-        # body_data = body['body']
-        # print(body)
-        # data = json.loads(body_data)
-        # username = data['username']
-        if request.user.is_authenticated:
-            logout(request)
+def signin(request):
+    if request.method == 'POST':
+        req_data = json.loads(request.body.decode())
+        username = req_data['username']
+        password = req_data['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
             return HttpResponse(status=204)
         else:
             return HttpResponse(status=401)
     else:
-        return HttpResponseNotAllowed(['GET'])
+        return HttpResponseNotAllowed(['POST'], status=405)
+
+def signout(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            logout(request)
+            return HttpResponse(status=204)
+        else:
+            return HttpResponse('Unauthorized', status=401)
+    else:
+        return HttpResponseNotAllowed(['GET'], status=405)
 
 @ensure_csrf_cookie
 def token(request):
     if request.method == 'GET':
-        return HttpResponse(request, status=204)
+        return HttpResponse(status=204)
     else:
-        return HttpResponseNotAllowed(["GET"])
-
+        return HttpResponseNotAllowed(['GET'], status=405)
 
 #outfit part start
 
