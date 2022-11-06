@@ -21,11 +21,12 @@ export const signinUser = async (username:string, pw:string) => {
         body: JSON.stringify(data)
     }
     // console.log(localStorage.getItem('token'))
-    await axios.post("/api/ooo/user/signin/", option).then(() => {
-        localStorage.setItem('username', username)
-    }).catch((error) => {
-        console.log(error.response)
-    })
+    await axios.post("/api/ooo/user/signin/", option)
+    // .then(() => {
+    //     localStorage.setItem('username', username)
+    // }).catch((error) => {
+    //     console.log(error.response)
+    // })
 
 }
 

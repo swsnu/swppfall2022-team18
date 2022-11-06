@@ -2,6 +2,8 @@
 views of ooo
 '''
 import json
+import ast
+
 from json.decoder import JSONDecodeError
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponse, JsonResponse
@@ -17,17 +19,18 @@ def index():
     '''
     return HttpResponse("Hello, world")
 
-
 def signup(request):
     '''
     signup : django default user
     '''
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
+        
         username = req_data['username']
         password = req_data['password']
         new_user = User.objects.create_user(username=username, password=password)
         Closet.objects.create(user=new_user)
+
         return HttpResponse(status=201)
     return HttpResponseNotAllowed(['POST'], status=405)
 

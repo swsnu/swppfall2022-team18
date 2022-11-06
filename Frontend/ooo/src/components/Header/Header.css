@@ -20,7 +20,7 @@
 }
 
 #appName {
-    font-size: 130px;
+    font-size: 125px;
     color: white;
 }
 
@@ -31,7 +31,7 @@
 
 #infoButton {
     position: absolute;
-    right: 7.5%;
+    right: 150px;
     flex-direction: row;
     top: 2%;
     background-color: white;
@@ -43,7 +43,7 @@
 
 #logoutButton {
     position: absolute;
-    right: 3%;
+    right: 40px;
     flex-direction: row;
     top: 2%;
     border:none;
