@@ -18,8 +18,8 @@ class signinUserCase(TestCase):
         
         #usercloth is user2's clothes
         #usercloth-labelset pair = (1,1) (2,2) (3,3) (4,3) (5,4)
-        #sample-labelset pair = (1,1) (2,2) (3,4) (4,4)
-        #outfit-sample set = (1: 1,2) (2: 3,4) (3: 2,4)
+        #sample-labelset pair = (1,1) (2,2) (3,4) (4,4) (5,5)
+        #outfit-sample set = (1: 1,2) (2: 3,4,5) (3: 2,4)
         UserCloth.objects.create(
             image_id = 1,
             closet = closet2,
@@ -116,6 +116,33 @@ class signinUserCase(TestCase):
             pattern = 'test_pattern_4',
             label_set = labelset_4
         )    
+        SampleCloth.objects.create(
+            image_id = 5,
+            purchase_link = "cloth purchase link 5",
+            outfit = outfit2,
+            type = "test_type_5",
+            color = 'test_color_5',
+            pattern = 'test_pattern_5',
+            label_set = labelset_4
+        )   
+        SampleCloth.objects.create(
+            image_id = 6,
+            purchase_link = "cloth purchase link 2",
+            outfit = outfit3,
+            type = "test_type_2",
+            color = 'test_color_2',
+            pattern = 'test_pattern_2',
+            label_set = labelset_2
+        ) 
+        SampleCloth.objects.create(
+            image_id = 7,
+            purchase_link = "cloth purchase link 4",
+            outfit = outfit3,
+            type = "test_type_4",
+            color = 'test_color_4',
+            pattern = 'test_pattern_4',
+            label_set = labelset_4
+        ) 
 
     def test_csrf(self):
         # By default, csrf checks are disabled in test client
@@ -167,6 +194,19 @@ class signinUserCase(TestCase):
         response = client.get('/api/ooo/outfit/')
         self.assertEqual(response.status_code, 401)
 
+        response = client.post(
+            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            json.dumps({
+                'type': 'type1',
+                'color': 'color1',
+                'pattern': 'pattern1',
+                'userHave': 'False',
+                'recommend': 'False'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 401)
+
         response = client.put('/api/ooo/outfit/')
         self.assertEqual(response.status_code, 405)
 
@@ -175,9 +215,137 @@ class signinUserCase(TestCase):
                     content_type='application/json')
         self.assertEqual(response.status_code, 204)
 
-        #get outfit list with cursor:0, page_size:10
+        #get outfit list with cursor:0, pageSize:10
         response = client.get(
-            '/api/ooo/outfit/?cursor=0&page_size=2'
+            '/api/ooo/outfit/?cursor=0&pageSize=1'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        response = client.get(
+            '/api/ooo/outfit/?cursor=0&pageSize=3'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        #test post
+
+        #bad request
+        response = client.post(
+            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            json.dumps({
+                'type': 'type1',
+                'userHave': 'False',
+                'recommend': 'False'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
+
+        #using labelset
+        response = client.post(
+            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            json.dumps({
+                'type': "test_type_1",
+                'color': 'test_color_1',
+                'pattern':'test_pattern_1',
+                'userHave': 'False',
+                'recommend': 'False'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        #try to using labelset but failed
+        response = client.post(
+            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            json.dumps({
+                'type': "test_type_1",
+                'color': 'test_color_1',
+                'pattern':'test_pattern_3',
+                'userHave': 'False',
+                'recommend': 'False'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        #using recommend filter
+        response = client.post(
+            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            json.dumps({
+                'type': "test_type_2",
+                'color': 'test_color_2',
+                'pattern':'test_pattern_2',
+                'userHave': 'False',
+                'recommend': 'True'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        response = client.post(
+            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            json.dumps({
+                'type': "test_type_1",
+                'color': 'test_color_1',
+                'pattern':'test_pattern_3',
+                'userHave': 'True',
+                'recommend': 'False'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        response = client.post(
+            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            json.dumps({
+                'type': "test_type_3",
+                'color': 'test_color_3',
+                'pattern':'test_pattern_3',
+                'userHave': 'False',
+                'recommend': 'True'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+        print(response.content)
+
+        response = client.post(
+            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            json.dumps({
+                'type': '',
+                'color': 'color1',
+                'pattern': '',
+                'userHave': 'False',
+                'recommend': 'True'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        #using userHave filter
+        response = client.post(
+            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            json.dumps({
+                'type': "test_type_2",
+                'color': 'test_color_2',
+                'pattern':'test_pattern_2',
+                'userHave': 'True',
+                'recommend': 'False'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        response = client.post(
+            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            json.dumps({
+                'type': '',
+                'color': '',
+                'pattern': 'test_pattern_1',
+                'userHave': 'True',
+                'recommend': 'False'
+            }),
+            content_type='application/json'
         )
         self.assertEqual(response.status_code, 200)
 
@@ -245,5 +413,4 @@ class signinUserCase(TestCase):
         self.assertEqual(response.status_code, 204)
 
         response = client.get('/api/ooo/outfit/today/')
-        self.assertEqual(response.status_code, 200)  
-        print(response.content)      
+        self.assertEqual(response.status_code, 200)      
