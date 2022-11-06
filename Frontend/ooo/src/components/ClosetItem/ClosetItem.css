@@ -1,15 +1,61 @@
 .ClosetItem {
+    display: flex;
     width: 30%;
     flex-direction: row;
     justify-content: center;
     align-content: center;
     background-color: white;
+    margin-left: 1%;
 }
 
 .ClosetItem .ClothImage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+    height: 100%;
+}
+
+#cloth-img {
+    width: 100%;
+    height: 80%;
     object-fit: cover;
 }
 
-.ClosetItem .ClothLabel {
-    width: 10%;
+.ClosetItem .ClothLable {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-left: 20px;
 }
+
+#type-label {
+    font-size: 20px;
+    font-weight:500
+}
+
+#type-text {
+    font-size: 20px;
+    font-weight: 200;
+}
+#color-label {
+    font-size: 20px;
+    font-weight:500
+}
+
+#color-text {
+    font-size: 20px;
+    font-weight: 200;
+}
+
+#stripe-label {
+    font-size: 20px;
+    font-weight:500
+}
+
+#stripe-text {
+    font-size: 20px;
+    font-weight: 200;
+}
+
