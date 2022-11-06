@@ -61,18 +61,26 @@ def signout(request):
         return HttpResponse('Unauthorized', status=401)
     return HttpResponseNotAllowed(['GET'], status=405)
 
-@ensure_csrf_cookie
 def closet(request):
     '''
     closet : get or create user's closet items
     '''
+    if not request.user.is_authenticated:
+        return HttpResponse('Unauthorized', status=401)
+    
     user = User.objects.get(id=request.user.id)
     user_closet = Closet.objects.get(user=user)
 
     if request.method == 'GET':
+        if not request.user.is_authenticated:
+            return HttpResponse('Unauthorized', status=401)
+
         closet_item_list = [closet_item for closet_item in UserCloth.objects.filter(closet=user_closet).values()]
         return JsonResponse(closet_item_list, safe=False)
     elif request.method == 'POST':
+        if not request.user.is_authenticated:
+            return HttpResponse('Unauthorized', status=401)
+
         try:
             req_data = json.loads(request.body.decode())
 
@@ -102,39 +110,56 @@ def closet(request):
             # dates - created as default value []
         )
         closet_item.save()
-        return HttpResponse(status=204)
+        return HttpResponse(status=200)
     else:
-        return HttpResponseNotAllowed(['GET', 'POST'])
+        return HttpResponseNotAllowed(['GET', 'POST'], status=405)
 
-@ensure_csrf_cookie
 def closet_item(request, cloth_id):
     '''
     closet_item : get, edit or delete user's closet item / post date a user wore the cloth
     '''
-    # user = User.objects.get(id=request.user.id)
-    # user_closet = Closet.objects.get(user=user)
-    target_item_obj = UserCloth.objects.get(id=cloth_id)
-    dates_history = ast.literal_eval(target_item_obj.dates)
+    if not request.user.is_authenticated:
+        return HttpResponse('Unauthorized', status=401)
 
-    if request.method == 'GET':        
-        target_item_dict = UserCloth.objects.filter(id=cloth_id).values()[0]
+    try:
+        target_item_obj = UserCloth.objects.get(id=cloth_id)
+        dates_history = ast.literal_eval(target_item_obj.dates)
+    except UserCloth.DoesNotExist:
+        return HttpResponseNotFound()
+
+    if request.method == 'GET':
+        if not request.user.is_authenticated:
+            return HttpResponse('Unauthorized', status=401)
+
+        try:
+            target_item_dict = UserCloth.objects.filter(id=cloth_id).values()[0]
+        except UserCloth.DoesNotExist:
+            return HttpResponseNotFound()
+
         return JsonResponse(target_item_dict)
 
     elif request.method == 'POST':
+        if not request.user.is_authenticated:
+            return HttpResponse('Unauthorized', status=401)
+
         try:
             req_data = json.loads(request.body.decode())
             dates = req_data['dates']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
 
-        dates_history.append(dates)
-        target_item_obj.dates = json.dumps(dates_history)
+        if dates not in dates_history:
+            dates_history.append(dates)
+            target_item_obj.dates = json.dumps(dates_history)
 
-        target_item_obj.save()
+            target_item_obj.save()
 
-        return HttpResponse(status=204)
+        return HttpResponse(status=200)
 
     elif request.method == 'PUT':
+        if not request.user.is_authenticated:
+            return HttpResponse('Unauthorized', status=401)
+
         try:
             req_data = json.loads(request.body.decode())
 
@@ -181,6 +206,9 @@ def closet_item(request, cloth_id):
         return JsonResponse(response_dict, status=200)
 
     elif request.method == 'DELETE':
+        if not request.user.is_authenticated:
+            return HttpResponse('Unauthorized', status=401)
+
         try:
             target_item_obj.delete()
             return HttpResponse(status=200)
@@ -188,7 +216,7 @@ def closet_item(request, cloth_id):
             return HttpResponseBadRequest()
 
     else:
-        return HttpResponseNotAllowed(['GET', 'POST', 'PUT', 'DELETE'])
+        return HttpResponseNotAllowed(['GET', 'POST', 'PUT', 'DELETE'], status=405)
 
 @ensure_csrf_cookie
 def token(request):
@@ -262,7 +290,6 @@ def outfit_list(request):
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
         
-
         using_labelset = False
         No_cloth_filter = True
         if filter_type or filter_color or filter_pattern:
