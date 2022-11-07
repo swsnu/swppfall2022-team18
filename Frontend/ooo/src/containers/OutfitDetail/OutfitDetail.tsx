@@ -5,21 +5,19 @@ import { useParams } from "react-router";
 import { AppDispatch } from "../../store";
 import axios from "axios";
 import "./OutfitDetail.css";
+import {
+	fetchOutfit,
+	fetchSampleCloth,
+	selectOutfit,
+} from "../../store/slices/outfit";
 
 const OutfitDetail = async () => {
 	const { id } = useParams();
+	const { user } = useParams();
 
 	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
-
-	// const apiUrl = "api/ooo/outfit/" + id + "/";
-
-	// try {
-	// 	const response = await axios.get(apiUrl);
-	// 	console.log(response.data);
-	// } catch (error) {
-	// 	console.error(error);
-	// }
+	const outfitState = useSelector(selectOutfit);
 
 	return;
 };

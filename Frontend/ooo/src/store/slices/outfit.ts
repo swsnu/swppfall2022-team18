@@ -136,6 +136,6 @@ export const outfitSlice = createSlice({
 });
 
 export const outfitActions = outfitSlice.actions;
-export const selectoutfit = (state: RootState) => state.outfit;
+export const selectOutfit = (state: RootState) => state.outfit;
 
 export default outfitSlice.reducer;
