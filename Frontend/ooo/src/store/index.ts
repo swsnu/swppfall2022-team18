@@ -1,12 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userClothReducer from "./slices/UserCloth";
-import sampleClothReducer from "./slices/sampleCloth";
 import outfitReducer from "./slices/outfit";
 
 export const store = configureStore({
 	reducer: {
-		userCloth: userClothReducer,
-		sampleCloth: sampleClothReducer,
 		outfit: outfitReducer,
 	},
 });

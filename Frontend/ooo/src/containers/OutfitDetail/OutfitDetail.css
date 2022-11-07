@@ -1,0 +1,18 @@
+@font-face {
+	font-family: "Kreon";
+	src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf")
+		format("opentype");
+}
+* {
+	font-family: "Kreon";
+}
+
+.OutfitDetail {
+	display: flex;
+	flex-basis: 100%;
+	flex-direction: column;
+}
+
+.OutfitDetail .header {
+	min-width: 2080px;
+}

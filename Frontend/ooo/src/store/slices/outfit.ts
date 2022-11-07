@@ -4,6 +4,8 @@ import { RootState } from "..";
 
 export interface OutfitType {
 	id: number;
+	name: string;
+	info: string;
 	outfit_info: string;
 	popularity: number;
 	image_id: number;
@@ -61,23 +63,26 @@ const initialState: OutfitState = {
 	userCloth: null,
 };
 
+const headers = {
+	username: localStorage.getItem("username"),
+};
+
 export const fetchOutfits = createAsyncThunk(
 	"outfit/fetchOutfits",
 	async () => {
-		const response = await axios.get<OutfitType[]>("/api/ooo/outfit/");
+		const response = await axios.get<OutfitType[]>("/api/ooo/outfit/", {
+			headers,
+		});
 		return response.data;
 	}
 );
 
 export const fetchFilteredOutfits = createAsyncThunk(
 	"outfit/fetchFilteredOutfits",
-	async (
-		td: Pick<
-			FilterType,
-			"color" | "type" | "pattern" | "userHave" | "recommend"
-		>
-	) => {
-		const response = await axios.post<OutfitType[]>("/api/ooo/outfit/");
+	async () => {
+		const response = await axios.post<OutfitType[]>("/api/ooo/outfit/", {
+			headers,
+		});
 		return response.data;
 	}
 );
@@ -85,7 +90,9 @@ export const fetchFilteredOutfits = createAsyncThunk(
 export const fetchOutfit = createAsyncThunk(
 	"outfit/fetchOutfit",
 	async (id: OutfitType["id"]) => {
-		const response = await axios.get(`/api/ooo/outfit/${id}/`);
+		const response = await axios.get(`/api/ooo/outfit/${id}/`, {
+			headers,
+		});
 		return response.data ?? null;
 	}
 );
@@ -93,7 +100,9 @@ export const fetchOutfit = createAsyncThunk(
 export const fetchSampleCloth = createAsyncThunk(
 	"outfit/fetchSampleCloth",
 	async (id: OutfitType["id"]) => {
-		const response = await axios.get(`/api/ooo/samplecloth/${id}/`);
+		const response = await axios.get(`/api/ooo/samplecloth/${id}/`, {
+			headers,
+		});
 		return response.data ?? null;
 	}
 );
@@ -126,6 +135,7 @@ export const outfitSlice = createSlice({
 			state.outfits = action.payload;
 		});
 		builder.addCase(fetchOutfit.fulfilled, (state, action) => {
+			console.log(action.payload);
 			state.selectedOutfit = action.payload.outfit;
 			state.sampleClothes = action.payload.sampleClothes;
 		});
