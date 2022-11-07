@@ -30,6 +30,7 @@ class UserCloth(models.Model):
     UserCloth : cloth object that user post
     '''
     name = models.CharField(max_length=100, blank=True)
+    image_id = models.IntegerField(blank=False, primary_key = True)
     img = models.ImageField(blank=False, upload_to ='images/')
     closet = models.ForeignKey(
         Closet,
@@ -56,9 +57,10 @@ class Outfit(models.Model):
     '''
     outfit_info = models.CharField(max_length=200, blank=True)
     popularity = models.IntegerField(blank=False)
+    image_id = models.IntegerField(blank=False, primary_key = True)
     img = models.ImageField(blank=False, upload_to='./images')
     purchase_link = models.CharField(max_length=500, blank=False)
-    cloth_list = models.TextField(default=json.dumps("[]"))
+    cloth_list = models.IntegerField(default=json.dumps("[]"))
     image = ImageSpecField(source='img', processors=[ResizeToFill(120.60)])
     
 class SampleCloth(models.Model):
@@ -66,6 +68,7 @@ class SampleCloth(models.Model):
     SampleCloth : clothes that are included in Outfit
     '''
     name = models.CharField(max_length=100, blank=True)
+    image_id = models.IntegerField(blank=False, primary_key = True)
     img = models.ImageField(blank=False, upload_to='./images')
     purchase_link = models.CharField(max_length=500, blank=False)
     outfit = models.ForeignKey(
