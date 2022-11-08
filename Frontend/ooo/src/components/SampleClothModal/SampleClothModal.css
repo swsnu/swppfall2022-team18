@@ -1,0 +1,136 @@
+@font-face {
+	font-family: "Kreon";
+	src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf")
+		format("opentype");
+}
+* {
+	font-family: "Kreon";
+}
+
+.SampleClothModal {
+	display: flex;
+	flex-basis: 100%;
+	height: auto;
+	flex-direction: column;
+}
+
+#samplecloth-title {
+	margin-top: 10px;
+	margin-left: 45%;
+	font-size: 30px;
+	color: black;
+}
+
+.SampleClothModal .Body {
+	display: flex;
+	flex-basis: 100%;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.SampleClothModal .Body .sampleDiv {
+	display: flex;
+	width: 30%;
+	padding-left: 2%;
+	padding-right: 2%;
+	flex-direction: column;
+}
+
+#sample-img {
+	width: 50%;
+	height: 50%;
+	object-fit: cover;
+}
+
+#sample-image-title {
+	margin-top: 3px;
+	padding-left: 30%;
+	padding-right: 30%;
+	font-size: 20px;
+	color: black;
+}
+
+.SampleClothModal .Body .userDiv {
+	display: flex;
+	width: 30%;
+	padding-left: 2%;
+	padding-right: 2%;
+	flex-direction: column;
+}
+
+#user-img {
+	width: 50%;
+	height: 50%;
+	object-fit: cover;
+}
+
+#user-image-title {
+	margin-top: 3px;
+	padding-left: 30%;
+	padding-right: 30%;
+	font-size: 20px;
+	color: black;
+}
+
+.SampleClothModal .Body .DataDiv {
+	display: flex;
+	width: 30%;
+	padding-left: 2%;
+	padding-right: 2%;
+	flex-direction: column;
+}
+
+#purchase-button {
+	margin-left: 70%;
+	margin-top: 10%;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 10px;
+	font-size: 30px;
+	opacity: 0.7;
+}
+
+#purchase-button:hover {
+	opacity: 1;
+}
+
+#cloth-name {
+	margin-top: 3px;
+	padding-left: 10%;
+	padding-right: 10%;
+	font-size: 30px;
+	color: black;
+}
+
+.SampleClothModal .Body .DataDiv .ClothTags {
+	display: flex;
+	width: 30%;
+	padding-left: 2%;
+	padding-right: 2%;
+	flex-direction: column;
+}
+
+#cloth-type {
+	margin-top: 3px;
+	padding-left: 10%;
+	padding-right: 10%;
+	font-size: 20px;
+	color: black;
+}
+
+#cloth-color {
+	margin-top: 3px;
+	padding-left: 10%;
+	padding-right: 10%;
+	font-size: 20px;
+	color: black;
+}
+#cloth-pattern {
+	margin-top: 3px;
+	padding-left: 10%;
+	padding-right: 10%;
+	font-size: 20px;
+	color: black;
+}

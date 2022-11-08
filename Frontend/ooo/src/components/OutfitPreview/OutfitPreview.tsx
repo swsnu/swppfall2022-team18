@@ -5,7 +5,7 @@ export interface IProps {
 	source_url: string;
 	info: string;
 	cloth_names: string[];
-	clickOutfitDetailHandler?: () => void;
+	clickOutfitDetail?: () => void;
 }
 
 const OutfitPreview = (props: IProps) => {
@@ -14,7 +14,11 @@ const OutfitPreview = (props: IProps) => {
 	return (
 		<div className="OutfitPreview">
 			<div className="OutfitImage">
-				<img id="outfit-img" src={props.source_url}></img>
+				<img
+					id="outfit-img"
+					src={props.source_url}
+					onClick={props.clickOutfitDetail}
+				></img>
 			</div>
 			<div className="OutfitLable">
 				<text id="outfit-info-text">{props.info}</text>

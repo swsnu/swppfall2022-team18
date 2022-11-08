@@ -90,9 +90,11 @@ export const fetchFilteredOutfits = createAsyncThunk(
 export const fetchOutfit = createAsyncThunk(
 	"outfit/fetchOutfit",
 	async (id: OutfitType["id"]) => {
+		console.log("fetchOutfit");
 		const response = await axios.get(`/api/ooo/outfit/${id}/`, {
 			headers,
 		});
+		console.log("fetchOutfit", response.data);
 		return response.data ?? null;
 	}
 );
@@ -135,9 +137,9 @@ export const outfitSlice = createSlice({
 			state.outfits = action.payload;
 		});
 		builder.addCase(fetchOutfit.fulfilled, (state, action) => {
-			console.log(action.payload);
+			console.log("fetchOutfit", action.payload);
 			state.selectedOutfit = action.payload.outfit;
-			state.sampleClothes = action.payload.sampleClothes;
+			state.sampleClothes = action.payload.sampleclothes;
 		});
 		builder.addCase(fetchSampleCloth.fulfilled, (state, action) => {
 			state.userCloth = action.payload.usercloth;
