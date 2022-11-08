@@ -21,7 +21,7 @@ const SampleClothModal = (props: Iprops) => {
 	const navigate = useNavigate();
 
 	const clickPurchaseButtonHander = () => {
-		navigate(props.sampleCloth_link);
+		navigate("/Redirect", { state: { url: props.sampleCloth_link } });
 	};
 
 	if (props.userHave) {

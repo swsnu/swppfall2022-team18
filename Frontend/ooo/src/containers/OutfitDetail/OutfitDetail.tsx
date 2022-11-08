@@ -74,7 +74,7 @@ const OutfitDetail = () => {
 	];
 
 	const clickPurchaseButtonHander = (purchase_link: string) => {
-		navigate(purchase_link);
+		navigate("/redirect", { state: { url: purchase_link } });
 	};
 
 	const clickClothHandler = (id: number) => {
