@@ -50,6 +50,16 @@
 	opacity: 0.7;
 }
 
+#userhave-button-on {
+	margin-left: 5%;
+	background-color: black;
+	color: white;
+	border: none;
+	padding: 10px;
+	font-size: 25px;
+	opacity: 0.7;
+}
+
 #userhave-button:hover {
 	opacity: 1;
 }
@@ -58,6 +68,16 @@
 	margin-left: 1%;
 	background-color: grey;
 	color: black;
+	border: none;
+	padding: 10px;
+	font-size: 25px;
+	opacity: 0.7;
+}
+
+#recommend-button-on {
+	margin-left: 1%;
+	background-color: black;
+	color: white;
 	border: none;
 	padding: 10px;
 	font-size: 25px;
@@ -78,6 +98,16 @@
 	opacity: 0.7;
 }
 
+#filter-button-on {
+	margin-left: 1%;
+	background-color: black;
+	color: white;
+	border: none;
+	padding: 10px;
+	font-size: 25px;
+	opacity: 0.7;
+}
+
 #filter-button:hover {
 	opacity: 1;
 }
@@ -89,7 +119,7 @@
 	border: none;
 	padding: 10px;
 	font-size: 25px;
-	opacity: 0.7;
+	opacity: 0.5;
 }
 
 #filter-reset-button:hover {

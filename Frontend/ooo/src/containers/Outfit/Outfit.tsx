@@ -148,11 +148,19 @@ export default function Outfit() {
 	//make outfit image as button to navigate to outfit detail page
 
 	const clickUserHaveHandler = () => {
-		return;
+		if (userHave == true) setUserHave(false);
+		else {
+			setRecommend(false);
+			setUserHave(true);
+		}
 	};
 
 	const clickRecommendHandler = () => {
-		return;
+		if (recommend == true) setRecommend(false);
+		else {
+			setRecommend(true);
+			setUserHave(false);
+		}
 	};
 
 	const clickFilterHandler = () => {
@@ -160,7 +168,9 @@ export default function Outfit() {
 	};
 
 	const clickResetHandler = () => {
-		return;
+		setRecommend(false);
+		setUserHave(false);
+		setClothFilter(false);
 	};
 
 	const clickOutfitImageHandler = () => {
@@ -183,10 +193,27 @@ export default function Outfit() {
 			<div className="OutfitBody">
 				<div className="OutfitTitle">Outfits</div>
 				<div className="OutfitButtons">
-					<button id="userhave-button">userHave</button>
-					<button id="recommend-button">recomment</button>
-					<button id="filter-button">Filter</button>
-					<button id="filter-reset-button">Reset</button>
+					<button
+						id={userHave ? "userhave-button-on" : "userhave-button"}
+						onClick={() => clickUserHaveHandler()}
+					>
+						userHave
+					</button>
+					<button
+						id={recommend ? "recommend-button-on" : "recommend-button"}
+						onClick={() => clickRecommendHandler()}
+					>
+						recomment
+					</button>
+					<button
+						id={clothFilter ? "filter-button-on" : "filter-button"}
+						onClick={() => clickFilterHandler()}
+					>
+						Filter
+					</button>
+					<button id="filter-reset-button" onClick={() => clickResetHandler()}>
+						Reset
+					</button>
 				</div>
 				<Modal isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
 					<FilterModal></FilterModal>
