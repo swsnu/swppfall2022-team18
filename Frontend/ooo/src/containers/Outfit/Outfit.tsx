@@ -13,7 +13,6 @@ export default function Outfit() {
 	const [recommend, setRecommend] = useState(false);
 	const [clothFilter, setClothFilter] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
-
 	const outfits = [
 		{
 			name: "나쁠게 없어!",
@@ -203,7 +202,7 @@ export default function Outfit() {
 						id={recommend ? "recommend-button-on" : "recommend-button"}
 						onClick={() => clickRecommendHandler()}
 					>
-						recomment
+						recommend
 					</button>
 					<button
 						id={clothFilter ? "filter-button-on" : "filter-button"}

@@ -41,7 +41,7 @@
 }
 
 #userhave-button {
-	margin-left: 5%;
+	margin-left: 2%;
 	background-color: grey;
 	color: black;
 	border: none;
@@ -51,7 +51,7 @@
 }
 
 #userhave-button-on {
-	margin-left: 5%;
+	margin-left: 2%;
 	background-color: black;
 	color: white;
 	border: none;
@@ -113,7 +113,7 @@
 }
 
 #filter-reset-button {
-	margin-left: 50%;
+	margin-left: 60%;
 	background-color: red;
 	color: white;
 	border: none;
@@ -130,34 +130,38 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-between;
 	margin-top: 20px;
 }
 
-.OutfitPage .OutfitBody .OutfitImages .OutfitImage {
+.OutfitPage .OutfitBody .OutfitImages .outfit-body {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-content: center;
 	margin-left: 2%;
 	margin-right: 2%;
-	width: 100%;
-	height: 100%;
-}
-
-.OutfitPage .OutfitBody .OutfitImages .OutfitImage:hover {
+	margin-bottom: 2%;
+	width: 27%;
+	height: 27%;
 	background-color: #e3e3e3;
 	border-radius: 20px;
 }
 
+.OutfitPage .OutfitBody .OutfitImages .outfit-body:hover {
+	background-color: grey;
+	border-radius: 20px;
+}
 #outfit-image {
 	width: 500px;
 	height: 1000px;
 	object-fit: contain;
 }
 
-.OutfitPage .OutfitBody .OutfitImages .OutfitData {
+.OutfitPage .OutfitBody .OutfitImages .outfit-body .OutfitData {
 	display: flex;
-	width: 40%;
+	width: 100%;
 	flex-direction: column;
+}
+
+#outfit-info-text {
+	font-size: 20px;
+	color: black;
 }
