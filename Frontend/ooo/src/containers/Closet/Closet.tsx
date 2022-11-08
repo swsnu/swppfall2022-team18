@@ -20,6 +20,7 @@ import hood from '../../assets/images/hood.jpg'
 import pants from '../../assets/images/pants.jpg'
 
 import AddClothModal from '../../components/AddClothModal/AddClothModal'
+// import ClothDetailModal from '../../components/ClothDetailModal/ClothDetailModal'
 
 interface IProps {
     title: string;
@@ -43,11 +44,17 @@ export default function Closet(props: IProps){
       dispatch(fetchUserClothes());
     }, []);
 
-    const [modalOpen, setModalOpen] = useState(false)
+    const [addClothModalOpen, setAddClothModalOpen] = useState(false)
+    // const [clothDetailModalOpen, setClothDetailModalOpen] = useState(false)
+
     const clickAddClothPopupHandler = () => {
-        setModalOpen(true)
+        setAddClothModalOpen(true)
     };
     
+    // const clickClothDetailPopupHandler = () => {
+    //     setClothDetailModalOpen(true)
+    // };
+
     return(
         <div className='Closet'>
             <div className='Closet-header'>
@@ -63,7 +70,7 @@ export default function Closet(props: IProps){
                     <div className='ClosetHead'>
                         <text id='Closet-text-main'>Closet</text>
                         <button id='add-cloth-button' onClick={clickAddClothPopupHandler}>Add</button>
-                        <Modal isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
+                        <Modal isOpen={addClothModalOpen} onRequestClose={() => setAddClothModalOpen(false)}>
                             <AddClothModal></AddClothModal>
                         </Modal>
                     </div>
@@ -86,7 +93,13 @@ export default function Closet(props: IProps){
 
                     <text id='Closet-text-sub'>Top</text>
                     <div className='Closet-image-sub'>
-                        <ClosetItem source_url={neet} type='니트' color="회색" pattern="없음" />
+                        <ClosetItem
+                            source_url={neet} type='니트' color="회색" pattern="없음"
+                            // clickClothDetailPopupHandler={() => setClothDetailModalOpen}
+                        />
+                        {/* <Modal isOpen={clothDetailModalOpen} onRequestClose={() => setClothDetailModalOpen(false)}>
+                            <ClothDetailModal></ClothDetailModal>
+                        </Modal> */}
                         <ClosetItem source_url={hood} type='후드' color="회색" pattern="없음"/>
                     </div>
 
