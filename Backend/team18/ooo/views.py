@@ -5,7 +5,7 @@ import json
 import ast
 
 from json.decoder import JSONDecodeError
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.http.response import HttpResponseNotAllowed, HttpResponseNotFound, HttpResponseBadRequest
 from django.contrib.auth import authenticate, logout, login
@@ -34,14 +34,16 @@ def signup(request):
         return HttpResponse(status=201)
     return HttpResponseNotAllowed(['POST'], status=405)
 
+@csrf_exempt
 def signin(request):
     '''
     signin : django default user
     '''
     if request.method == 'POST':
-        req_data = json.loads(request.body.decode())
-        username = req_data['username']
-        password = req_data['password']
+        req_data = json.loads(request.body.decode())["body"]
+        print("body is", req_data)
+        username = req_data["username"]
+        password = req_data["password"]
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -61,6 +63,7 @@ def signout(request):
         return HttpResponse('Unauthorized', status=401)
     return HttpResponseNotAllowed(['GET'], status=405)
 
+@csrf_exempt
 def closet(request):
     '''
     closet : get or create user's closet items

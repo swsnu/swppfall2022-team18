@@ -30,9 +30,9 @@ export default function Home(){
                 <div className='ClosetDiv'>
                     <text id='Closet-text' >Closet</text>
                     <div className='Closet-image'>
-                        <ClosetItem source_url={neet} type='니트' color="회색" stripe="없음" />
-                        <ClosetItem source_url={hood} type='후드' color="회색" stripe="없음"/>
-                        <ClosetItem source_url={pants} type='바지' color="회색" stripe="없음"/>
+                        <ClosetItem source_url={neet} type='니트' color="회색" pattern="없음" />
+                        <ClosetItem source_url={hood} type='후드' color="회색" pattern="없음"/>
+                        <ClosetItem source_url={pants} type='바지' color="회색" pattern="없음"/>
                     </div>
                     <div className='Closet-button'>
                     <button id='more-button' onClick={() => {navigate('/closet')}}>More</button>
