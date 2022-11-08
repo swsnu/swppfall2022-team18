@@ -63,7 +63,6 @@ export default function Closet(props: IProps){
                     <div className='ClosetHead'>
                         <text id='Closet-text-main'>Closet</text>
                         <button id='add-cloth-button' onClick={clickAddClothPopupHandler}>Add</button>
-                        {/* { modalOpen && <AddClothPopup setModalOpen={setModalOpen} /> } */}
                         <Modal isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
                             <AddClothModal></AddClothModal>
                         </Modal>

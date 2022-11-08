@@ -37,6 +37,15 @@
     padding-bottom: 70px;
 }
 
+.AddClothModal .AddClothModalTop .UploadClothDiv .UploadedClothTempDiv {
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-right: 65%;
+    background-color: lightgray;
+    width: 350px;
+    height: 400px;
+}
+
 #upload-cloth-button {
     margin-top: 10px;
     margin-left: 40px;
