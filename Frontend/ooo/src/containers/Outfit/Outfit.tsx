@@ -166,6 +166,10 @@ export default function Outfit() {
 		setModalOpen(true);
 	};
 
+	const clickDoneHandler = () => {
+		setModalOpen(false)
+	}
+
 	const clickResetHandler = () => {
 		setRecommend(false);
 		setUserHave(false);
@@ -214,8 +218,8 @@ export default function Outfit() {
 						Reset
 					</button>
 				</div>
-				<Modal isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
-					<FilterModal></FilterModal>
+				<Modal id = "filter-modal" isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
+					<FilterModal clickDoneHandler={clickDoneHandler}></FilterModal>
 				</Modal>
 				<div className="OutfitImages">
 					{outfits.map((outfit) => {

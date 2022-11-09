@@ -1,0 +1,65 @@
+@font-face {
+	font-family: "Kreon";
+	src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf")
+		format("opentype");
+}
+* {
+	font-family: "Kreon";
+}
+
+.FilterModal {
+	display: flex;
+	flex-basis: 100%;
+    flex-direction: column;
+	height: auto;
+	flex-direction: column;
+}
+
+#color-select {
+    display: block;
+    width: 100%;
+    padding: 8px 8px;
+	font-size: 20px;
+	line-height: 20px;
+	border: 1px solid;
+	border-radius: 4px;
+	color: inherit;
+	background-color: transparent;
+    margin-bottom: 30px;
+}
+
+#color-select:focus {
+    border-color: red;
+}
+
+#pattern-select {
+    display: block;
+    width: 100%;
+    padding: 8px 8px;
+	font-size: 20px;
+	line-height: 20px;
+	border: 1px solid;
+	border-radius: 4px;
+	color: inherit;
+	background-color: transparent;
+}
+
+#pattern-select:focus {
+    border-color: red;
+}
+
+
+#done-button {
+    margin-top: 30px;
+    background-color: black;
+    color: white;
+    border:none;
+    border-radius: 30px;
+    padding: 10px;
+    font-size: 40px;
+    opacity: 0.7;
+}
+
+#done-button:hover {
+    opacity: 1;
+}
