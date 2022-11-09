@@ -40,6 +40,17 @@ const ClothDetailModal = () => {
 	//     }
 	// };
 
+	const cloth = {
+		cloth_color: "그레이",
+		cloth_name: "(SS19) Denim Trucker Jacket Grey",
+		cloth_link: "https://www.musinsa.com/app/goods/969580/0",
+		cloth_num: 969580,
+		cloth_image:
+			"https://image.msscdn.net/images/goods_img/20190228/969580/969580_1_500.jpg?t=20190228191158",
+		cloth_pattern: "None",
+		cloth_type: "트러커 재킷",
+	};
+
 	const clickMoveToRecommendedStyleHandler = () => {
 		navigate("/outfit/");
 	};
@@ -59,31 +70,33 @@ const ClothDetailModal = () => {
 			</div>
 			<div className="ClothDetailModalTop">
 				<div className="ClothImage-modal">
-					<img id="cloth-img-modal" src={neet}></img>
+					<img id="cloth-img-modal" src={cloth.cloth_image}></img>
 				</div>
 				<div className="ClothLable-modal">
 					<text id="type-label-modal">
 						<b>종류</b>
 					</text>
-					<text id="type-text-modal">{"니트"}</text>
+					<text id="type-text-modal">{cloth.cloth_type}</text>
 					<br></br>
 					<text id="color-label-modal">
 						<b>색상</b>
 					</text>
-					<text id="color-text-modal">{"회색"}</text>
+					<text id="color-text-modal">{cloth.cloth_color}</text>
 					<br></br>
 					<text id="stripe-label-modal">
 						<b>무늬</b>
 					</text>
-					<text id="stripe-text-modal">{"없음"}</text>
+					<text id="stripe-text-modal">{cloth.cloth_pattern}</text>
 					<br></br>
 				</div>
-				<button
-					id="move-recommend-button"
-					onClick={() => clickMoveToRecommendedStyleHandler()}
-				>
-					Get Recommendation
-				</button>
+				<div className="ClothButton-modal">
+					<button
+						id="move-recommend-button"
+						onClick={() => clickMoveToRecommendedStyleHandler()}
+					>
+						Get Recommendation
+					</button>
+				</div>
 			</div>
 		</div>
 	);

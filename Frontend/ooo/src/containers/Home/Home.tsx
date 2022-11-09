@@ -354,6 +354,10 @@ export default function Home() {
 	//	setLoading(false)
 	//},[])
 
+	const clickOutfitImageHandler = () => {
+		navigate("/outfit/1/");
+	};
+
 	if (Loading) {
 		return <div>Loading..</div>;
 	} else {
@@ -380,6 +384,17 @@ export default function Home() {
 							{outer_cloth_data_list.length > 2 ? (
 								<div className="Closet-item-box">
 									<ClosetItem
+										source_url={outer_cloth_data_list[0].cloth_image}
+										type={outer_cloth_data_list[0].cloth_type}
+										color={outer_cloth_data_list[0].cloth_color}
+										pattern={outer_cloth_data_list[0].cloth_pattern}
+										clickClothDetailPopupHandler={() => {
+											navigate(
+												"/outfit/${outer_cloth_data_list[0].cloth_num}/"
+											);
+										}}
+									/>
+									<ClosetItem
 										source_url={top_cloth_data_list[0].cloth_image}
 										type={top_cloth_data_list[0].cloth_type}
 										color={top_cloth_data_list[0].cloth_color}
@@ -396,17 +411,6 @@ export default function Home() {
 										clickClothDetailPopupHandler={() => {
 											navigate(
 												"/outfit/${bottom_cloth_data_list[0].cloth_num}/"
-											);
-										}}
-									/>
-									<ClosetItem
-										source_url={outer_cloth_data_list[0].cloth_image}
-										type={outer_cloth_data_list[0].cloth_type}
-										color={outer_cloth_data_list[0].cloth_color}
-										pattern={outer_cloth_data_list[0].cloth_pattern}
-										clickClothDetailPopupHandler={() => {
-											navigate(
-												"/outfit/${outer_cloth_data_list[0].cloth_num}/"
 											);
 										}}
 									/>
@@ -480,6 +484,7 @@ export default function Home() {
 										cloth_names={outfit_clothes[0].map((cloth, i) => {
 											return cloth.cloth_name + " ";
 										})}
+										clickOutfitDetail={() => clickOutfitImageHandler()}
 									/>
 									<OutfitPreview
 										source_url={codi_data_list[1].codi_image}
