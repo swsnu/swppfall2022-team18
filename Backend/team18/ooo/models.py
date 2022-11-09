@@ -45,7 +45,7 @@ class UserCloth(models.Model):
         null=False,
         related_name='user_cloth'
     )
-    dates = models.TextField(default=json.dumps("[]"))
+    dates = models.TextField(default=json.dumps([]))
 
 
 class Outfit(models.Model):
