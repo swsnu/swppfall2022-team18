@@ -5,7 +5,7 @@ import json
 import ast
 
 from json.decoder import JSONDecodeError
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.http.response import HttpResponseNotAllowed, HttpResponseNotFound, HttpResponseBadRequest
 from django.contrib.auth import authenticate, logout, login
@@ -19,12 +19,13 @@ def index():
     '''
     return HttpResponse("Hello, world")
 
+@csrf_exempt
 def signup(request):
     '''
     signup : django default user
     '''
     if request.method == 'POST':
-        req_data = json.loads(request.body.decode())
+        req_data = json.loads(request.body.decode())["body"]
         
         username = req_data['username']
         password = req_data['password']
@@ -34,14 +35,16 @@ def signup(request):
         return HttpResponse(status=201)
     return HttpResponseNotAllowed(['POST'], status=405)
 
+@csrf_exempt
 def signin(request):
     '''
     signin : django default user
     '''
     if request.method == 'POST':
-        req_data = json.loads(request.body.decode())
-        username = req_data['username']
-        password = req_data['password']
+        req_data = json.loads(request.body.decode())["body"]
+        print("body is", req_data)
+        username = req_data["username"]
+        password = req_data["password"]
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -50,6 +53,7 @@ def signin(request):
         return HttpResponse(status=401)
     return HttpResponseNotAllowed(['POST'], status=405)
 
+@csrf_exempt
 def signout(request):
     '''
     signout : django default user
@@ -61,7 +65,8 @@ def signout(request):
         return HttpResponse('Unauthorized', status=401)
     return HttpResponseNotAllowed(['GET'], status=405)
 
-@ensure_csrf_cookie
+# @ensure_csrf_cookie
+@csrf_exempt
 def closet(request):
     '''
     closet : get or create user's closet items
@@ -74,7 +79,7 @@ def closet(request):
         return JsonResponse(closet_item_list, safe=False)
     elif request.method == 'POST':
         try:
-            req_data = json.loads(request.body.decode())
+            req_data = json.loads(request.body.decode())["body"]
 
             name = req_data['name']
             image_id = req_data['image_id']
@@ -106,7 +111,8 @@ def closet(request):
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
 
-@ensure_csrf_cookie
+# @ensure_csrf_cookie
+@csrf_exempt
 def closet_item(request, cloth_id):
     '''
     closet_item : get, edit or delete user's closet item / post date a user wore the cloth
@@ -122,7 +128,7 @@ def closet_item(request, cloth_id):
 
     elif request.method == 'POST':
         try:
-            req_data = json.loads(request.body.decode())
+            req_data = json.loads(request.body.decode())["body"]
             dates = req_data['dates']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
@@ -136,7 +142,7 @@ def closet_item(request, cloth_id):
 
     elif request.method == 'PUT':
         try:
-            req_data = json.loads(request.body.decode())
+            req_data = json.loads(request.body.decode())["body"]
 
             name = req_data['name']
             image_id = req_data['image_id']
@@ -200,6 +206,8 @@ def token(request):
     return HttpResponseNotAllowed(['GET'], status=405)
 
 #outfit part start
+# @ensure_csrf_cookie
+@csrf_exempt
 def outfit_list(request):
     if request.method == 'GET':
         if not request.user.is_authenticated:
@@ -253,7 +261,7 @@ def outfit_list(request):
         page_size = int(request.GET.get('pageSize', '12').replace('/',''))
 
         try:
-            req_data = json.loads(request.body.decode())
+            req_data = json.loads(request.body.decode())["body"]
             filter_type = req_data["type"]
             filter_color = req_data["color"]
             filter_pattern = req_data["pattern"]
@@ -384,6 +392,8 @@ def outfit_list(request):
 
     return HttpResponseNotAllowed(['GET', 'POST'], status=405)
 
+# @ensure_csrf_cookie
+@csrf_exempt
 def outfit(request, outfit_id):
     if request.method == 'GET':
         if not request.user.is_authenticated:
@@ -426,7 +436,8 @@ def outfit(request, outfit_id):
 
     return HttpResponseNotAllowed(['GET'], status=405)
 
-
+# @ensure_csrf_cookie
+@csrf_exempt
 def sample_cloth(request, samplecloth_id):
     if request.method == 'GET':
         if not request.user.is_authenticated:
@@ -470,6 +481,8 @@ def sample_cloth(request, samplecloth_id):
 
     return HttpResponseNotAllowed(['GET'], status=405)
 
+# @ensure_csrf_cookie
+@csrf_exempt
 def today_outfit(request):
     if request.method == 'GET':
         if not request.user.is_authenticated:

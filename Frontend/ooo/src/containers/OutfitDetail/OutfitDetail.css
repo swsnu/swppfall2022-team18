@@ -1,0 +1,108 @@
+@font-face {
+	font-family: "Kreon";
+	src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf")
+		format("opentype");
+}
+* {
+	font-family: "Kreon";
+}
+
+.OutfitDetail {
+	display: flex;
+	flex-basis: 100%;
+	flex-direction: column;
+}
+
+.OutfitDetail .header {
+	min-width: 2080px;
+}
+
+.OutfitDetail .OutfitDetail-body {
+	display: flex;
+	flex-direction: row;
+}
+
+.OutfitDetail .OutfitDetail-body .Outfit-image {
+	display: flex;
+	width: 44%;
+	min-width: 960px;
+	height: auto;
+	flex-direction: column;
+	margin-left: 2%;
+	margin-top: 2%;
+	/* border-color: black; */
+	border-radius: 40px;
+	box-shadow: gray;
+	box-shadow: 1px 1px 10px 0px;
+	padding-bottom: 70px;
+}
+
+#outfit-img {
+	width: 100%;
+	height: 80%;
+	object-fit: cover;
+}
+
+.OutfitDetail .OutfitDetail-body .OutfitDetailData {
+	display: flex;
+	width: 44%;
+	min-width: 960px;
+	height: auto;
+	flex-direction: column;
+	margin-top: 2%;
+	margin-left: 2%;
+	border-radius: 40px;
+	box-shadow: gray;
+	box-shadow: 1px 1px 10px 0px;
+}
+
+.OutfitDetail .OutfitDetail-body .OutfitDetailData .OutfitName {
+	margin-top: 10px;
+	font-size: 50px;
+	color: black;
+	padding-bottom: 15%;
+}
+
+.OutfitDetail .OutfitDetail-body .OutfitDetailData .OutfitInfo {
+	margin-top: 10px;
+	font-size: 30px;
+	color: black;
+	padding-bottom: 15%;
+}
+
+#outfit-purchase-button {
+	margin-left: 70%;
+	margin-top: 10%;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 10px;
+	font-size: 30px;
+	opacity: 0.7;
+}
+
+#outfit-purchase-button:hover {
+	opacity: 1;
+}
+
+#samplecloth-title {
+	margin-top: 10px;
+	font-size: 30px;
+	color: black;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.OutfitDetail .OutfitDetail-body .OutfitDetailData .sampleClothes {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	margin-top: 20px;
+}
+
+#samplecloth-img {
+	width: 300px;
+	height: 600px;
+	object-fit: contain;
+}
