@@ -113,18 +113,18 @@ export const outfitSlice = createSlice({
 	name: "outfit",
 	initialState,
 	reducers: {
-		editFilter: (
-			state,
-			action: PayloadAction<{
-				color: string | null;
-				type: string | null;
-				pattern: string | null;
-				userHave: boolean;
-				recommend: boolean;
-			}>
-		) => {
-			state.filter = action.payload;
-		},
+		// editFilter: (
+		// 	state,
+		// 	action: PayloadAction<{
+		// 		color: string | null;
+		// 		type: string | null;
+		// 		pattern: string | null;
+		// 		userHave: boolean;
+		// 		recommend: boolean;
+		// 	}>
+		// ) => {
+		// 	state.filter = action.payload;
+		// },
 	},
 	extraReducers: (builder) => {
 		// Add reducers for additional action types here, and handle loading state as needed
@@ -137,12 +137,12 @@ export const outfitSlice = createSlice({
 			state.outfits = action.payload;
 		});
 		builder.addCase(fetchOutfit.fulfilled, (state, action) => {
-			console.log("fetchOutfit", action.payload);
+			console.log(action.payload)
 			state.selectedOutfit = action.payload.outfit;
 			state.sampleClothes = action.payload.sampleclothes;
 		});
 		builder.addCase(fetchSampleCloth.fulfilled, (state, action) => {
-			state.userCloth = action.payload.usercloth;
+			state.userCloth = action.payload;
 		});
 	},
 });
