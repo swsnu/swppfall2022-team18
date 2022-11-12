@@ -1,0 +1,96 @@
+@font-face {
+	font-family: "Kreon";
+	src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf")
+		format("opentype");
+}
+* {
+	font-family: "Kreon";
+}
+
+.ClothDetailModal {
+	display: flex;
+	flex-basis: 100%;
+	height: auto;
+	flex-direction: column;
+}
+
+#ClothDetailModal-text {
+	font-size: 30px;
+	color: black;
+}
+
+.ClothDetailModal .ClothDetailModalTop {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	height: auto;
+}
+
+.ClothDetailModal .ClothDetailModalTop .ClothImage-modal {
+	display: flex;
+	width: 40%;
+	padding-left: 2%;
+	padding-right: 2%;
+	flex-direction: column;
+	height: auto;
+}
+
+#cloth-img-modal {
+	height: 100%;
+	object-fit: contain;
+}
+
+.ClothDetailModal .ClothDetailModalTop .ClothLable-modal {
+	display: flex;
+	width: 40%;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	margin-left: 20px;
+	height: auto;
+}
+
+#type-label-modal {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+#type-text-modal {
+	font-size: 20px;
+	font-weight: 200;
+}
+#color-label-modal {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+#color-text-modal {
+	font-size: 20px;
+	font-weight: 200;
+}
+
+#stripe-label-modal {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+#stripe-text-modal {
+	font-size: 20px;
+	font-weight: 200;
+}
+
+#move-recommend-button {
+	margin-top: 20px;
+	margin-left: 0%;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 5px;
+	font-size: 30px;
+	opacity: 0.7;
+}
+
+#move-recommend-button:hover {
+	opacity: 1;
+}

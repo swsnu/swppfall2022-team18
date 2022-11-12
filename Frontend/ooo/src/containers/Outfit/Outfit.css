@@ -1,0 +1,175 @@
+@font-face {
+	font-family: "Kreon";
+	src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf")
+		format("opentype");
+}
+* {
+	font-family: "Kreon";
+}
+
+.OutfitPage {
+	display: flex;
+	flex-basis: 100%;
+	flex-direction: column;
+}
+
+.OutfitPage .OutfitBody {
+	display: flex;
+	width: 90%;
+	min-width: 1960px;
+	flex-direction: column;
+	margin-left: 5%;
+	margin-top: 2%;
+	padding-bottom: 100px;
+	border-radius: 40px;
+	box-shadow: gray;
+	box-shadow: 1px 1px 10px 0px;
+}
+
+.OutfitPage .OutfitBody .OutfitTitle {
+	font-size: 60px;
+	color: black;
+}
+
+.OutfitPage .OutfitBody .OutfitButtons {
+	display: flex;
+	width: 90%;
+	min-width: 1960px;
+	flex-direction: row;
+	margin-left: 5%;
+	margin-top: 2%;
+}
+
+#userhave-button {
+	margin-left: 2%;
+	background-color: grey;
+	color: black;
+	border: none;
+	padding: 10px;
+	font-size: 25px;
+	opacity: 0.7;
+}
+
+#userhave-button-on {
+	margin-left: 2%;
+	background-color: black;
+	color: white;
+	border: none;
+	padding: 10px;
+	font-size: 25px;
+	opacity: 0.7;
+}
+
+#filter-modal {
+	display: flex;
+	width: 20%;
+	height: 20%;
+	margin-left: 21.5%;
+	margin-top: 16.5%;
+}
+
+#userhave-button:hover {
+	opacity: 1;
+}
+
+#recommend-button {
+	margin-left: 1%;
+	background-color: grey;
+	color: black;
+	border: none;
+	padding: 10px;
+	font-size: 25px;
+	opacity: 0.7;
+}
+
+#recommend-button-on {
+	margin-left: 1%;
+	background-color: black;
+	color: white;
+	border: none;
+	padding: 10px;
+	font-size: 25px;
+	opacity: 0.7;
+}
+
+#recommend-button:hover {
+	opacity: 1;
+}
+
+#filter-button {
+	margin-left: 1%;
+	background-color: grey;
+	color: black;
+	border: none;
+	padding: 10px;
+	font-size: 25px;
+	opacity: 0.7;
+}
+
+#filter-button-on {
+	margin-left: 1%;
+	background-color: black;
+	color: white;
+	border: none;
+	padding: 10px;
+	font-size: 25px;
+	opacity: 0.7;
+}
+
+#filter-button:hover {
+	opacity: 1;
+}
+
+#filter-reset-button {
+	margin-left: 60%;
+	background-color: red;
+	color: white;
+	border: none;
+	padding: 10px;
+	font-size: 25px;
+	opacity: 0.5;
+}
+
+#filter-reset-button:hover {
+	opacity: 1;
+}
+
+.OutfitPage .OutfitBody .OutfitImages {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin-top: 20px;
+}
+
+.OutfitPage .OutfitBody .OutfitImages .outfit-body {
+	display: flex;
+	flex-direction: column;
+	margin-left: 2%;
+	margin-right: 2%;
+	margin-bottom: 2%;
+	width: 27%;
+	height: 27%;
+	background-color: #e3e3e3;
+	border-radius: 20px;
+}
+
+.OutfitPage .OutfitBody .OutfitImages .outfit-body:hover {
+	background-color: grey;
+	border-radius: 20px;
+}
+#outfit-image {
+	width: 500px;
+	height: 1000px;
+	object-fit: contain;
+}
+
+.OutfitPage .OutfitBody .OutfitImages .outfit-body .OutfitData {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+}
+
+#outfit-info-text {
+	font-size: 20px;
+	color: black;
+}
