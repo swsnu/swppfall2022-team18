@@ -69,7 +69,7 @@ const OutfitDetail = () => {
 		{
 			image_id: "1",
 			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20190219/957879/957879_6_500.jpg?t=20210727092552",
+				"https://image.msscdn.net/images/goods_img/20180914/858911/858911_6_500.jpg?t=20220628150414",
 		},
 	];
 
@@ -139,6 +139,7 @@ const OutfitDetail = () => {
 						</div>
 					</div>
 					<Modal
+						id="sample-modal"
 						isOpen={modalOpen}
 						onRequestClose={() => {
 							setModalOpen(false);

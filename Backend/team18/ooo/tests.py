@@ -188,6 +188,180 @@ class signinUserCase(TestCase):
         response = client.get('/api/ooo/user/logout/')
         self.assertEqual(response.status_code, 401)
 
+    def test_closet(self):
+        client = Client(enforce_csrf_checks=False)
+        #before login
+        response = client.get('/api/ooo/closet/')
+        self.assertEqual(response.status_code, 401)
+
+        response = client.post(
+            '/api/ooo/closet/',
+            json.dumps({
+                'name': 'name1',
+                'image_id': 1,
+                'type': 'type1',
+                'color': 'color1',
+                'pattern': 'pattern1'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 401)
+
+        response = client.put('/api/ooo/outfit/')
+        self.assertEqual(response.status_code, 405)
+
+        #after login
+        response = client.post('/api/ooo/user/signin/',  json.dumps({'username': 'testuser2', 'password': '1234'}),
+                    content_type='application/json')
+        self.assertEqual(response.status_code, 204)
+
+        #get closet
+        response = client.get(
+            '/api/ooo/closet/'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        #test post
+
+        #bad request
+        response = client.post(
+            '/api/ooo/closet/',
+            json.dumps({
+                'name': 'name1',
+                'color': 'color1',
+                'pattern': 'pattern1'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)
+
+        #using labelset
+        response = client.post(
+            '/api/ooo/closet/',
+            json.dumps({
+                'name': 'name1',
+                'image_id': 1,
+                'type': 'test_type_1',
+                'color': 'test_color_1',
+                'pattern': 'test_pattern_1'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        #try to using labelset but failed
+        response = client.post(
+            '/api/ooo/closet/',
+            json.dumps({
+                'name': 'name1',
+                'image_id': 1,
+                'type': 'test_type_1',
+                'color': 'test_color_1',
+                'pattern': 'test_pattern_3'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_closet_item(self):
+        client = Client(enforce_csrf_checks=False)
+        #before login
+        response = client.get('/api/ooo/closet/1/')
+        self.assertEqual(response.status_code, 401)
+
+        response = client.post(
+            '/api/ooo/closet/1/',
+            json.dumps({
+                'dates': '2022-08-17',
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 401)
+
+        response = client.put(
+            '/api/ooo/closet/1/',
+             json.dumps({
+                'name': 'name1',
+                'image_id': 1,
+                'type': 'type1',
+                'color': 'color1',
+                'pattern': 'pattern1'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 401)
+
+        response = client.delete('/api/ooo/closet/1/')
+        self.assertEqual(response.status_code, 401)
+
+        #after login
+        response = client.post('/api/ooo/user/signin/',  json.dumps({'username': 'testuser2', 'password': '1234'}),
+                    content_type='application/json')
+        self.assertEqual(response.status_code, 204)
+
+        #get closet
+        response = client.get(
+            '/api/ooo/closet/1/'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        #get usercloth 10 (doesn't exsit)
+        response = client.get('/api/ooo/closet/10/')
+        self.assertEqual(response.status_code, 404)
+    
+        #test post
+        response = client.post(
+            '/api/ooo/closet/1/',
+            json.dumps({
+                'dates': '2022-08-17'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        #test put
+
+        response = client.put(
+            '/api/ooo/closet/1/',
+            json.dumps({
+                'name': 'name1',
+                'image_id': 1,
+                'type': 'type1',
+                'color': 'color1',
+                'pattern': 'pattern1',
+                'old_date': '2021-01-01',
+                'new_date': '2022-01-01'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        #using labelset
+        response = client.put(
+            '/api/ooo/closet/1/',
+            json.dumps({
+                'name': 'name1',
+                'image_id': 1,
+                'type': 'test_type_1',
+                'color': 'test_color_1',
+                'pattern': 'test_pattern_1',
+                'old_date': '2021-01-01',
+                'new_date': '2022-01-01'
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+
+        # test delete
+
+        response = client.delete('/api/ooo/closet/1/')
+        self.assertEqual(response.status_code, 200)
+
+        #delete usercloth 10 (doesn't exsit)
+        response = client.delete('/api/ooo/closet/10/')
+        self.assertEqual(response.status_code, 404)
+
+
     def test_outfit_list(self):
         client = Client(enforce_csrf_checks=False)
         #before login
