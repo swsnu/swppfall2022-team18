@@ -78,13 +78,13 @@ export default function Login() {
 							{!wrongInput ? (
 								<div></div>
 							) : (
-								<text id="wrong-text">ID, Password가 틀렸습니다.</text>
+								<text data-testid="wrong-text" id="wrong-text">ID, Password가 틀렸습니다.</text>
 							)}
 						</div>
 						<div className="button-div">
 							<button
 								id="login-button"
-								data-testid="login-button"
+								data-testid="login-button-test"
 								onClick={() => postLoginHandler()}
 							>
 								로그인
@@ -92,7 +92,6 @@ export default function Login() {
 							<button
 								id="signup-button"
 								data-testid="signup-button"
-								onClick={() => postLoginHandler()}
 							>
 								회원가입
 							</button>

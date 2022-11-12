@@ -115,6 +115,7 @@ const OutfitDetail = () => {
 					<div className="OutfitDetailData">
 						<button
 							id="outfit-purchase-button"
+							data-testid="outfit-purchase-button"
 							onClick={() =>
 								clickPurchaseButtonHander(selectedOutfit.codi_link)
 							}
@@ -130,6 +131,7 @@ const OutfitDetail = () => {
 									<div className="sampleCloth-image" key={sc.cloth_num}>
 										<img
 											id="samplecloth-img"
+											data-testid="samplecloth-image"
 											src={sc.cloth_image}
 											onClick={() => clickClothHandler(sc.cloth_num)}
 										></img>
@@ -141,11 +143,6 @@ const OutfitDetail = () => {
 					<Modal
 						id="sample-modal"
 						isOpen={modalOpen}
-						onRequestClose={() => {
-							setModalOpen(false);
-							setSelectedCloth(0);
-							setUserHave(false);
-						}}
 					>
 						<SampleClothModal
 							userHave={userHave}
@@ -157,6 +154,19 @@ const OutfitDetail = () => {
 							sampleCloth_name={sampleClothes[selectedCloth].cloth_name}
 							sampleCloth_link={sampleClothes[selectedCloth].cloth_link}
 						></SampleClothModal>
+						<div id="close-buton-div">
+							<button
+							id='modal-close-button'
+							data-testid="modal-close-button"
+							onClick={() => {
+								setModalOpen(false);
+								setSelectedCloth(0);
+								setUserHave(false);
+							}}>
+							닫기
+							</button>
+						</div>
+						
 					</Modal>
 				</div>
 			</div>
