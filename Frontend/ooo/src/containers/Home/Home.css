@@ -1,198 +1,210 @@
 @font-face {
-    font-family:"Kreon" ;
-    src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf") format("opentype");
+	font-family: "Kreon";
+	src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf")
+		format("opentype");
 }
 * {
-    font-family: "Kreon";
+	font-family: "Kreon";
 }
 
 .Home {
-    display: flex;
-    flex-basis: 100%;
-    flex-direction: column;
+	display: flex;
+	flex-basis: 100%;
+	flex-direction: column;
 }
 
 .Home .Home-header {
-    min-width: 2080px;
+	min-width: 2080px;
 }
 
 .Home .HomeTop {
-    display: flex;
-    flex-direction: row;
-    }
+	display: flex;
+	flex-direction: row;
+}
 /*cashing?*/
 .Home .HomeTop .ClosetDiv {
-    display: flex;
-    width: 44%;
-    min-width: 960px;
-    height: auto;
-    flex-direction: column;
-    margin-left: 5%;
-    margin-top: 2%;
-    /* border-color: black; */
-    border-radius: 40px;
-    box-shadow: gray;
-    box-shadow: 1px 1px 10px 0px;
-    padding-bottom: 70px;
+	display: flex;
+	width: 44%;
+	min-width: 960px;
+	height: auto;
+	flex-direction: column;
+	margin-left: 5%;
+	margin-top: 2%;
+	/* border-color: black; */
+	border-radius: 40px;
+	box-shadow: gray;
+	box-shadow: 1px 1px 10px 0px;
+	padding-bottom: 70px;
 }
 
 #Closet-text {
-    margin-top: 10px;
-    font-size: 60px;
-    color: black;
-    padding-right: 70%;
+	margin-top: 10px;
+	font-size: 60px;
+	color: black;
+	padding-right: 70%;
 }
 
 .Home .HomeTop .Closet-image {
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
-    height: 60%;
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	justify-content: center;
+	height: 60%;
+}
+
+.Home .HomeTop .Closet-image .Closet-item-box {
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	justify-content: center;
+	height: 60%;
 }
 
 .Home .HomeTop .Closet-button {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    margin-top: 40px;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	margin-top: 40px;
 }
 
 #more-button {
-    margin-top: 30px;
-    background-color: black;
-    color: white;
-    border:none;
-    border-radius: 30px;
-    padding: 10px;
-    font-size: 40px;
-    opacity: 0.7;
+	margin-top: 30px;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 10px;
+	font-size: 40px;
+	opacity: 0.7;
 }
 
 #more-button:hover {
-    opacity: 1;
+	opacity: 1;
 }
 
-
 .Home .HomeTop .TodayOutfit {
-    display: flex;
-    width: 44%;
-    min-width: 960px;
-    flex-direction: column;
-    margin-top: 2%;
-    margin-left: 2%;
-    border-radius: 40px;
-    box-shadow: gray;
-    box-shadow: 1px 1px 10px 0px;
+	display: flex;
+	width: 44%;
+	min-width: 960px;
+	flex-direction: column;
+	margin-top: 2%;
+	margin-left: 2%;
+	border-radius: 40px;
+	box-shadow: gray;
+	box-shadow: 1px 1px 10px 0px;
 }
 
 .Home .HomeTop .TodayOutfit .TodayOutfit-content {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-content: center;
-    justify-content: center;
-    margin-top: 40px;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	align-content: center;
+	justify-content: center;
+	margin-top: 40px;
 }
 
 .Home .HomeTop .TodayOutfit .TodayOutfit-content .TodayOutfit-image {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    width: 70%;
-    height: 500px;
-
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	width: 70%;
+	height: 500px;
 }
 
 .Home .HomeTop .TodayOutfit .TodayOutfit-content .TodayOutfit-lable {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    width: 30%;
-    height: 600px;
-
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	width: 30%;
+	height: 600px;
 }
 
 #TodayOutfit-text {
-    margin-top: 10px;
-    font-size: 60px;
-    color: black;
-    padding-right: 48%
+	margin-top: 10px;
+	font-size: 60px;
+	color: black;
+	padding-right: 48%;
 }
 
 #today-outfit-info-text {
-    font-size: 30px;
-    font-weight:500;
-    margin-bottom: 20px;
+	font-size: 30px;
+	font-weight: 500;
+	margin-bottom: 20px;
 }
 
 #today-cloth-name {
-    font-size: 20px;
-    font-weight:200;
+	font-size: 20px;
+	font-weight: 200;
 }
 
 #wear-button {
-    background-color: black;
-    color: white;
-    border:none;
-    border-radius: 30px;
-    padding: 10px;
-    font-size: 30px;
-    opacity: 0.7;
-    margin-top: 70%;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 10px;
+	font-size: 30px;
+	opacity: 0.7;
+	margin-top: 70%;
 }
 
 #wear-button:hover {
-    opacity: 1;
+	opacity: 1;
 }
 
 .Home .HomeBottom {
-    display: flex;
-    flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
 .Home .HomeBottom .OutfitDiv {
-    display: flex;
-    width: 90%;
-    min-width: 1960px;
-    flex-direction: column;
-    margin-left: 5%;
-    margin-top: 2%;
-    padding-bottom: 100px;
-    border-radius: 40px;
-    box-shadow: gray;
-    box-shadow: 1px 1px 10px 0px;
+	display: flex;
+	width: 90%;
+	min-width: 1960px;
+	flex-direction: column;
+	margin-left: 5%;
+	margin-top: 2%;
+	padding-bottom: 100px;
+	border-radius: 40px;
+	box-shadow: gray;
+	box-shadow: 1px 1px 10px 0px;
 }
 
 .Home .HomeBottom .OutfitDiv .OutfitHead {
-    display: flex;
-    margin-top: 10px;
-    flex-direction: row;
-    margin-left: 40px;
+	display: flex;
+	margin-top: 10px;
+	flex-direction: row;
+	margin-left: 40px;
 }
 
 #Outfit-text {
-    font-size: 60px;
-    color: black;
+	font-size: 60px;
+	color: black;
 }
 
 #outfit-more-button {
-    margin-left: 85%;
-    background-color: black;
-    color: white;
-    border:none;
-    border-radius: 30px;
-    padding: 10px;
-    font-size: 40px;
-    opacity: 0.7;
+	margin-left: 85%;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 10px;
+	font-size: 40px;
+	opacity: 0.7;
 }
 
 #outfit-more-button:hover {
-    opacity: 1;
+	opacity: 1;
 }
 
 .Home .HomeBottom .OutfitDiv .OutfitImage {
-    display: flex;
-    flex-direction: row;
-    margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+	margin-top: 20px;
+}
+
+.Home .HomeBottom .OutfitDiv .OutfitImage .Outfit-item-box {
+	display: flex;
+	flex-direction: row;
+	margin-top: 20px;
 }

@@ -1,0 +1,76 @@
+@font-face {
+	font-family: "Kreon";
+	src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf")
+		format("opentype");
+}
+* {
+	font-family: "Kreon";
+}
+
+.Closet {
+	display: flex;
+	flex-basis: 100%;
+	flex-direction: column;
+}
+
+.Closet .Closet-header {
+	min-width: 2080px;
+}
+
+.Closet .ClosetTop {
+	flex-direction: row;
+}
+/*cashing?*/
+.Closet .ClosetTop .ClosetDiv {
+	display: flex;
+	/* width: 44%; */
+	min-width: 960px;
+	height: auto;
+	flex-direction: column;
+	margin-left: 5%;
+	margin-top: 2%;
+	/* border-color: black; */
+	border-radius: 40px;
+	box-shadow: gray;
+	box-shadow: 1px 1px 10px 0px;
+	padding-bottom: 70px;
+}
+
+.Closet .ClosetTop .ClosetDiv .ClosetHead {
+	margin-top: 10px;
+	flex-direction: row;
+}
+
+#Closet-text-main {
+	font-size: 60px;
+	color: black;
+}
+
+#add-cloth-button {
+	margin-left: 85%;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 10px;
+	font-size: 20px;
+	opacity: 0.7;
+}
+
+#add-cloth-button:hover {
+	opacity: 1;
+}
+
+#Closet-text-sub {
+	margin-top: 10px;
+	font-size: 30px;
+	color: black;
+}
+
+.Closet .ClosetTop .Closet-image-sub {
+	display: flex;
+	flex-direction: row;
+	align-content: left;
+	justify-content: left;
+	height: 60%;
+}

@@ -1,0 +1,115 @@
+@font-face {
+	font-family: "Kreon";
+	src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf")
+		format("opentype");
+}
+* {
+	font-family: "Kreon";
+}
+
+.AddClothModal {
+	display: flex;
+	flex-basis: 100%;
+	flex-direction: column;
+}
+
+#AddClothModal-text {
+	font-size: 30px;
+	color: black;
+}
+
+.AddClothModal .AddClothModalTop {
+	display: flex;
+	flex-direction: row;
+}
+/*cashing?*/
+.AddClothModal .AddClothModalTop .UploadClothDiv {
+	display: flex;
+	width: 44%;
+	min-width: 500px;
+	height: auto;
+	flex-direction: column;
+	margin-left: 5%;
+	margin-top: 2%;
+	/* border-color: black; */
+	border-radius: 40px;
+	box-shadow: gray;
+	box-shadow: 1px 1px 10px 0px;
+	padding-bottom: 70px;
+}
+
+.AddClothModal .AddClothModalTop .UploadClothDiv .UploadedClothTempDiv {
+	margin-top: 10px;
+	margin-left: 40px;
+	margin-right: 65%;
+	background-color: lightgray;
+	width: 350px;
+	height: 400px;
+}
+
+#upload-cloth-button {
+	margin-top: 10px;
+	margin-left: 40px;
+	margin-right: 65%;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 5px;
+	font-size: 15px;
+	opacity: 0.7;
+}
+
+#upload-cloth-button:hover {
+	opacity: 1;
+}
+
+.AddClothModal .AddClothModalTop .UploadedClothInfoDiv {
+	display: flex;
+	width: 44%;
+	min-width: 500px;
+	height: auto;
+	flex-direction: column;
+	margin-left: 5%;
+	margin-top: 2%;
+	/* border-color: black; */
+	border-radius: 40px;
+	box-shadow: gray;
+	box-shadow: 1px 1px 10px 0px;
+	padding-bottom: 70px;
+}
+
+.AddClothModal
+	.AddClothModalTop
+	.UploadedClothInfoDiv
+	.UploadedClothInfoDiv-sub {
+	margin-top: 20px;
+}
+
+#UploadedClothInfoDiv-text {
+	margin-top: 10px;
+	margin-left: 40px;
+	font-size: 20px;
+	color: black;
+}
+
+#cloth-info-input {
+	margin-left: 40px;
+}
+
+#create-cloth-button {
+	margin-top: 20px;
+	margin-left: 40px;
+	margin-right: 75%;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 5px;
+	font-size: 15px;
+	opacity: 0.7;
+}
+
+#create-cloth-button:hover {
+	opacity: 1;
+}
