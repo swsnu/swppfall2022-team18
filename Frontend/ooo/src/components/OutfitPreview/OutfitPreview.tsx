@@ -15,13 +15,14 @@ const OutfitPreview = (props: IProps) => {
 		<div className="OutfitPreview">
 			<div className="OutfitImage">
 				<img
+					data-testid="outfit-img"
 					id="outfit-img"
 					src={props.source_url}
 					onClick={props.clickOutfitDetail}
 				></img>
 			</div>
 			<div className="OutfitLable">
-				<text id="outfit-info-text">{props.info}</text>
+				<text id="outfit-info-text" data-testid = 'outfit-info-text'>{props.info}</text>
 				{props.cloth_names.map((cloth_name: string, index) => {
 					return (
 						<text key={index} id="cloth-name">
