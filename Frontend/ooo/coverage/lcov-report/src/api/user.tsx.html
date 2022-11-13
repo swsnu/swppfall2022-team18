@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.82% </span>
+                <span class="strong">39.13% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/23</span>
+                <span class='fraction'>9/23</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">22.22% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/9</span>
+                <span class='fraction'>2/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.82% </span>
+                <span class="strong">39.13% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/23</span>
+                <span class='fraction'>9/23</span>
             </div>
         
             
@@ -142,24 +142,24 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -182,8 +182,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -191,8 +191,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -208,13 +208,13 @@ export const signinUser = async (username: string, pw: string) =&gt; {
 		.then(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt; {
 <span class="cstat-no" title="statement not covered" >			console.log(response);</span>
 		})
-		.catch((error) =&gt; {
-			console.log(error.response);
+		.catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
+<span class="cstat-no" title="statement not covered" >			console.log(error.response);</span>
 		});
 &nbsp;
-	const data = { username: username, password: pw };
-	console.log(data);
-	const option = {
+	const data = <span class="cstat-no" title="statement not covered" >{ username: username, password: pw };</span>
+<span class="cstat-no" title="statement not covered" >	console.log(data);</span>
+	const option = <span class="cstat-no" title="statement not covered" >{</span>
 		method: "POST",
 		headers: {
 			"Content-type": "application/json;charset=UTF-8",
@@ -223,10 +223,10 @@ export const signinUser = async (username: string, pw: string) =&gt; {
 		body: data,
 	};
 	// console.log(localStorage.getItem('token'))
-	await axios
+<span class="cstat-no" title="statement not covered" >	await axios</span>
 		.post("/api/ooo/user/signin/", option)
-		.then(() =&gt; {
-			localStorage.setItem("username", username);
+		.then(<span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >			localStorage.setItem("username", username);</span>
 		})
 		.catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
 <span class="cstat-no" title="statement not covered" >			console.log(error.response);</span>
@@ -248,9 +248,9 @@ export const signupUser = <span class="fstat-no" title="function not covered" >a
 	});
 };
 &nbsp;
-export const logoutUser = <span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {
-	const data = <span class="cstat-no" title="statement not covered" >{ username: localStorage.getItem("username") };</span>
-	const option = <span class="cstat-no" title="statement not covered" >{</span>
+export const logoutUser = async () =&gt; {
+	const data = { username: localStorage.getItem("username") };
+	const option = {
 		method: "POST",
 		headers: {
 			"Content-type": "application/json;charset=UTF-8",
@@ -258,8 +258,8 @@ export const logoutUser = <span class="fstat-no" title="function not covered" >a
 		},
 		body: JSON.stringify(data),
 	};
-<span class="cstat-no" title="statement not covered" >	console.log(localStorage.getItem("token"));</span>
-<span class="cstat-no" title="statement not covered" >	await axios.post("/api/ooo/user/logout/", option).then(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+	console.log(localStorage.getItem("token"));
+	await axios.post("/api/ooo/user/logout/", option).then(<span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >		localStorage.removeItem("token");</span>
 <span class="cstat-no" title="statement not covered" >		localStorage.removeItem("username");</span>
 	});
@@ -271,7 +271,7 @@ export const logoutUser = <span class="fstat-no" title="function not covered" >a
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-12T14:18:37.920Z
+                at 2022-11-13T02:01:18.672Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
