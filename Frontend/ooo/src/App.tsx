@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./containers/Login/Login";
@@ -7,6 +6,7 @@ import Closet from "./containers/Closet/Closet";
 import Outfit from "./containers/Outfit/Outfit";
 import OutfitDetail from "./containers/OutfitDetail/OutfitDetail";
 import Redirect from "./containers/Redirect/Redirect";
+import React from "react";
 // import axios from 'axios';
 // import { useCookies } from 'react-cookie';
 
