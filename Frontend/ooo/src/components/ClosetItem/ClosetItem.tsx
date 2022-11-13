@@ -24,9 +24,6 @@ const ClosetItem = (props: IProps) => {
 		setClothDetailModalOpen(true);
 	};
 
-	const closeClothDetailPopupHandler= () =>{
-		setClothDetailModalOpen(false);
-	}
 
 	return (
 		<div className="ClosetItem">
@@ -38,9 +35,18 @@ const ClosetItem = (props: IProps) => {
 				id="detail-modal"
 				data-testid='detail-modal'
 				isOpen={clothDetailModalOpen}
-				onRequestClose={closeClothDetailPopupHandler}
 			>
 				<ClothDetailModal></ClothDetailModal>
+				<div id="close-buton-div">
+							<button
+							id='modal-close-button'
+							data-testid="modal-close-button"
+							onClick={() => {
+								setClothDetailModalOpen(false);
+							}}>
+							닫기
+							</button>
+						</div>
 			</Modal>
 			<div className="ClothLable">
 				<text id="type-label">종류</text>

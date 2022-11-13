@@ -36,11 +36,8 @@ describe("<ClosetItem />",()=>{
         screen.findByText("None");
         const imgbutton = screen.getAllByTestId("clothimg")[0];
         fireEvent.click(imgbutton)
-        fireEvent.keyDown(imgbutton,{
-            key: "Escape",
-            code: "Escape",
-            keyCode: 27,
-            charCode: 27
-        });
+        const closebutton =screen.getAllByTestId("modal-close-button")[0];
+        fireEvent.click(closebutton)
+
     })
 })
