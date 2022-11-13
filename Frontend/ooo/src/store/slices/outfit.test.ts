@@ -86,7 +86,7 @@ describe("outfit reducer", () => {
     })
 
     it("should handle fetchOutfit is failed", async() => {
-        axios.get = jest.fn().mockResolvedValue({data: null});
+        axios.get = jest.fn().mockResolvedValue({ data: {outfit: null, sampleclothes: []}});
         await store.dispatch(fetchOutfit(1));
     })
 
