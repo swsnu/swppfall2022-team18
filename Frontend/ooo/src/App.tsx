@@ -20,15 +20,15 @@ function App() {
 	return (
 		<BrowserRouter>
 			<div className="App">
-					<Routes>
-						<Route path="/closet" element={<Closet title={"Closet"} />} />
-						<Route path="/home" element={<Home />} />
-						<Route path="/outfit" element={<Outfit />} />
-						<Route path="/outfit/:id" element={<OutfitDetail />} />
-						<Route path="/" element={<Login />} />
-						<Route path="*" element={<h1>Not Found</h1>} />
-						<Route path="/Redirect" element={<Redirect />} />
-					</Routes>
+				<Routes>
+					<Route path="/closet" element={<Closet title={"Closet"} />} />
+					<Route path="/home" element={<Home />} />
+					<Route path="/outfit" element={<Outfit />} />
+					<Route path="/outfit/:id" element={<OutfitDetail />} />
+					<Route path="/" element={<Login />} />
+					<Route path="*" element={<h1>Not Found</h1>} />
+					<Route path="/Redirect" element={<Redirect />} />
+				</Routes>
 			</div>
 		</BrowserRouter>
 	);

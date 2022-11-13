@@ -108,6 +108,6 @@
 }
 
 #sample-modal {
-	display: center;
+	display: flex;
 	height: 70%;
 }
