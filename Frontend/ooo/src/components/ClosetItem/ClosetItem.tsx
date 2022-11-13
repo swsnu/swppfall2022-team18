@@ -1,11 +1,6 @@
 import "./ClosetItem.css";
 import React from "react";
-import { deleteUserCloth } from "../../store/slices/userCloth";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { AppDispatch } from "../../store";
+import { useState } from "react";
 import Modal from "react-modal";
 import ClothDetailModal from "../../components/ClothDetailModal/ClothDetailModal";
 
@@ -37,12 +32,12 @@ const ClosetItem = (props: IProps) => {
 				<ClothDetailModal></ClothDetailModal>
 			</Modal>
 			<div className="ClothLable">
-				<text id="type-label">종류</text>
-				<text id="type-text">{props.type}</text>
-				<text id="color-label">색상</text>
-				<text id="color-text">{props.color}</text>
-				<text id="stripe-label">무늬</text>
-				<text id="stripe-text">{props.pattern}</text>
+				<div id="type-label">종류</div>
+				<div id="type-text">{props.type}</div>
+				<div id="color-label">색상</div>
+				<div id="color-text">{props.color}</div>
+				<div id="stripe-label">무늬</div>
+				<div id="stripe-text">{props.pattern}</div>
 			</div>
 		</div>
 	);

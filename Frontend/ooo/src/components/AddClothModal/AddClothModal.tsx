@@ -1,12 +1,10 @@
 import "./AddClothModal.css";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import { createUserCloth } from "../../store/slices/userCloth";
-import Modal from "react-modal";
-import { Url } from "url";
 
 // const TodoModal = (props: any) => (
 //     <Modal
@@ -80,7 +78,7 @@ const AddClothModal = () => {
 	return (
 		<div className="AddClothModal">
 			<div className="AddClothModalHead">
-				<text id="AddClothModal-text">Add New Cloth</text>
+				<div id="AddClothModal-text">Add New Cloth</div>
 			</div>
 			<div className="AddClothModalTop">
 				<div className="UploadClothDiv">
@@ -103,7 +101,7 @@ const AddClothModal = () => {
 				<div className="CenterDiv"></div>
 				<div className="UploadedClothInfoDiv">
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Name</text>
+						<div id="UploadedClothInfoDiv-text">Name</div>
 						<br></br>
 						<input
 							type="text"
@@ -113,7 +111,7 @@ const AddClothModal = () => {
 						/>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Type</text>
+						<div id="UploadedClothInfoDiv-text">Type</div>
 						<br></br>
 						<input
 							type="text"
@@ -123,7 +121,7 @@ const AddClothModal = () => {
 						/>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Color</text>
+						<div id="UploadedClothInfoDiv-text">Color</div>
 						<br></br>
 						<input
 							type="text"
@@ -133,7 +131,7 @@ const AddClothModal = () => {
 						/>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Pattern</text>
+						<div id="UploadedClothInfoDiv-text">Pattern</div>
 						<br></br>
 						<input
 							type="text"

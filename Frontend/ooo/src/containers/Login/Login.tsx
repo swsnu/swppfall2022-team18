@@ -46,17 +46,17 @@ export default function Login() {
 		return (
 			<div className="Login">
 				<div className="header-div">
-					<text id="appName">oOo</text>
-					<text id="detailAppName">:recommend your outfit</text>
+					<div id="appName">oOo</div>
+					<div id="detailAppName">:recommend your outfit</div>
 				</div>
 				<div className="form">
 					<div className="form-margin-left"></div>
 					<div className="login-form">
 						<div className="login-text">
-							<text id="signin-signup-text">로그인 및 회원가입</text>
+							<div id="signin-signup-text">로그인 및 회원가입</div>
 						</div>
 						<div className="username-div">
-							<text id="username-text">ID</text>
+							<div id="username-text">ID</div>
 							<input
 								id="username-input"
 								data-testid="username-input"
@@ -66,7 +66,7 @@ export default function Login() {
 							/>
 						</div>
 						<div className="pw-div">
-							<text id="pw-text">PW</text>
+							<div id="pw-text">PW</div>
 							<input
 								id="pw-input"
 								data-testid="pw-input"
@@ -78,7 +78,7 @@ export default function Login() {
 							{!wrongInput ? (
 								<div></div>
 							) : (
-								<text id="wrong-text">ID, Password가 틀렸습니다.</text>
+								<div id="wrong-text">ID, Password가 틀렸습니다.</div>
 							)}
 						</div>
 						<div className="button-div">

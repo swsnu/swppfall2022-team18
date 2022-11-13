@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { execPath } from "process";
 import { RootState } from "..";
 
 export interface UserClothType {

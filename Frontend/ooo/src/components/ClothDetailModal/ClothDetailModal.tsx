@@ -1,33 +1,21 @@
 import "./ClothDetailModal.css";
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
-import { Navigate, useNavigate } from "react-router-dom";
-import { AppDispatch } from "../../store";
-import Modal from "react-modal";
-import { Url } from "url";
-import {
-	selectUserCloth,
-	fetchUserClothes,
-	fetchUserCloth,
-	createUserCloth,
-	deleteUserCloth,
-} from "../../store/slices/userCloth";
-import ClosetItem from "../../components/ClosetItem/ClosetItem";
-
-import neet from "../../assets/images/neet.jpg";
+import React, { useState } from "react";
+// import { useDispatch } from "react-redux";
+// import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
+// import { AppDispatch } from "../../store";
 
 const ClothDetailModal = () => {
 	const navigate = useNavigate();
-	const { id } = useParams();
+	// const { id } = useParams();
 
-	const [name, setName] = useState<string>("");
-	const [image_id, setImageId] = useState<number>();
-	const [type, setType] = useState<string>("");
-	const [color, setColor] = useState<string>("");
-	const [pattern, setPattern] = useState<string>("");
+	// const [name, setName] = useState<string>("");
+	// const [image_id, setImageId] = useState<number>();
+	// const [type, setType] = useState<string>("");
+	// const [color, setColor] = useState<string>("");
+	// const [pattern, setPattern] = useState<string>("");
 	const [submitted, setSubmitted] = useState<boolean>(false);
-	const dispatch = useDispatch<AppDispatch>();
+	// const dispatch = useDispatch<AppDispatch>();
 
 	// const clickDeleteClothHandler = async () => {
 	//     const data = { cloth_id: Number(id) };
@@ -66,27 +54,27 @@ const ClothDetailModal = () => {
 	return (
 		<div className="ClothDetailModal">
 			<div className="ClothDetailModalHead">
-				<text id="ClothDetailModal-text">Cloth Detail</text>
+				<div id="ClothDetailModal-text">Cloth Detail</div>
 			</div>
 			<div className="ClothDetailModalTop">
 				<div className="ClothImage-modal">
 					<img id="cloth-img-modal" src={cloth.cloth_image}></img>
 				</div>
 				<div className="ClothLable-modal">
-					<text id="type-label-modal">
+					<div id="type-label-modal">
 						<b>종류</b>
-					</text>
-					<text id="type-text-modal">{cloth.cloth_type}</text>
+					</div>
+					<div id="type-text-modal">{cloth.cloth_type}</div>
 					<br></br>
-					<text id="color-label-modal">
+					<div id="color-label-modal">
 						<b>색상</b>
-					</text>
-					<text id="color-text-modal">{cloth.cloth_color}</text>
+					</div>
+					<div id="color-text-modal">{cloth.cloth_color}</div>
 					<br></br>
-					<text id="stripe-label-modal">
+					<div id="stripe-label-modal">
 						<b>무늬</b>
-					</text>
-					<text id="stripe-text-modal">{cloth.cloth_pattern}</text>
+					</div>
+					<div id="stripe-text-modal">{cloth.cloth_pattern}</div>
 					<br></br>
 				</div>
 				<div className="ClothButton-modal">

@@ -1,10 +1,6 @@
 import "./SampleClothModal.css";
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "../../store";
-import Modal from "react-modal";
 
 export interface Iprops {
 	userHave: boolean;
@@ -27,15 +23,15 @@ const SampleClothModal = (props: Iprops) => {
 	if (props.userHave) {
 		return (
 			<div className="SampleClothModal">
-				<text id="samplecloth-title">Clothes Data</text>
+				<div id="samplecloth-title">Clothes Data</div>
 				<div className="Body">
 					<div className="sampleDiv">
 						<img className="sample-image" src={props.sampleCloth_url}></img>
-						<text id="sample-image-title">코디 이미지</text>
+						<div id="sample-image-title">코디 이미지</div>
 					</div>
 					<div className="userDiv">
 						<img className="user-image" src={props.userCloth_url}></img>
-						<text id="user-image-title">유저 이미지</text>
+						<div id="user-image-title">유저 이미지</div>
 					</div>
 					<div className="DataDiv">
 						<button
@@ -44,11 +40,11 @@ const SampleClothModal = (props: Iprops) => {
 						>
 							Purchase Button
 						</button>
-						<text id="cloth-name">{props.sampleCloth_name}</text>
+						<div id="cloth-name">{props.sampleCloth_name}</div>
 						<div className="ClothTags">
-							<text id="cloth-type">Type : {props.type}</text>
-							<text id="cloth-color">Color : {props.color}</text>
-							<text id="cloth-pattern">Pattern : {props.pattern}</text>
+							<div id="cloth-type">Type : {props.type}</div>
+							<div id="cloth-color">Color : {props.color}</div>
+							<div id="cloth-pattern">Pattern : {props.pattern}</div>
 						</div>
 					</div>
 				</div>
@@ -57,11 +53,11 @@ const SampleClothModal = (props: Iprops) => {
 	} else {
 		return (
 			<div className="SampleClothModal">
-				<text id="samplecloth-title">Clothes Data</text>
+				<div id="samplecloth-title">Clothes Data</div>
 				<div className="Body">
 					<div className="sampleDiv">
 						<img className="sample-image" src={props.sampleCloth_url}></img>
-						<text id="sample-image-title">코디 이미지</text>
+						<div id="sample-image-title">코디 이미지</div>
 					</div>
 					<div className="DataDiv">
 						<button
@@ -70,11 +66,11 @@ const SampleClothModal = (props: Iprops) => {
 						>
 							Purchase Button
 						</button>
-						<text id="cloth-name">{props.sampleCloth_name}</text>
+						<div id="cloth-name">{props.sampleCloth_name}</div>
 						<div className="ClothTags">
-							<text id="cloth-type">Type : {props.type}</text>
-							<text id="cloth-color">Color : {props.color}</text>
-							<text id="cloth-pattern">Pattern : {props.pattern}</text>
+							<div id="cloth-type">Type : {props.type}</div>
+							<div id="cloth-color">Color : {props.color}</div>
+							<div id="cloth-pattern">Pattern : {props.pattern}</div>
 						</div>
 					</div>
 				</div>

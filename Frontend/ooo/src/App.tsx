@@ -7,14 +7,6 @@ import Closet from "./containers/Closet/Closet";
 import Outfit from "./containers/Outfit/Outfit";
 import OutfitDetail from "./containers/OutfitDetail/OutfitDetail";
 import Redirect from "./containers/Redirect/Redirect";
-// import axios from 'axios';
-// import { useCookies } from 'react-cookie';
-
-// const [cookies] = useCookies()
-
-// axios.defaults.xsrfCookieName = 'csrftoken'
-// axios.defaults.xsrfHeaderName = "X-CSRFToken"
-// axios.defaults.headers.common['X-CSRFToken'] = cookies["csfttoken"];
 
 function App() {
 	return (

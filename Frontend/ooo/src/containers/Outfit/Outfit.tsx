@@ -1,10 +1,8 @@
 import { logoutUser } from "../../api/user";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import FilterModal from "../../components/FilterModal/FilterModal";
-import ClosetItem from "../../components/ClosetItem/ClosetItem";
-import OutfitPreview from "../../components/OutfitPreview/OutfitPreview";
 import "./Outfit.css";
 import Modal from "react-modal";
 
@@ -167,8 +165,8 @@ export default function Outfit() {
 	};
 
 	const clickDoneHandler = () => {
-		setModalOpen(false)
-	}
+		setModalOpen(false);
+	};
 
 	const clickResetHandler = () => {
 		setRecommend(false);
@@ -218,7 +216,11 @@ export default function Outfit() {
 						Reset
 					</button>
 				</div>
-				<Modal id = "filter-modal" isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
+				<Modal
+					id="filter-modal"
+					isOpen={modalOpen}
+					onRequestClose={() => setModalOpen(false)}
+				>
 					<FilterModal clickDoneHandler={clickDoneHandler}></FilterModal>
 				</Modal>
 				<div className="OutfitImages">
@@ -228,12 +230,13 @@ export default function Outfit() {
 								<div className="OutfitImage">
 									<img
 										id="outfit-image"
+										data-testid="outfit-image"
 										src={outfit.image_url}
 										onClick={() => clickOutfitImageHandler()}
 									></img>
 								</div>
 								<div className="OutfitData">
-									<text id="outfit-info-text">{outfit.info}</text>
+									<div id="outfit-info-text">{outfit.info}</div>
 								</div>
 							</div>
 						);
