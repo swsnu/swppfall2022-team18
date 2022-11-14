@@ -3,12 +3,7 @@
 # swppfall2022-team18
 
 
-## oOo v0.0.1
-### Frontend
-  * /login Page 추가
-
-### Backend
-  * login 관련 view 추가
+## oOo v0.0.2
 
 ## How to Run(Front)
 ``` 

@@ -1,9 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter, Routes, Route, useNavigate } from "react-router-dom";
-import { getMockStore, renderWithProviders } from "../../test-utils/mocks";
-import Login from "./Login";
+import { MemoryRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { getMockStore, renderWithProviders } from '../../test-utils/mocks'
+import Login from "./Login"
 import axios from "axios";
 import React from "react";
+
 
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
@@ -12,8 +13,8 @@ jest.mock("react-router", () => ({
 		mockNavigate(props.to);
 		return null;
 	},
-	useNavigate: () => mockNavigate,
-}));
+	useNavigate : () => mockNavigate,
+}))
 
 describe("<Login/>", () => {
 	it("should render without errors", () => {
@@ -33,16 +34,19 @@ describe("<Login/>", () => {
 		await screen.findByDisplayValue("test");
 		await screen.findByDisplayValue("wjdwodud!6");
 		fireEvent.click(loginButon);
+    
 		await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
 	});
 
 	it("should handle postLoginHandler is failed", async () => {
 		const err = new Error("error");
+
 		jest.spyOn(axios, "post").mockRejectedValueOnce(err);
 		render(<Login></Login>);
 		const loginButon = screen.getByTestId("login-button-test");
 		fireEvent.click(loginButon);
 	});
+
 
 	// it("should handle redirect", async () => {
 	// 	window.localStorage.getItem = jest.fn()

@@ -24,8 +24,10 @@ const ClosetItem = (props: IProps) => {
 		setClothDetailModalOpen(true);
 	};
 
+
 	return (
 		<div className="ClosetItem">
+
 			<div
 				className="ClothImage"
 				data-testid="clothimg"

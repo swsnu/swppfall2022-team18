@@ -1,8 +1,8 @@
 import { logoutUser } from "../../api/user";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
-import { useDispatch, useSelector } from "react-redux";
+//import { useDispatch, useSelector } from "react-redux";
 import ClosetItem from "../../components/ClosetItem/ClosetItem";
 import "./Home.css";
 import OutfitPreview from "../../components/OutfitPreview/OutfitPreview";
@@ -13,7 +13,7 @@ export default function Home() {
 	//const dispatch = useDispatch<AppDispatch>();
 	//const clothlists = useSelector(selectCloth);
 	//const outfitlist = useSelector(selectOutfit).outfits;
-	const [Loading, setLoading] = useState(false);
+	//const [Loading, setLoading] = useState(false);
 
 	const today_codi = {
 		codi_name: "그레이의 향연",
@@ -354,22 +354,20 @@ export default function Home() {
 	//	setLoading(false)
 	//},[])
 
-	const clickOutfitImageHandler = () => {
-		navigate("/outfit/1/");
-	};
 
-	if (Loading) {
-		return <div>Loading..</div>;
-	} else {
+	//if (Loading) {
+	//	return <div>Loading..</div>;
+	//} else {
 		return (
 			<div className="Home">
-				<div className="Home-header">
+				<div className="Home-header"
+					data-testid='Header'>
 					<Header
 						clickInfoHandler={() => {
 							navigate("/");
 						}}
 						clickLogoutHandler={() => {
-							logoutUser();
+						//	logoutUser();
 						}}
 						clickHeaderHandler={() => {
 							navigate("/home");
@@ -381,17 +379,18 @@ export default function Home() {
 					<div className="ClosetDiv">
 						<text id="Closet-text">Closet</text>
 						<div className="Closet-image">
-							{outer_cloth_data_list.length > 2 ? (
-								<div className="Closet-item-box">
+							{/*outer_cloth_data_list.length > 2 ? (*/}
+								<div className="Closet-item-box"
+								data-testid='ClosetItem'>
 									<ClosetItem
 										source_url={outer_cloth_data_list[0].cloth_image}
 										type={outer_cloth_data_list[0].cloth_type}
 										color={outer_cloth_data_list[0].cloth_color}
 										pattern={outer_cloth_data_list[0].cloth_pattern}
 										clickClothDetailPopupHandler={() => {
-											navigate(
-												"/outfit/${outer_cloth_data_list[0].cloth_num}/"
-											);
+											//navigate(
+											//	"/outfit/${outer_cloth_data_list[0].cloth_num}/"
+											//);
 										}}
 									/>
 									<ClosetItem
@@ -400,7 +399,7 @@ export default function Home() {
 										color={top_cloth_data_list[0].cloth_color}
 										pattern={top_cloth_data_list[0].cloth_pattern}
 										clickClothDetailPopupHandler={() => {
-											navigate("/outfit/${top_cloth_data_list[0].cloth_num}/");
+										//	navigate("/outfit/${top_cloth_data_list[0].cloth_num}/");
 										}}
 									/>
 									<ClosetItem
@@ -409,18 +408,20 @@ export default function Home() {
 										color={bottom_cloth_data_list[0].cloth_color}
 										pattern={bottom_cloth_data_list[0].cloth_pattern}
 										clickClothDetailPopupHandler={() => {
-											navigate(
-												"/outfit/${bottom_cloth_data_list[0].cloth_num}/"
-											);
+											//navigate(
+											//	"/outfit/${bottom_cloth_data_list[0].cloth_num}/"
+											//);
 										}}
 									/>
 								</div>
-							) : (
-								<div className="Closet-item-box">
+							{/*) : (
+								<div className="Closet-item-box"
+								data-testid='ClosetItem'>
 									{
 										//closetlist.map((cloth, index)=>{
 										//	<div id={index}>
 										//		<ClosetItem
+										//			data-testid='ClosetItem'
 										//			source_url={cloth.image_id}
 										//			type={cloth.type}
 										//			color={cloth.color}
@@ -432,11 +433,12 @@ export default function Home() {
 										//)
 									}
 								</div>
-							)}
+								)}*/}
 						</div>
 						<div className="Closet-button">
 							<button
 								id="more-button"
+								data-testid='more-btn'
 								onClick={() => {
 									navigate("/closet");
 								}}
@@ -446,17 +448,19 @@ export default function Home() {
 						</div>
 					</div>
 					<div className="CenterDiv"></div>
-					<div className="TodayOutfit">
+					<div className="TodayOutfit"
+					data-testid='TodayOutfit'>
 						<text id="TodayOutfit-text">Today{"'"}s Outfit</text>
 						<div className="TodayOutfit-content">
-							<div className="TodayOutfit-image">
-								<img id="today-outfit-img" src={today_codi.codi_image}></img>
+							<div className="TodayOutfit-image" >
+								<img id="today-outfit-img" src={today_codi.codi_image} data-testid = 'today-outfit-img'></img>
 							</div>
-							<div className="TodayOutfit-lable">
+							<div className="TodayOutfit-lable"
+							data-testid = 'TodayOutfit-lable'>
 								<text id="today-outfit-info-text">{today_codi.codi_name}</text>
 								<text id="today-cloth-name">{today_clothes[0].cloth_name}</text>
 								<text id="today-cloth-name">{today_clothes[1].cloth_name}</text>
-								<button id="wear-button">오늘 입기</button>
+								<button id="wear-button" data-testid='wear-button'>오늘 입기</button>
 							</div>
 						</div>
 					</div>
@@ -468,6 +472,7 @@ export default function Home() {
 							<text id="Outfit-text">Outfit</text>
 							<button
 								id="outfit-more-button"
+								data-testid='more-btn'
 								onClick={() => {
 									navigate("/outfit");
 								}}
@@ -476,37 +481,39 @@ export default function Home() {
 							</button>
 						</div>
 						<div className="OutfitImage">
-							{codi_data_list.length > 2 ? (
-								<div className="Outfit-item-box">
+							{/*{codi_data_list.length > 2 ? (*/}
+								<div className="Outfit-item-box"
+								data-testid='OutfitPreview'>
 									<OutfitPreview
 										source_url={codi_data_list[0].codi_image}
 										info={codi_data_list[0].explain}
-										cloth_names={outfit_clothes[0].map((cloth, i) => {
+										cloth_names={outfit_clothes[0].map((cloth) => {
 											return cloth.cloth_name + " ";
 										})}
-										clickOutfitDetail={() => clickOutfitImageHandler()}
 									/>
 									<OutfitPreview
 										source_url={codi_data_list[1].codi_image}
 										info={codi_data_list[1].explain}
-										cloth_names={outfit_clothes[1].map((cloth, i) => {
+										cloth_names={outfit_clothes[1].map((cloth) => {
 											return cloth.cloth_name + " ";
 										})}
 									/>
 									<OutfitPreview
 										source_url={codi_data_list[2].codi_image}
 										info={codi_data_list[2].explain}
-										cloth_names={outfit_clothes[2].map((cloth, i) => {
+										cloth_names={outfit_clothes[2].map((cloth) => {
 											return cloth.cloth_name + " ";
 										})}
 									/>
 								</div>
-							) : (
-								<div className="Outfit-item-box">
+							{/*}) : (
+								<div className="Outfit-item-box"
+								data-testid='OutfitPreview'>
 									{
 										//codi_data_list.map((cloth, index)=>{
 										//	<div id={index}>
 										//		<OutfitPreview
+										//			data-testid='OutfitPreview'
 										//			source_url={cloth.codi_image}
 										//		    info={cloth.explain}
 										//			cloth_names={outfit_clothes[index].map((c, i)=>{
@@ -517,11 +524,11 @@ export default function Home() {
 										//)
 									}
 								</div>
-							)}
+								)}*/}
 						</div>
 					</div>
 				</div>
 			</div>
 		);
-	}
+//	}
 }

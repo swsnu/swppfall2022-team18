@@ -70,12 +70,12 @@ export const userClothSlice = createSlice({
 	initialState,
 	reducers: {
 		// getAll: (state, action: PayloadAction<{ userClothes: UserClothType[] }>) => {},
-		getUserCloth: (state, action: PayloadAction<{ targetId: number }>) => {
-			const target = state.userClothes.find(
-				(td) => td.id === action.payload.targetId
-			);
-			state.selectedUserCloth = target ?? null;
-		},
+		// getUserCloth: (state, action: PayloadAction<{ targetId: number }>) => {
+		// 	const target = state.userClothes.find(
+		// 		(td) => td.id === action.payload.targetId
+		// 	);
+		// 	state.selectedUserCloth = target ?? null;
+		// },
 		deleteUserCloth: (state, action: PayloadAction<{ targetId: number }>) => {
 			const deleted = state.userClothes.filter((userCloth) => {
 				return userCloth.id !== action.payload.targetId;
