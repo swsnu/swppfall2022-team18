@@ -78,7 +78,7 @@ const AddClothModal = () => {
 	return (
 		<div className="AddClothModal">
 			<div className="AddClothModalHead">
-				<div id="AddClothModal-text">Add New Cloth</div>
+				<text id="AddClothModal-text">Add New Cloth</text>
 			</div>
 			<div className="AddClothModalTop">
 				<div className="UploadClothDiv">
@@ -101,7 +101,7 @@ const AddClothModal = () => {
 				<div className="CenterDiv"></div>
 				<div className="UploadedClothInfoDiv">
 					<div className="UploadedClothInfoDiv-sub">
-						<div id="UploadedClothInfoDiv-text">Name</div>
+						<text id="UploadedClothInfoDiv-text">Name</text>
 						<br></br>
 						<input
 							type="text"
@@ -111,7 +111,7 @@ const AddClothModal = () => {
 						/>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<div id="UploadedClothInfoDiv-text">Type</div>
+						<text id="UploadedClothInfoDiv-text">Type</text>
 						<br></br>
 						<input
 							type="text"
@@ -121,7 +121,7 @@ const AddClothModal = () => {
 						/>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<div id="UploadedClothInfoDiv-text">Color</div>
+						<text id="UploadedClothInfoDiv-text">Color</text>
 						<br></br>
 						<input
 							type="text"
@@ -131,7 +131,7 @@ const AddClothModal = () => {
 						/>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<div id="UploadedClothInfoDiv-text">Pattern</div>
+						<text id="UploadedClothInfoDiv-text">Pattern</text>
 						<br></br>
 						<input
 							type="text"

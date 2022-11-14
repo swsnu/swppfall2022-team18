@@ -236,7 +236,7 @@ export default function Outfit() {
 									></img>
 								</div>
 								<div className="OutfitData">
-									<div id="outfit-info-text">{outfit.info}</div>
+									<text id="outfit-info-text">{outfit.info}</text>
 								</div>
 							</div>
 						);

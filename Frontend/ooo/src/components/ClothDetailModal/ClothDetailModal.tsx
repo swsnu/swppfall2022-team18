@@ -54,27 +54,27 @@ const ClothDetailModal = () => {
 	return (
 		<div className="ClothDetailModal">
 			<div className="ClothDetailModalHead">
-				<div id="ClothDetailModal-text">Cloth Detail</div>
+				<text id="ClothDetailModal-text">Cloth Detail</text>
 			</div>
 			<div className="ClothDetailModalTop">
 				<div className="ClothImage-modal">
 					<img id="cloth-img-modal" src={cloth.cloth_image}></img>
 				</div>
 				<div className="ClothLable-modal">
-					<div id="type-label-modal">
+					<text id="type-label-modal">
 						<b>종류</b>
-					</div>
-					<div id="type-text-modal">{cloth.cloth_type}</div>
+					</text>
+					<text id="type-text-modal">{cloth.cloth_type}</text>
 					<br></br>
-					<div id="color-label-modal">
+					<text id="color-label-modal">
 						<b>색상</b>
-					</div>
-					<div id="color-text-modal">{cloth.cloth_color}</div>
+					</text>
+					<text id="color-text-modal">{cloth.cloth_color}</text>
 					<br></br>
-					<div id="stripe-label-modal">
+					<text id="stripe-label-modal">
 						<b>무늬</b>
-					</div>
-					<div id="stripe-text-modal">{cloth.cloth_pattern}</div>
+					</text>
+					<text id="stripe-text-modal">{cloth.cloth_pattern}</text>
 					<br></br>
 				</div>
 				<div className="ClothButton-modal">

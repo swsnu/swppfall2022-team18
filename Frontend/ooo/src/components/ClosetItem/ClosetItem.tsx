@@ -32,12 +32,12 @@ const ClosetItem = (props: IProps) => {
 				<ClothDetailModal></ClothDetailModal>
 			</Modal>
 			<div className="ClothLable">
-				<div id="type-label">종류</div>
-				<div id="type-text">{props.type}</div>
-				<div id="color-label">색상</div>
-				<div id="color-text">{props.color}</div>
-				<div id="stripe-label">무늬</div>
-				<div id="stripe-text">{props.pattern}</div>
+				<text id="type-label">종류</text>
+				<text id="type-text">{props.type}</text>
+				<text id="color-label">색상</text>
+				<text id="color-text">{props.color}</text>
+				<text id="stripe-label">무늬</text>
+				<text id="stripe-text">{props.pattern}</text>
 			</div>
 		</div>
 	);

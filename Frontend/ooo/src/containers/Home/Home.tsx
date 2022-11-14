@@ -379,7 +379,7 @@ export default function Home() {
 
 				<div className="HomeTop">
 					<div className="ClosetDiv">
-						<div id="Closet-text">Closet</div>
+						<text id="Closet-text">Closet</text>
 						<div className="Closet-image">
 							{outer_cloth_data_list.length > 2 ? (
 								<div className="Closet-item-box">
@@ -447,15 +447,15 @@ export default function Home() {
 					</div>
 					<div className="CenterDiv"></div>
 					<div className="TodayOutfit">
-						<div id="TodayOutfit-text">Today{"'"}s Outfit</div>
+						<text id="TodayOutfit-text">Today{"'"}s Outfit</text>
 						<div className="TodayOutfit-content">
 							<div className="TodayOutfit-image">
 								<img id="today-outfit-img" src={today_codi.codi_image}></img>
 							</div>
 							<div className="TodayOutfit-lable">
-								<div id="today-outfit-info-text">{today_codi.codi_name}</div>
-								<div id="today-cloth-name">{today_clothes[0].cloth_name}</div>
-								<div id="today-cloth-name">{today_clothes[1].cloth_name}</div>
+								<text id="today-outfit-info-text">{today_codi.codi_name}</text>
+								<text id="today-cloth-name">{today_clothes[0].cloth_name}</text>
+								<text id="today-cloth-name">{today_clothes[1].cloth_name}</text>
 								<button id="wear-button">오늘 입기</button>
 							</div>
 						</div>
@@ -465,7 +465,7 @@ export default function Home() {
 				<div className="HomeBottom">
 					<div className="OutfitDiv">
 						<div className="OutfitHead">
-							<div id="Outfit-text">Outfit</div>
+							<text id="Outfit-text">Outfit</text>
 							<button
 								id="outfit-more-button"
 								onClick={() => {

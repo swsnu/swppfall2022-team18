@@ -176,7 +176,7 @@ export default function Closet(props: IProps) {
 			<div className="ClosetTop">
 				<div className="ClosetDiv">
 					<div className="ClosetHead">
-						<div id="Closet-text-main">Closet</div>
+						<text id="Closet-text-main">Closet</text>
 						<button id="add-cloth-button" onClick={clickAddClothPopupHandler}>
 							Add
 						</button>
@@ -188,7 +188,7 @@ export default function Closet(props: IProps) {
 						</Modal>
 					</div>
 
-					<div id="Closet-text-sub">Outwear</div>
+					<text id="Closet-text-sub">Outwear</text>
 					<div className="Closet-image-sub">
 						<ClosetItem
 							source_url={outer_cloth_data_list[0].cloth_image}
@@ -211,7 +211,7 @@ export default function Closet(props: IProps) {
                         })} */}
 					</div>
 
-					<div id="Closet-text-sub">Top</div>
+					<text id="Closet-text-sub">Top</text>
 					<div className="Closet-image-sub">
 						<ClosetItem
 							source_url={top_cloth_data_list[0].cloth_image}
@@ -231,7 +231,7 @@ export default function Closet(props: IProps) {
 						/>
 					</div>
 
-					<div id="Closet-text-sub">Bottom</div>
+					<text id="Closet-text-sub">Bottom</text>
 					<div className="Closet-image-sub">
 						<ClosetItem
 							source_url={bottom_cloth_data_list[0].cloth_image}

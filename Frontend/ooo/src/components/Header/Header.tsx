@@ -11,8 +11,8 @@ const Header = (props: IProps) => {
 	return (
 		<div className="Header">
 			<div className="headerText" onClick={props.clickHeaderHandler}>
-				<div id="appName">oOo</div>
-				<div id="detailAppName">:recommend your outfit</div>
+				<text id="appName">oOo</text>
+				<text id="detailAppName">:recommend your outfit</text>
 			</div>
 			<div className="headerButton">
 				<button id="infoButton" onClick={props.clickInfoHandler}>

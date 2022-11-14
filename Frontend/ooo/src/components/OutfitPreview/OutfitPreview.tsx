@@ -21,12 +21,12 @@ const OutfitPreview = (props: IProps) => {
 				></img>
 			</div>
 			<div className="OutfitLable">
-				<div id="outfit-info-text">{props.info}</div>
+				<text id="outfit-info-text">{props.info}</text>
 				{props.cloth_names.map((cloth_name: string, index) => {
 					return (
-						<div key={index} id="cloth-name">
+						<text key={index} id="cloth-name">
 							{cloth_name}
-						</div>
+						</text>
 					);
 				})}
 			</div>

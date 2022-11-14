@@ -123,7 +123,7 @@ const OutfitDetail = () => {
 						</button>
 						<div className="OutfitName">{selectedOutfit.codi_name}</div>
 						<div className="OutfitInfo">{selectedOutfit.explain}</div>
-						<div id="samplecloth-title">구성하는 옷들</div>
+						<text id="samplecloth-title">구성하는 옷들</text>
 						<div className="sampleClothes">
 							{sampleClothes.map((sc) => {
 								return (

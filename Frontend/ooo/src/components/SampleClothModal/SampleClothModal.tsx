@@ -23,15 +23,15 @@ const SampleClothModal = (props: Iprops) => {
 	if (props.userHave) {
 		return (
 			<div className="SampleClothModal">
-				<div id="samplecloth-title">Clothes Data</div>
+				<text id="samplecloth-title">Clothes Data</text>
 				<div className="Body">
 					<div className="sampleDiv">
 						<img className="sample-image" src={props.sampleCloth_url}></img>
-						<div id="sample-image-title">코디 이미지</div>
+						<text id="sample-image-title">코디 이미지</text>
 					</div>
 					<div className="userDiv">
 						<img className="user-image" src={props.userCloth_url}></img>
-						<div id="user-image-title">유저 이미지</div>
+						<text id="user-image-title">유저 이미지</text>
 					</div>
 					<div className="DataDiv">
 						<button
@@ -40,11 +40,11 @@ const SampleClothModal = (props: Iprops) => {
 						>
 							Purchase Button
 						</button>
-						<div id="cloth-name">{props.sampleCloth_name}</div>
+						<text id="cloth-name">{props.sampleCloth_name}</text>
 						<div className="ClothTags">
-							<div id="cloth-type">Type : {props.type}</div>
-							<div id="cloth-color">Color : {props.color}</div>
-							<div id="cloth-pattern">Pattern : {props.pattern}</div>
+							<text id="cloth-type">Type : {props.type}</text>
+							<text id="cloth-color">Color : {props.color}</text>
+							<text id="cloth-pattern">Pattern : {props.pattern}</text>
 						</div>
 					</div>
 				</div>
@@ -53,11 +53,11 @@ const SampleClothModal = (props: Iprops) => {
 	} else {
 		return (
 			<div className="SampleClothModal">
-				<div id="samplecloth-title">Clothes Data</div>
+				<text id="samplecloth-title">Clothes Data</text>
 				<div className="Body">
 					<div className="sampleDiv">
 						<img className="sample-image" src={props.sampleCloth_url}></img>
-						<div id="sample-image-title">코디 이미지</div>
+						<text id="sample-image-title">코디 이미지</text>
 					</div>
 					<div className="DataDiv">
 						<button
@@ -66,11 +66,11 @@ const SampleClothModal = (props: Iprops) => {
 						>
 							Purchase Button
 						</button>
-						<div id="cloth-name">{props.sampleCloth_name}</div>
+						<text id="cloth-name">{props.sampleCloth_name}</text>
 						<div className="ClothTags">
-							<div id="cloth-type">Type : {props.type}</div>
-							<div id="cloth-color">Color : {props.color}</div>
-							<div id="cloth-pattern">Pattern : {props.pattern}</div>
+							<text id="cloth-type">Type : {props.type}</text>
+							<text id="cloth-color">Color : {props.color}</text>
+							<text id="cloth-pattern">Pattern : {props.pattern}</text>
 						</div>
 					</div>
 				</div>
