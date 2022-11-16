@@ -47,9 +47,9 @@ const ClothDetailModal = () => {
 	//     navigate("/articles/create");
 	// };
 
-	if (submitted) {
-		navigate("/closet/");
-	}
+	// if (submitted) {
+	// 	navigate("/closet/");
+	// }
 
 	return (
 		<div className="ClothDetailModal">
@@ -58,7 +58,7 @@ const ClothDetailModal = () => {
 			</div>
 			<div className="ClothDetailModalTop">
 				<div className="ClothImage-modal">
-					<img id="cloth-img-modal" src={cloth.cloth_image}></img>
+					<img id="cloth-img-modal" data-testid="cloth-img-modal" src={cloth.cloth_image}></img>
 				</div>
 				<div className="ClothLable-modal">
 					<text id="type-label-modal">
