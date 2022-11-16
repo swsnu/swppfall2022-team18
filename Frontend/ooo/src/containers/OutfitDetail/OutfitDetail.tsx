@@ -90,87 +90,79 @@ const OutfitDetail = () => {
 		console.log(selectedCloth);
 	};
 
-	if (!selectedOutfit) {
-		return <h4>Loading...</h4>;
-	} else
-		return (
-			<div className="OutfitDetail">
-				<div className="header">
-					<Header
-						clickInfoHandler={() => {
-							navigate("/");
-						}}
-						clickLogoutHandler={() => {
-							logoutUser();
-						}}
-						clickHeaderHandler={() => {
-							navigate("/home");
-						}}
-					></Header>
+	return (
+		<div className="OutfitDetail">
+			<div className="header">
+				<Header
+					clickInfoHandler={() => {
+						navigate("/");
+					}}
+					clickLogoutHandler={() => {
+						logoutUser();
+					}}
+					clickHeaderHandler={() => {
+						navigate("/home");
+					}}
+				></Header>
+			</div>
+			<div className="OutfitDetail-body">
+				<div className="Outfit-image">
+					<img id="-outfit-img" src={selectedOutfit.codi_image} />
 				</div>
-				<div className="OutfitDetail-body">
-					<div className="Outfit-image">
-						<img id="-outfit-img" src={selectedOutfit.codi_image} />
-					</div>
-					<div className="OutfitDetailData">
-						<button
-							id="outfit-purchase-button"
-							data-testid="outfit-purchase-button"
-							onClick={() =>
-								clickPurchaseButtonHander(selectedOutfit.codi_link)
-							}
-						>
-							Purchase Button
-						</button>
-						<div className="OutfitName">{selectedOutfit.codi_name}</div>
-						<div className="OutfitInfo">{selectedOutfit.explain}</div>
-						<text id="samplecloth-title">구성하는 옷들</text>
-						<div className="sampleClothes">
-							{sampleClothes.map((sc) => {
-								return (
-									<div className="sampleCloth-image" key={sc.cloth_num}>
-										<img
-											id="samplecloth-img"
-											data-testid="samplecloth-image"
-											src={sc.cloth_image}
-											onClick={() => clickClothHandler(sc.cloth_num)}
-										></img>
-									</div>
-								);
-							})}
-						</div>
-					</div>
-					<Modal
-						id="sample-modal"
-						isOpen={modalOpen}
+				<div className="OutfitDetailData">
+					<button
+						id="outfit-purchase-button"
+						data-testid="outfit-purchase-button"
+						onClick={() => clickPurchaseButtonHander(selectedOutfit.codi_link)}
 					>
-						<SampleClothModal
-							userHave={userHave}
-							userCloth_url={userClothes[0].cloth_image}
-							sampleCloth_url={sampleClothes[selectedCloth].cloth_image}
-							type={sampleClothes[selectedCloth].cloth_type}
-							color={sampleClothes[selectedCloth].cloth_color}
-							pattern={sampleClothes[selectedCloth].cloth_pattern}
-							sampleCloth_name={sampleClothes[selectedCloth].cloth_name}
-							sampleCloth_link={sampleClothes[selectedCloth].cloth_link}
-						></SampleClothModal>
-						<div id="close-buton-div">
-							<button
-							id='modal-close-button'
+						Purchase Button
+					</button>
+					<div className="OutfitName">{selectedOutfit.codi_name}</div>
+					<div className="OutfitInfo">{selectedOutfit.explain}</div>
+					<text id="samplecloth-title">구성하는 옷들</text>
+					<div className="sampleClothes">
+						{sampleClothes.map((sc) => {
+							return (
+								<div className="sampleCloth-image" key={sc.cloth_num}>
+									<img
+										id="samplecloth-img"
+										data-testid="samplecloth-image"
+										src={sc.cloth_image}
+										onClick={() => clickClothHandler(sc.cloth_num)}
+									></img>
+								</div>
+							);
+						})}
+					</div>
+				</div>
+				<Modal id="sample-modal" isOpen={modalOpen}>
+					<SampleClothModal
+						userHave={userHave}
+						userCloth_url={userClothes[0].cloth_image}
+						sampleCloth_url={sampleClothes[selectedCloth].cloth_image}
+						type={sampleClothes[selectedCloth].cloth_type}
+						color={sampleClothes[selectedCloth].cloth_color}
+						pattern={sampleClothes[selectedCloth].cloth_pattern}
+						sampleCloth_name={sampleClothes[selectedCloth].cloth_name}
+						sampleCloth_link={sampleClothes[selectedCloth].cloth_link}
+					></SampleClothModal>
+					<div id="close-buton-div">
+						<button
+							id="modal-close-button"
 							data-testid="modal-close-button"
 							onClick={() => {
 								setModalOpen(false);
 								setSelectedCloth(0);
 								setUserHave(false);
-							}}>
+							}}
+						>
 							닫기
-							</button>
-						</div>
-						
-					</Modal>
-				</div>
+						</button>
+					</div>
+				</Modal>
 			</div>
-		);
+		</div>
+	);
 };
 
 export default OutfitDetail;
