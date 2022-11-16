@@ -18,9 +18,14 @@ module.exports = {
 		tsconfigRootDir: __dirname,
 		project: ["./tsconfig.json"],
 	},
+	settings: {
+		react: {
+			version: "detect",
+		},
+	},
 	plugins: ["react", "@typescript-eslint"],
 	rules: {
 		"@typescript-eslint/no-var-requires": 0,
 	},
-    ignorePatterns: ['.eslintrc.js']
+	ignorePatterns: [".eslintrc.js"],
 };

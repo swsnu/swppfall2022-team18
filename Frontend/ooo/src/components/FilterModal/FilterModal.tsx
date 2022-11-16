@@ -1,9 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "../../store";
-import Modal from "react-modal";
+import React from "react";
 import "./FilterModal.css";
 
 export interface IProps {
@@ -11,6 +6,10 @@ export interface IProps {
 }
 
 const FilterModal = (props: IProps) => {
+	// const [typeFilter, setTypeFilter] = useState("");
+	// const [colorFilter, setColorFilter] = useState("");
+	// const [patternFilter, setPatternFilter] = useState("");
+
 	const COLOROPTIONS = [
 		{ value: "Color" },
 		{ value: "black" },
@@ -33,20 +32,16 @@ const FilterModal = (props: IProps) => {
 		{ value: "Jacket" },
 	];
 
-	const handleChange = (e: any) => {
-		console.log(e.target.value);
-	};
-
 	return (
 		<div className="FilterModal">
-			<select id="type-select" onChange={handleChange}>
+			<select id="type-select">
 				{TYPEOPTIONS.map((option, index) => (
 					<option key={index} value={option.value}>
 						{option.value}
 					</option>
 				))}
 			</select>
-			<select id="color-select" onChange={handleChange}>
+			<select id="color-select">
 				{COLOROPTIONS.map((option, index) => (
 					<option key={index} value={option.value}>
 						{option.value}

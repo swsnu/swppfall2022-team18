@@ -1,7 +1,7 @@
 import "./ClosetItem.css";
 import React from "react";
 //import { deleteUserCloth } from "../../store/slices/userCloth";
-import { useState} from "react";
+import { useState } from "react";
 //import { useDispatch, useSelector } from "react-redux";
 //import { useParams } from "react-router";
 //import { NavLink, useNavigate, useLocation } from "react-router-dom";
@@ -27,26 +27,36 @@ const ClosetItem = (props: IProps) => {
 
 	return (
 		<div className="ClosetItem">
-			<div className="ClothImage" data-testid = 'clothimg' onClick={clickClothDetailPopupHandler}>
-				<img data-testid = 'cloth-img' id="cloth-img" src={props.source_url}></img>
+
+			<div
+				className="ClothImage"
+				data-testid="clothimg"
+				onClick={clickClothDetailPopupHandler}
+			>
+				<img
+					data-testid="cloth-img"
+					id="cloth-img"
+					src={props.source_url}
+				></img>
 			</div>
 			<Modal
 				ariaHideApp={false}
 				id="detail-modal"
-				data-testid='detail-modal'
+				data-testid="detail-modal"
 				isOpen={clothDetailModalOpen}
 			>
 				<ClothDetailModal></ClothDetailModal>
 				<div id="close-buton-div">
-							<button
-							id='modal-close-button'
-							data-testid="modal-close-button"
-							onClick={() => {
-								setClothDetailModalOpen(false);
-							}}>
-							닫기
-							</button>
-						</div>
+					<button
+						id="modal-close-button"
+						data-testid="modal-close-button"
+						onClick={() => {
+							setClothDetailModalOpen(false);
+						}}
+					>
+						닫기
+					</button>
+				</div>
 			</Modal>
 			<div className="ClothLable">
 				<text id="type-label">종류</text>
