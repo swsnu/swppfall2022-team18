@@ -1,12 +1,10 @@
 import "./AddClothModal.css";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import { createUserCloth } from "../../store/slices/userCloth";
-import Modal from "react-modal";
-import { Url } from "url";
 
 // const TodoModal = (props: any) => (
 //     <Modal

@@ -8,6 +8,7 @@ Frontend/ooo/node_modules
 
 # testing
 /coverage
+Frontend/ooo/coverage
 
 # production
 /build
