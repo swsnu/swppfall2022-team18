@@ -65,12 +65,16 @@ describe("<Outfit />", () => {
 		render(<Outfit></Outfit>);
 		const userHaveButton = screen.getByText("userHave");
 		fireEvent.click(userHaveButton);
+		fireEvent.click(userHaveButton);
 	});
 
 	it("should handle recommend button", () => {
 		render(<Outfit></Outfit>);
 		const recommendButton = screen.getByText("recommend");
 		fireEvent.click(recommendButton);
+		fireEvent.click(recommendButton);
+		const userHaveButton = screen.getByText("userHave");
+		fireEvent.click(userHaveButton);
 	});
 
 	it("should handle reset button", () => {
@@ -83,6 +87,14 @@ describe("<Outfit />", () => {
 		render(<Outfit></Outfit>);
 		const filterButton = screen.getByText("Filter");
 		fireEvent.click(filterButton);
+	});
+
+	it("should handle close Filter button", () => {
+		render(<Outfit></Outfit>);
+		const filterButton = screen.getByText("Filter");
+		fireEvent.click(filterButton);
+		const closeButton = screen.getByTestId("modal-close-button");
+		fireEvent.click(closeButton);
 	});
 
 	it("should handle Filter Modal Done button", () => {

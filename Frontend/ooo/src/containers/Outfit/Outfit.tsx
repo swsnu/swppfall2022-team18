@@ -166,6 +166,7 @@ export default function Outfit() {
 
 	const clickDoneHandler = () => {
 		setModalOpen(false);
+		setClothFilter(true);
 	};
 
 	const clickResetHandler = () => {
@@ -216,12 +217,19 @@ export default function Outfit() {
 						Reset
 					</button>
 				</div>
-				<Modal
-					id="filter-modal"
-					isOpen={modalOpen}
-					onRequestClose={() => setModalOpen(false)}
-				>
+				<Modal id="filter-modal" isOpen={modalOpen}>
 					<FilterModal clickDoneHandler={clickDoneHandler}></FilterModal>
+					<div id="close-buton-div">
+						<button
+							id="modal-close-button"
+							data-testid="modal-close-button"
+							onClick={() => {
+								setModalOpen(false);
+							}}
+						>
+							닫기
+						</button>
+					</div>
 				</Modal>
 				<div className="OutfitImages">
 					{outfits.map((outfit) => {
