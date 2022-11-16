@@ -7,7 +7,8 @@ import ast
 from json.decoder import JSONDecodeError
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.http import HttpResponse, JsonResponse
-from django.http.response import HttpResponseNotAllowed, HttpResponseNotFound, HttpResponseBadRequest
+from django.http.response import HttpResponseNotAllowed, HttpResponseNotFound
+from django.http.response import HttpResponseBadRequest
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -19,14 +20,13 @@ def index():
     '''
     return HttpResponse("Hello, world")
 
-@csrf_exempt
+# @csrf_exempt
 def signup(request):
     '''
     signup : django default user
     '''
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())["body"]
-        
         username = req_data['username']
         password = req_data['password']
         new_user = User.objects.create_user(username=username, password=password)
@@ -53,7 +53,7 @@ def signin(request):
         return HttpResponse(status=401)
     return HttpResponseNotAllowed(['POST'], status=405)
 
-@csrf_exempt
+# @csrf_exempt
 def signout(request):
     '''
     signout : django default user
@@ -72,7 +72,6 @@ def closet(request):
     '''
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized', status=401)
-    
     user = User.objects.get(id=request.user.id)
     user_closet = Closet.objects.get(user=user)
 
@@ -80,7 +79,7 @@ def closet(request):
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
 
-        closet_item_list = [closet_item for closet_item in UserCloth.objects.filter(closet=user_closet).values()]
+        closet_item_list = [closet for closet in UserCloth.objects.filter(closet=user_closet).values()]
         return JsonResponse(closet_item_list, safe=False)
     elif request.method == 'POST':
         if not request.user.is_authenticated:
@@ -289,7 +288,7 @@ def outfit_list(request):
         page_size = int(request.GET.get('pageSize', '12').replace('/',''))
 
         try:
-            req_data = json.loads(request.body.decode())["body"]
+            req_data = json.loads(request.body.decode())
             filter_type = req_data["type"]
             filter_color = req_data["color"]
             filter_pattern = req_data["pattern"]

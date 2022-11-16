@@ -1,12 +1,9 @@
 import "./AddClothModal.css";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import { createUserCloth } from "../../store/slices/userCloth";
-import Modal from "react-modal";
-import { Url } from "url";
 
 // const TodoModal = (props: any) => (
 //     <Modal
@@ -54,17 +51,17 @@ const AddClothModal = () => {
 			color: color,
 			pattern: pattern,
 		};
-		if (type == "" || color == "" || pattern == "") {
-			return alert("Please fill in all the details.");
-		}
+		// if (type == "" || color == "" || pattern == "") {
+		// 	return alert("Please fill in all the details.");
+		// }
 		const result = await dispatch(createUserCloth(data));
 		console.log(result);
 
-		if (result.type === `${createUserCloth.typePrefix}/fulfilled`) {
-			setSubmitted(true);
-		} else {
-			alert("Error on create UserCloth");
-		}
+		// if (result.type === `${createUserCloth.typePrefix}/fulfilled`) {
+		// 	setSubmitted(true);
+		// } else {
+		// 	alert("Error on create UserCloth");
+		// }
 	};
 
 	const [fileImage, setFileImage] = useState("");
@@ -73,9 +70,9 @@ const AddClothModal = () => {
 		setFileImage(URL.createObjectURL(e.target.files[0]));
 	};
 
-	if (submitted) {
-		navigate("/closet/");
-	}
+	// if (submitted) {
+	// 	navigate("/closet/");
+	// }
 
 	return (
 		<div className="AddClothModal">
@@ -83,19 +80,21 @@ const AddClothModal = () => {
 				<text id="AddClothModal-text">Add New Cloth</text>
 			</div>
 			<div className="AddClothModalTop">
-				<div className="UploadClothDiv">
+				<div className="UploadClothDiv" data-testid="UploadClothDiv">
 					<div className="UploadedClothPreviewDiv">
-						{fileImage ? (
+						{/* {fileImage ? (
 							fileImage && (
 								<img id="uploaded-image-preview" src={fileImage} height="400" />
 							)
 						) : (
 							<div className="UploadedClothTempDiv"></div>
-						)}
+						)} */}
+						<div className="UploadedClothTempDiv"></div>
 					</div>
 					<input
 						type="file"
 						id="upload-cloth-button"
+						data-testid="upload-cloth-button"
 						accept="image/*"
 						onChange={saveFileImage}
 					/>
@@ -108,6 +107,7 @@ const AddClothModal = () => {
 						<input
 							type="text"
 							id="cloth-info-input"
+							data-testid="cloth-info-input-name"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 						/>
@@ -118,6 +118,7 @@ const AddClothModal = () => {
 						<input
 							type="text"
 							id="cloth-info-input"
+							data-testid="cloth-info-input-type"
 							value={type}
 							onChange={(e) => setType(e.target.value)}
 						/>
@@ -128,6 +129,7 @@ const AddClothModal = () => {
 						<input
 							type="text"
 							id="cloth-info-input"
+							data-testid="cloth-info-input-color"
 							value={color}
 							onChange={(e) => setColor(e.target.value)}
 						/>
@@ -138,12 +140,14 @@ const AddClothModal = () => {
 						<input
 							type="text"
 							id="cloth-info-input"
+							data-testid="cloth-info-input-pattern"
 							value={pattern}
 							onChange={(e) => setPattern(e.target.value)}
 						/>
 					</div>
 					<button
 						id="create-cloth-button"
+						data-testid="create-cloth-button"
 						onClick={() => clickAddClothHandler()}
 					>
 						Add to Closet

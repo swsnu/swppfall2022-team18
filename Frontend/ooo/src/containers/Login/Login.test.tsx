@@ -16,16 +16,15 @@ jest.mock("react-router", () => ({
 	useNavigate : () => mockNavigate,
 }))
 
-
 describe("<Login/>", () => {
 	it("should render without errors", () => {
 		render(<Login></Login>);
 	});
 	it("should handle postLoginHandler", async () => {
 		jest.spyOn(axios, "post").mockResolvedValue({
-			data: {username: "test"},
+			data: { username: "test" },
 		});
-		
+
 		render(<Login></Login>);
 		const usernameInput = screen.getByTestId("username-input");
 		const pwInput = screen.getByTestId("pw-input");
@@ -35,16 +34,19 @@ describe("<Login/>", () => {
 		await screen.findByDisplayValue("test");
 		await screen.findByDisplayValue("wjdwodud!6");
 		fireEvent.click(loginButon);
-		await waitFor(() => expect(mockNavigate).toHaveBeenCalled())
+    
+		await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
 	});
 
 	it("should handle postLoginHandler is failed", async () => {
-		const err = new Error("error")
+		const err = new Error("error");
+
 		jest.spyOn(axios, "post").mockRejectedValueOnce(err);
 		render(<Login></Login>);
 		const loginButon = screen.getByTestId("login-button-test");
 		fireEvent.click(loginButon);
-	})
+	});
+
 
 	// it("should handle redirect", async () => {
 	// 	window.localStorage.getItem = jest.fn()

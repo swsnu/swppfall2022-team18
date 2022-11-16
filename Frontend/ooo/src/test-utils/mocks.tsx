@@ -31,3 +31,4 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
     // Return an object with the store and all of RTL's query functions
     return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
   }
+

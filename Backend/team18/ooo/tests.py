@@ -149,7 +149,7 @@ class signinUserCase(TestCase):
         # To test csrf protection we enforce csrf checks here
         client = Client(enforce_csrf_checks=True)
         response = client.post('/api/ooo/user/signup/',
-                               json.dumps({"username": "chris", "password": "chris"}),
+                               json.dumps({"body":{"username": "chris", "password": "chris"}}),
                                content_type='application/json')
         self.assertEqual(response.status_code, 403) 
 
@@ -160,32 +160,32 @@ class signinUserCase(TestCase):
         response = client.get('/api/ooo/user/signup/', HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 405) 
         
-        response = client.post('/api/ooo/user/signup/', json.dumps({"username": "chris", "password": "chris"}),
+        response = client.post('/api/ooo/user/signup/', json.dumps({"body":{"username": "chris", "password": "chris"}}),
                                 content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 201)                       
 
     def test_signin_and_out(self):
         client = Client(enforce_csrf_checks=False)
 
-        response = client.post('/api/ooo/user/signin/',  json.dumps({'username': 'wrongname', 'password': 'wrongpassword'}),
+        response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'wrongname', 'password': 'wrongpassword'}}),
                               content_type='application/json')
         self.assertEqual(response.status_code, 401)
 
         response = client.get('/api/ooo/user/signin/')
         self.assertEqual(response.status_code, 405) 
 
-        response = client.post('/api/ooo/user/signin/',  json.dumps({'username': 'testuser1', 'password': '1234'}),
+        response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'testuser1', 'password': '1234'}}),
                               content_type='application/json')
         self.assertEqual(response.status_code, 204)
 
-        response = client.get('/api/ooo/user/logout/')
+        response = client.get('/api/ooo/user/signout/')
         self.assertEqual(response.status_code, 204)
 
-        response = client.put('/api/ooo/user/logout/', json.dumps({'username': 'testuser1', 'password': 'testpw1'}),
+        response = client.put('/api/ooo/user/signout/', json.dumps({"body":{'username': 'testuser1', 'password': 'testpw1'}}),
                               content_type='application/json')
         self.assertEqual(response.status_code, 405)
 
-        response = client.get('/api/ooo/user/logout/')
+        response = client.get('/api/ooo/user/signout/')
         self.assertEqual(response.status_code, 401)
 
     def test_closet(self):
@@ -211,7 +211,7 @@ class signinUserCase(TestCase):
         self.assertEqual(response.status_code, 405)
 
         #after login
-        response = client.post('/api/ooo/user/signin/',  json.dumps({'username': 'testuser2', 'password': '1234'}),
+        response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
                     content_type='application/json')
         self.assertEqual(response.status_code, 204)
 
@@ -295,7 +295,7 @@ class signinUserCase(TestCase):
         self.assertEqual(response.status_code, 401)
 
         #after login
-        response = client.post('/api/ooo/user/signin/',  json.dumps({'username': 'testuser2', 'password': '1234'}),
+        response = client.post('/api/ooo/user/signin/', json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
                     content_type='application/json')
         self.assertEqual(response.status_code, 204)
 
@@ -385,7 +385,7 @@ class signinUserCase(TestCase):
         self.assertEqual(response.status_code, 405)
 
         #after login
-        response = client.post('/api/ooo/user/signin/',  json.dumps({'username': 'testuser2', 'password': '1234'}),
+        response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
                     content_type='application/json')
         self.assertEqual(response.status_code, 204)
 
@@ -533,7 +533,7 @@ class signinUserCase(TestCase):
         self.assertEqual(response.status_code, 405)
 
         #after login
-        response = client.post('/api/ooo/user/signin/',  json.dumps({'username': 'testuser2', 'password': '1234'}),
+        response = client.post('/api/ooo/user/signin/', json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
                     content_type='application/json')
         self.assertEqual(response.status_code, 204)
 
@@ -556,7 +556,7 @@ class signinUserCase(TestCase):
         self.assertEqual(response.status_code, 405)
 
         #after login
-        response = client.post('/api/ooo/user/signin/',  json.dumps({'username': 'testuser2', 'password': '1234'}),
+        response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
                     content_type='application/json')
         self.assertEqual(response.status_code, 204)
         
@@ -582,7 +582,7 @@ class signinUserCase(TestCase):
         self.assertEqual(response.status_code, 405)
 
         #after login
-        response = client.post('/api/ooo/user/signin/',  json.dumps({'username': 'testuser2', 'password': '1234'}),
+        response = client.post('/api/ooo/user/signin/', json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
                     content_type='application/json')
         self.assertEqual(response.status_code, 204)
 

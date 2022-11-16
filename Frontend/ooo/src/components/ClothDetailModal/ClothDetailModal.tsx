@@ -1,33 +1,21 @@
 import "./ClothDetailModal.css";
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
-import { Navigate, useNavigate } from "react-router-dom";
-import { AppDispatch } from "../../store";
-import Modal from "react-modal";
-import { Url } from "url";
-import {
-	selectUserCloth,
-	fetchUserClothes,
-	fetchUserCloth,
-	createUserCloth,
-	deleteUserCloth,
-} from "../../store/slices/userCloth";
-import ClosetItem from "../../components/ClosetItem/ClosetItem";
-
-import neet from "../../assets/images/neet.jpg";
+import React, { useState } from "react";
+// import { useDispatch } from "react-redux";
+// import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
+// import { AppDispatch } from "../../store";
 
 const ClothDetailModal = () => {
 	const navigate = useNavigate();
-	const { id } = useParams();
+	// const { id } = useParams();
 
-	const [name, setName] = useState<string>("");
-	const [image_id, setImageId] = useState<number>();
-	const [type, setType] = useState<string>("");
-	const [color, setColor] = useState<string>("");
-	const [pattern, setPattern] = useState<string>("");
+	// const [name, setName] = useState<string>("");
+	// const [image_id, setImageId] = useState<number>();
+	// const [type, setType] = useState<string>("");
+	// const [color, setColor] = useState<string>("");
+	// const [pattern, setPattern] = useState<string>("");
 	const [submitted, setSubmitted] = useState<boolean>(false);
-	const dispatch = useDispatch<AppDispatch>();
+	// const dispatch = useDispatch<AppDispatch>();
 
 	// const clickDeleteClothHandler = async () => {
 	//     const data = { cloth_id: Number(id) };
@@ -59,9 +47,9 @@ const ClothDetailModal = () => {
 	//     navigate("/articles/create");
 	// };
 
-	if (submitted) {
-		navigate("/closet/");
-	}
+	// if (submitted) {
+	// 	navigate("/closet/");
+	// }
 
 	return (
 		<div className="ClothDetailModal">
@@ -70,7 +58,7 @@ const ClothDetailModal = () => {
 			</div>
 			<div className="ClothDetailModalTop">
 				<div className="ClothImage-modal">
-					<img id="cloth-img-modal" src={cloth.cloth_image}></img>
+					<img id="cloth-img-modal" data-testid="cloth-img-modal" src={cloth.cloth_image}></img>
 				</div>
 				<div className="ClothLable-modal">
 					<text id="type-label-modal">

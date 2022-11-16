@@ -1,10 +1,8 @@
 import { logoutUser } from "../../api/user";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import FilterModal from "../../components/FilterModal/FilterModal";
-import ClosetItem from "../../components/ClosetItem/ClosetItem";
-import OutfitPreview from "../../components/OutfitPreview/OutfitPreview";
 import "./Outfit.css";
 import Modal from "react-modal";
 
@@ -167,8 +165,9 @@ export default function Outfit() {
 	};
 
 	const clickDoneHandler = () => {
-		setModalOpen(false)
-	}
+		setModalOpen(false);
+		setClothFilter(true);
+	};
 
 	const clickResetHandler = () => {
 		setRecommend(false);
@@ -218,8 +217,19 @@ export default function Outfit() {
 						Reset
 					</button>
 				</div>
-				<Modal id = "filter-modal" isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
+				<Modal id="filter-modal" isOpen={modalOpen}>
 					<FilterModal clickDoneHandler={clickDoneHandler}></FilterModal>
+					<div id="close-buton-div">
+						<button
+							id="modal-close-button"
+							data-testid="modal-close-button"
+							onClick={() => {
+								setModalOpen(false);
+							}}
+						>
+							닫기
+						</button>
+					</div>
 				</Modal>
 				<div className="OutfitImages">
 					{outfits.map((outfit) => {
@@ -228,6 +238,7 @@ export default function Outfit() {
 								<div className="OutfitImage">
 									<img
 										id="outfit-image"
+										data-testid="outfit-image"
 										src={outfit.image_url}
 										onClick={() => clickOutfitImageHandler()}
 									></img>
