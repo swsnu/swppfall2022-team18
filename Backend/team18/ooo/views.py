@@ -53,6 +53,7 @@ def signin(request):
         return HttpResponse(status=401)
     return HttpResponseNotAllowed(['POST'], status=405)
 
+
 # @csrf_exempt
 def signout(request):
     '''
