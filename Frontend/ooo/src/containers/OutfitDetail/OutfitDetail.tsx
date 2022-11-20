@@ -117,8 +117,8 @@ const OutfitDetail = () => {
 					clickInfoHandler={() => {
 						navigate("/");
 					}}
-					clickLogoutHandler={() => {
-						logoutUser();
+					clickLogoutHandler={async() => {
+						await logoutUser().catch((error) => console.log(error))
 						setIsSending(!isSending)
 					}}
 					clickHeaderHandler={() => {

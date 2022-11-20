@@ -36,7 +36,7 @@ const AddClothModal = () => {
 	// };
 
 	const [name, setName] = useState<string>("");
-	const [image_id, setImageId] = useState<number>();
+	const [image_id, setImageId] = useState<string>();
 	const [type, setType] = useState<string>("");
 	const [color, setColor] = useState<string>("");
 	const [pattern, setPattern] = useState<string>("");
@@ -46,14 +46,11 @@ const AddClothModal = () => {
 	const clickAddClothHandler = async () => {
 		const data = {
 			name: name,
-			image_id: image_id ?? 0,
+			image_id: image_id ?? "",
 			type: type,
 			color: color,
 			pattern: pattern,
 		};
-		// if (type == "" || color == "" || pattern == "") {
-		// 	return alert("Please fill in all the details.");
-		// }
 		const result = await dispatch(createUserCloth(data));
 		console.log(result);
 
@@ -82,14 +79,13 @@ const AddClothModal = () => {
 			<div className="AddClothModalTop">
 				<div className="UploadClothDiv" data-testid="UploadClothDiv">
 					<div className="UploadedClothPreviewDiv">
-						{/* {fileImage ? (
+						{fileImage ? (
 							fileImage && (
 								<img id="uploaded-image-preview" src={fileImage} height="400" />
 							)
 						) : (
 							<div className="UploadedClothTempDiv"></div>
-						)} */}
-						<div className="UploadedClothTempDiv"></div>
+						)}
 					</div>
 					<input
 						type="file"

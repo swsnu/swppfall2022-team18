@@ -13,6 +13,7 @@
     flex-basis: 100%;
     flex-direction: column;
     padding-bottom: 60px;
+    cursor: pointer;
 }
 
 .Header .headerButton {

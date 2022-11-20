@@ -86,7 +86,7 @@ export default function Home() {
 									return(
 										<ClosetItem
 										key={index}
-										source_url={cloth.image_id.toString()} //나중에 바꿔야함.
+										source_url={cloth.image_id} //나중에 바꿔야함.
 										type={cloth.type}
 										color={cloth.color}
 										pattern={cloth.pattern}
@@ -116,7 +116,7 @@ export default function Home() {
 								userClothes.recommendOutfit !== null ? 
 								<div>
 									<div className="TodayOutfit-image" >
-										<img id="today-outfit-img" src={userClothes.recommendOutfit.image_id.toString()} data-testid = 'today-outfit-img'></img>
+										<img id="today-outfit-img" src={userClothes.recommendOutfit.image_id} data-testid = 'today-outfit-img'></img>
 									</div>
 									<div className="TodayOutfit-lable"
 									data-testid = 'TodayOutfit-lable'>
@@ -130,11 +130,18 @@ export default function Home() {
 												)
 											})
 										}
-										{/*  */}
 										<button id="wear-button" data-testid='wear-button'>오늘 입기</button>
 									</div>
 								</div>
-								: <div></div>
+								: <div>
+									<div className="TodayOutfit-image" >
+										<img id="today-outfit-img" src={"noe"} data-testid = 'today-outfit-img'></img>
+									</div>
+									<div className="TodayOutfit-lable"
+									data-testid = 'TodayOutfit-lable'>
+										<button id="wear-button" data-testid='wear-button'>오늘 입기</button>
+									</div>
+								</div>
 							}
 						</div>
 					</div>
@@ -155,50 +162,21 @@ export default function Home() {
 							</button>
 						</div>
 						<div className="OutfitImage">
-							{/*{codi_data_list.length > 2 ? (*/}
-								<div className="Outfit-item-box"
+							<div className="Outfit-item-box"
 								data-testid='OutfitPreview'>
-									<OutfitPreview
-										source_url={codi_data_list[0].codi_image}
-										info={codi_data_list[0].explain}
-										cloth_names={outfit_clothes[0].map((cloth) => {
-											return cloth.cloth_name + " ";
-										})}
-									/>
-									<OutfitPreview
-										source_url={codi_data_list[1].codi_image}
-										info={codi_data_list[1].explain}
-										cloth_names={outfit_clothes[1].map((cloth) => {
-											return cloth.cloth_name + " ";
-										})}
-									/>
-									<OutfitPreview
-										source_url={codi_data_list[2].codi_image}
-										info={codi_data_list[2].explain}
-										cloth_names={outfit_clothes[2].map((cloth) => {
-											return cloth.cloth_name + " ";
-										})}
-									/>
-								</div>
-							{/*}) : (
-								<div className="Outfit-item-box"
-								data-testid='OutfitPreview'>
-									{
-										//codi_data_list.map((cloth, index)=>{
-										//	<div id={index}>
-										//		<OutfitPreview
-										//			data-testid='OutfitPreview'
-										//			source_url={cloth.codi_image}
-										//		    info={cloth.explain}
-										//			cloth_names={outfit_clothes[index].map((c, i)=>{
-										//			return c.cloth_name + " "
-										//		/>
-										//	</div>
-										//}
-										//)
-									}
-								</div>
-								)}*/}
+								{
+									// outfit.outfits.map((outfit, index) => {
+									// 	return(
+									// 		<OutfitPreview
+									// 		key={index}
+									// 		source_url={outfit.image_id.toString()}
+									// 		info={outfit.outfit_info}
+									// 		cloth_names={outfit.clothes}
+									// 	/>
+									// 	)
+									// })
+								}
+							</div>
 						</div>
 					</div>
 				</div>

@@ -5,8 +5,10 @@ import { RootState } from "..";
 export interface OutfitType {
 	id: number;
 	outfit_info: string;
+	outfit_name: string;
 	popularity: number;
-	image_id: number;
+	image_id: string;
+	clothes: string[];
 	purchase_link: string;
 }
 
@@ -32,7 +34,7 @@ export interface SampleClothType {
 export interface UserClothType {
 	id: number;
 	name: string;
-	image_id: number;
+	image_id: string;
 	user: number;
 	color: string;
 	type: string;

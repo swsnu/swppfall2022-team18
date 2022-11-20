@@ -5,7 +5,7 @@ import { RootState } from "..";
 export interface UserClothType {
 	id: number;
 	name: string;
-	image_id: number;
+	image_id: string;
 	user: number;
 	color: string;
 	type: string;
@@ -14,10 +14,12 @@ export interface UserClothType {
 export interface TodayOutfitType {
 	id: number;
 	outfit_info: string;
+	outfit_name: string
 	popularity: number;
-	image_id: number;
+	image_id: string;
 	userClothes: UserClothType[]
 }
+
 
 export interface UserClothState {
 	userClothes: UserClothType[];
@@ -65,7 +67,7 @@ export const fetchRecommendOutfit = createAsyncThunk(
 export const createUserCloth = createAsyncThunk(
 	"closet/createUserCloth",
 	async (
-		td: Pick<UserClothType, "image_id" | "color" | "type" | "pattern">,
+		td: Pick<UserClothType, "name" | "image_id" | "color" | "type" | "pattern">,
 		{ dispatch }
 	) => {
 		const response = await axios.post("/api/ooo/closet/", td);
@@ -111,7 +113,7 @@ export const userClothSlice = createSlice({
 			action: PayloadAction<{
 				id: number;
 				name: string;
-				image_id: number;
+				image_id: string;
 				user: number;
 				color: string;
 				type: string;

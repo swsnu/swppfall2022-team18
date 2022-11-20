@@ -57,7 +57,7 @@ describe("outfit reducer", () => {
 
     it("should handle createUserCloth", async() => {
         jest.spyOn(axios, "post").mockResolvedValue({data: fakeUserCloth})
-        await store.dispatch(createUserCloth({image_id: 1, color:"black", type:"shirt", pattern:"stripe"}))
+        await store.dispatch(createUserCloth({name:"test", image_id: "", color:"black", type:"shirt", pattern:"stripe"}))
         // expect(store.getState().userCloth.userClothes).toEqual([fakeUserCloth])
     })
 
@@ -71,7 +71,7 @@ describe("outfit reducer", () => {
         const mockConsoleError = jest.fn()
         console.error = mockConsoleError;
         jest.spyOn(axios, "post").mockResolvedValue({response: {data: { title: ["error"]}}})
-        await store.dispatch(createUserCloth({image_id: 1, color:"black", type:"shirt", pattern:"stripe"}))
+        await store.dispatch(createUserCloth({name:"test", image_id: "", color:"black", type:"shirt", pattern:"stripe"}))
         expect(mockConsoleError).toBeCalled()
     })
 
