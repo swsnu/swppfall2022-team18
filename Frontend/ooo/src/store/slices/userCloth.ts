@@ -11,15 +11,26 @@ export interface UserClothType {
 	type: string;
 	pattern: string;
 }
+export interface TodayOutfitType {
+	id: number;
+	outfit_info: string;
+	popularity: number;
+	image_id: number;
+	userClothes: UserClothType[]
+}
 
 export interface UserClothState {
 	userClothes: UserClothType[];
 	selectedUserCloth: UserClothType | null;
+	recommendOutfit: TodayOutfitType | null;
 }
+
+
 
 const initialState: UserClothState = {
 	userClothes: [],
 	selectedUserCloth: null,
+	recommendOutfit: null
 };
 
 export const fetchUserClothes = createAsyncThunk(
@@ -37,6 +48,19 @@ export const fetchUserCloth = createAsyncThunk(
 		return response.data ?? null;
 	}
 );
+
+export const fetchRecommendOutfit = createAsyncThunk(
+	"outfit/today",
+	async () => {
+		const response = await axios.get('/api/ooo/outift/today/')
+		if(response.status === 200){
+			return response.data
+		}
+		else return null
+
+		
+	}
+)
 
 export const createUserCloth = createAsyncThunk(
 	"closet/createUserCloth",
@@ -118,6 +142,9 @@ export const userClothSlice = createSlice({
 		builder.addCase(createUserCloth.rejected, (_state, action) => {
 			console.error(action.error);
 		});
+		builder.addCase(fetchRecommendOutfit.fulfilled, (state, action) => {
+			state.recommendOutfit = action.payload;
+		})
 	},
 });
 

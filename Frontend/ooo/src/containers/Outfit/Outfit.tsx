@@ -1,5 +1,5 @@
 import { logoutUser } from "../../api/user";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import FilterModal from "../../components/FilterModal/FilterModal";
@@ -179,6 +179,26 @@ export default function Outfit() {
 		navigate("1/");
 	};
 
+	const [isSending, setIsSending] = useState(false)
+	const checkLoginned = () => {
+		console.log("start")
+		console.log(localStorage.getItem("username"));
+		if(localStorage.getItem("username") !== null){
+			return true
+		}
+		else return false
+	};
+
+
+	useEffect(() => {
+		const redirect = () => {
+			if (!checkLoginned()) {
+				navigate("/");
+			}
+		};
+		redirect();
+	}, [isSending]);
+
 	return (
 		<div className="OutfitPage">
 			<Header
@@ -187,6 +207,7 @@ export default function Outfit() {
 				}}
 				clickLogoutHandler={() => {
 					logoutUser();
+					setIsSending(!isSending)
 				}}
 				clickHeaderHandler={() => {
 					navigate("/home");

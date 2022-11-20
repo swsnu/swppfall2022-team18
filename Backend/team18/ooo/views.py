@@ -20,19 +20,28 @@ def index():
     '''
     return HttpResponse("Hello, world")
 
-# @csrf_exempt
+@csrf_exempt
 def signup(request):
     '''
     signup : django default user
     '''
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())["body"]
+        print(req_data)
         username = req_data['username']
         password = req_data['password']
-        new_user = User.objects.create_user(username=username, password=password)
-        Closet.objects.create(user=new_user)
+        
+        #check duplicate username
+        try:
+            dup_user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            new_user = User.objects.create_user(username=username, password=password)
+            Closet.objects.create(user=new_user)
 
-        return HttpResponse(status=201)
+            return HttpResponse(status=201)
+        return HttpResponse(status=404)
+        
+        
     return HttpResponseNotAllowed(['POST'], status=405)
 
 @csrf_exempt

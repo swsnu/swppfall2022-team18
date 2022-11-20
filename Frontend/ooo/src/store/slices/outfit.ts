@@ -4,8 +4,6 @@ import { RootState } from "..";
 
 export interface OutfitType {
 	id: number;
-	name: string;
-	info: string;
 	outfit_info: string;
 	popularity: number;
 	image_id: number;
