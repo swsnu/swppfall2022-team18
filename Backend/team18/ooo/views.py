@@ -43,7 +43,8 @@ def signin(request):
     signin : django default user
     '''
     if request.method == 'POST':
-        req_data = json.loads(request.body.decode())["body"]
+        # req_data = json.loads(request.body.decode())["body"]
+        req_data = json.loads(request.body)
         # print("body is", req_data)
         username = req_data["username"]
         password = req_data["password"]
@@ -274,7 +275,7 @@ def outfit_list(request):
                 "outfit_info": outfit.outfit_info,
                 "popularity" : outfit.popularity,
                 "image_link": outfit.image_link,
-                "putchase_link": outfit.purchase_link
+                "purchase_link": outfit.purchase_link
             }
             json_outfit_list.append(json_outfit)
 
@@ -404,7 +405,7 @@ def outfit_list(request):
                 "outfit_info": outfit.outfit_info,
                 "popularity" : outfit.popularity,
                 "image_link": outfit.image_link,
-                "putchase_link": outfit.purchase_link
+                "purchase_link": outfit.purchase_link
             }
             json_outfit_list.append(json_outfit)
 
@@ -444,7 +445,7 @@ def outfit(request, outfit_id):
             "outfit_info": outfit.outfit_info,
             "popularity" : outfit.popularity,
             "image_link": outfit.image_link,
-            "putchase_link": outfit.purchase_link
+            "purchase_link": outfit.purchase_link
         }
 
         json_samplecloth_list = []
@@ -602,14 +603,24 @@ def today_outfit(request):
             }
             json_userclothes.append(json_usercloth)
 
-        json_outfit = {
-            "id" : recommend[0].id,   
-            "outfit_info": recommend[0].outfit_info,
-            "popularity" : recommend[0].popularity,
-            "image_link": recommend[0].image_link,
-            "purchase_link": recommend[0].purchase_link,
-            "userclothes" : json_userclothes
-        }
+        if recommend == []:
+            json_outfit = {
+                "id" : "",   
+                "outfit_info": "", 
+                "popularity" : "", 
+                "image_link": "", 
+                "purchase_link": "", 
+                "userclothes" : []
+            }
+        else:
+            json_outfit = {
+                "id" : recommend[0].id,   
+                "outfit_info": recommend[0].outfit_info,
+                "popularity" : recommend[0].popularity,
+                "image_link": recommend[0].image_link,
+                "purchase_link": recommend[0].purchase_link,
+                "userclothes" : json_userclothes
+            }
 
         return JsonResponse(json_outfit, status=200)
             

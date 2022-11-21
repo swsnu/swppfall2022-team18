@@ -67,7 +67,6 @@ class SampleCloth(models.Model):
     outfit = models.ManyToManyField(
         Outfit,
         related_name='sample_cloth',
-        blank=False
     )
     type = models.CharField(max_length=100, blank=False)
     color = models.CharField(max_length=100, blank=False)
