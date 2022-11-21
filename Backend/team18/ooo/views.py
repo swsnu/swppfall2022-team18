@@ -43,8 +43,7 @@ def signin(request):
     signin : django default user
     '''
     if request.method == 'POST':
-        # req_data = json.loads(request.body.decode())["body"]
-        req_data = json.loads(request.body)
+        req_data = json.loads(request.body.decode())["body"]
         # print("body is", req_data)
         username = req_data["username"]
         password = req_data["password"]
@@ -90,7 +89,7 @@ def closet(request):
             return HttpResponse('Unauthorized', status=401)
 
         try:
-            req_data = json.loads(request.body.decode())
+            req_data = json.loads(request.body.decode())["body"]
 
             name = req_data['name']
             image_link = req_data['image_link']
@@ -156,7 +155,7 @@ def closet_item(request, cloth_id):
             return HttpResponse('Unauthorized', status=401)
 
         try:
-            req_data = json.loads(request.body.decode())
+            req_data = json.loads(request.body.decode())["body"]
             dates = req_data['dates']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
@@ -174,7 +173,7 @@ def closet_item(request, cloth_id):
             return HttpResponse('Unauthorized', status=401)
 
         try:
-            req_data = json.loads(request.body.decode())
+            req_data = json.loads(request.body.decode())["body"]
 
             name = req_data['name']
             image_link = req_data['image_link']
@@ -294,7 +293,7 @@ def outfit_list(request):
         page_size = int(request.GET.get('pageSize', '12').replace('/',''))
 
         try:
-            req_data = json.loads(request.body.decode())
+            req_data = json.loads(request.body.decode())["body"]
             filter_type = req_data["type"]
             filter_color = req_data["color"]
             filter_pattern = req_data["pattern"]
