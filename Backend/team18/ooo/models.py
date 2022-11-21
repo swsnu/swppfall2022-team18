@@ -28,7 +28,7 @@ class UserCloth(models.Model):
     UserCloth : cloth object that user post
     '''
     name = models.CharField(max_length=100, blank=True)
-    image_id = models.IntegerField(blank=False)
+    image_link = models.CharField(max_length=1000, blank=False, default="")
     closet = models.ForeignKey(
         Closet,
         on_delete=models.CASCADE,
@@ -45,7 +45,7 @@ class UserCloth(models.Model):
         null=False,
         related_name='user_cloth'
     )
-    dates = models.TextField(default=json.dumps([]))
+    dates = models.TextField(blank=True)
 
 
 class Outfit(models.Model):
@@ -54,7 +54,7 @@ class Outfit(models.Model):
     '''
     outfit_info = models.CharField(max_length=200, blank=True)
     popularity = models.IntegerField(blank=False)
-    image_id = models.IntegerField(blank=False)
+    image_link = models.CharField(max_length=1000, blank=False, default="")
     purchase_link = models.CharField(max_length=500, blank=False)
 
 class SampleCloth(models.Model):
@@ -62,11 +62,10 @@ class SampleCloth(models.Model):
     SampleCloth : clothes that are included in Outfit
     '''
     name = models.CharField(max_length=100, blank=True)
-    image_id = models.IntegerField(blank=False)
+    image_link = models.CharField(max_length=1000, blank=False, default="")
     purchase_link = models.CharField(max_length=500, blank=False)
-    outfit = models.ForeignKey(
+    outfit = models.ManyToManyField(
         Outfit,
-        on_delete=models.CASCADE,
         related_name='sample_cloth',
         blank=False
     )
