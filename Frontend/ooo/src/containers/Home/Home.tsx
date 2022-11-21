@@ -20,10 +20,14 @@ export default function Home() {
 	const outfit = useSelector(selectOutfit);
 	const [Loading, setLoading] = useState(false);
 
+
+	console.log(Array.isArray(outfit.outfits))
+	console.log(outfit.outfits)
 	//for logout
 	const [isSending, setIsSending] = useState(false)
 	const checkLoginned = () => {
 		console.log("start")
+
 		console.log(localStorage.getItem("username"));
 		if(localStorage.getItem("username") !== null){
 			return true
@@ -50,6 +54,7 @@ export default function Home() {
 			dispatch(fetchOutfits());
 			dispatch(fetchRecommendOutfit());
 			setLoading(false)
+
 		}
 		getData()
 	},[])
@@ -86,7 +91,7 @@ export default function Home() {
 									return(
 										<ClosetItem
 										key={index}
-										source_url={cloth.image_id} //나중에 바꿔야함.
+										source_url={cloth.image_link} //나중에 바꿔야함.
 										type={cloth.type}
 										color={cloth.color}
 										pattern={cloth.pattern}
@@ -116,7 +121,7 @@ export default function Home() {
 								userClothes.recommendOutfit !== null ? 
 								<div>
 									<div className="TodayOutfit-image" >
-										<img id="today-outfit-img" src={userClothes.recommendOutfit.image_id} data-testid = 'today-outfit-img'></img>
+										<img id="today-outfit-img" src={userClothes.recommendOutfit.image_link} data-testid = 'today-outfit-img'></img>
 									</div>
 									<div className="TodayOutfit-lable"
 									data-testid = 'TodayOutfit-lable'>
@@ -165,16 +170,15 @@ export default function Home() {
 							<div className="Outfit-item-box"
 								data-testid='OutfitPreview'>
 								{
-									// outfit.outfits.map((outfit, index) => {
-									// 	return(
-									// 		<OutfitPreview
-									// 		key={index}
-									// 		source_url={outfit.image_id.toString()}
-									// 		info={outfit.outfit_info}
-									// 		cloth_names={outfit.clothes}
-									// 	/>
-									// 	)
-									// })
+									outfit.outfits.map((outfit, index) => {
+										return(
+											<OutfitPreview
+											key={index}
+											source_url={outfit.image_link.toString()}
+											info={outfit.outfit_info}
+										/>
+										)
+									})
 								}
 							</div>
 						</div>

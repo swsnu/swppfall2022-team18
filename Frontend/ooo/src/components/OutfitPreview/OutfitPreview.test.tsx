@@ -13,7 +13,6 @@ describe("<OutfitPreview />",()=>{
         render(<OutfitPreview 
             source_url="https://image.msscdn.net/images/style/detail/8679/detail_8679_1_500.jpg"
             info="트러커 재킷과 스트라이프 패턴 티셔츠를 코디하고 데님 팬츠로 심플하게 연출한 캠퍼스 룩"
-            cloth_names={["옷1","옷2"]}
             clickOutfitDetail={mockNavigate}/>);
         screen.findByText("옷1");
         screen.findByText("옷2");

@@ -61,10 +61,6 @@ export default function Outfit() {
 		setClothFilter(false);
 	};
 
-	const clickOutfitImageHandler = () => {
-		navigate("1/");
-	};
-
 	const [isSending, setIsSending] = useState(false)
 	const checkLoginned = () => {
 		console.log("start")
@@ -149,15 +145,14 @@ export default function Outfit() {
 					</div>
 				</Modal>
 				<div className="OutfitImages">
-					{/* {outfitState.outfits.map((outfit, index) => {
+					{outfitState.outfits.map((outfit, index) => {
 						return (
 							<div className="outfit-body" key={index}>
 								<div className="OutfitImage">
 									<img
 										id="outfit-image"
 										data-testid="outfit-image"
-										src={outfit.image_id}
-										onClick={() => clickOutfitImageHandler()}
+										src={outfit.image_link}
 									></img>
 								</div>
 								<div className="OutfitData">
@@ -165,7 +160,7 @@ export default function Outfit() {
 								</div>
 							</div>
 						);
-					})} */}
+					})}
 				</div>
 			</div>
 		</div>

@@ -105,7 +105,7 @@ export default function Closet(props: IProps) {
 							return(
 								<ClosetItem
 								key={index}
-								source_url={cloth.image_id}
+								source_url={cloth.image_link}
 								type={cloth.type}
 								color={cloth.color}
 								pattern={cloth.pattern}

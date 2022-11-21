@@ -21,7 +21,7 @@ import { createUserCloth } from "../../store/slices/userCloth";
 
 // export interface IProps {
 //     // name: string,
-//     // image_id?: number,
+//     // image_link?: number,
 //     // type: string,
 //     // color: string,
 //     // pattern: string
@@ -36,17 +36,17 @@ const AddClothModal = () => {
 	// };
 
 	const [name, setName] = useState<string>("");
-	const [image_id, setImageId] = useState<string>();
 	const [type, setType] = useState<string>("");
 	const [color, setColor] = useState<string>("");
 	const [pattern, setPattern] = useState<string>("");
+	const [fileImage, setFileImage] = useState("");
 	const [submitted, setSubmitted] = useState<boolean>(false);
 	const dispatch = useDispatch<AppDispatch>();
 
 	const clickAddClothHandler = async () => {
 		const data = {
 			name: name,
-			image_id: image_id ?? "",
+			image_link: fileImage,
 			type: type,
 			color: color,
 			pattern: pattern,
@@ -61,7 +61,7 @@ const AddClothModal = () => {
 		// }
 	};
 
-	const [fileImage, setFileImage] = useState("");
+	
 
 	const saveFileImage = (e: any) => {
 		setFileImage(URL.createObjectURL(e.target.files[0]));

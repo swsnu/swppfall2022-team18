@@ -7,8 +7,7 @@ export interface OutfitType {
 	outfit_info: string;
 	outfit_name: string;
 	popularity: number;
-	image_id: string;
-	clothes: string[];
+	image_link: string;
 	purchase_link: string;
 }
 
@@ -23,7 +22,7 @@ export interface FilterType {
 export interface SampleClothType {
 	id: number;
 	name: string;
-	image_id: number;
+	image_link: number;
 	outfit: number;
 	color: string;
 	type: string;
@@ -34,7 +33,7 @@ export interface SampleClothType {
 export interface UserClothType {
 	id: number;
 	name: string;
-	image_id: string;
+	image_link: string;
 	user: number;
 	color: string;
 	type: string;
@@ -70,10 +69,12 @@ const headers = {
 export const fetchOutfits = createAsyncThunk(
 	"outfit/fetchOutfits",
 	async () => {
-		const response = await axios.get<OutfitType[]>("/api/ooo/outfit/", {
+		const response = await axios.get("/api/ooo/outfit/", {
 			headers,
 		});
-		return response.data;
+		console.log(response.data)
+		return response.data.outfits;//나중에 고치기
+		
 	}
 );
 
