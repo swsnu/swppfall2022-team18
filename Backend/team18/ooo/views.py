@@ -496,7 +496,15 @@ def sample_cloth(request, samplecloth_id):
                 "dates" : usercloth.dates
             }
         except UserCloth.DoesNotExist:
-            json_usercloth = {}
+            json_usercloth = {
+                "id": "",
+                "image_link": "",
+                "type": "",
+                "color": "",
+                "pattern": "",
+                "user" : "",
+                "dates" : "",
+            }
 
         samplecloth_outfit_list = samplecloth.outfit.all()
         samplecloth_outfit_ids = [outfit.id for outfit in samplecloth_outfit_list]
