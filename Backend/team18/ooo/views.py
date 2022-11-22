@@ -282,7 +282,7 @@ def outfit_list(request):
                 "id" : outfit.id,
                 "outfit_info": outfit.outfit_info,
                 "popularity" : outfit.popularity,
-                "image_link": outfit.image_link,
+                "image_link": outfit.image,
                 "purchase_link": outfit.purchase_link
             }
             json_outfit_list.append(json_outfit)
@@ -412,7 +412,7 @@ def outfit_list(request):
                 "id" : outfit.id,
                 "outfit_info": outfit.outfit_info,
                 "popularity" : outfit.popularity,
-                "image_link": outfit.image_link,
+                "image_link": outfit.image,
                 "purchase_link": outfit.purchase_link
             }
             json_outfit_list.append(json_outfit)
@@ -452,7 +452,7 @@ def outfit(request, outfit_id):
             "id" : outfit.id,   
             "outfit_info": outfit.outfit_info,
             "popularity" : outfit.popularity,
-            "image_link": outfit.image_link,
+            "image_link": outfit.image,
             "purchase_link": outfit.purchase_link
         }
 
@@ -464,7 +464,7 @@ def outfit(request, outfit_id):
             json_samplecloth = {
                 "id": samplecloth.id,
                 "name": samplecloth.name,
-                "image_link": samplecloth.image_link,
+                "image_link": samplecloth.image,
                 "purchase_link": samplecloth.purchase_link,
                 "outfit": samplecloth_outfit_ids,
                 "type": samplecloth.type,
@@ -497,7 +497,7 @@ def sample_cloth(request, samplecloth_id):
             usercloth = UserCloth.objects.get(Q(closet=user_closet) & Q(label_set=samplecloth.label_set))
             json_usercloth = {
                 "id": usercloth.id,
-                "image_link": usercloth.image_link,
+                "image_link": usercloth.image,
                 "type": usercloth.type,
                 "color": usercloth.color,
                 "pattern": usercloth.pattern,
@@ -521,7 +521,7 @@ def sample_cloth(request, samplecloth_id):
         json_samplecloth = {
                 "id": samplecloth.id,
                 "name": samplecloth.name,
-                "image_link": samplecloth.image_link,
+                "image_link": samplecloth.image,
                 "purchase_link": samplecloth.purchase_link,
                 "outfit": samplecloth_outfit_ids,
                 "type": samplecloth.type,
@@ -633,7 +633,7 @@ def today_outfit(request):
                 "id" : recommend[0].id,   
                 "outfit_info": recommend[0].outfit_info,
                 "popularity" : recommend[0].popularity,
-                "image_link": recommend[0].image_link,
+                "image_link": recommend[0].image,
                 "purchase_link": recommend[0].purchase_link,
                 "userclothes" : json_userclothes
             }
