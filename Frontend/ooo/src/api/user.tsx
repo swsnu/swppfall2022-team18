@@ -40,12 +40,13 @@ export const signupUser = async (username: string, pw: string) => {
 		headers: {
 			"Content-type": "application/json;charset=UTF-8",
 		},
-		body: JSON.stringify(data),
+		body: data,
 	};
+	console.log(option)
 
-	await axios.post("/api/ooo/user/signup/", option).catch((error) => {
-		console.log(error.response);
-	});
+	const response = await axios.post("/api/ooo/user/signup/", option)
+	return response
+
 };
 
 export const logoutUser = async () => {
@@ -56,11 +57,14 @@ export const logoutUser = async () => {
 			"Content-type": "application/json;charset=UTF-8",
 			"X-CSRFTOKEN": "JkwYDkuqKG8UYeeWgBoYwbVEem1wyS9h",
 		},
-		body: JSON.stringify(data),
+		body: data,
 	};
-	console.log(localStorage.getItem("token"));
-	await axios.post("/api/ooo/user/logout/", option).then(() => {
+	await axios.get("/api/ooo/user/signout/").then(() => {
 		localStorage.removeItem("token");
 		localStorage.removeItem("username");
-	});
+	})
+	// await axios.post("/api/ooo/user/signout/", option).then(() => {
+	// 	localStorage.removeItem("token");
+	// 	localStorage.removeItem("username");
+	// });
 };

@@ -90,6 +90,26 @@ const OutfitDetail = () => {
 		console.log(selectedCloth);
 	};
 
+	const [isSending, setIsSending] = useState(false)
+	const checkLoginned = () => {
+		console.log("start")
+		console.log(localStorage.getItem("username"));
+		if(localStorage.getItem("username") !== null){
+			return true
+		}
+		else return false
+	};
+
+
+	useEffect(() => {
+		const redirect = () => {
+			if (!checkLoginned()) {
+				navigate("/");
+			}
+		};
+		redirect();
+	}, [isSending]);
+
 	return (
 		<div className="OutfitDetail">
 			<div className="header">
@@ -97,8 +117,9 @@ const OutfitDetail = () => {
 					clickInfoHandler={() => {
 						navigate("/");
 					}}
-					clickLogoutHandler={() => {
-						logoutUser();
+					clickLogoutHandler={async() => {
+						await logoutUser().catch((error) => console.log(error))
+						setIsSending(!isSending)
 					}}
 					clickHeaderHandler={() => {
 						navigate("/home");

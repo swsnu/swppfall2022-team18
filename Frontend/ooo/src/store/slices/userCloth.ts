@@ -5,21 +5,34 @@ import { RootState } from "..";
 export interface UserClothType {
 	id: number;
 	name: string;
-	image_id: number;
+	image_link: string;
 	user: number;
 	color: string;
 	type: string;
 	pattern: string;
 }
+export interface TodayOutfitType {
+	id: number;
+	outfit_info: string;
+	outfit_name: string
+	popularity: number;
+	image_link: string;
+	userClothes: UserClothType[]
+}
+
 
 export interface UserClothState {
 	userClothes: UserClothType[];
 	selectedUserCloth: UserClothType | null;
+	recommendOutfit: TodayOutfitType | null;
 }
+
+
 
 const initialState: UserClothState = {
 	userClothes: [],
 	selectedUserCloth: null,
+	recommendOutfit: null
 };
 
 export const fetchUserClothes = createAsyncThunk(
@@ -38,10 +51,23 @@ export const fetchUserCloth = createAsyncThunk(
 	}
 );
 
+export const fetchRecommendOutfit = createAsyncThunk(
+	"outfit/today",
+	async () => {
+		const response = await axios.get('/api/ooo/outfit/today/')
+		if(response.status === 200){
+			return response.data
+		}
+		else return null
+
+		
+	}
+)
+
 export const createUserCloth = createAsyncThunk(
 	"closet/createUserCloth",
 	async (
-		td: Pick<UserClothType, "image_id" | "color" | "type" | "pattern">,
+		td: Pick<UserClothType, "name" | "image_link" | "color" | "type" | "pattern">,
 		{ dispatch }
 	) => {
 		const response = await axios.post("/api/ooo/closet/", td);
@@ -87,7 +113,7 @@ export const userClothSlice = createSlice({
 			action: PayloadAction<{
 				id: number;
 				name: string;
-				image_id: number;
+				image_link: string;
 				user: number;
 				color: string;
 				type: string;
@@ -97,7 +123,7 @@ export const userClothSlice = createSlice({
 			const newUserCloth = {
 				id: state.userClothes[state.userClothes.length - 1].id + 1, // temporary
 				name: action.payload.name,
-				image_id: action.payload.image_id,
+				image_link: action.payload.image_link,
 				user: action.payload.user,
 				color: action.payload.color,
 				type: action.payload.type,
@@ -118,6 +144,9 @@ export const userClothSlice = createSlice({
 		builder.addCase(createUserCloth.rejected, (_state, action) => {
 			console.error(action.error);
 		});
+		builder.addCase(fetchRecommendOutfit.fulfilled, (state, action) => {
+			state.recommendOutfit = action.payload;
+		})
 	},
 });
 

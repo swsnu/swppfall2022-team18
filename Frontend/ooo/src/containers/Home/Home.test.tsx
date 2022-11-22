@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { useNavigate } from "react-router-dom";
 import { Provider } from "react-redux";
+import React from "react";
 import { renderWithProviders } from "../../test-utils/mocks";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Home from './Home';
@@ -35,13 +36,6 @@ jest.mock("../../components/OutfitPreview/OutfitPreview", () => (props: OutfitPr
 			<div className="OutfitLable">
 				<text id="outfit-info-text"
                 data-testid = 'outfit-info'>{props.info}</text>
-				{props.cloth_names.map((cloth_name: string, index) => {
-					return (
-						<text key={index} id="cloth-name" data-testid='cloth-name'>
-							{cloth_name}
-						</text>
-					);
-				})}
 			</div>
 		</div>
     ));

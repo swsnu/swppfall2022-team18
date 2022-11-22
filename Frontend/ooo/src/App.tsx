@@ -7,6 +7,7 @@ import Outfit from "./containers/Outfit/Outfit";
 import OutfitDetail from "./containers/OutfitDetail/OutfitDetail";
 import Redirect from "./containers/Redirect/Redirect";
 import React from "react";
+import Signup from "./containers/Signup/Signup";
 // import axios from 'axios';
 // import { useCookies } from 'react-cookie';
 
@@ -26,6 +27,7 @@ function App() {
 					<Route path="/outfit" element={<Outfit />} />
 					<Route path="/outfit/:id" element={<OutfitDetail />} />
 					<Route path="/" element={<Login />} />
+					<Route path="/signup" element={<Signup/>}/>
 					<Route path="*" element={<h1>Not Found</h1>} />
 					<Route path="/Redirect" element={<Redirect />} />
 				</Routes>

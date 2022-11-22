@@ -21,7 +21,7 @@ import { createUserCloth } from "../../store/slices/userCloth";
 
 // export interface IProps {
 //     // name: string,
-//     // image_id?: number,
+//     // image_link?: number,
 //     // type: string,
 //     // color: string,
 //     // pattern: string
@@ -36,24 +36,21 @@ const AddClothModal = () => {
 	// };
 
 	const [name, setName] = useState<string>("");
-	const [image_id, setImageId] = useState<number>();
 	const [type, setType] = useState<string>("");
 	const [color, setColor] = useState<string>("");
 	const [pattern, setPattern] = useState<string>("");
+	const [fileImage, setFileImage] = useState("");
 	const [submitted, setSubmitted] = useState<boolean>(false);
 	const dispatch = useDispatch<AppDispatch>();
 
 	const clickAddClothHandler = async () => {
 		const data = {
 			name: name,
-			image_id: image_id ?? 0,
+			image_link: fileImage,
 			type: type,
 			color: color,
 			pattern: pattern,
 		};
-		// if (type == "" || color == "" || pattern == "") {
-		// 	return alert("Please fill in all the details.");
-		// }
 		const result = await dispatch(createUserCloth(data));
 		console.log(result);
 
@@ -64,7 +61,7 @@ const AddClothModal = () => {
 		// }
 	};
 
-	const [fileImage, setFileImage] = useState("");
+	
 
 	const saveFileImage = (e: any) => {
 		setFileImage(URL.createObjectURL(e.target.files[0]));
@@ -82,14 +79,13 @@ const AddClothModal = () => {
 			<div className="AddClothModalTop">
 				<div className="UploadClothDiv" data-testid="UploadClothDiv">
 					<div className="UploadedClothPreviewDiv">
-						{/* {fileImage ? (
+						{fileImage ? (
 							fileImage && (
 								<img id="uploaded-image-preview" src={fileImage} height="400" />
 							)
 						) : (
 							<div className="UploadedClothTempDiv"></div>
-						)} */}
-						<div className="UploadedClothTempDiv"></div>
+						)}
 					</div>
 					<input
 						type="file"
