@@ -3,7 +3,7 @@ from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from .models import Closet, UserCloth, LabelSet, SampleCloth, Outfit
-from .forms import SampleClothChangeListForm
+# from .forms import SampleClothChangeListForm
 
 # admin.site.register(User, UserAdmin)
 # Register your models here.

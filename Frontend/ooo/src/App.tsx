@@ -8,6 +8,7 @@ import OutfitDetail from "./containers/OutfitDetail/OutfitDetail";
 import Redirect from "./containers/Redirect/Redirect";
 import React from "react";
 import Signup from "./containers/Signup/Signup";
+import Setting from "./containers/Setting/Setting";
 // import axios from 'axios';
 // import { useCookies } from 'react-cookie';
 
@@ -30,6 +31,7 @@ function App() {
 					<Route path="/signup" element={<Signup/>}/>
 					<Route path="*" element={<h1>Not Found</h1>} />
 					<Route path="/Redirect" element={<Redirect />} />
+					<Route path="/setting" element={<Setting/>}/>
 				</Routes>
 			</div>
 		</BrowserRouter>

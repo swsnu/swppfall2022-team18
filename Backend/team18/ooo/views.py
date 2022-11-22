@@ -15,6 +15,14 @@ from django.db.models import Q
 from .models import Outfit, SampleCloth, UserCloth, Closet, LabelSet
 from datetime import date, datetime, timedelta
 
+type_tree =  [
+    ['상의', ['반소매 티셔츠', '피케/카라 티셔츠', '긴소매 티셔츠', '맨투맨/스웨트셔츠', '민소매 티셔츠', '후드 티셔츠', '셔츠/블라우스', '니트/스웨터', '기타 상의']], 
+    ['바지', ['데님 팬츠', '숏 팬츠', '코튼 팬츠', '레깅스', '슈트 팬츠/슬랙스', '점프 슈트/오버올', '트레이닝/조거 팬츠', '기타 바지']], 
+    ['아우터', ['후드 집업', '환절기 코트', '블루종/MA-1', '겨울 싱글 코트', '레더/라이더스 재킷', '겨울 더블 코트',
+             '무스탕/퍼', '겨울 기타 코트', '롱패딩/롱헤비 아우터', '트러커 재킷', '슈트/블레이저 재킷', '숏패딩/숏헤비 아우터', '카디건', '패딩 베스트', '아노락 재킷',
+             '베스트', '플리스/뽀글이', '사파리/헌팅 재킷', '트레이닝 재킷', '나일론/코치 재킷', '스타디움 재킷', '기타 아우터']]]
+
+
 
 def index():
     '''
@@ -53,7 +61,6 @@ def signin(request):
     '''
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())["body"]
-        # print("body is", req_data)
         username = req_data["username"]
         password = req_data["password"]
         user = authenticate(request, username=username, password=password)
@@ -76,6 +83,37 @@ def signout(request):
             return HttpResponse(status=204)
         return HttpResponse('Unauthorized', status=401)
     return HttpResponseNotAllowed(['GET'], status=405)
+
+
+def userinfo(request):
+    if not request.user.is_authenticated:
+        return HttpResponse('Unauthorized', status=401)
+    user = User.objects.get(username = request.user.username)
+    
+    if request.method == 'GET':
+        data = {
+            'username': request.user.username,
+        }
+        return HttpResponse(data, status=200)
+    elif request.method == 'PUT':
+        try:
+            req_data = json.loads(request.body.decode())["body"]
+            password = req_data['password']
+
+        except (KeyError, JSONDecodeError) as e:
+            return HttpResponseBadRequest()
+        
+        ## 여기가 왜 안되지?
+        user.set_password(password)
+        user.save()
+        request.user.set_password(password)
+        return HttpResponse(status=204)
+    elif request.method == 'DELETE':
+        # user.delete()
+        request.user.delete()
+        return HttpResponse(status=204)
+    else:
+        return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'], status=405)
 
 #@csrf_exempt
 def closet(request):
@@ -620,21 +658,13 @@ def today_outfit(request):
             json_userclothes.append(json_usercloth)
 
         if recommend == []:
-            json_outfit = {
-                "id" : "",   
-                "outfit_info": "", 
-                "popularity" : "", 
-                "image_link": "", 
-                "purchase_link": "", 
-                "userclothes" : []
-            }
+            return HttpResponse(status=404)
         else:
             json_outfit = {
                 "id" : recommend[0].id,   
                 "outfit_info": recommend[0].outfit_info,
                 "popularity" : recommend[0].popularity,
                 "image_link": recommend[0].image_link,
-                "purchase_link": recommend[0].purchase_link,
                 "userclothes" : json_userclothes
             }
 
