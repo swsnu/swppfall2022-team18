@@ -63,8 +63,6 @@ export default function Outfit() {
 
 	const [isSending, setIsSending] = useState(false)
 	const checkLoginned = () => {
-		console.log("start")
-		console.log(localStorage.getItem("username"));
 		if(localStorage.getItem("username") !== null){
 			return true
 		}
@@ -95,7 +93,7 @@ export default function Outfit() {
 		<div className="OutfitPage">
 			<Header
 				clickInfoHandler={() => {
-					navigate("/");
+					navigate("/setting");
 				}}
 				clickLogoutHandler={async() => {
 					await logoutUser().catch((error) => console.log(error))
