@@ -12,6 +12,7 @@ jobs:
         - pip install coveralls
         - gem install coveralls-lcov
         - cd team18
+        - yarn global add coveralls
       script:
         - pylint **/*.py --load-plugins pylint_django
         - coverage run --source='.' manage.py test
