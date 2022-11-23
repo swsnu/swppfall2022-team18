@@ -34,7 +34,6 @@ export default function Outfit(props: IProps) {
 		pattern: props.pattern,
 	});
 	const [modalOpen, setModalOpen] = useState(false);
-	const [cursor, setCursor] = useState(outfitState.cursor);
 	const [isLast, setIsLast] = useState(outfitState.isLast);
 
 	const [page, setPage] = useState(1);

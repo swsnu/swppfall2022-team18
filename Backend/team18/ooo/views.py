@@ -600,6 +600,7 @@ def today_outfit(request):
                 clean_usercloth_list.append(usercloth)
             else: 
                 last_day = date.fromisoformat(usercloth_days[len(usercloth_days)-1])
+                #if today == last_day, it is OK to recommend
                 if (today - last_day) > three_day:
                     clean_usercloth_list.append(usercloth)
 
