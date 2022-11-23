@@ -20,15 +20,9 @@ export default function Home() {
 	const outfit = useSelector(selectOutfit);
 	const [Loading, setLoading] = useState(false);
 
-
-	console.log(Array.isArray(outfit.outfits))
-	console.log(outfit.outfits)
 	//for logout
 	const [isSending, setIsSending] = useState(false)
 	const checkLoginned = () => {
-		console.log("start")
-
-		console.log(localStorage.getItem("username"));
 		if(localStorage.getItem("username") !== null){
 			return true
 		}
@@ -69,7 +63,7 @@ export default function Home() {
 					data-testid='Header'>
 					<Header
 						clickInfoHandler={() => {
-							navigate("/");
+							navigate("/setting");
 						}}
 						clickLogoutHandler={async() => {
 							await logoutUser().catch((error) => console.log(error))

@@ -1,12 +1,15 @@
 import React from "react";
 import axios from "axios";
 
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+
 export const signinUser = async (username: string, pw: string) => {
 	console.log("called");
 	await axios
 		.get("/api/ooo/user/token/")
 		.then((response) => {
-			console.log(response);
+			console.log(response)
 		})
 		.catch((error) => {
 			console.log(error.response);
@@ -18,7 +21,6 @@ export const signinUser = async (username: string, pw: string) => {
 		method: "POST",
 		headers: {
 			"Content-type": "application/json;charset=UTF-8",
-			"X-CSRFToken": localStorage.getItem("token"),
 		},
 		body: data,
 	};
@@ -50,21 +52,31 @@ export const signupUser = async (username: string, pw: string) => {
 };
 
 export const logoutUser = async () => {
-	const data = { username: localStorage.getItem("username") };
-	const option = {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json;charset=UTF-8",
-			"X-CSRFTOKEN": "JkwYDkuqKG8UYeeWgBoYwbVEem1wyS9h",
-		},
-		body: data,
-	};
 	await axios.get("/api/ooo/user/signout/").then(() => {
-		localStorage.removeItem("token");
 		localStorage.removeItem("username");
 	})
-	// await axios.post("/api/ooo/user/signout/", option).then(() => {
-	// 	localStorage.removeItem("token");
-	// 	localStorage.removeItem("username");
-	// });
 };
+
+export const editUser = async (pw: string) => {
+	const data = { password: pw}
+	const option = {
+		method: 'PUT',
+		headers: {
+			"Content-type": "application/json;charset=UTF-8",
+		},
+		body: data
+	}
+	await axios.put("/api/ooo/user/info/", option).then((response) => {
+		return response
+	}).catch((e) => {
+		console.log(e)
+	})
+}
+
+export const deleteUser = async () => {
+	await axios.delete("/api/ooo/user/info/").then(() => {
+		localStorage.removeItem("username");
+	}).catch((e) => {
+		console.log(e)
+	})
+}
