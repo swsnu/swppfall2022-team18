@@ -7,70 +7,50 @@ import FilterModal from "../../components/FilterModal/FilterModal";
 import "./Outfit.css";
 import Modal from "react-modal";
 import { AppDispatch } from "../../store";
-import { selectOutfit } from "../../store/slices/outfit";
-import { fetchOutfits } from "../../store/slices/outfit";
+import outfit, { selectOutfit } from "../../store/slices/outfit";
+import {
+	fetchFilteredOutfits,
+	FilterPostInputType,
+} from "../../store/slices/outfit";
 
-export default function Outfit() {
-	const [userHave, setUserHave] = useState(false);
-	const [recommend, setRecommend] = useState(false);
-	const [clothFilter, setClothFilter] = useState(false);
-	const [modalOpen, setModalOpen] = useState(false);
-	const [isLoading, setIsLoading] = useState(false)
+export interface IProps {
+	userHave: boolean;
+	recommend: boolean;
+	type: string | null;
+	color: string | null;
+	pattern: string | null;
+}
+
+export default function Outfit(props: IProps) {
 	const dispatch = useDispatch<AppDispatch>();
 	const outfitState = useSelector(selectOutfit);
 
+	const [userHave, setUserHave] = useState(false);
+	const [recommend, setRecommend] = useState(false);
+	const [clothFilter, setClothFilter] = useState(false);
+	const [filters, setFilters] = useState({
+		type: props.type,
+		color: props.color,
+		pattern: props.pattern,
+	});
+	const [modalOpen, setModalOpen] = useState(false);
+	const [cursor, setCursor] = useState(outfitState.cursor);
+	const [isLast, setIsLast] = useState(outfitState.isLast);
+
+	const [page, setPage] = useState(1);
+	const [isLoading, setIsLoading] = useState(false);
+
 	const navigate = useNavigate();
-	//get current filter and save in local storage -> toggle button
 
-	//make cursor
-
-	//call api POST outfit/ to fetch filtered outfit
-
-	//print all outfits
-
-	//make outfit image as button to navigate to outfit detail page
-
-	const clickUserHaveHandler = () => {
-		if (userHave == true) setUserHave(false);
-		else {
-			setRecommend(false);
-			setUserHave(true);
-		}
-	};
-
-	const clickRecommendHandler = () => {
-		if (recommend == true) setRecommend(false);
-		else {
-			setRecommend(true);
-			setUserHave(false);
-		}
-	};
-
-	const clickFilterHandler = () => {
-		setModalOpen(true);
-	};
-
-	const clickDoneHandler = () => {
-		setModalOpen(false);
-		setClothFilter(true);
-	};
-
-	const clickResetHandler = () => {
-		setRecommend(false);
-		setUserHave(false);
-		setClothFilter(false);
-	};
-
-	const [isSending, setIsSending] = useState(false)
+	const [isSending, setIsSending] = useState(false);
 	const checkLoginned = () => {
-		if(localStorage.getItem("username") !== null){
-			return true
-		}
-		else return false
+		if (localStorage.getItem("username") !== null) {
+			return true;
+		} else return false;
 	};
-
 
 	useEffect(() => {
+		//login check, redirect to login page
 		const redirect = () => {
 			if (!checkLoginned()) {
 				navigate("/");
@@ -79,15 +59,90 @@ export default function Outfit() {
 		redirect();
 	}, [isSending]);
 
-	useEffect(()=>{
+	useEffect(() => {
 		//closet list, outfitlist 받아오는 것
-			const getData = async() => {
-				setIsLoading(true)
-				dispatch(fetchOutfits());
-				setIsLoading(false)
-			}
-			getData()
-		},[])
+		const getData = async () => {
+			const postInput: FilterPostInputType = {
+				filter: {
+					type: filters.type,
+					color: filters.color,
+					pattern: filters.pattern,
+					userHave: userHave,
+					recommend: recommend,
+				},
+				cursor: (page - 1) * 12,
+				pageSize: 12,
+			};
+			setIsLoading(true);
+			dispatch(fetchFilteredOutfits(postInput));
+			setIsLoading(false);
+		};
+		getData();
+	}, []);
+
+	const clickUserHaveHandler = () => {
+		if (userHave == true) setUserHave(false);
+		else {
+			setRecommend(false);
+			setUserHave(true);
+		}
+		setPage(1);
+	};
+
+	const clickRecommendHandler = () => {
+		if (recommend == true) setRecommend(false);
+		else {
+			setRecommend(true);
+			setUserHave(false);
+		}
+		setPage(1);
+	};
+
+	const clickFilterHandler = () => {
+		setModalOpen(true);
+	};
+
+	const clickDoneHandler = (
+		type: string | null,
+		color: string | null,
+		pattern: string | null
+	) => {
+		setModalOpen(false);
+		setClothFilter(true);
+		setFilters({
+			type: type,
+			color: color,
+			pattern: pattern,
+		});
+		setPage(1);
+	};
+
+	const clickResetHandler = () => {
+		if (recommend || userHave || clothFilter) setPage(1);
+
+		setRecommend(false);
+		setUserHave(false);
+		setClothFilter(false);
+		setFilters({
+			type: null,
+			color: null,
+			pattern: null,
+		});
+	};
+
+	const clickNextPageHandler = () => {
+		const currentPage = page;
+		setPage(currentPage + 1);
+	};
+
+	const clickBeforePageHandler = () => {
+		const currentPage = page;
+		setPage(currentPage - 1);
+	};
+
+	const clickFirstPageHandler = () => {
+		setPage(1);
+	};
 
 	return (
 		<div className="OutfitPage">
@@ -95,9 +150,9 @@ export default function Outfit() {
 				clickInfoHandler={() => {
 					navigate("/setting");
 				}}
-				clickLogoutHandler={async() => {
-					await logoutUser().catch((error) => console.log(error))
-					setIsSending(!isSending)
+				clickLogoutHandler={async () => {
+					await logoutUser().catch((error) => console.log(error));
+					setIsSending(!isSending);
 				}}
 				clickHeaderHandler={() => {
 					navigate("/home");
@@ -129,7 +184,9 @@ export default function Outfit() {
 					</button>
 				</div>
 				<Modal id="filter-modal" isOpen={modalOpen}>
-					<FilterModal clickDoneHandler={clickDoneHandler}></FilterModal>
+					<FilterModal
+						clickDoneHandler={clickDoneHandler(type, color, pattern)}
+					></FilterModal>
 					<div id="close-buton-div">
 						<button
 							id="modal-close-button"
@@ -143,22 +200,62 @@ export default function Outfit() {
 					</div>
 				</Modal>
 				<div className="OutfitImages">
-					{outfitState.outfits.map((outfit, index) => {
-						return (
-							<div className="outfit-body" key={index}>
-								<div className="OutfitImage">
-									<img
-										id="outfit-image"
-										data-testid="outfit-image"
-										src={outfit.image_link}
-									></img>
+					<div className="outfit-list-div">
+						{outfitState.outfits.map((outfit, index) => {
+							return (
+								<div className="outfit-body" key={index}>
+									<div className="OutfitImage">
+										<img
+											id="outfit-image"
+											data-testid="outfit-image"
+											src={outfit.image_link}
+										></img>
+									</div>
+									<div className="OutfitData">
+										<text id="outfit-info-text">{outfit.outfit_info}</text>
+									</div>
 								</div>
-								<div className="OutfitData">
-									<text id="outfit-info-text">{outfit.outfit_info}</text>
-								</div>
-							</div>
-						);
-					})}
+							);
+						})}
+					</div>
+					<div className="page-buttons-div">
+						<div id="first-page-button-div">
+							{page == 1 ? (
+								<></>
+							) : (
+								<>
+									<button
+										id="first-page-button"
+										onClick={() => clickFirstPageHandler}
+									></button>
+								</>
+							)}
+						</div>
+						<div id="before-page-button-div">
+							{page == 1 ? (
+								<></>
+							) : (
+								<>
+									<button
+										id="before-page-button"
+										onClick={() => clickBeforePageHandler}
+									></button>
+								</>
+							)}
+						</div>
+						<div id="next-page-button-div">
+							{isLast == true ? (
+								<></>
+							) : (
+								<>
+									<button
+										id="next-page-button"
+										onClick={() => clickNextPageHandler}
+									></button>
+								</>
+							)}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
