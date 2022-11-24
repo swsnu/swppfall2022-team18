@@ -5,8 +5,7 @@ from selenium.webdriver.common.keys import Keys
 import time
 import os
 from selenium.webdriver.chrome.options import Options
-import re 
-import pandas as pd
+import re
 import csv
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE","team18.settings")
@@ -175,7 +174,7 @@ def parse_top_cloth_data():
                             time.sleep(5)
                             driver.implicitly_wait(LOADING_TIME)
                             #cloth_num = int(driver.find_element('xpath','//*[@id="searchList"]/li[{}]'.format(l)).get_attribute('data-no'))
-                            driver.find_elements('name','goods_link')[l-1].click()
+                            driver.find_elements('name','goods_link')[2*(l-1)].click()
                             print("/",flush=True)
                             time.sleep(5)
                             driver.implicitly_wait(LOADING_TIME)
@@ -245,7 +244,7 @@ def parse_bottom_cloth_data():
     driver.get("https://www.musinsa.com/categories/item/003")
     time.sleep(5)
     driver.implicitly_wait(LOADING_TIME)
-    driver.find_element('xpath','/html/body/div[2]/div[3]/div[12]/button[2]').click()
+    driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
     time.sleep(5)
     driver.implicitly_wait(LOADING_TIME)
     # 상의 색깔별로 들어감. 
@@ -265,7 +264,7 @@ def parse_bottom_cloth_data():
                     driver.get('https://www.musinsa.com/categories/item/003?d_cat_cd=003&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
                     time.sleep(5)
                     driver.implicitly_wait(LOADING_TIME)
-                    driver.find_element('xpath','/html/body/div[2]/div[3]/div[12]/button[2]').click()
+                    driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
                     time.sleep(5)
                     driver.implicitly_wait(LOADING_TIME)
                     cloth_cnt = len(driver.find_elements('xpath','//*[@id="searchList"]/li'))
@@ -279,7 +278,7 @@ def parse_bottom_cloth_data():
                             time.sleep(5)
                             driver.implicitly_wait(LOADING_TIME)
                             #cloth_num = int(driver.find_element('xpath','//*[@id="searchList"]/li[{}]'.format(l)).get_attribute('data-no'))
-                            driver.find_elements('name','goods_link')[l-1].click()
+                            driver.find_elements('name','goods_link')[2*(l-1)].click()
                             time.sleep(5)
                             driver.implicitly_wait(LOADING_TIME)
                             cloth_link = str(driver.current_url)
@@ -348,7 +347,7 @@ def parse_outer_cloth_data():
     driver.get("https://www.musinsa.com/categories/item/002")
     time.sleep(5)
     driver.implicitly_wait(LOADING_TIME)
-    driver.find_element('xpath','/html/body/div[2]/div[3]/div[12]/button[2]').click()
+    driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
     time.sleep(5)
     driver.implicitly_wait(LOADING_TIME)
     # 상의 색깔별로 들어감. 
@@ -368,7 +367,7 @@ def parse_outer_cloth_data():
                     driver.get('https://www.musinsa.com/categories/item/002?d_cat_cd=002&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
                     time.sleep(5)
                     driver.implicitly_wait(LOADING_TIME)
-                    driver.find_element('xpath','/html/body/div[2]/div[3]/div[12]/button[2]').click()
+                    driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
                     time.sleep(5)
                     driver.implicitly_wait(LOADING_TIME)
                     cloth_cnt = len(driver.find_elements('xpath','//*[@id="searchList"]/li'))
@@ -382,7 +381,7 @@ def parse_outer_cloth_data():
                             time.sleep(5)
                             driver.implicitly_wait(LOADING_TIME)
                             #cloth_num = int(driver.find_element('xpath','//*[@id="searchList"]/li[{}]'.format(l)).get_attribute('data-no'))
-                            driver.find_elements('name','goods_link')[l-1].click()
+                            driver.find_elements('name','goods_link')[2*(l-1)].click()
                             time.sleep(5)
                             driver.implicitly_wait(LOADING_TIME)
                             cloth_link = str(driver.current_url)
@@ -576,8 +575,10 @@ def csv_to_list(filename):
 #parse_outfit_data()
 #parse_top_cloth_data()
 #parse_outer_cloth_data()
-#parse_bottom_cloth_data()
+parse_bottom_cloth_data()
 #list_to_csv()
 #csv_to_list('cloth_list.csv')
-csv_to_db('top_cloth_data.csv')
-
+#csv_to_db('codi_data.csv')
+#csv_to_db('top_cloth_data.csv')
+#csv_to_db('bottom_cloth_data.csv')
+#csv_to_db('outer_cloth_data.csv')
