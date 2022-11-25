@@ -21,4 +21,4 @@ class UserClothSerializer(serializers.ModelSerializer):
    
    class Meta:
        model = UserCloth
-       fields = all
+       fields = '__all__'
