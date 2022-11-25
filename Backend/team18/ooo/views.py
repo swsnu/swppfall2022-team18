@@ -14,6 +14,8 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import Outfit, SampleCloth, UserCloth, Closet, LabelSet
 from datetime import date, datetime, timedelta
+from rest_framework import serializers
+from .serializers import SampleClothSerializer, OutfitSerializer
 
 type_tree =  [
     ['상의', ['반소매 티셔츠', '피케/카라 티셔츠', '긴소매 티셔츠', '맨투맨/스웨트셔츠', '민소매 티셔츠', '후드 티셔츠', '셔츠/블라우스', '니트/스웨터', '기타 상의']], 
@@ -300,7 +302,9 @@ def outfit_list(request):
         all_outfits = list(Outfit.objects.all().order_by("-popularity"))
         outfits_count = len(all_outfits)
         response_outfit_range = min(outfits_count, cursor + page_size + 1)
-
+        
+        if min(outfits_count, cursor+page_size + 1) == outfits_count: cursor = 0
+        
         outfit_list = all_outfits[cursor:response_outfit_range]
 
         is_last = False
@@ -536,7 +540,7 @@ def sample_cloth(request, samplecloth_id):
             usercloth = UserCloth.objects.get(Q(closet=user_closet) & Q(label_set=samplecloth.label_set))
             json_usercloth = {
                 "id": usercloth.id,
-                "image_link": usercloth.image,
+                "image_link": usercloth.image_link,
                 "type": usercloth.type,
                 "color": usercloth.color,
                 "pattern": usercloth.pattern,
