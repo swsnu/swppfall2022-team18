@@ -14,6 +14,8 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import Outfit, SampleCloth, UserCloth, Closet, LabelSet
 from datetime import date, datetime, timedelta
+from rest_framework import serializers
+from .serializers import SampleClothSerializer, OutfitSerializer
 
 type_tree =  [
     ['상의', ['반소매 티셔츠', '피케/카라 티셔츠', '긴소매 티셔츠', '맨투맨/스웨트셔츠', '민소매 티셔츠', '후드 티셔츠', '셔츠/블라우스', '니트/스웨터', '기타 상의']], 
@@ -301,7 +303,11 @@ def outfit_list(request):
         outfits_count = len(all_outfits)
         response_outfit_range = min(outfits_count, cursor + page_size + 1)
 
-        outfit_list = all_outfits[cursor:response_outfit_range]
+        if min(outfits_count, cursor + page_size + 1) == outfits_count:
+            cursor = 0
+        
+        # outfit_list = all_outfits[cursor:response_outfit_range]
+        outfit_list = all_outfits[0:1]
 
         is_last = False
 
@@ -316,12 +322,20 @@ def outfit_list(request):
         
         json_outfit_list = []
         for outfit in outfit_list:
+            # json_outfit = {
+            #     "id" : outfit.id,
+            #     "outfit_info": outfit.outfit_info,
+            #     "popularity" : outfit.popularity,
+            #     "image_link": outfit.image_link,
+            #     "purchase_link": outfit.purchase_link
+            # }
+            outfit_serialize = OutfitSerializer(outfit)
             json_outfit = {
-                "id" : outfit.id,
-                "outfit_info": outfit.outfit_info,
-                "popularity" : outfit.popularity,
-                "image_link": outfit.image,
-                "purchase_link": outfit.purchase_link
+                "id" : outfit_serialize.data['id'],
+                "outfit_info": outfit_serialize.data['outfit_info'],
+                "popularity" : outfit_serialize.data['popularity'],
+                "image_link": outfit_serialize.data['image'],
+                "purchase_link": outfit_serialize.data['purchase_link']
             }
             json_outfit_list.append(json_outfit)
 
@@ -330,6 +344,7 @@ def outfit_list(request):
             'cursor': newCursor,
             'outfits': json_outfit_list
         }
+
         return JsonResponse(content, status=200)
 
     elif request.method == 'POST':

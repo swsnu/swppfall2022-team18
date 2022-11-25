@@ -71,6 +71,7 @@ const headers = {
 export const fetchOutfits = createAsyncThunk(
 	"outfit/fetchOutfits",
 	async () => {
+		console.log("here")
 		const response = await axios.get("/api/ooo/outfit/", {
 			headers,
 		});

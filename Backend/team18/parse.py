@@ -579,5 +579,9 @@ def csv_to_list(filename):
 #parse_bottom_cloth_data()
 #list_to_csv()
 #csv_to_list('cloth_list.csv')
+# csv_to_db('top_cloth_data.csv')
+csv_to_db('codi_data.csv')
 csv_to_db('top_cloth_data.csv')
+csv_to_db('bottom_cloth_data.csv')
+csv_to_db('outer_cloth_data.csv')
 
