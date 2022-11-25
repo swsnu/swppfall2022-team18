@@ -572,13 +572,13 @@ def csv_to_list(filename):
         lists.append(item)
     return lists
 
-#parse_outfit_data()
-#parse_top_cloth_data()
-#parse_outer_cloth_data()
-parse_bottom_cloth_data()
-#list_to_csv()
-#csv_to_list('cloth_list.csv')
-#csv_to_db('codi_data.csv')
-#csv_to_db('top_cloth_data.csv')
-#csv_to_db('bottom_cloth_data.csv')
-#csv_to_db('outer_cloth_data.csv')
+#parse_outfit_data() #코디 데이터 크롤링하는 함수
+#parse_top_cloth_data() #상의 데이터 크롤링하는 함수
+#parse_outer_cloth_data() #아우터 데이터 크롤링하는 함수
+#parse_bottom_cloth_data() #하의 데이터 크롤링하는 함수
+#list_to_csv() # list를 csv 파일로 변환하는 함수인데 지금 쓸 필요 없음
+#csv_to_list('cloth_list.csv') #csv 파일 list로 변환 변환하고자하는 파일 명 파라미터로 주기.
+csv_to_db('codi_data.csv') #csv 파일에 적힌 데이터 db로 옮기기 원하는 csv파일 파라미터로 주기
+csv_to_db('top_cloth_data.csv')
+csv_to_db('bottom_cloth_data.csv')
+csv_to_db('outer_cloth_data.csv')

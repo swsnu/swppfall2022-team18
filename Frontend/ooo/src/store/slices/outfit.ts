@@ -24,7 +24,7 @@ export interface FilterType {
 export interface SampleClothType {
 	id: number;
 	name: string;
-	image_link: number;
+	image_link: string;
 	outfit: number;
 	color: string;
 	type: string;
@@ -47,6 +47,7 @@ export interface OutfitState {
 	selectedOutfit: OutfitType | null;
 	filter: FilterType;
 	sampleClothes: SampleClothType[];
+	sampleCloth: SampleClothType | null;
 	userCloth: UserClothType | null;
 }
 
@@ -61,6 +62,7 @@ const initialState: OutfitState = {
 		recommend: false,
 	},
 	sampleClothes: [],
+	sampleCloth:null,
 	userCloth: null,
 };
 
@@ -145,7 +147,8 @@ export const outfitSlice = createSlice({
 			state.sampleClothes = action.payload.sampleclothes;
 		});
 		builder.addCase(fetchSampleCloth.fulfilled, (state, action) => {
-			state.userCloth = action.payload;
+			state.userCloth = action.payload.usercloth;
+			state.sampleCloth = action.payload.samplecloth;
 		});
 	},
 });
