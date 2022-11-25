@@ -19,4 +19,4 @@ urlpatterns = [
     path('outfit/<int:outfit_id>/', views.outfit, name='outfit/get_outfit/'),
     path('outfit/samplecloth/<int:samplecloth_id>/', views.sample_cloth, name='outfit/get_samplecloth/'),
     path('outfit/today/', views.today_outfit, name='outfit/today/')
-] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+]
