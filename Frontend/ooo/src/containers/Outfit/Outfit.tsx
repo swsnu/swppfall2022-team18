@@ -71,8 +71,8 @@ export default function Outfit(props: IProps) {
 				pattern: filters.pattern,
 				userHave: userHave,
 				recommend: recommend,
-				cursor: (page - 1) * 3,
-				pageSize: 3,
+				cursor: (page - 1) * 9,
+				pageSize: 9,
 			};
 			setIsLoading(true);
 			dispatch(fetchFilteredOutfits(postInput));
@@ -276,6 +276,7 @@ export default function Outfit(props: IProps) {
 								</>
 							)}
 						</div>
+						<div className="now-page-div">{page}</div>
 						<div id="next-page-button-div">
 							{isLast == true ? (
 								<></>
