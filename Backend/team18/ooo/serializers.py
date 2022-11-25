@@ -16,9 +16,9 @@ class OutfitSerializer(serializers.ModelSerializer):
         model = Outfit
         fields = '__all__'
         
-#class UserClothSerializer(serializers.ModelSerializer):
-#    image = serializers.ImageField(use_url=True)
-#    
-#    class Meta:
-#        model = UserCloth
-#        fields = all
+class UserClothSerializer(serializers.ModelSerializer):
+   image = serializers.ImageField(use_url=True)
+   
+   class Meta:
+       model = UserCloth
+       fields = all
