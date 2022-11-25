@@ -21,7 +21,7 @@ class signinUserCase(TestCase):
         #sample-labelset pair = (1,1) (2,2) (3,4) )(4,4 (5,5)
         #outfit-sample set = (1: 1,2) (2: 3,4,5) (3: 2,4)
         UserCloth.objects.create(
-            image_link = "image_link_1",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             closet = closet2,
             type = "test_type_1",
             color = 'test_color_1',
@@ -29,7 +29,7 @@ class signinUserCase(TestCase):
             label_set = labelset_1
         )
         UserCloth.objects.create(
-            image_link = "image_link_2",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             closet = closet2,
             type = "test_type_2",
             color = 'test_color_2',
@@ -37,7 +37,7 @@ class signinUserCase(TestCase):
             label_set = labelset_2
         )
         UserCloth.objects.create(
-            image_link = "image_link_3",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             closet = closet2,
             type = "test_type_3",
             color = 'test_color_3',
@@ -45,7 +45,7 @@ class signinUserCase(TestCase):
             label_set = labelset_3
         )
         UserCloth.objects.create(
-            image_link = "image_link_4",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             closet = closet2,
             type = "test_type_3",
             color = 'test_color_3',
@@ -53,7 +53,7 @@ class signinUserCase(TestCase):
             label_set = labelset_3
         )
         UserCloth.objects.create(
-            image_link = "image_link_5",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             closet = closet2,
             type = "test_type_4",
             color = 'test_color_4',
@@ -63,24 +63,24 @@ class signinUserCase(TestCase):
 
         outfit1 = Outfit.objects.create(
             popularity = 100,
-            image_link = "outfit_image_link_1",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             purchase_link = "purchase link 1"
         )
 
         outfit2 = Outfit.objects.create(
             popularity = 200,
-            image_link = "outfit_image_link_2",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             purchase_link = "purchase link 2"
         )
 
         outfit3 = Outfit.objects.create(
             popularity = 300,
-            image_link = "outfit_image_link_3",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             purchase_link = "purchase link 3"
         )
         
         samplecloth1 = SampleCloth.objects.create(
-            image_link = "sample_image_link_1",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             purchase_link = "cloth purchase link 1",
             type = "test_type_1",
             color = 'test_color_1',
@@ -90,7 +90,7 @@ class signinUserCase(TestCase):
         samplecloth1.outfit.set([outfit1])
 
         samplecloth2 = SampleCloth.objects.create(
-            image_link = "sample_image_link_2",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             purchase_link = "cloth purchase link 2",
             type = "test_type_2",
             color = 'test_color_2',
@@ -100,7 +100,7 @@ class signinUserCase(TestCase):
         samplecloth2.outfit.set([outfit1])
 
         samplecloth3 = SampleCloth.objects.create(
-            image_link = "sample_image_link_3",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             purchase_link = "cloth purchase link 3",
             type = "test_type_4",
             color = 'test_color_4',
@@ -110,7 +110,7 @@ class signinUserCase(TestCase):
         samplecloth3.outfit.set([outfit2])
 
         samplecloth4 = SampleCloth.objects.create(
-            image_link = "sample_image_link_4",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             purchase_link = "cloth purchase link 4",
             type = "test_type_4",
             color = 'test_color_4',
@@ -120,7 +120,7 @@ class signinUserCase(TestCase):
         samplecloth4.outfit.set([outfit2])
 
         samplecloth5 = SampleCloth.objects.create(
-            image_link = "sample_image_link_5",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             purchase_link = "cloth purchase link 5",
             type = "test_type_5",
             color = 'test_color_5',
@@ -130,7 +130,7 @@ class signinUserCase(TestCase):
         samplecloth5.outfit.set([outfit2])
 
         samplecloth6 = SampleCloth.objects.create(
-            image_link = "sample_image_link_6",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             purchase_link = "cloth purchase link 2",
             type = "test_type_2",
             color = 'test_color_2',
@@ -140,7 +140,7 @@ class signinUserCase(TestCase):
         samplecloth6.outfit.set([outfit3])
 
         samplecloth7 = SampleCloth.objects.create(
-            image_link = "sample_image_link_7",
+            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             purchase_link = "cloth purchase link 4",
             type = "test_type_4",
             color = 'test_color_4',
@@ -244,11 +244,13 @@ class signinUserCase(TestCase):
         response = client.post(
             '/api/ooo/closet/',
             json.dumps({
-                'name': 'name1',
-                'image_link': "image_link_1",
-                'type': 'test_type_1',
-                'color': 'test_color_1',
-                'pattern': 'test_pattern_1'
+                "body" : {
+                    'name': 'name1',
+                    'image_link': "image_link_1",
+                    'type': 'test_type_1',
+                    'color': 'test_color_1',
+                    'pattern': 'test_pattern_1'
+                }
             }),
             content_type='application/json'
         )
@@ -258,11 +260,13 @@ class signinUserCase(TestCase):
         response = client.post(
             '/api/ooo/closet/',
             json.dumps({
-                'name': 'name1',
-                'image_link': "image_link_1",
-                'type': 'test_type_1',
-                'color': 'test_color_1',
-                'pattern': 'test_pattern_3'
+                "body" : {
+                    'name': 'name1',
+                    'image_link': "image_link_1",
+                    'type': 'test_type_1',
+                    'color': 'test_color_1',
+                    'pattern': 'test_pattern_3'
+                }
             }),
             content_type='application/json'
         )
@@ -286,11 +290,13 @@ class signinUserCase(TestCase):
         response = client.put(
             '/api/ooo/closet/1/',
              json.dumps({
-                'name': 'name1',
-                'image_link': "image_link_1",
-                'type': 'type1',
-                'color': 'color1',
-                'pattern': 'pattern1'
+                    "body" : {
+                    'name': 'name1',
+                    'image_link': "image_link_1",
+                    'type': 'type1',
+                    'color': 'color1',
+                    'pattern': 'pattern1'
+                }
             }),
             content_type='application/json'
         )
@@ -318,7 +324,9 @@ class signinUserCase(TestCase):
         response = client.post(
             '/api/ooo/closet/1/',
             json.dumps({
+            "body": {
                 'dates': '2022-08-17'
+            }
             }),
             content_type='application/json'
         )
@@ -329,6 +337,7 @@ class signinUserCase(TestCase):
         response = client.put(
             '/api/ooo/closet/1/',
             json.dumps({
+            "body": {
                 'name': 'name1',
                 'image_link': "image_link_1",
                 'type': 'type1',
@@ -336,6 +345,7 @@ class signinUserCase(TestCase):
                 'pattern': 'pattern1',
                 'old_date': '2021-01-01',
                 'new_date': '2022-01-01'
+                }
             }),
             content_type='application/json'
         )
@@ -345,6 +355,7 @@ class signinUserCase(TestCase):
         response = client.put(
             '/api/ooo/closet/1/',
             json.dumps({
+            "body": {
                 'name': 'name1',
                 'image_link': "image_link_1",
                 'type': 'test_type_1',
@@ -352,6 +363,7 @@ class signinUserCase(TestCase):
                 'pattern': 'test_pattern_1',
                 'old_date': '2021-01-01',
                 'new_date': '2022-01-01'
+            }
             }),
             content_type='application/json'
         )
@@ -376,11 +388,12 @@ class signinUserCase(TestCase):
         response = client.post(
             '/api/ooo/outfit/?cursor=0&pageSize=2',
             json.dumps({
+            'body' : {
                 'type': 'type1',
                 'color': 'color1',
                 'pattern': 'pattern1',
                 'userHave': 'False',
-                'recommend': 'False'
+                'recommend': 'False'}
             }),
             content_type='application/json'
         )
@@ -409,11 +422,13 @@ class signinUserCase(TestCase):
 
         #bad request
         response = client.post(
-            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            '/api/ooo/outfit/',
             json.dumps({
+            'body':{
                 'type': 'type1',
                 'userHave': 'False',
                 'recommend': 'False'
+                }
             }),
             content_type='application/json'
         )
@@ -421,13 +436,17 @@ class signinUserCase(TestCase):
 
         #using labelset
         response = client.post(
-            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            '/api/ooo/outfit/',
             json.dumps({
-                'type': "test_type_1",
-                'color': 'test_color_1',
-                'pattern':'test_pattern_1',
-                'userHave': 'False',
-                'recommend': 'False'
+                'body':{
+                    'cursor' : '0',
+                    'pageSize' : '12',
+                    'type': "test_type_1",
+                    'color': 'test_color_1',
+                    'pattern':'test_pattern_1',
+                    'userHave': 'False',
+                    'recommend': 'False'
+                }
             }),
             content_type='application/json'
         )
@@ -435,13 +454,17 @@ class signinUserCase(TestCase):
 
         #try to using labelset but failed
         response = client.post(
-            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            '/api/ooo/outfit/',
             json.dumps({
-                'type': "test_type_1",
-                'color': 'test_color_1',
-                'pattern':'test_pattern_3',
-                'userHave': 'False',
-                'recommend': 'False'
+                'body':{
+                    'cursor' : '0',
+                    'pageSize' : '12',
+                    'type': "test_type_1",
+                    'color': 'test_color_1',
+                    'pattern':'test_pattern_3',
+                    'userHave': 'False',
+                    'recommend': 'False'
+                }
             }),
             content_type='application/json'
         )
@@ -449,39 +472,51 @@ class signinUserCase(TestCase):
 
         #using recommend filter
         response = client.post(
-            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            '/api/ooo/outfit/',
             json.dumps({
-                'type': "test_type_2",
-                'color': 'test_color_2',
-                'pattern':'test_pattern_2',
-                'userHave': 'False',
-                'recommend': 'True'
+                'body':{
+                    'cursor' : '0',
+                    'pageSize' : '12',
+                    'type': "test_type_2",
+                    'color': 'test_color_2',
+                    'pattern':'test_pattern_2',
+                    'userHave': 'False',
+                    'recommend': 'True'
+                }
             }),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, 200)
 
         response = client.post(
-            '/api/ooo/outfit/?cursor=0&pageSize=2',
-            json.dumps({
-                'type': "test_type_1",
-                'color': 'test_color_1',
-                'pattern':'test_pattern_3',
-                'userHave': 'True',
-                'recommend': 'False'
+            '/api/ooo/outfit/',
+            json.dumps({            
+                'body':{
+                    'cursor' : '0',
+                    'pageSize' : '12',
+                    'type': "test_type_1",
+                    'color': 'test_color_1',
+                    'pattern':'test_pattern_3',
+                    'userHave': 'True',
+                    'recommend': 'False'
+                }
             }),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, 200)
 
         response = client.post(
-            '/api/ooo/outfit/?cursor=0&pageSize=2',
-            json.dumps({
-                'type': "test_type_3",
-                'color': 'test_color_3',
-                'pattern':'test_pattern_3',
-                'userHave': 'False',
-                'recommend': 'True'
+            '/api/ooo/outfit/',
+            json.dumps({            
+                'body':{
+                    'cursor' : '0',
+                    'pageSize' : '12',
+                    'type': "test_type_3",
+                    'color': 'test_color_3',
+                    'pattern':'test_pattern_3',
+                    'userHave': 'False',
+                    'recommend': 'True'
+                }
             }),
             content_type='application/json'
         )
@@ -489,13 +524,17 @@ class signinUserCase(TestCase):
         # print(response.content)
 
         response = client.post(
-            '/api/ooo/outfit/?cursor=0&pageSize=2',
-            json.dumps({
-                'type': '',
-                'color': 'color1',
-                'pattern': '',
-                'userHave': 'False',
-                'recommend': 'True'
+            '/api/ooo/outfit/',
+            json.dumps({            
+                'body':{
+                    'cursor' : '0',
+                    'pageSize' : '12',
+                    'type': '',
+                    'color': 'color1',
+                    'pattern': '',
+                    'userHave': 'False',
+                    'recommend': 'True'
+                }
             }),
             content_type='application/json'
         )
@@ -503,26 +542,34 @@ class signinUserCase(TestCase):
 
         #using userHave filter
         response = client.post(
-            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            '/api/ooo/outfit/',
             json.dumps({
-                'type': "test_type_2",
-                'color': 'test_color_2',
-                'pattern':'test_pattern_2',
-                'userHave': 'True',
-                'recommend': 'False'
+                'body': {
+                    'cursor' : '0',
+                    'pageSize' : '12',
+                    'type': "test_type_2",
+                    'color': 'test_color_2',
+                    'pattern':'test_pattern_2',
+                    'userHave': 'True',
+                    'recommend': 'False'
+                }
             }),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, 200)
 
         response = client.post(
-            '/api/ooo/outfit/?cursor=0&pageSize=2',
+            '/api/ooo/outfit/',
             json.dumps({
-                'type': '',
-                'color': '',
-                'pattern': 'test_pattern_1',
-                'userHave': 'True',
-                'recommend': 'False'
+                "body" : {
+                    'cursor' : '0',
+                    'pageSize' : '12',
+                    'type': '',
+                    'color': '',
+                    'pattern': 'test_pattern_1',
+                    'userHave': 'True',
+                    'recommend': 'False'
+                }
             }),
             content_type='application/json'
         )
@@ -599,7 +646,9 @@ class signinUserCase(TestCase):
         response = client.post(
             '/api/ooo/closet/5/',
             json.dumps({
+            "body":{
                 'dates': '2022-11-20'
+            }
             }),
             content_type='application/json'
         )
