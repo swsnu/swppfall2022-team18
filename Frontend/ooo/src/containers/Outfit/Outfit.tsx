@@ -145,7 +145,9 @@ export default function Outfit() {
 				<div className="OutfitImages">
 					{outfitState.outfits.map((outfit, index) => {
 						return (
-							<div className="outfit-body" key={index}>
+							<div className="outfit-body" key={index}
+								onClick={() => {navigate("/outfit/" + outfit.id.toString())}}
+							>
 								<div className="OutfitImage">
 									<img
 										id="outfit-image"

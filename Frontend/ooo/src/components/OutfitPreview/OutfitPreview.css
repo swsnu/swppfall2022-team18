@@ -1,11 +1,10 @@
 .OutfitPreview {
 	display: flex;
-	width: 30%;
+	min-width: 400px;
 	flex-direction: row;
 	justify-content: center;
 	align-content: center;
 	background-color: white;
-	margin-left: 1%;
 	padding-left: 40px;
 	padding-bottom: 40px;
 }
