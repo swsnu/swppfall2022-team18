@@ -11,8 +11,16 @@ jest.mock("react-router", () => ({
 	useNavigate: () => mockNavigate,
 }));
 
+const mockDoneHandler = (
+	type: string | null,
+	color: string | null,
+	pattern: string | null
+) => {
+	return;
+};
+
 describe("<FilterModal/>", () => {
 	it("should render without errors", () => {
-		render(<FilterModal></FilterModal>);
+		render(<FilterModal clickDoneHandler={mockDoneHandler}></FilterModal>);
 	});
 });

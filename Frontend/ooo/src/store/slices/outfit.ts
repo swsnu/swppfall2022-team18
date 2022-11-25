@@ -23,7 +23,11 @@ export interface FilterType {
 }
 
 export interface FilterPostInputType {
-	filter: FilterType | null;
+	color: string | null;
+	type: string | null;
+	pattern: string | null;
+	userHave: boolean;
+	recommend: boolean;
 	cursor: number;
 	pageSize: number;
 }
@@ -118,11 +122,10 @@ export const fetchFilteredOutfits = createAsyncThunk(
 			"/api/ooo/outfit/",
 			{
 				headers,
-				cursor: data.cursor,
-				pageSize: data.pageSize,
-				body: data.filter,
+				body: data,
 			}
 		);
+		console.log(response.data);
 		return response.data;
 	}
 );

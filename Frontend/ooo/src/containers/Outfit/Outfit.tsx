@@ -48,6 +48,9 @@ export default function Outfit(props: IProps) {
 		} else return false;
 	};
 
+	console.log(isLast);
+	console.log(outfitState.isLast);
+
 	useEffect(() => {
 		//login check, redirect to login page
 		const redirect = () => {
@@ -60,24 +63,27 @@ export default function Outfit(props: IProps) {
 
 	useEffect(() => {
 		//closet list, outfitlist 받아오는 것
+		console.log(userHave);
 		const getData = async () => {
 			const postInput: FilterPostInputType = {
-				filter: {
-					type: filters.type,
-					color: filters.color,
-					pattern: filters.pattern,
-					userHave: userHave,
-					recommend: recommend,
-				},
-				cursor: (page - 1) * 12,
-				pageSize: 12,
+				type: filters.type,
+				color: filters.color,
+				pattern: filters.pattern,
+				userHave: userHave,
+				recommend: recommend,
+				cursor: (page - 1) * 3,
+				pageSize: 3,
 			};
 			setIsLoading(true);
 			dispatch(fetchFilteredOutfits(postInput));
 			setIsLoading(false);
 		};
 		getData();
-	}, []);
+	}, [page, userHave, recommend, filters]);
+
+	useEffect(() => {
+		setIsLast(outfitState.isLast);
+	}, [outfitState]);
 
 	const clickUserHaveHandler = () => {
 		if (userHave == true) setUserHave(false);
@@ -130,6 +136,7 @@ export default function Outfit(props: IProps) {
 	};
 
 	const clickNextPageHandler = () => {
+		console.log(page);
 		const currentPage = page;
 		setPage(currentPage + 1);
 	};
@@ -141,6 +148,11 @@ export default function Outfit(props: IProps) {
 
 	const clickFirstPageHandler = () => {
 		setPage(1);
+	};
+
+	const clickOutfitImageHandler = (outfit_id: number) => {
+		const navigateLink = "/outfit/" + outfit_id + "/";
+		navigate(navigateLink);
 	};
 
 	return (
@@ -183,9 +195,7 @@ export default function Outfit(props: IProps) {
 					</button>
 				</div>
 				<Modal id="filter-modal" isOpen={modalOpen}>
-					<FilterModal
-						clickDoneHandler={clickDoneHandler(type, color, pattern)}
-					></FilterModal>
+					<FilterModal clickDoneHandler={clickDoneHandler}></FilterModal>
 					<div id="close-buton-div">
 						<button
 							id="modal-close-button"
@@ -199,24 +209,44 @@ export default function Outfit(props: IProps) {
 					</div>
 				</Modal>
 				<div className="OutfitImages">
-					<div className="outfit-list-div">
-						{outfitState.outfits.map((outfit, index) => {
-							return (
-								<div className="outfit-body" key={index}>
-									<div className="OutfitImage">
-										<img
-											id="outfit-image"
-											data-testid="outfit-image"
-											src={outfit.image_link}
-										></img>
-									</div>
-									<div className="OutfitData">
-										<text id="outfit-info-text">{outfit.outfit_info}</text>
-									</div>
-								</div>
-							);
-						})}
-					</div>
+					{isLoading == true ? (
+						<>
+							<div className="loading-div">Loading...</div>
+						</>
+					) : (
+						<>
+							<div className="outfit-list-div">
+								{outfitState.outfits.length == 0 ? (
+									<>
+										<div className="no-outfit-div">NO OUTFITS :(</div>
+									</>
+								) : (
+									<>
+										{outfitState.outfits.map((outfit, index) => {
+											return (
+												<div className="outfit-body" key={index}>
+													<div className="OutfitImage">
+														<img
+															id="outfit-image"
+															data-testid="outfit-image"
+															src={outfit.image_link}
+															onClick={() => clickOutfitImageHandler(outfit.id)}
+														></img>
+													</div>
+													<div className="OutfitData">
+														<text id="outfit-info-text">
+															{outfit.outfit_info}
+														</text>
+													</div>
+												</div>
+											);
+										})}
+									</>
+								)}
+							</div>
+						</>
+					)}
+
 					<div className="page-buttons-div">
 						<div id="first-page-button-div">
 							{page == 1 ? (
@@ -225,8 +255,10 @@ export default function Outfit(props: IProps) {
 								<>
 									<button
 										id="first-page-button"
-										onClick={() => clickFirstPageHandler}
-									></button>
+										onClick={() => clickFirstPageHandler()}
+									>
+										처음으로
+									</button>
 								</>
 							)}
 						</div>
@@ -237,8 +269,10 @@ export default function Outfit(props: IProps) {
 								<>
 									<button
 										id="before-page-button"
-										onClick={() => clickBeforePageHandler}
-									></button>
+										onClick={() => clickBeforePageHandler()}
+									>
+										이전 페이지
+									</button>
 								</>
 							)}
 						</div>
@@ -249,8 +283,10 @@ export default function Outfit(props: IProps) {
 								<>
 									<button
 										id="next-page-button"
-										onClick={() => clickNextPageHandler}
-									></button>
+										onClick={() => clickNextPageHandler()}
+									>
+										다음 페이지
+									</button>
 								</>
 							)}
 						</div>

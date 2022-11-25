@@ -31,6 +31,7 @@ const FilterModal = (props: IProps) => {
 	];
 
 	const TYPEOPTIONS = [
+		{ value: "Type" },
 		{ value: "T-Shirt" },
 		{ value: "Shirt" },
 		{ value: "Jean" },

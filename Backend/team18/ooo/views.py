@@ -14,6 +14,8 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import Outfit, SampleCloth, UserCloth, Closet, LabelSet
 from datetime import date, datetime, timedelta
+from rest_framework import serializers
+from .serializers import SampleClothSerializer, OutfitSerializer
 
 type_tree =  [
     ['상의', ['반소매 티셔츠', '피케/카라 티셔츠', '긴소매 티셔츠', '맨투맨/스웨트셔츠', '민소매 티셔츠', '후드 티셔츠', '셔츠/블라우스', '니트/스웨터', '기타 상의']], 
@@ -301,7 +303,11 @@ def outfit_list(request):
         outfits_count = len(all_outfits)
         response_outfit_range = min(outfits_count, cursor + page_size + 1)
 
-        outfit_list = all_outfits[cursor:response_outfit_range]
+        if min(outfits_count, cursor + page_size + 1) == outfits_count:
+            cursor = 0
+
+        # outfit_list = all_outfits[cursor:response_outfit_range]
+        outfit_list = all_outfits[0:1]
 
         is_last = False
 
@@ -316,12 +322,13 @@ def outfit_list(request):
         
         json_outfit_list = []
         for outfit in outfit_list:
+            outfit_serialize = OutfitSerializer(outfit)
             json_outfit = {
-                "id" : outfit.id,
-                "outfit_info": outfit.outfit_info,
-                "popularity" : outfit.popularity,
-                "image_link": outfit.image,
-                "purchase_link": outfit.purchase_link
+                "id" : outfit_serialize.data['id'],
+                "outfit_info": outfit_serialize.data['outfit_info'],
+                "popularity" : outfit_serialize.data['popularity'],
+                "image_link": outfit_serialize.data['image'],
+                "purchase_link": outfit_serialize.data['purchase_link']
             }
             json_outfit_list.append(json_outfit)
 
@@ -336,11 +343,10 @@ def outfit_list(request):
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
 
-        cursor = int(request.GET.get('cursor', '99999999999999').replace('/',''))
-        page_size = int(request.GET.get('pageSize', '12').replace('/',''))
-
         try:
             req_data = json.loads(request.body.decode())["body"]
+            cursor = int(req_data["cursor"])
+            page_size = int(req_data["pageSize"])
             filter_type = req_data["type"]
             filter_color = req_data["color"]
             filter_pattern = req_data["pattern"]
@@ -348,7 +354,9 @@ def outfit_list(request):
             filter_recommend = req_data["recommend"]
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        
+
+        print(filter_userhave)
+
         using_labelset = False
 
         if filter_type and filter_color and filter_pattern:
@@ -362,7 +370,7 @@ def outfit_list(request):
 
         closet = Closet.objects.get(user=request.user)
         
-        if filter_recommend == "True" or filter_userhave == "True":
+        if filter_recommend == True or filter_userhave == True:
             usercloth_list = list(UserCloth.objects.filter(closet=closet))
 
             labelset_list = []
@@ -407,8 +415,9 @@ def outfit_list(request):
                         recommend.append(outfit)   
                 all_outfits = recommend
  
-        else:
+        elif filter_type or filter_color or filter_pattern:
             #No userHave, recommend filter
+
             if using_labelset:
                 samplecloth_list = SampleCloth.objects.filter(label_set = filter_labelset)
             else:
@@ -420,14 +429,19 @@ def outfit_list(request):
                 if filter_pattern:
                     samplecloth_list = [x for x in samplecloth_list if x.pattern == filter_pattern]
             all_outfits = []
+            print(samplecloth_list)
 
             for samplecloth in samplecloth_list:
                 samplecloth_include_outfit = list(samplecloth.outfit.all())
                 all_outfits = all_outfits + samplecloth_include_outfit
-
+            print(all_outfits)
             all_outfits = list(set(all_outfits))
             all_outfits = sorted(all_outfits, key=lambda outfit: outfit.popularity, reverse=True)
         
+        else:
+            all_outfits = list(Outfit.objects.all().order_by("-popularity"))
+            all_outfits = list(set(all_outfits))
+
         outfits_count = len(all_outfits)
         response_outfit_range = min(outfits_count, cursor + page_size + 1)
 
@@ -446,12 +460,13 @@ def outfit_list(request):
 
         json_outfit_list = []
         for outfit in outfit_list:
+            outfit_serialize = OutfitSerializer(outfit)
             json_outfit = {
-                "id" : outfit.id,
-                "outfit_info": outfit.outfit_info,
-                "popularity" : outfit.popularity,
-                "image_link": outfit.image,
-                "purchase_link": outfit.purchase_link
+                "id" : outfit_serialize.data['id'],
+                "outfit_info": outfit_serialize.data['outfit_info'],
+                "popularity" : outfit_serialize.data['popularity'],
+                "image_link": outfit_serialize.data['image'],
+                "purchase_link": outfit_serialize.data['purchase_link']
             }
             json_outfit_list.append(json_outfit)
 
@@ -466,6 +481,8 @@ def outfit_list(request):
             'cursor': newCursor,
             'outfits': json_outfit_list
         }
+
+        print(content)
 
         return JsonResponse(content, status=200)
 
@@ -486,12 +503,13 @@ def outfit(request, outfit_id):
 
         sample_cloth_list = SampleCloth.objects.filter(outfit=outfit)
 
+        outfit_serialize = OutfitSerializer(outfit)
         json_outfit = {
-            "id" : outfit.id,   
-            "outfit_info": outfit.outfit_info,
-            "popularity" : outfit.popularity,
-            "image_link": outfit.image,
-            "purchase_link": outfit.purchase_link
+            "id" : outfit_serialize.data['id'],
+            "outfit_info": outfit_serialize.data['outfit_info'],
+            "popularity" : outfit_serialize.data['popularity'],
+            "image_link": outfit_serialize.data['image'],
+            "purchase_link": outfit_serialize.data['purchase_link']
         }
 
         json_samplecloth_list = []

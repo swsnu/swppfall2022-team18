@@ -35,41 +35,105 @@ jest.mock("react-redux", () => ({
 	useDispatch: () => mockDispatch,
 }));
 
+export interface IProps {
+	userHave: boolean;
+	recommend: boolean;
+	type: string | null;
+	color: string | null;
+	pattern: string | null;
+}
+
+const mockProps: IProps = {
+	userHave: false,
+	recommend: false,
+	type: null,
+	color: null,
+	pattern: null,
+};
+
 describe("<Outfit />", () => {
 	it("should render Outfit", () => {
-		const { container } = render(<Outfit></Outfit>);
+		const { container } = render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		expect(container).toBeTruthy();
 	});
 
 	it("should handle clickHeaderHandler", () => {
-		render(<Outfit></Outfit>);
+		render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		const appNameText = screen.getByText("oOo");
 		fireEvent.click(appNameText);
 		expect(mockNavigate).toHaveBeenCalled();
 	});
 
 	it("should handle clickInfoHandler", () => {
-		render(<Outfit></Outfit>);
+		render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		const appNameText = screen.getByText("내 정보");
 		fireEvent.click(appNameText);
 		expect(mockNavigate).toHaveBeenCalled();
 	});
 
 	it("should handle clickLogoutHandler", () => {
-		render(<Outfit></Outfit>);
+		render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		const appNameText = screen.getByText("로그아웃");
 		fireEvent.click(appNameText);
 	});
 
 	it("should handle userHave button", () => {
-		render(<Outfit></Outfit>);
+		render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		const userHaveButton = screen.getByText("userHave");
 		fireEvent.click(userHaveButton);
 		fireEvent.click(userHaveButton);
 	});
 
 	it("should handle recommend button", () => {
-		render(<Outfit></Outfit>);
+		render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		const recommendButton = screen.getByText("recommend");
 		fireEvent.click(recommendButton);
 		fireEvent.click(recommendButton);
@@ -78,19 +142,43 @@ describe("<Outfit />", () => {
 	});
 
 	it("should handle reset button", () => {
-		render(<Outfit></Outfit>);
+		render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		const resetButton = screen.getByText("Reset");
 		fireEvent.click(resetButton);
 	});
 
 	it("should handle Filter button", () => {
-		render(<Outfit></Outfit>);
+		render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		const filterButton = screen.getByText("Filter");
 		fireEvent.click(filterButton);
 	});
 
 	it("should handle close Filter button", () => {
-		render(<Outfit></Outfit>);
+		render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		const filterButton = screen.getByText("Filter");
 		fireEvent.click(filterButton);
 		const closeButton = screen.getByTestId("modal-close-button");
@@ -98,7 +186,15 @@ describe("<Outfit />", () => {
 	});
 
 	it("should handle Filter Modal Done button", () => {
-		render(<Outfit></Outfit>);
+		render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		const filterButton = screen.getByText("Filter");
 		fireEvent.click(filterButton);
 		const doneButton = screen.getByText("Done");
@@ -106,13 +202,29 @@ describe("<Outfit />", () => {
 	});
 
 	it("should handle Filter Modal Done", () => {
-		render(<Outfit></Outfit>);
+		render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		const filterButton = screen.getByText("Filter");
 		fireEvent.click(filterButton);
 	});
 
 	it("should handle Click Outfit Image", () => {
-		render(<Outfit></Outfit>);
+		render(
+			<Outfit
+				userHave={false}
+				recommend={false}
+				type={null}
+				color={null}
+				pattern={null}
+			></Outfit>
+		);
 		const outfitImage = screen.getAllByTestId("outfit-image")[0];
 		fireEvent.click(outfitImage);
 		expect(mockNavigate).toHaveBeenCalled();
