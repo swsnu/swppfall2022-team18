@@ -70,11 +70,7 @@ const TypeFilter = (props: IProps) => {
 			<>
 				<select id="type-select" disabled={true}>
 					{NullTypeOptions.map((option, index) => (
-						<option
-							key={index}
-							value={option.value}
-							onClick={() => props.selectHandler(option.value)}
-						>
+						<option key={index} value={option.value}>
 							{option.value}
 						</option>
 					))}

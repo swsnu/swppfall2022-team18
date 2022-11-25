@@ -48,9 +48,6 @@ export default function Outfit(props: IProps) {
 		} else return false;
 	};
 
-	console.log(isLast);
-	console.log(outfitState.isLast);
-
 	useEffect(() => {
 		//login check, redirect to login page
 		const redirect = () => {
@@ -63,7 +60,7 @@ export default function Outfit(props: IProps) {
 
 	useEffect(() => {
 		//closet list, outfitlist 받아오는 것
-		console.log(userHave);
+		// console.log(userHave);
 		const getData = async () => {
 			const postInput: FilterPostInputType = {
 				type: filters.type,
@@ -255,6 +252,7 @@ export default function Outfit(props: IProps) {
 								<>
 									<button
 										id="first-page-button"
+										data-testid="first-page-button"
 										onClick={() => clickFirstPageHandler()}
 									>
 										처음으로
@@ -269,6 +267,7 @@ export default function Outfit(props: IProps) {
 								<>
 									<button
 										id="before-page-button"
+										data-testid="before-page-button"
 										onClick={() => clickBeforePageHandler()}
 									>
 										이전 페이지
@@ -284,6 +283,7 @@ export default function Outfit(props: IProps) {
 								<>
 									<button
 										id="next-page-button"
+										data-testid="next-page-button"
 										onClick={() => clickNextPageHandler()}
 									>
 										다음 페이지

@@ -74,7 +74,7 @@ const OutfitDetail = () => {
 	];
 
 	const clickPurchaseButtonHander = (purchase_link: string) => {
-		navigate("/redirect", { state: { url: purchase_link } });
+		navigate("/Redirect", { state: { url: purchase_link } });
 	};
 
 	const clickClothHandler = (id: number) => {
@@ -90,14 +90,12 @@ const OutfitDetail = () => {
 		console.log(selectedCloth);
 	};
 
-	const [isSending, setIsSending] = useState(false)
+	const [isSending, setIsSending] = useState(false);
 	const checkLoginned = () => {
-		if(localStorage.getItem("username") !== null){
-			return true
-		}
-		else return false
+		if (localStorage.getItem("username") !== null) {
+			return true;
+		} else return false;
 	};
-
 
 	useEffect(() => {
 		const redirect = () => {
@@ -115,9 +113,9 @@ const OutfitDetail = () => {
 					clickInfoHandler={() => {
 						navigate("/setting");
 					}}
-					clickLogoutHandler={async() => {
-						await logoutUser().catch((error) => console.log(error))
-						setIsSending(!isSending)
+					clickLogoutHandler={async () => {
+						await logoutUser().catch((error) => console.log(error));
+						setIsSending(!isSending);
 					}}
 					clickHeaderHandler={() => {
 						navigate("/home");
