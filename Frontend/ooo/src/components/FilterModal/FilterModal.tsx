@@ -1,6 +1,7 @@
 import React from "react";
 import "./FilterModal.css";
 import { useState } from "react";
+import TypeFilter from "../TypeFilter/TypeFilter";
 
 export interface IProps {
 	clickDoneHandler: (
@@ -14,8 +15,9 @@ const FilterModal = (props: IProps) => {
 	const [type, setType] = useState<string | null>(null);
 	const [color, setColor] = useState<string | null>(null);
 	const [pattern, setPattern] = useState<string | null>(null);
+	const [metaType, setMetaType] = useState<string | null>(null);
 
-	const COLOROPTIONS = [
+	const ColorOptions = [
 		{ value: "Color" },
 		{ value: "black" },
 		{ value: "white" },
@@ -24,24 +26,84 @@ const FilterModal = (props: IProps) => {
 		{ value: "etc" },
 	];
 
-	const PATTERNOPTIONS = [
+	const PatternOptions = [
 		{ value: "Pattern" },
 		{ value: "stripe" },
 		{ value: "none" },
 	];
 
-	const TYPEOPTIONS = [
-		{ value: "Type" },
-		{ value: "T-Shirt" },
-		{ value: "Shirt" },
-		{ value: "Jean" },
-		{ value: "Jacket" },
+	const MetaTypeOptions = [
+		{ value: "옷 종류" },
+		{ value: "상의" },
+		{ value: "바지" },
+		{ value: "아우터" },
 	];
 
+	const TopTypeOptions = [
+		{ value: "상의 종류" },
+		{ value: "반소매 티셔츠" },
+		{ value: "피케/카라 티셔츠" },
+		{ value: "긴소매 티셔츠" },
+		{ value: "맨투맨/스웨트셔츠" },
+		{ value: "민소매 티셔츠" },
+		{ value: "후드 티셔츠" },
+		{ value: "셔츠/블라우스" },
+		{ value: "니트/스웨터" },
+		{ value: "기타 상의" },
+	];
+
+	const BottomTypeOptions = [
+		{ value: "하의 종류" },
+		{ value: "데님 팬츠" },
+		{ value: "숏 팬츠" },
+		{ value: "코튼 팬츠" },
+		{ value: "레깅스" },
+		{ value: "슈트 팬츠/슬랙스" },
+		{ value: "점프 슈트/오버올" },
+		{ value: "트레이닝/조거 팬츠" },
+		{ value: "기타 바지" },
+	];
+
+	const OuterTypeOptions = [
+		{ value: "아우터 종류" },
+		{ value: "후드 집업" },
+		{ value: "환절기 코트" },
+		{ value: "블루종/MA-1" },
+		{ value: "겨울 싱글 코트" },
+		{ value: "레더/라이더스 재킷" },
+		{ value: "겨울 더블 코트" },
+		{ value: "무스탕/퍼" },
+		{ value: "겨울 기타 코트" },
+		{ value: "롱패딩/롱헤비 아우터" },
+		{ value: "트러커 재킷" },
+		{ value: "슈트/블레이저 재킷" },
+		{ value: "숏패딩/숏헤비 아우터" },
+		{ value: "카디건" },
+		{ value: "패딩 베스트" },
+		{ value: "아노락 재킷" },
+		{ value: "베스트" },
+		{ value: "플리스/뽀글이" },
+		{ value: "사파리/헌팅 재킷" },
+		{ value: "트레이닝 재킷" },
+		{ value: "나일론/코치 재킷" },
+		{ value: "스타디움 재킷" },
+		{ value: "기타 아우터" },
+	];
+
+	const clickMetaTypeOptionHandler = (value: string) => {
+		if (value == "옷 종류") {
+			setMetaType(null);
+		} else setMetaType(value);
+	};
+
 	const clickTypeOptionHandler = (value: string) => {
-		if (value == "Type") {
-			setType(null);
-		} else setType(value);
+		if (
+			value == "상의 종류" ||
+			value == "하의 종류" ||
+			value == "아우터 종류"
+		) {
+			setMetaType(null);
+		} else setMetaType(value);
 	};
 
 	const clickColorOptionHandler = (value: string) => {
@@ -58,19 +120,25 @@ const FilterModal = (props: IProps) => {
 
 	return (
 		<div className="FilterModal">
-			<select id="type-select">
-				{TYPEOPTIONS.map((option, index) => (
-					<option
-						key={index}
-						value={option.value}
-						onClick={() => clickTypeOptionHandler(option.value)}
-					>
-						{option.value}
-					</option>
-				))}
-			</select>
+			<div>
+				<select id="type-select">
+					{MetaTypeOptions.map((option, index) => (
+						<option
+							key={index}
+							value={option.value}
+							onClick={() => clickMetaTypeOptionHandler(option.value)}
+						>
+							{option.value}
+						</option>
+					))}
+				</select>
+				<TypeFilter
+					metaType={metaType}
+					selectHandler={clickTypeOptionHandler}
+				></TypeFilter>
+			</div>
 			<select id="color-select">
-				{COLOROPTIONS.map((option, index) => (
+				{ColorOptions.map((option, index) => (
 					<option
 						key={index}
 						value={option.value}
@@ -82,7 +150,7 @@ const FilterModal = (props: IProps) => {
 			</select>
 
 			<select id="pattern-select">
-				{PATTERNOPTIONS.map((option, index) => (
+				{PatternOptions.map((option, index) => (
 					<option
 						key={index}
 						value={option.value}
