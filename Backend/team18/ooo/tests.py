@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 import json
 from .models import User, Closet, UserCloth, LabelSet, SampleCloth, Outfit
+from datetime import date, datetime, timedelta
 
 # Create your tests here.
 class signinUserCase(TestCase):
@@ -392,8 +393,8 @@ class signinUserCase(TestCase):
                 'type': 'type1',
                 'color': 'color1',
                 'pattern': 'pattern1',
-                'userHave': 'False',
-                'recommend': 'False'}
+                'userHave': False,
+                'recommend': False}
             }),
             content_type='application/json'
         )
@@ -426,8 +427,8 @@ class signinUserCase(TestCase):
             json.dumps({
             'body':{
                 'type': 'type1',
-                'userHave': 'False',
-                'recommend': 'False'
+                'userHave': False,
+                'recommend': False
                 }
             }),
             content_type='application/json'
@@ -444,8 +445,8 @@ class signinUserCase(TestCase):
                     'type': "test_type_1",
                     'color': 'test_color_1',
                     'pattern':'test_pattern_1',
-                    'userHave': 'False',
-                    'recommend': 'False'
+                    'userHave': False,
+                    'recommend': False
                 }
             }),
             content_type='application/json'
@@ -462,8 +463,8 @@ class signinUserCase(TestCase):
                     'type': "test_type_1",
                     'color': 'test_color_1',
                     'pattern':'test_pattern_3',
-                    'userHave': 'False',
-                    'recommend': 'False'
+                    'userHave': False,
+                    'recommend': False
                 }
             }),
             content_type='application/json'
@@ -480,8 +481,8 @@ class signinUserCase(TestCase):
                     'type': "test_type_2",
                     'color': 'test_color_2',
                     'pattern':'test_pattern_2',
-                    'userHave': 'False',
-                    'recommend': 'True'
+                    'userHave': False,
+                    'recommend': True
                 }
             }),
             content_type='application/json'
@@ -497,8 +498,8 @@ class signinUserCase(TestCase):
                     'type': "test_type_1",
                     'color': 'test_color_1',
                     'pattern':'test_pattern_3',
-                    'userHave': 'True',
-                    'recommend': 'False'
+                    'userHave': True,
+                    'recommend': False
                 }
             }),
             content_type='application/json'
@@ -514,8 +515,8 @@ class signinUserCase(TestCase):
                     'type': "test_type_3",
                     'color': 'test_color_3',
                     'pattern':'test_pattern_3',
-                    'userHave': 'False',
-                    'recommend': 'True'
+                    'userHave': False,
+                    'recommend': True
                 }
             }),
             content_type='application/json'
@@ -532,8 +533,8 @@ class signinUserCase(TestCase):
                     'type': '',
                     'color': 'color1',
                     'pattern': '',
-                    'userHave': 'False',
-                    'recommend': 'True'
+                    'userHave': False,
+                    'recommend': True
                 }
             }),
             content_type='application/json'
@@ -550,8 +551,8 @@ class signinUserCase(TestCase):
                     'type': "test_type_2",
                     'color': 'test_color_2',
                     'pattern':'test_pattern_2',
-                    'userHave': 'True',
-                    'recommend': 'False'
+                    'userHave': True,
+                    'recommend': False
                 }
             }),
             content_type='application/json'
@@ -567,8 +568,8 @@ class signinUserCase(TestCase):
                     'type': '',
                     'color': '',
                     'pattern': 'test_pattern_1',
-                    'userHave': 'True',
-                    'recommend': 'False'
+                    'userHave': True,
+                    'recommend': False
                 }
             }),
             content_type='application/json'
@@ -642,12 +643,17 @@ class signinUserCase(TestCase):
         self.assertEqual(response.status_code, 200)   
         print(response.content)
 
+        today = date.today()
+        zero_day = timedelta(days=0)
+        one_day = timedelta(days=1)
+
+
         #get out usercloth 5 (label_set=4) from the candidate of making recommend outfit
         response = client.post(
             '/api/ooo/closet/5/',
             json.dumps({
             "body":{
-                'dates': '2022-11-20'
+                'dates': (today-one_day).isoformat()
             }
             }),
             content_type='application/json'
@@ -656,5 +662,18 @@ class signinUserCase(TestCase):
 
         response = client.get('/api/ooo/outfit/today/')
         self.assertEqual(response.status_code, 200) 
-        print(response.content)
+
+        response = client.post(
+            '/api/ooo/closet/1/',
+            json.dumps({
+            "body":{
+                'dates': (today-one_day).isoformat()
+            }
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)  
+
+        response = client.get('/api/ooo/outfit/today/')
+        self.assertEqual(response.status_code, 404) 
         
