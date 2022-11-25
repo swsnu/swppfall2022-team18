@@ -10,6 +10,7 @@ import { logoutUser } from "../../api/user";
 import Modal from "react-modal";
 import SampleClothModal from "../../components/SampleClothModal/SampleClothModal";
 
+
 const OutfitDetail = () => {
 	const { id } = useParams();
 

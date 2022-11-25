@@ -10,6 +10,8 @@ import { AppDispatch } from "../../store";
 import { selectOutfit } from "../../store/slices/outfit";
 import { fetchOutfits } from "../../store/slices/outfit";
 
+const SERVER = 'http://127.0.0.1:8000'
+
 export default function Outfit() {
 	const [userHave, setUserHave] = useState(false);
 	const [recommend, setRecommend] = useState(false);
@@ -150,7 +152,7 @@ export default function Outfit() {
 									<img
 										id="outfit-image"
 										data-testid="outfit-image"
-										src={outfit.image_link}
+										src={SERVER+ outfit.image_link}
 									></img>
 								</div>
 								<div className="OutfitData">
