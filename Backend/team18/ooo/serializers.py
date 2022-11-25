@@ -2,23 +2,23 @@ from rest_framework import serializers
 from .models import SampleCloth, UserCloth, Outfit
 
 
-class SampleClothSerializer(serializers.ModelSerializer):
+class SampleClothSerializer(serializers.HyperlinkedModelSerializer):
     image = serializers.ImageField(use_url=True)
     
     class Meta:
         model = SampleCloth
         fields = '__all__'
         
-class OutfitSerializer(serializers.ModelSerializer):
+class OutfitSerializer(serializers.HyperlinkedModelSerializer):
     image = serializers.ImageField(use_url=True)
     
     class Meta:
         model = Outfit
         fields = '__all__'
         
-#class UserClothSerializer(serializers.ModelSerializer):
+#class UserClothSerializer(serializers.HyperlinkModelSerializer):
 #    image = serializers.ImageField(use_url=True)
 #    
 #    class Meta:
 #        model = UserCloth
-#        fields = all
+#        fields = '__all__'

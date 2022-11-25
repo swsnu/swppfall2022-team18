@@ -30,15 +30,16 @@ error_outer_cloth_link=[]
 def parse_outfit_data():
         
     driver = webdriver.Chrome()
-    time.sleep(5)
+    time.sleep(3)
     driver.implicitly_wait(2)
     LOADING_TIME = 15
-    for i in range(81,91): # 뒷 페이지 가는 버튼 있을 때까지. 10페이지만으로 바꿈. 214까지 있음.
+    for i in range(1,11): # 뒷 페이지 가는 버튼 있을 때까지. 10페이지만으로 바꿈. 214까지 있음.
         driver.get("https://www.musinsa.com/app/styles/lists?use_yn_360=&style_type=&brand=&model=&tag_no=&max_rt=&min_rt=&display_cnt=60&list_kind=big&sort=view_cnt&page={}".format(i))
-        time.sleep(5)
+        time.sleep(3)
         driver.implicitly_wait(LOADING_TIME)
+
         driver.find_element('xpath','/html/body/div[3]/div[3]/div[1]/button[2]').click()
-        time.sleep(5)
+        time.sleep(3)
         driver.implicitly_wait(LOADING_TIME)
         codi_li = driver.find_elements("class name","style-list-item__thumbnail")
         list_num = 1
@@ -48,7 +49,7 @@ def parse_outfit_data():
             try:
                 codi_li = driver.find_elements("class name","style-list-item__thumbnail")
                 codi_name_list = driver.find_elements("class name","style-list-information__title")
-                print(len(driver.find_elements('class name', 'post-information__text')))
+
                 rank = driver.find_elements("class name","post-information")[list_num-1].find_elements('tag name','span')[1].text
                 rank = re.sub(r'[^0-9]','',rank)
                 print(rank)
@@ -57,7 +58,7 @@ def parse_outfit_data():
                 # 코디 이미지
                 codi_image = driver.find_elements('class name',"style-list-thumbnail__img")[list_num-1].get_attribute("src")
                 driver.find_elements('class name',"style-list-item__link")[list_num-1].click()
-                time.sleep(5)
+                time.sleep(3)
                 driver.implicitly_wait(LOADING_TIME)
                 # 코디 설명
                 explain = driver.find_element('class name',"styling_txt").text
@@ -69,32 +70,64 @@ def parse_outfit_data():
                     cloth_list_num = driver.find_elements('class name',"styling_img")
                     cloth_links = []
                     for c in cloth_list_num: # 하나의 코디를 이루는 옷 링크 모으기.
+                        top_cloth_data_list=[]
+                        bottom_cloth_data_list=[]
+                        outer_cloth_data_list=[]
                         try:
                             c.click() 
                             driver.implicitly_wait(LOADING_TIME)
                             store = False
                             #상의, 바지, 아우터일 경우에만 옷 저장
-                            for cloth_type in driver.find_elements("xpath","//*[@id=\"page_product_detail\"]/div[3]/div[3]/div[1]/p/a"):
-                                if (cloth_type.text.strip() == '상의' or cloth_type.text.strip() == '바지' or cloth_type.text.strip() == '아우터'):
-                                    store = True
-                                    print(cloth_type.text)
+                            cloth_class = driver.find_element('class name','item_categories').find_elements('tag name', 'a')[0].text
+                            if (cloth_class.strip() == '상의' or cloth_class.strip() == '바지' or cloth_class.strip() == '아우터'):
+                                store = True
+                                print(cloth_class, flush=True)
                             if store:
-                                url = str(driver.current_url)
-                                cloth_links.append(url)
-                                with open('cloth_list.csv','a', encoding='utf-8', newline='') as cloth_list_csvfile:
-                                    wr = csv.writer(cloth_list_csvfile)
-                                    wr.writerow([url])
-                                print(url)
-                                print(cloth_links)
+                                cloth_link = str(driver.current_url)
+                                cloth_type = driver.find_element('class name','item_categories').find_elements('tag name', 'a')[1].text
+                                cloth_image = driver.find_element('class name','plus_cursor').get_attribute("src")
+                                cloth_name = driver.find_element('xpath','//*[@id="page_product_detail"]/div[3]/div[3]/span/em').text
+                                print(cloth_type  + '/' +cloth_name, flush=True)
+                                if cloth_name.__contains__('체크'):
+                                    cloth_pattern = '체크'
+                                elif cloth_name.__contains__('스트라이프'):
+                                    cloth_pattern = '스트라이프'
+                                elif cloth_name.__contains__('자수'):
+                                    cloth_pattern = '자수'
+                                elif cloth_name.__contains__('로고'):
+                                    cloth_pattern = '로고'
+                                else:
+                                    cloth_pattern = 'None'
+                                if cloth_class.strip()=='상의':
+                                    top_cloth_data_list.append({'cloth_name':cloth_name, 'cloth_link':cloth_link, 'cloth_image':cloth_image, 'cloth_pattern':cloth_pattern, 'cloth_type':cloth_type, 'codi_link':codi_link})
+                                    with open('top_cloth_data.csv','a', encoding='utf-8', newline='') as top_cloth_csvfile:
+                                        fieldnames = ['cloth_name', 'cloth_link', 'cloth_image', 'cloth_pattern', 'cloth_type', 'codi_link']
+                                        wr = csv.DictWriter(top_cloth_csvfile, fieldnames=fieldnames)
+                                        wr.writerow(top_cloth_data_list[len(top_cloth_data_list)-1])
+                                    print(top_cloth_data_list[len(top_cloth_data_list)-1])
+                                elif cloth_class.strip()=='바지':
+                                    bottom_cloth_data_list.append({'cloth_name':cloth_name, 'cloth_link':cloth_link, 'cloth_image':cloth_image, 'cloth_pattern':cloth_pattern, 'cloth_type':cloth_type, 'codi_link':codi_link})
+                                    with open('bottom_cloth_data.csv','a', encoding='utf-8', newline='') as bottom_cloth_csvfile:
+                                        fieldnames = ['cloth_name', 'cloth_link', 'cloth_image', 'cloth_pattern', 'cloth_type', 'codi_link']
+                                        wr = csv.DictWriter(bottom_cloth_csvfile, fieldnames=fieldnames)
+                                        wr.writerow(bottom_cloth_data_list[len(bottom_cloth_data_list)-1])
+                                    print(bottom_cloth_data_list[len(bottom_cloth_data_list)-1])
+                                elif cloth_class.strip() == '아우터':
+                                    outer_cloth_data_list.append({'cloth_name':cloth_name, 'cloth_link':cloth_link, 'cloth_image':cloth_image, 'cloth_pattern':cloth_pattern, 'cloth_type':cloth_type, 'codi_link':codi_link})
+                                    with open('outer_cloth_data.csv','a', encoding='utf-8', newline='') as outer_cloth_csvfile:
+                                        fieldnames = ['cloth_name', 'cloth_link', 'cloth_image', 'cloth_pattern', 'cloth_type', 'codi_link']
+                                        wr = csv.DictWriter(outer_cloth_csvfile, fieldnames=fieldnames)
+                                        wr.writerow(outer_cloth_data_list[len(outer_cloth_data_list)-1])
+                                    print(outer_cloth_data_list[len(outer_cloth_data_list)-1])
                             driver.back()
-                            time.sleep(5)
+                            time.sleep(3)
                             driver.implicitly_wait(LOADING_TIME)
                             cloth_list_num = driver.find_elements('class name',"styling_img")
                         except Exception as e:
                             print(e)
                             pass 
                     driver.back()
-                    time.sleep(5)
+                    time.sleep(3)
                     driver.implicitly_wait(LOADING_TIME)
                     list_num += 1
                     print(cloth_links)
@@ -461,8 +494,6 @@ def csv_to_db(file_name):
     else:
         df = open(file_name, 'r', encoding='utf-8-sig')
         dic_list = csv.DictReader(df)
-        df_codi = open('codi_data.csv','r',encoding='utf-8-sig')
-        outfits = csv.DictReader(df_codi)
         for dic in dic_list:
             color = ""
             print(dic)
@@ -547,12 +578,9 @@ def csv_to_db(file_name):
             label, created = LabelSet.objects.get_or_create(type = dic['cloth_type'], color = color, pattern = dic['cloth_pattern'])
             label.save()
             outfit_list = []
-            string = dic['cloth_link']
-            for outfit in outfits:
-                if string in outfit['cloth_links']:
-                    print('y')
-                    for list in Outfit.objects.filter(purchase_link = outfit['codi_link']):
-                        outfit_list.append(list)
+            print('y')
+            for list in Outfit.objects.filter(purchase_link = dic['codi_link']):
+                outfit_list.append(list)
             print(outfit_list)
             sample_cloth = SampleCloth(name = dic['cloth_name'], image_link = dic['cloth_image'], purchase_link = dic['cloth_link'], type = dic['cloth_type'], color = color, pattern = dic['cloth_pattern'], label_set = label)
             sample_cloth.save()
