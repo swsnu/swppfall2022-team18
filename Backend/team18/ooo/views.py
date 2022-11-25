@@ -297,7 +297,7 @@ def outfit_list(request):
             return HttpResponse('Unauthorized', status=401)
 
         cursor = int(request.GET.get('cursor', '99999999999999').replace('/',''))
-        page_size = int(request.GET.get('pageSize', '12').replace('/',''))
+        page_size = int(request.GET.get('pageSize', '3').replace('/',''))
 
         all_outfits = list(Outfit.objects.all().order_by("-popularity"))
         outfits_count = len(all_outfits)
@@ -610,6 +610,7 @@ def today_outfit(request):
         
         today = date.today()
         three_day = timedelta(days=3)
+        zero_day = timedelta(days=0)
 
         jsonDec = json.decoder.JSONDecoder()
 
@@ -624,7 +625,7 @@ def today_outfit(request):
             else: 
                 last_day = date.fromisoformat(usercloth_days[len(usercloth_days)-1])
                 #if today == last_day, it is OK to recommend
-                if (today - last_day) > three_day:
+                if (today - last_day) > three_day and (today - last_day) != zero_day:
                     clean_usercloth_list.append(usercloth)
 
         labelset_list = []
