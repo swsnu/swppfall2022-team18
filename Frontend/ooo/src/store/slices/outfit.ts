@@ -35,7 +35,7 @@ export interface FilterPostInputType {
 export interface SampleClothType {
 	id: number;
 	name: string;
-	image_link: number;
+	image_link: string;
 	outfit: number;
 	color: string;
 	type: string;
@@ -59,6 +59,7 @@ export interface OutfitState {
 	filter: FilterType;
 	sampleClothes: SampleClothType[];
 	userCloth: UserClothType | null;
+	sampleCloth: SampleClothType | null;
 	cursor: number;
 	isLast: boolean;
 }
@@ -92,6 +93,7 @@ const initialState: OutfitState = {
 	},
 	sampleClothes: [],
 	userCloth: null,
+	sampleCloth: null
 	cursor: 0,
 	isLast: false,
 };
@@ -137,7 +139,7 @@ export const fetchOutfit = createAsyncThunk(
 		const response = await axios.get(`/api/ooo/outfit/${id}/`, {
 			headers,
 		});
-		console.log("fetchOutfit", response.data);
+		// console.log("fetchOutfit", response.data);
 		return response.data ?? null;
 	}
 );
@@ -145,10 +147,15 @@ export const fetchOutfit = createAsyncThunk(
 export const fetchSampleCloth = createAsyncThunk(
 	"outfit/fetchSampleCloth",
 	async (id: OutfitType["id"]) => {
-		const response = await axios.get(`/api/ooo/samplecloth/${id}/`, {
+		const response = await axios.get(`/api/ooo/outfit/samplecloth/${id}/`, {
 			headers,
 		});
-		return response.data ?? null;
+		if(response.status === 200){
+			return response.data
+		}
+		else{
+			return null
+		}
 	}
 );
 
@@ -189,7 +196,10 @@ export const outfitSlice = createSlice({
 			state.sampleClothes = action.payload.sampleclothes;
 		});
 		builder.addCase(fetchSampleCloth.fulfilled, (state, action) => {
-			state.userCloth = action.payload;
+			if(action.payload.usercloth.id !== -1){
+				state.userCloth = action.payload.usercloth;
+			}
+			state.sampleCloth = action.payload.samplecloth;
 		});
 	},
 });

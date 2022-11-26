@@ -106,10 +106,15 @@ def userinfo(request):
             return HttpResponseBadRequest()
         
         ## 여기가 왜 안되지?
-        user.set_password(password)
-        user.save()
+        # user.set_password(password)
+        # user.save()
         request.user.set_password(password)
-        return HttpResponse(status=204)
+        request.user.save()
+        name = request.user.username
+        user = authenticate(request, username=name, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponse(status=204)
     elif request.method == 'DELETE':
         # user.delete()
         request.user.delete()
@@ -305,11 +310,10 @@ def outfit_list(request):
 
         if min(outfits_count, cursor + page_size + 1) == outfits_count:
             cursor = 0
-
+            response_outfit_range = 12
         
         outfit_list = all_outfits[cursor:response_outfit_range]
         # outfit_list = all_outfits[0:1]
-
         is_last = False
 
         if len(outfit_list) != page_size + 1:
@@ -520,6 +524,7 @@ def outfit(request, outfit_id):
             samplecloth_outfit_list = samplecloth.outfit.all()
             samplecloth_outfit_ids = [outfit.id for outfit in samplecloth_outfit_list]
             samplecloth_serialize = SampleClothSerializer(samplecloth)
+            print('start')
             json_samplecloth = {
                 "id": samplecloth_serialize.data['id'],
                 "name": samplecloth_serialize.data['name'],
@@ -528,9 +533,13 @@ def outfit(request, outfit_id):
                 "outfit": samplecloth_outfit_ids,
                 "type": samplecloth_serialize.data['type'],
                 "color": samplecloth_serialize.data['color'],
-                "pattern": samplecloth_serialize.data['pattern'],
+                "pattern": samplecloth_serialize.data['pattern']
+
             }
+            print(json_samplecloth)
             json_samplecloth_list.append(json_samplecloth)
+
+        
 
         content = {
             'outfit': json_outfit,
@@ -550,6 +559,8 @@ def sample_cloth(request, samplecloth_id):
             samplecloth = SampleCloth.objects.get(id=samplecloth_id)
         except SampleCloth.DoesNotExist:
             return HttpResponseNotFound()
+        
+        
 
         user_closet = Closet.objects.get(user=request.user)
         try:
@@ -557,6 +568,8 @@ def sample_cloth(request, samplecloth_id):
             usercloth_serialize = UserClothSerializer(usercloth)
             json_usercloth = {
                 "id": usercloth_serialize.data['id'],
+                "name": usercloth_serialize.data['name'],
+
                 "image_link": usercloth_serialize.data['image'],
                 "type": usercloth_serialize.data['type'],
                 "color": usercloth_serialize.data['color'],
@@ -566,12 +579,13 @@ def sample_cloth(request, samplecloth_id):
             }
         except UserCloth.DoesNotExist:
             json_usercloth = {
-                "id": "",
+                "id": -1,
+                "name": "",
                 "image_link": "",
                 "type": "",
                 "color": "",
                 "pattern": "",
-                "user" : "",
+                "user" : -1,
                 "dates" : "",
             }
 
@@ -594,6 +608,8 @@ def sample_cloth(request, samplecloth_id):
             "usercloth": json_usercloth,
             "samplecloth": json_samplecloth
         }
+        
+        print(content)
         return JsonResponse(content, status=200)
 
     return HttpResponseNotAllowed(['GET'], status=405)
@@ -677,6 +693,8 @@ def today_outfit(request):
             usercloth_serialize = UserClothSerializer(recommend_usercloth)
             json_usercloth = {
                 "id": recommend_usercloth.id,
+                "name": recommend_usercloth.name,
+
                 "image_link": usercloth_serialize.data['image'],
                 "type": recommend_usercloth.type,
                 "color": recommend_usercloth.color,
