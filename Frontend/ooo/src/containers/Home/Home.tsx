@@ -81,7 +81,7 @@ export default function Home() {
 						<div className="Closet-image">
 							<div className="Closet-item-box"
 							data-testid='ClosetItem'>
-								{userClothes.userClothes.map((cloth, index) => {
+								{userClothes.userClothes.length !== 0 ? userClothes.userClothes.map((cloth, index) => {
 									return(
 										<ClosetItem
 										key={index}
@@ -91,7 +91,12 @@ export default function Home() {
 										pattern={cloth.pattern}
 										/>
 									)
-								})}
+								})
+							:
+							<div>
+								<text id='add-cloth-text'>옷을 추가해보세요!</text>
+							</div>
+							}
 							</div>
 						</div>
 						<div className="Closet-button">
@@ -134,11 +139,7 @@ export default function Home() {
 								</div>
 								: <div>
 									<div className="TodayOutfit-image" >
-										<img id="today-outfit-img" src={"noe"} data-testid = 'today-outfit-img'></img>
-									</div>
-									<div className="TodayOutfit-lable"
-									data-testid = 'TodayOutfit-lable'>
-										<button id="wear-button" data-testid='wear-button'>오늘 입기</button>
+										<text id='add-cloth-text'> 옷을 추가해보세요! </text>
 									</div>
 								</div>
 							}
@@ -160,21 +161,20 @@ export default function Home() {
 								More
 							</button>
 						</div>
-						<div className="OutfitImage">
-							<div className="Outfit-item-box"
-								data-testid='OutfitPreview'>
-								{
-									outfit.outfits.map((outfit, index) => {
-										return(
+						<div className="OutfitImage" data-testid='OutfitPreview'>
+							{
+								outfit.outfits.map((outfit, index) => {
+									return(
+										<div key={index} className='OutfitPreviewItem'>
 											<OutfitPreview
 											key={index}
 											source_url={outfit.image_link.toString()}
 											info={outfit.outfit_info}
-										/>
-										)
-									})
-								}
-							</div>
+											/>
+										</div>
+									)
+								})
+							}
 						</div>
 					</div>
 				</div>

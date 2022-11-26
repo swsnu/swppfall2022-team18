@@ -58,7 +58,7 @@ describe("<Closet />", () => {
             <Provider store={store}>
                 <MemoryRouter>
                     <Routes>
-                        <Route path="/" element={<Closet title="CLOSET_TEST_TITLE" />} />
+                        <Route path="/" element={<Closet/>} />
                     </Routes>
                 </MemoryRouter>
             </Provider>

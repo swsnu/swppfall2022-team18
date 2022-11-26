@@ -6,33 +6,36 @@ jobs:
   include:
     - language: python
       python: "3.9.6"
-      install:
-        - cd Backend
-        - pip install -r requirements.txt
-        - pip install coveralls
-        - gem install coveralls-lcov
-        - cd team18
-        - yarn global add coveralls
-      script:
-        - pylint **/*.py --load-plugins pylint_django
-        - coverage run --source='.' manage.py test
-        - coverage xml
-        - sonar-scanner
-        - coveralls --merge=../../Frontend/ooo/coverage.json
-    - language: node_js
       node_js: 14
       addons:
         sonarcloud:
           organization: swsnu
           token:
-            secure: "98d4b5dec11e52863538a00ea274cc4f5be90279"
+          secure:
+            secure: "tLPRGSKUI5xIrhfle8B6YGbNRLGpJ83rL2S/eZXcc4FwIxOY+0DGy5VjH4dlRMHGYiqosV4gzubYkDuK4Gw2nLblaxjgB2u7UMkpn9hZLaKpPD0Cx8ofMJNk6h79+xMfH9RsDn/Uit+Ghu2xHaiJQoxan+LkOPEB6+M0AEp65yx0IOTWr9DVYYC08riK8GDc2wsTjc+H5Do7raBJ5Mqw2EUFHVmHlgdqR0i8CrtD9q10thW5r+4hvRRbZHXr5/cbRcioDTqnFRE/9UAGJb225LLMMtCz3lRqF//+A6AE9FKish1UqbOeTlZyKkbLAV3yN7MfE9uah1o5PihL+t+qzGosi6ldxJ0xR1oWmA0l6SonrbN5bITpZgmu49THbodZD7tv2AXLrbqE0a7HCoo7UWi0AiA2kFgSVxnReMuypBTRaX4Et2p7ceFuggoS8RsFmiPoIIleLdzuhTIq1O9hm6koe2OseCQLor3GLHQ8kBsLXCiol6NHZSbHXcHluXl+2lCvLwJnUDhD0XFvFFo61z2z7LuGxt7FXxIAuDgj8T9KtL/v7m7NYTLpjTKiMP+Zck3TteEHxNwd30CNKI0BsJtQkyAFj7DRHrf99oLrG8v+Xhi1x1/0rv7lYMhf12r0iQvEdqxkZIJh8t3Az6zAyr7I2gYFYA75WbzO++07ll4="
+            #secure: "98d4b5dec11e52863538a00ea274cc4f5be90279"
       install:
+        - cd Backend
+        - pip install -r requirements.txt
+        - pip install coveralls
+        - gem install coveralls-lcov
+        - cd ..
         - cd Frontend/ooo
         - yarn install
         - yarn global add coveralls
+        - cd ../..
       script:
+        - cd Frontend/ooo
         - ./node_modules/.bin/eslint src
         - yarn test --coverage --watchAll=false
-        - coveralls-lcov -v -n coverage/lcov.info > coverage.json
-        - cd .. && sonar-scanner
-      secure: "tLPRGSKUI5xIrhfle8B6YGbNRLGpJ83rL2S/eZXcc4FwIxOY+0DGy5VjH4dlRMHGYiqosV4gzubYkDuK4Gw2nLblaxjgB2u7UMkpn9hZLaKpPD0Cx8ofMJNk6h79+xMfH9RsDn/Uit+Ghu2xHaiJQoxan+LkOPEB6+M0AEp65yx0IOTWr9DVYYC08riK8GDc2wsTjc+H5Do7raBJ5Mqw2EUFHVmHlgdqR0i8CrtD9q10thW5r+4hvRRbZHXr5/cbRcioDTqnFRE/9UAGJb225LLMMtCz3lRqF//+A6AE9FKish1UqbOeTlZyKkbLAV3yN7MfE9uah1o5PihL+t+qzGosi6ldxJ0xR1oWmA0l6SonrbN5bITpZgmu49THbodZD7tv2AXLrbqE0a7HCoo7UWi0AiA2kFgSVxnReMuypBTRaX4Et2p7ceFuggoS8RsFmiPoIIleLdzuhTIq1O9hm6koe2OseCQLor3GLHQ8kBsLXCiol6NHZSbHXcHluXl+2lCvLwJnUDhD0XFvFFo61z2z7LuGxt7FXxIAuDgj8T9KtL/v7m7NYTLpjTKiMP+Zck3TteEHxNwd30CNKI0BsJtQkyAFj7DRHrf99oLrG8v+Xhi1x1/0rv7lYMhf12r0iQvEdqxkZIJh8t3Az6zAyr7I2gYFYA75WbzO++07ll4="
+        - coveralls-lcov -v -n coverage/lcov.info > ../coverage.json
+        - cd ../..
+        - cd Backend/team18
+        - pylint **/*.py --load-plugins pylint_django
+        - coverage run --source='.' manage.py test --keepdb
+        - coverage xml
+        - coveralls --merge=../../frontend/coverage.json
+        - cd ../..
+        - sonar-scanners
+
+      #secure: "tLPRGSKUI5xIrhfle8B6YGbNRLGpJ83rL2S/eZXcc4FwIxOY+0DGy5VjH4dlRMHGYiqosV4gzubYkDuK4Gw2nLblaxjgB2u7UMkpn9hZLaKpPD0Cx8ofMJNk6h79+xMfH9RsDn/Uit+Ghu2xHaiJQoxan+LkOPEB6+M0AEp65yx0IOTWr9DVYYC08riK8GDc2wsTjc+H5Do7raBJ5Mqw2EUFHVmHlgdqR0i8CrtD9q10thW5r+4hvRRbZHXr5/cbRcioDTqnFRE/9UAGJb225LLMMtCz3lRqF//+A6AE9FKish1UqbOeTlZyKkbLAV3yN7MfE9uah1o5PihL+t+qzGosi6ldxJ0xR1oWmA0l6SonrbN5bITpZgmu49THbodZD7tv2AXLrbqE0a7HCoo7UWi0AiA2kFgSVxnReMuypBTRaX4Et2p7ceFuggoS8RsFmiPoIIleLdzuhTIq1O9hm6koe2OseCQLor3GLHQ8kBsLXCiol6NHZSbHXcHluXl+2lCvLwJnUDhD0XFvFFo61z2z7LuGxt7FXxIAuDgj8T9KtL/v7m7NYTLpjTKiMP+Zck3TteEHxNwd30CNKI0BsJtQkyAFj7DRHrf99oLrG8v+Xhi1x1/0rv7lYMhf12r0iQvEdqxkZIJh8t3Az6zAyr7I2gYFYA75WbzO++07ll4="

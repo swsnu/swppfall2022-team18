@@ -26,19 +26,14 @@ const OutfitDetail = () => {
 	}, []);
 
 
-	const clickPurchaseButtonHander = (purchase_link: string | undefined) => {
-		if (purchase_link as string){
-			navigate("/redirect", { state: { url: purchase_link } });
-		}
-		else{
-			navigate("*");
-		}
+	const clickPurchaseButtonHander = (purchase_link: string) => {
+		navigate("/Redirect", { state: { url: purchase_link } });
 	};
 
-	const clickClothHandler = (id: number) => {
+	const clickClothHandler = async(id: number) => {
 		//use modal
 		setModalOpen(true);
-		dispatch(fetchSampleCloth(id))
+		await dispatch(fetchSampleCloth(id))
 		setSelectedCloth(id);
 		if (outfitState.userCloth === null){
 			setUserHave(false);
@@ -47,17 +42,14 @@ const OutfitDetail = () => {
 			setUserHave(true);
 
 		}
-		console.log(selectedCloth);
 	};
 
-	const [isSending, setIsSending] = useState(false)
+	const [isSending, setIsSending] = useState(false);
 	const checkLoginned = () => {
-		if(localStorage.getItem("username") !== null){
-			return true
-		}
-		else return false
+		if (localStorage.getItem("username") !== null) {
+			return true;
+		} else return false;
 	};
-
 
 	useEffect(() => {
 		const redirect = () => {
@@ -75,9 +67,9 @@ const OutfitDetail = () => {
 					clickInfoHandler={() => {
 						navigate("/setting");
 					}}
-					clickLogoutHandler={async() => {
-						await logoutUser().catch((error) => console.log(error))
-						setIsSending(!isSending)
+					clickLogoutHandler={async () => {
+						await logoutUser().catch((error) => console.log(error));
+						setIsSending(!isSending);
 					}}
 					clickHeaderHandler={() => {
 						navigate("/home");
@@ -92,7 +84,7 @@ const OutfitDetail = () => {
 					<button
 						id="outfit-purchase-button"
 						data-testid="outfit-purchase-button"
-						onClick={() => clickPurchaseButtonHander(outfitState.selectedOutfit?.purchase_link)}
+						onClick={() => clickPurchaseButtonHander(outfitState.selectedOutfit !== null ? outfitState.selectedOutfit.purchase_link : "")}
 					>
 						Purchase Button
 					</button>
@@ -115,16 +107,16 @@ const OutfitDetail = () => {
 						})}
 					</div>
 				</div>
-				<Modal id="sample-modal" isOpen={modalOpen}>
+				<Modal id="sample-modal" isOpen={modalOpen} ariaHideApp={false}>
 					<SampleClothModal
 						userHave={userHave}
-						userCloth_url={outfitState.userCloth?.image_link}
-						sampleCloth_url={outfitState.sampleCloth?.image_link}
-						type={outfitState.sampleCloth?.type}
-						color={outfitState.sampleCloth?.color}
-						pattern={outfitState.sampleCloth?.pattern}
-						sampleCloth_name={outfitState.sampleCloth?.name}
-						sampleCloth_link={outfitState.sampleCloth?.purchase_link}
+						userCloth_url={outfitState.userCloth === null ? "" : outfitState.userCloth.image_link}
+						sampleCloth_url={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.image_link}
+						type={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.type}
+						color={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.color}
+						pattern={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.pattern}
+						sampleCloth_name={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.name}
+						sampleCloth_link={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.purchase_link}
 					></SampleClothModal>
 					<div id="close-buton-div">
 						<button

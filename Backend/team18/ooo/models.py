@@ -33,7 +33,7 @@ class UserCloth(models.Model):
     name = models.CharField(max_length=100, blank=True)
     image_link = models.CharField(max_length=500, blank=False)
     #추후에 usercloth image 처리 방법에 따라서 달라질 듯
-    #image = models.ImageField(upload_to= 'images/', default='')
+    image = models.ImageField(upload_to= 'images/', blank=True,default='')
     closet = models.ForeignKey(
         Closet,
         on_delete=models.CASCADE,
