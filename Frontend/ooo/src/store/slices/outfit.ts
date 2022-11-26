@@ -93,7 +93,7 @@ const initialState: OutfitState = {
 	},
 	sampleClothes: [],
 	userCloth: null,
-	sampleCloth: null
+	sampleCloth: null,
 	cursor: 0,
 	isLast: false,
 };

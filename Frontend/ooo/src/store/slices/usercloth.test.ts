@@ -35,6 +35,7 @@ describe("outfit reducer", () => {
         expect(reducer(undefined, {type: "unknown"})).toEqual({
             userClothes: [],
             selectedUserCloth: null,
+            recommendOutfit: null,
         })
     })
     it("should handle fetchUserClothes", async() => {

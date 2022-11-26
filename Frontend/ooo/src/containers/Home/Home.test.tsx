@@ -1,14 +1,16 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useNavigate } from "react-router-dom";
 import { Provider } from "react-redux";
 import React from "react";
-import { renderWithProviders } from "../../test-utils/mocks";
+import { renderWithProviders, getMockStore } from '../../test-utils/mocks';
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Home from "./Home";
-import { store } from "../../store";
+import { OutfitState } from "../../store/slices/outfit";
+import { UserClothState } from "../../store/slices/userCloth";
 import { IProps as HeaderProps } from "../../components/Header/Header";
 import { IProps as OutfitPreviewProps } from "../../components/OutfitPreview/OutfitPreview";
 import { IProps as ClosetItemProps } from "../../components/ClosetItem/ClosetItem";
+import axios from 'axios';
 
 jest.mock("../../components/Header/Header", () => (props: HeaderProps) => (
 	<div data-testid="spyHeader">
@@ -89,6 +91,56 @@ jest.mock(
 		)
 );
 
+const stubInitialOutfitState: OutfitState = {
+	outfits: [
+		{
+			id: 1,
+			outfit_info: "",
+			outfit_name: "",
+			popularity: 1,
+			image_link: "",
+			purchase_link: "",
+		},
+	],
+	selectedOutfit: null,
+	filter: {
+		color: null,
+		type: null,
+		pattern: null,
+		userHave: false,
+		recommend: false,
+	},
+	sampleClothes: [
+		{id: 1, name:"", image_link:"", outfit:1, color:"black", type:"shirt", pattern:"no", purchase_link:""}
+	],
+	sampleCloth: null,
+	userCloth: null,
+	cursor: 0,
+	isLast: false,
+};
+
+const stubInitialUserClothState: UserClothState = {
+	userClothes: [
+		{id: 1, name:"", image_link:"", user:1, color:"black", type:"shirt", pattern:"no"}
+	],
+	selectedUserCloth: null,
+	recommendOutfit: {
+		id: 1,
+		outfit_info: "",
+		outfit_name: "",
+		popularity: 1,
+		image_link: "",
+		userClothes: [
+			{id: 1, name:"", image_link:"", user:1, color:"black", type:"shirt", pattern:"no"}
+		],
+	},
+};
+
+const mockStore = getMockStore({
+	userCloth: stubInitialUserClothState,
+	outfit: stubInitialOutfitState,
+});
+
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
 	...jest.requireActual("react-router"),
@@ -105,7 +157,7 @@ describe("<Home />", () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 		home = (
-			<Provider store={store}>
+			<Provider store={mockStore}>
 				<MemoryRouter>
 					<Routes>
 						<Route path="/" element={<Home />} />
@@ -122,11 +174,11 @@ describe("<Home />", () => {
 		const logobutton = screen.getAllByTestId("logo")[0];
 		screen.findByText("oOo");
 		fireEvent.click(logobutton);
-		expect(mockNavigate).toHaveBeenCalledTimes(1);
+		expect(mockNavigate).toHaveBeenCalled();
 
 		const infobutton = screen.getAllByTestId("info")[0];
 		fireEvent.click(infobutton);
-		expect(mockNavigate).toHaveBeenCalledTimes(2);
+		expect(mockNavigate).toHaveBeenCalled();
 
 		const logoutbutton = screen.getAllByTestId("logout")[0];
 		fireEvent.click(logoutbutton);
@@ -151,8 +203,40 @@ describe("<Home />", () => {
 		const morebtn = screen.getAllByTestId("more-btn");
 		expect(morebtn).toHaveLength(2);
 		fireEvent.click(morebtn[0]);
-		expect(mockNavigate).toHaveBeenCalledTimes(3);
+		expect(mockNavigate).toHaveBeenCalled();
 		fireEvent.click(morebtn[1]);
-		expect(mockNavigate).toHaveBeenCalledTimes(4);
+		expect(mockNavigate).toHaveBeenCalled();
 	});
+
+	it("should handle header logout button", async() => {
+		render(home);
+		jest.spyOn(axios, "get").mockResolvedValue({
+			data: { username: "test" },
+		});
+		const logoutbutton = screen.getAllByTestId("logout")[0];
+		fireEvent.click(logoutbutton);
+		await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
+	})
+
+	it("should handler info button", () => {
+		render(home);
+		const infoButton = screen.getAllByTestId("info")[0];
+		fireEvent.click(infoButton);
+	})
+
+	it("should handle closet more button", async() => {
+		render(home);
+		const moreButton = screen.getAllByTestId("more-btn")[0]
+		fireEvent.click(moreButton)
+		await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
+	})
+
+	it("should handle outfit more button", async() => {
+		render(home);
+		const moreButton = screen.getAllByTestId("more-btn")[1]
+		fireEvent.click(moreButton)
+		await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
+	})
+
+
 });
