@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { stat } from "fs";
 import { RootState } from "..";
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 
 export interface OutfitType {
 	id: number;
@@ -19,6 +20,16 @@ export interface FilterType {
 	pattern: string | null;
 	userHave: boolean;
 	recommend: boolean;
+}
+
+export interface FilterPostInputType {
+	color: string | null;
+	type: string | null;
+	pattern: string | null;
+	userHave: boolean;
+	recommend: boolean;
+	cursor: number;
+	pageSize: number;
 }
 
 export interface SampleClothType {
@@ -49,6 +60,25 @@ export interface OutfitState {
 	sampleClothes: SampleClothType[];
 	userCloth: UserClothType | null;
 	sampleCloth: SampleClothType | null;
+	cursor: number;
+	isLast: boolean;
+}
+
+export interface fetchOutputState {
+	isLast: boolean;
+	cursor: number;
+	outfits: OutfitType[];
+}
+
+export interface fetchFilteredOutputState {
+	color: string | null;
+	type: string | null;
+	pattern: string | null;
+	userHave: boolean;
+	recommend: boolean;
+	isLast: boolean;
+	cursor: number;
+	outfits: OutfitType[];
 }
 
 const initialState: OutfitState = {
@@ -64,6 +94,8 @@ const initialState: OutfitState = {
 	sampleClothes: [],
 	userCloth: null,
 	sampleCloth: null
+	cursor: 0,
+	isLast: false,
 };
 
 const headers = {
@@ -72,23 +104,30 @@ const headers = {
 
 export const fetchOutfits = createAsyncThunk(
 	"outfit/fetchOutfits",
-	async () => {
-		console.log("here")
-		const response = await axios.get("/api/ooo/outfit/", {
+	async (cursor, pageSize) => {
+		const response = await axios.get<fetchOutputState>("/api/ooo/outfit/", {
 			headers,
+			params: {
+				cursor: cursor,
+				pageSize: pageSize,
+			},
 		});
-		console.log(response.data)
-		return response.data.outfits;//나중에 고치기
-		
+		console.log(response.data);
+		return response.data;
 	}
 );
 
 export const fetchFilteredOutfits = createAsyncThunk(
 	"outfit/fetchFilteredOutfits",
-	async () => {
-		const response = await axios.post<OutfitType[]>("/api/ooo/outfit/", {
-			headers,
-		});
+	async (data: FilterPostInputType) => {
+		const response = await axios.post<fetchFilteredOutputState>(
+			"/api/ooo/outfit/",
+			{
+				headers,
+				body: data,
+			}
+		);
+		console.log(response.data);
 		return response.data;
 	}
 );
@@ -124,31 +163,35 @@ export const outfitSlice = createSlice({
 	name: "outfit",
 	initialState,
 	reducers: {
-		// editFilter: (
-		// 	state,
-		// 	action: PayloadAction<{
-		// 		color: string | null;
-		// 		type: string | null;
-		// 		pattern: string | null;
-		// 		userHave: boolean;
-		// 		recommend: boolean;
-		// 	}>
-		// ) => {
-		// 	state.filter = action.payload;
-		// },
+		editFilter: (
+			state,
+			action: PayloadAction<{
+				color: string | null;
+				type: string | null;
+				pattern: string | null;
+				userHave: boolean;
+				recommend: boolean;
+			}>
+		) => {
+			state.filter = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		// Add reducers for additional action types here, and handle loading state as needed
 		builder.addCase(fetchOutfits.fulfilled, (state, action) => {
 			// Add user to the state array
-			state.outfits = action.payload;
+			state.outfits = action.payload.outfits;
+			state.isLast = action.payload.isLast;
+			state.cursor = action.payload.cursor;
 		});
 		builder.addCase(fetchFilteredOutfits.fulfilled, (state, action) => {
 			// Add user to the state array
-			state.outfits = action.payload;
+			state.outfits = action.payload.outfits;
+			state.isLast = action.payload.isLast;
+			state.cursor = action.payload.cursor;
 		});
 		builder.addCase(fetchOutfit.fulfilled, (state, action) => {
-			console.log(action.payload)
+			console.log(action.payload);
 			state.selectedOutfit = action.payload.outfit;
 			state.sampleClothes = action.payload.sampleclothes;
 		});

@@ -32,7 +32,7 @@ def index():
     '''
     return HttpResponse("Hello, world")
 
-@csrf_exempt
+#@csrf_exempt
 def signup(request):
     '''
     signup : django default user
@@ -302,7 +302,7 @@ def outfit_list(request):
             return HttpResponse('Unauthorized', status=401)
 
         cursor = int(request.GET.get('cursor', '99999999999999').replace('/',''))
-        page_size = int(request.GET.get('pageSize', '12').replace('/',''))
+        page_size = int(request.GET.get('pageSize', '3').replace('/',''))
 
         all_outfits = list(Outfit.objects.all().order_by("-popularity"))
         outfits_count = len(all_outfits)
@@ -327,13 +327,7 @@ def outfit_list(request):
         
         json_outfit_list = []
         for outfit in outfit_list:
-            # json_outfit = {
-            #     "id" : outfit.id,
-            #     "outfit_info": outfit.outfit_info,
-            #     "popularity" : outfit.popularity,
-            #     "image_link": outfit.image_link,
-            #     "purchase_link": outfit.purchase_link
-            # }
+
             outfit_serialize = OutfitSerializer(outfit)
             json_outfit = {
                 "id" : outfit_serialize.data['id'],
@@ -356,11 +350,10 @@ def outfit_list(request):
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
 
-        cursor = int(request.GET.get('cursor', '99999999999999').replace('/',''))
-        page_size = int(request.GET.get('pageSize', '12').replace('/',''))
-
         try:
             req_data = json.loads(request.body.decode())["body"]
+            cursor = int(req_data["cursor"])
+            page_size = int(req_data["pageSize"])
             filter_type = req_data["type"]
             filter_color = req_data["color"]
             filter_pattern = req_data["pattern"]
@@ -368,7 +361,9 @@ def outfit_list(request):
             filter_recommend = req_data["recommend"]
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        
+
+        print(filter_userhave)
+
         using_labelset = False
 
         if filter_type and filter_color and filter_pattern:
@@ -382,7 +377,7 @@ def outfit_list(request):
 
         closet = Closet.objects.get(user=request.user)
         
-        if filter_recommend == "True" or filter_userhave == "True":
+        if filter_recommend == True or filter_userhave == True:
             usercloth_list = list(UserCloth.objects.filter(closet=closet))
 
             labelset_list = []
@@ -427,8 +422,9 @@ def outfit_list(request):
                         recommend.append(outfit)   
                 all_outfits = recommend
  
-        else:
+        elif filter_type or filter_color or filter_pattern:
             #No userHave, recommend filter
+
             if using_labelset:
                 samplecloth_list = SampleCloth.objects.filter(label_set = filter_labelset)
             else:
@@ -440,14 +436,19 @@ def outfit_list(request):
                 if filter_pattern:
                     samplecloth_list = [x for x in samplecloth_list if x.pattern == filter_pattern]
             all_outfits = []
+            print(samplecloth_list)
 
             for samplecloth in samplecloth_list:
                 samplecloth_include_outfit = list(samplecloth.outfit.all())
                 all_outfits = all_outfits + samplecloth_include_outfit
-
+            print(all_outfits)
             all_outfits = list(set(all_outfits))
             all_outfits = sorted(all_outfits, key=lambda outfit: outfit.popularity, reverse=True)
         
+        else:
+            all_outfits = list(Outfit.objects.all().order_by("-popularity"))
+            all_outfits = list(set(all_outfits))
+
         outfits_count = len(all_outfits)
         response_outfit_range = min(outfits_count, cursor + page_size + 1)
 
@@ -488,6 +489,8 @@ def outfit_list(request):
             'outfits': json_outfit_list
         }
 
+        print(content)
+
         return JsonResponse(content, status=200)
 
 
@@ -506,7 +509,7 @@ def outfit(request, outfit_id):
             return HttpResponseNotFound()
 
         sample_cloth_list = SampleCloth.objects.filter(outfit=outfit)
-    
+
         outfit_serialize = OutfitSerializer(outfit)
         json_outfit = {
             "id" : outfit_serialize.data['id'],
@@ -531,6 +534,7 @@ def outfit(request, outfit_id):
                 "type": samplecloth_serialize.data['type'],
                 "color": samplecloth_serialize.data['color'],
                 "pattern": samplecloth_serialize.data['pattern']
+
             }
             print(json_samplecloth)
             json_samplecloth_list.append(json_samplecloth)
@@ -565,6 +569,7 @@ def sample_cloth(request, samplecloth_id):
             json_usercloth = {
                 "id": usercloth_serialize.data['id'],
                 "name": usercloth_serialize.data['name'],
+
                 "image_link": usercloth_serialize.data['image'],
                 "type": usercloth_serialize.data['type'],
                 "color": usercloth_serialize.data['color'],
@@ -621,6 +626,7 @@ def today_outfit(request):
         
         today = date.today()
         three_day = timedelta(days=3)
+        zero_day = timedelta(days=0)
 
         jsonDec = json.decoder.JSONDecoder()
 
@@ -634,7 +640,11 @@ def today_outfit(request):
                 clean_usercloth_list.append(usercloth)
             else: 
                 last_day = date.fromisoformat(usercloth_days[len(usercloth_days)-1])
-                if (today - last_day) > three_day:
+                #if today == last_day, it is OK to recommend
+                print("day print",today)
+                print(last_day)
+                print(today - last_day)
+                if (today - last_day) > three_day and (today - last_day) != zero_day:
                     clean_usercloth_list.append(usercloth)
 
         labelset_list = []
@@ -684,6 +694,7 @@ def today_outfit(request):
             json_usercloth = {
                 "id": recommend_usercloth.id,
                 "name": recommend_usercloth.name,
+
                 "image_link": usercloth_serialize.data['image'],
                 "type": recommend_usercloth.type,
                 "color": recommend_usercloth.color,
