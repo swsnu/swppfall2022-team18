@@ -60,7 +60,6 @@ export interface OutfitState {
 	sampleClothes: SampleClothType[];
 	sampleCloth: SampleClothType | null;
 	userCloth: UserClothType | null;
-	sampleCloth: SampleClothType | null;
 	cursor: number;
 	isLast: boolean;
 }
@@ -95,7 +94,6 @@ const initialState: OutfitState = {
 	sampleClothes: [],
 	sampleCloth:null,
 	userCloth: null,
-	sampleCloth: null
 	cursor: 0,
 	isLast: false,
 };

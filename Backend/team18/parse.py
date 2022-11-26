@@ -154,6 +154,7 @@ def parse_outfit_data():
                     fieldnames = ['link', 'number', 'page']
                     wr = csv.DictWriter(error_link_csvfile, fieldnames=fieldnames)
                     wr.writerow(error_link[len(error_link)-1])
+                driver.back()
                 pass
     driver.quit()
             # 코디 데이터 저장 (아직 테스트 불가)
