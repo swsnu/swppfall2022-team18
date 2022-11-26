@@ -3,3 +3,4 @@ coverage==6.5
 pylint==2.15.5
 pylint-django==2.5.3
 decouple==0.0.7
+djangorestframework==3.14.0
