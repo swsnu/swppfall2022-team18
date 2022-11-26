@@ -1,0 +1,184 @@
+@font-face {
+    font-family:"Kreon" ;
+    src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf") format("opentype");
+}
+* {
+    font-family: "Kreon";
+}
+
+
+.Signup {
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.Signup .header-div {
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    background-color: black;
+    opacity: 0.8;
+    padding: 60px;
+    margin-bottom: 300px;
+}
+
+
+#appName {
+    font-size: 130px;
+    color: white;
+}
+
+#detailAppName {
+    font-size: 50px;
+    color: white;
+}
+
+.Signup .form {
+    display: flex;
+    flex-direction: row;
+}
+
+.Signup .form-margin-left {
+    display: flex;
+    padding-left: 40%;
+}
+
+.Signup .form-margin-right {
+    display: flex;
+    padding-right: 40%;
+}
+
+.Signup .Signup-form {
+    display: flex;
+    flex-basis: 20%;
+    flex-direction: column;
+    border-radius: 20px;
+    background-color: black;
+    opacity: 0.8;
+    justify-content: center;
+    align-content: center;
+    padding:20px
+}
+
+#signin-signup-text {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+}
+
+.Signup .Signup-form .Signup-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 50px;
+}
+
+.Signup .Signup-form .username-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 20px;
+}
+
+
+.Signup .Signup-form .pw-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 20px;
+}
+
+.Signup .Signup-form .checkpw-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+
+.Signup .Signup-form .button-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    margin-top: 5%;
+}
+
+.Signup .Signup-form .wrong-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+
+#username-text {
+    font-size: 20px;
+    color: white;
+    margin-right: 20px;
+}
+
+#username-input {
+    padding-right: 50px;
+}
+
+#pw-text {
+    font-size: 20px;
+    color: white;
+    margin-right: 20px;
+}
+
+#checkpw-text {
+    font-size: 20px;
+    color: white;
+    margin-right: 20px;
+}
+
+#pw-input {
+    padding-right: 50px;
+}
+
+#checkpw-input {
+    padding-right: 50px;
+}
+
+#Signup-button {
+    flex-direction: row;
+    background-color: white;
+    border:none;
+    border-radius: 20px;
+    padding:10px;
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+#signup-button {
+    flex-direction: row;
+    border:none;
+    background-color: white;
+    border-radius: 20px;
+    padding:10px;
+    font-size: 20px;
+}
+
+#Signup-button:hover {
+    background-color: black;
+    opacity: 0.8;
+    color: white;
+}
+
+#signup-button:hover {
+    background-color: black;
+    opacity: 0.8;
+    color: white;
+}
+
+#wrong-text {
+    color: #FF6060;
+}

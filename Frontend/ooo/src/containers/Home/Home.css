@@ -115,6 +115,7 @@
 	display: flex;
 	flex-direction: column;
 	align-content: center;
+	justify-content: center;
 	width: 30%;
 	height: 600px;
 }
@@ -150,6 +151,11 @@
 
 #wear-button:hover {
 	opacity: 1;
+}
+
+#add-cloth-text {
+	width: 500px;
+	font-size: 30px;
 }
 
 .Home .HomeBottom {
@@ -200,11 +206,13 @@
 .Home .HomeBottom .OutfitDiv .OutfitImage {
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 	margin-top: 20px;
 }
 
-.Home .HomeBottom .OutfitDiv .OutfitImage .Outfit-item-box {
-	display: flex;
-	flex-direction: row;
-	margin-top: 20px;
+.Home .HomeBottom .OutfitDiv .OutfitPreviewItem {
+	width: 27%;
+	margin-left: 2%;
+	margin-right: 2%;
+	margin-bottom: 2%;
 }

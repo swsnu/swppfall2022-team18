@@ -26,3 +26,10 @@ yarn-error.log*
 
 #db
 db.sqlite3
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# data
+Backend/team18/media

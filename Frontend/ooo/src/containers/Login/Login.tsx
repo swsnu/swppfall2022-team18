@@ -40,6 +40,10 @@ export default function Login() {
 		}
 	};
 
+	const clickSignUpHandler = () => {
+		navigate("/signup");
+	}
+
 	if (login) {
 		return <Navigate to="/home" />;
 	} else {
@@ -92,6 +96,7 @@ export default function Login() {
 							<button
 								id="signup-button"
 								data-testid="signup-button"
+								onClick={() => clickSignUpHandler()}
 							>
 								회원가입
 							</button>

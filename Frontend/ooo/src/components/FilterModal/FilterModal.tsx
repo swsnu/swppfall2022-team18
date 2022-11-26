@@ -1,16 +1,23 @@
 import React from "react";
 import "./FilterModal.css";
+import { useState } from "react";
+import TypeFilter from "../TypeFilter/TypeFilter";
 
 export interface IProps {
-	clickDoneHandler?: () => void;
+	clickDoneHandler: (
+		type: string | null,
+		color: string | null,
+		pattern: string | null
+	) => void;
 }
 
 const FilterModal = (props: IProps) => {
-	// const [typeFilter, setTypeFilter] = useState("");
-	// const [colorFilter, setColorFilter] = useState("");
-	// const [patternFilter, setPatternFilter] = useState("");
+	const [type, setType] = useState<string | null>(null);
+	const [color, setColor] = useState<string | null>(null);
+	const [pattern, setPattern] = useState<string | null>(null);
+	const [metaType, setMetaType] = useState<string | null>(null);
 
-	const COLOROPTIONS = [
+	const ColorOptions = [
 		{ value: "Color" },
 		{ value: "black" },
 		{ value: "white" },
@@ -19,45 +26,96 @@ const FilterModal = (props: IProps) => {
 		{ value: "etc" },
 	];
 
-	const PATTERNOPTIONS = [
+	const PatternOptions = [
 		{ value: "Pattern" },
 		{ value: "stripe" },
 		{ value: "none" },
 	];
 
-	const TYPEOPTIONS = [
-		{ value: "T-Shirt" },
-		{ value: "Shirt" },
-		{ value: "Jean" },
-		{ value: "Jacket" },
+	const MetaTypeOptions = [
+		{ value: "옷 종류" },
+		{ value: "상의" },
+		{ value: "바지" },
+		{ value: "아우터" },
 	];
+
+	const clickMetaTypeOptionHandler = (value: string) => {
+		if (value == "옷 종류") {
+			setMetaType(null);
+		} else setMetaType(value);
+	};
+
+	const clickTypeOptionHandler = (value: string) => {
+		if (
+			value == "상의 종류" ||
+			value == "하의 종류" ||
+			value == "아우터 종류"
+		) {
+			setMetaType(null);
+		} else setMetaType(value);
+	};
+
+	const clickColorOptionHandler = (value: string) => {
+		if (value == "Color") {
+			setColor(null);
+		} else setColor(value);
+	};
+
+	const clickPatternOptionHandler = (value: string) => {
+		if (value == "Pattern") {
+			setPattern(null);
+		} else setPattern(value);
+	};
 
 	return (
 		<div className="FilterModal">
-			<select id="type-select">
-				{TYPEOPTIONS.map((option, index) => (
-					<option key={index} value={option.value}>
-						{option.value}
-					</option>
-				))}
-			</select>
+			<div>
+				<select id="type-select">
+					{MetaTypeOptions.map((option, index) => (
+						<option
+							key={index}
+							value={option.value}
+							onClick={() => clickMetaTypeOptionHandler(option.value)}
+						>
+							{option.value}
+						</option>
+					))}
+				</select>
+				<TypeFilter
+					data-testid="typefilter"
+					metaType={metaType}
+					selectHandler={clickTypeOptionHandler}
+				></TypeFilter>
+			</div>
 			<select id="color-select">
-				{COLOROPTIONS.map((option, index) => (
-					<option key={index} value={option.value}>
+				{ColorOptions.map((option, index) => (
+					<option
+						key={index}
+						value={option.value}
+						onClick={() => clickColorOptionHandler(option.value)}
+					>
 						{option.value}
 					</option>
 				))}
 			</select>
 
 			<select id="pattern-select">
-				{PATTERNOPTIONS.map((option, index) => (
-					<option key={index} value={option.value}>
+				{PatternOptions.map((option, index) => (
+					<option
+						key={index}
+						value={option.value}
+						onClick={() => clickPatternOptionHandler(option.value)}
+					>
 						{option.value}
 					</option>
 				))}
 			</select>
 
-			<button id="done-button" onClick={props.clickDoneHandler}>
+			<button
+				id="done-button"
+				data-testid="done-button"
+				onClick={() => props.clickDoneHandler(type, color, pattern)}
+			>
 				Done
 			</button>
 		</div>

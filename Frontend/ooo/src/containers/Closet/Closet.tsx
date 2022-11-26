@@ -11,19 +11,13 @@ import {
 	fetchUserCloth,
 	createUserCloth,
 	deleteUserCloth,
+	UserClothType,
 } from "../../store/slices/userCloth";
 import { AppDispatch } from "../../store";
 import Modal from "react-modal";
 
-import neet from "../../assets/images/neet.jpg";
-import hood from "../../assets/images/hood.jpg";
-import pants from "../../assets/images/pants.jpg";
 import AddClothModal from "../../components/AddClothModal/AddClothModal";
 // import ClothDetailModal from '../../components/ClothDetailModal/ClothDetailModal'
-
-interface IProps {
-	title: string;
-}
 
 type ClosetItem = {
 	id: number;
@@ -33,139 +27,86 @@ type ClosetItem = {
 	pattern: string;
 };
 
-export default function Closet(props: IProps) {
+export default function Closet() {
+	const type_tree =  [
+		[['상의'], ['반소매 티셔츠', '피케/카라 티셔츠', '긴소매 티셔츠', '맨투맨/스웨트셔츠', '민소매 티셔츠', '후드 티셔츠', '셔츠/블라우스', '니트/스웨터', '기타 상의']], 
+		[['바지'], ['데님 팬츠', '숏 팬츠', '코튼 팬츠', '레깅스', '슈트 팬츠/슬랙스', '점프 슈트/오버올', '트레이닝/조거 팬츠', '기타 바지']], 
+		[['아우터'], ['후드 집업', '환절기 코트', '블루종/MA-1', '겨울 싱글 코트', '레더/라이더스 재킷', '겨울 더블 코트',
+				'무스탕/퍼', '겨울 기타 코트', '롱패딩/롱헤비 아우터', '트러커 재킷', '슈트/블레이저 재킷', '숏패딩/숏헤비 아우터', '카디건', '패딩 베스트', '아노락 재킷',
+				'베스트', '플리스/뽀글이', '사파리/헌팅 재킷', '트레이닝 재킷', '나일론/코치 재킷', '스타디움 재킷', '기타 아우터']]]
+	
+	const TYPEOPTIONS = [
+		{ value: "Type" },
+		{ value: "상의" },
+		{ value: "바지" },
+		{ value: "아우터" },
+	];
+	
 	const navigate = useNavigate();
-	const { title } = props;
-
 	const userClothState = useSelector(selectUserCloth);
 	const dispatch = useDispatch<AppDispatch>();
 
-	useEffect(() => {
-		dispatch(fetchUserClothes());
-	}, []);
-
 	const [addClothModalOpen, setAddClothModalOpen] = useState(false);
+	const [filteredList, setFilteredList] = useState<UserClothType[]>([]);
+
 
 	const clickAddClothPopupHandler = () => {
 		setAddClothModalOpen(true);
 	};
 
-	const top_cloth_data_list = [
-		{
-			cloth_color: "베이지",
-			cloth_name: "릴랙스 오버사이즈 크루넥 - 베이지 / CM1408",
-			cloth_link: "https://www.musinsa.com/app/goods/957879/0",
-			cloth_num: 957879,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20190219/957879/957879_6_500.jpg?t=20210727092552",
-			cloth_pattern: "로고",
-			cloth_type: "맨투맨/스웨트셔츠",
-		},
-		{
-			cloth_color: "화이트",
-			cloth_name: "릴렉스 핏 옥스포드 워크 셔츠 [화이트]",
-			cloth_link: "https://www.musinsa.com/app/goods/1222009/0",
-			cloth_num: 1222009,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20191113/1222009/1222009_1_500.jpg?t=20191113104338",
-			cloth_pattern: "None",
-			cloth_type: "셔츠/블라우스",
-		},
-	];
-	const bottom_cloth_data_list = [
-		{
-			cloth_color: "연청",
-			cloth_name: "와이드 데님 팬츠 (BLEACH)",
-			cloth_link: "https://www.musinsa.com/app/goods/986708/0",
-			cloth_num: 986708,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20190319/986708/986708_1_500.jpg?t=20220628154233",
-			cloth_pattern: "None",
-			cloth_type: "데님 팬츠",
-		},
-		{
-			cloth_color: "중청",
-			cloth_name: "와이드 데님 팬츠 (LIGHT BLUE)",
-			cloth_link: "https://www.musinsa.com/app/goods/858911/0",
-			cloth_num: 858911,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20180914/858911/858911_6_500.jpg?t=20220628150414",
-			cloth_pattern: "None",
-			cloth_type: "데님 팬츠",
-		},
-		{
-			cloth_color: "검정",
-			cloth_name: "3-스트라이프 트레이닝 팬츠 - 블랙 / CM1409",
-			cloth_link: "https://www.musinsa.com/app/goods/957880/0",
-			cloth_num: 957880,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20190219/957880/957880_8_500.jpg?t=20210727113258",
-			cloth_pattern: "스트라이프",
-			cloth_type: "트레이닝/조거 팬츠",
-		},
-	];
-	const outer_cloth_data_list = [
-		{
-			cloth_color: "그레이",
-			cloth_name: "(SS19) Denim Trucker Jacket Grey",
-			cloth_link: "https://www.musinsa.com/app/goods/969580/0",
-			cloth_num: 969580,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20190228/969580/969580_1_500.jpg?t=20190228191158",
-			cloth_pattern: "None",
-			cloth_type: "트러커 재킷",
-		},
-		{
-			cloth_color: "갈색",
-			cloth_name: "TRUCKER JACKET(2COLOR)",
-			cloth_link: "https://www.musinsa.com/app/goods/952064/0",
-			cloth_num: 952064,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20190213/952064/952064_3_500.jpg?t=20220628164752",
-			cloth_pattern: "None",
-			cloth_type: "트러커 재킷",
-		},
-		{
-			cloth_color: "블랙",
-			cloth_name: "오버사이즈 블레이저 [블랙]",
-			cloth_link: "https://www.musinsa.com/app/goods/1283757/0",
-			cloth_num: 1283757,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20200130/1283757/1283757_1_500.jpg?t=20200130110037",
-			cloth_pattern: "None",
-			cloth_type: "슈트/블레이저 재킷",
-		},
-		{
-			cloth_color: "그레이",
-			cloth_name: "후디드 스웨트 집업_짧은 길이 [멜란지 그레이]",
-			cloth_link: "https://www.musinsa.com/app/goods/1213655/0",
-			cloth_num: 1213655,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20191105/1213655/1213655_2_500.jpg?t=20200706110939",
-			cloth_pattern: "None",
-			cloth_type: "후드 집업",
-		},
-		{
-			cloth_color: "블랙",
-			cloth_name: "라이트웨이트 밴딩 하프 슬랙스 [블랙]",
-			cloth_link: "https://www.musinsa.com/app/goods/1079390/0",
-			cloth_num: 1079390,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20190620/1079390/1079390_5_500.jpg?t=20210705143724",
-			cloth_pattern: "None",
-			cloth_type: "슈트 팬츠/슬랙스",
-		},
-	];
+	const getType = (t:string) => {
+		for(let i =0; i< type_tree.length; i++){
+			if(t in type_tree[i][1]){
+				return type_tree[i][0]
+			}
+		}
+		return ""
+	}
+
+	//for logout
+	const [isSending, setIsSending] = useState(false)
+	const checkLoginned = () => {
+		if(localStorage.getItem("username") !== null){
+			return true
+		}
+		else return false
+	};
+
+	const filter_list = (t:string) => {
+		if(t === 'type'){
+			setFilteredList(userClothState.userClothes)
+		}
+		else{
+			const tmpUserCloth = userClothState.userClothes.filter((cloth) => {t === getType(cloth.type)})
+			setFilteredList(tmpUserCloth)
+		}
+	}
+
+	useEffect(() => {
+		dispatch(fetchUserClothes());
+		filter_list('type');
+	}, []);
+
+
+	useEffect(() => {
+		const redirect = () => {
+			if (!checkLoginned()) {
+				navigate("/");
+			}
+		};
+		redirect();
+	}, [isSending]);
 
 	return (
 		<div className="Closet">
 			<div className="Closet-header">
 				<Header
 					clickInfoHandler={() => {
-						navigate("/");
+						navigate("/setting");
 					}}
-					clickLogoutHandler={() => {
-						logoutUser();
+					clickLogoutHandler={async() => {
+						await logoutUser().catch((error) => console.log(error))
+						setIsSending(!isSending)
 					}}
 					clickHeaderHandler={() => {
 						navigate("/home");
@@ -177,7 +118,18 @@ export default function Closet(props: IProps) {
 				<div className="ClosetDiv">
 					<div className="ClosetHead">
 						<text id="Closet-text-main">Closet</text>
-						<button id="add-cloth-button" onClick={clickAddClothPopupHandler}>
+						<div id='Closet-select-div'>
+							<select id="type-select" 
+							data-testid="select-component"
+							onChange={(e) => {filter_list(e.target.value)}}>
+								{TYPEOPTIONS.map((option, index) => (
+									<option key={index} value={option.value} >
+										{option.value}
+									</option>
+								))}
+							</select>
+						</div>
+						<button id="add-cloth-button" data-testid="add-cloth-button" onClick={clickAddClothPopupHandler}>
 							Add
 						</button>
 						<Modal
@@ -188,67 +140,23 @@ export default function Closet(props: IProps) {
 						</Modal>
 					</div>
 
-					<text id="Closet-text-sub">Outwear</text>
-					<div className="Closet-image-sub">
-						<ClosetItem
-							source_url={outer_cloth_data_list[0].cloth_image}
-							type={outer_cloth_data_list[0].cloth_type}
-							color={outer_cloth_data_list[0].cloth_color}
-							pattern={outer_cloth_data_list[0].cloth_pattern}
-							// clickClothDetailPopupHandler={() => setAddClothModalOpen}
-						/>
-						{/* {userClothState.userClothes.map((td) => { // userCloth.ts -> userClothes: []
-                            return (
-                                <ClosetItem
-                                    key={td.id}
-                                    source_url={"img/outfit/" + td.image_id + ".jpg"}
-                                    type={td.type}
-                                    color={td.color}
-                                    pattern={td.pattern}
-                                    // clickDetail={() => clickArticleHandler(td)} clickClothDetailPopupHandler는 컴포넌트에 구현되어있어야함
-                                />
-                            );
-                        })} */}
+					{
+						filteredList.length !== 0 ? filteredList.map((cloth, index) => {
+							return(
+								<ClosetItem
+								key={index}
+								source_url={cloth.image_link}
+								type={cloth.type}
+								color={cloth.color}
+								pattern={cloth.pattern}
+							/>
+							)
+						})
+					:
+					<div>
+						<text id='add-cloth-text'>옷을 추가해보세요!</text>
 					</div>
-
-					<text id="Closet-text-sub">Top</text>
-					<div className="Closet-image-sub">
-						<ClosetItem
-							source_url={top_cloth_data_list[0].cloth_image}
-							type={top_cloth_data_list[0].cloth_type}
-							color={top_cloth_data_list[0].cloth_color}
-							pattern={top_cloth_data_list[0].cloth_pattern}
-							// clickClothDetailPopupHandler={() => setClothDetailModalOpen}
-						/>
-						{/* <Modal isOpen={clothDetailModalOpen} onRequestClose={() => setClothDetailModalOpen(false)}>
-                            <ClothDetailModal></ClothDetailModal>
-                        </Modal> */}
-						<ClosetItem
-							source_url={top_cloth_data_list[1].cloth_image}
-							type={top_cloth_data_list[1].cloth_type}
-							color={top_cloth_data_list[1].cloth_color}
-							pattern={top_cloth_data_list[1].cloth_pattern}
-						/>
-					</div>
-
-					<text id="Closet-text-sub">Bottom</text>
-					<div className="Closet-image-sub">
-						<ClosetItem
-							source_url={bottom_cloth_data_list[0].cloth_image}
-							type={bottom_cloth_data_list[0].cloth_type}
-							color={bottom_cloth_data_list[0].cloth_color}
-							pattern={bottom_cloth_data_list[0].cloth_pattern}
-						/>
-						<ClosetItem
-							source_url={bottom_cloth_data_list[1].cloth_image}
-							type={bottom_cloth_data_list[1].cloth_type}
-							color={bottom_cloth_data_list[1].cloth_color}
-							pattern={bottom_cloth_data_list[1].cloth_pattern}
-						/>
-					</div>
-
-					{/* closetItem 컴포넌트 가져오고, onclick clickClothDetailPopupHandler 달기 */}
-					{/* 상의 div, 하의 div 나눠서 가져와야 함. 제목도 달고 */}
+					}
 				</div>
 			</div>
 		</div>

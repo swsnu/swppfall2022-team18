@@ -1,12 +1,15 @@
 import React from "react";
 import axios from "axios";
 
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+
 export const signinUser = async (username: string, pw: string) => {
 	console.log("called");
 	await axios
 		.get("/api/ooo/user/token/")
 		.then((response) => {
-			console.log(response);
+			console.log(response)
 		})
 		.catch((error) => {
 			console.log(error.response);
@@ -18,7 +21,6 @@ export const signinUser = async (username: string, pw: string) => {
 		method: "POST",
 		headers: {
 			"Content-type": "application/json;charset=UTF-8",
-			"X-CSRFToken": localStorage.getItem("token"),
 		},
 		body: data,
 	};
@@ -40,27 +42,41 @@ export const signupUser = async (username: string, pw: string) => {
 		headers: {
 			"Content-type": "application/json;charset=UTF-8",
 		},
-		body: JSON.stringify(data),
+		body: data,
 	};
+	console.log(option)
 
-	await axios.post("/api/ooo/user/signup/", option).catch((error) => {
-		console.log(error.response);
-	});
+	const response = await axios.post("/api/ooo/user/signup/", option)
+	return response
+
 };
 
 export const logoutUser = async () => {
-	const data = { username: localStorage.getItem("username") };
+	await axios.get("/api/ooo/user/signout/").then(() => {
+		localStorage.removeItem("username");
+	})
+};
+
+export const editUser = async (pw: string) => {
+	const data = { password: pw}
 	const option = {
-		method: "POST",
+		method: 'PUT',
 		headers: {
 			"Content-type": "application/json;charset=UTF-8",
-			"X-CSRFTOKEN": "JkwYDkuqKG8UYeeWgBoYwbVEem1wyS9h",
 		},
-		body: JSON.stringify(data),
-	};
-	console.log(localStorage.getItem("token"));
-	await axios.post("/api/ooo/user/logout/", option).then(() => {
-		localStorage.removeItem("token");
+		body: data
+	}
+	await axios.put("/api/ooo/user/info/", option).then((response) => {
+		return response
+	}).catch((e) => {
+		console.log(e)
+	})
+}
+
+export const deleteUser = async () => {
+	await axios.delete("/api/ooo/user/info/").then(() => {
 		localStorage.removeItem("username");
-	});
-};
+	}).catch((e) => {
+		console.log(e)
+	})
+}

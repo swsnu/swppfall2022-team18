@@ -1,13 +1,17 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useNavigate } from "react-router-dom";
 import { Provider } from "react-redux";
-// import { renderWithProviders } from "../../test-utils/mocks";
+import {getMockStore } from '../../test-utils/mocks';
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Closet from './Closet';
 import {store} from '../../store'
+import React from "react";
 import { IProps as HeaderProps } from "../../components/Header/Header";
-// import { IProps as OutfitPreviewProps } from "../../components/OutfitPreview/OutfitPreview";
 import { IProps as ClosetItemProps } from "../../components/ClosetItem/ClosetItem";
+import axios from 'axios';
+import { OutfitState } from '../../store/slices/outfit';
+import { UserClothState } from '../../store/slices/userCloth';
+import userEvent from "@testing-library/user-event";
 
 jest.mock("../../components/Header/Header", () => (props: HeaderProps) => (
     <div data-testid="spyHeader">
@@ -38,6 +42,56 @@ jest.mock("../../components/ClosetItem/ClosetItem", () => (props: ClosetItemProp
     </div>
 ));
 
+const stubInitialOutfitState: OutfitState = {
+	outfits: [
+		{
+			id: 1,
+			outfit_info: "",
+			outfit_name: "",
+			popularity: 1,
+			image_link: "",
+			purchase_link: "",
+		},
+	],
+	selectedOutfit: null,
+	filter: {
+		color: null,
+		type: null,
+		pattern: null,
+		userHave: false,
+		recommend: false,
+	},
+	sampleClothes: [
+		{id: 1, name:"", image_link:"", outfit:1, color:"black", type:"shirt", pattern:"no", purchase_link:""}
+	],
+	sampleCloth: null,
+	userCloth: null,
+	cursor: 0,
+	isLast: false,
+};
+
+const stubInitialUserClothState: UserClothState = {
+	userClothes: [
+		{id: 1, name:"", image_link:"", user:1, color:"black", type:"반소매 티셔츠", pattern:"no"}
+	],
+	selectedUserCloth: null,
+	recommendOutfit: {
+		id: 1,
+		outfit_info: "",
+		outfit_name: "",
+		popularity: 1,
+		image_link: "",
+		userClothes: [
+			{id: 1, name:"", image_link:"", user:1, color:"black", type:"shirt", pattern:"no"}
+		],
+	},
+};
+
+const mockStore = getMockStore({
+	userCloth: stubInitialUserClothState,
+	outfit: stubInitialOutfitState,
+});
+
 const mockNavigate = jest.fn()
 jest.mock("react-router", () => ({
     ...jest.requireActual("react-router"),
@@ -55,10 +109,10 @@ describe("<Closet />", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         closet = (
-            <Provider store={store}>
+            <Provider store={mockStore}>
                 <MemoryRouter>
                     <Routes>
-                        <Route path="/" element={<Closet title="CLOSET_TEST_TITLE" />} />
+                        <Route path="/" element={<Closet/>} />
                     </Routes>
                 </MemoryRouter>
             </Provider>
@@ -74,24 +128,50 @@ describe("<Closet />", () => {
         const logobutton = screen.getAllByTestId("logo")[0];
         screen.findByText("oOo")
         fireEvent.click(logobutton)
-        expect(mockNavigate).toHaveBeenCalledTimes(1);
-
-        const infobutton = screen.getAllByTestId("info")[0];
-        fireEvent.click(infobutton)
-        expect(mockNavigate).toHaveBeenCalledTimes(2);
-
-        const logoutbutton = screen.getAllByTestId("logout")[0];
-        fireEvent.click(logoutbutton)
-        //expect(mockDispatch).toHaveBeenCalledTimes(1);
+        expect(mockNavigate).toHaveBeenCalled();
 
         // Add Cloth Button
-        const addclothbutton = screen.getByText("Add");
-        fireEvent.click(addclothbutton)
-        expect(mockNavigate).toHaveBeenCalledTimes(2);
+        const addclothbutton = screen.getAllByTestId("add-cloth-button")[0];
+        fireEvent.click(addclothbutton);
+        expect(mockNavigate).toHaveBeenCalled()
 
         // ClosetItem
         const closetitems = screen.getAllByTestId("spyClosetItem");
-        expect(closetitems).toHaveLength(5);
         fireEvent.click(screen.getAllByTestId('clothimg')[0]);
     });
+
+    it("should handle header logout button", async() => {
+		render(closet);
+		jest.spyOn(axios, "get").mockResolvedValue({
+			data: { username: "test" },
+		});
+		const logoutbutton = screen.getAllByTestId("logout")[0];
+		fireEvent.click(logoutbutton);
+		await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
+	})
+
+    it("should handler info button", () => {
+		render(closet);
+		const infoButton = screen.getAllByTestId("info")[0];
+		fireEvent.click(infoButton);
+	})
+
+    it("should handle select component", () => {
+        render(closet);
+        const selectElement = screen.getAllByRole("combobox", {})[0];
+        userEvent.selectOptions(selectElement, "상의");
+        const defaultOption = screen.getByRole("option", {
+            name: "Type",
+        }) as HTMLOptionElement;
+        const selectedOption = screen.getByRole("option", {
+            name: "상의",
+        }) as HTMLOptionElement;
+        fireEvent.click(selectedOption);
+        expect(defaultOption.selected).toBeFalsy();
+        expect(selectedOption.selected).toBeTruthy();
+        fireEvent.click(defaultOption);
+
+    })
+
+
 })
