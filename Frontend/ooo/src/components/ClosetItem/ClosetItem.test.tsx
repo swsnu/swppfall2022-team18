@@ -20,11 +20,14 @@ describe("<ClosetItem />",()=>{
         const clickClothDetailPopupHandler = jest.fn();
         let clothDetailModalOpen = false;
         const setClothDetailModalOpen = jest.fn(()=>{!clothDetailModalOpen});
-        render(<ClosetItem source_url="https://image.msscdn.net/images/goods_img/20190228/969580/969580_1_500.jpg?t=20190228191158"
-        type='트러커 재킷'
-        color="그레이"
-        pattern="None"
-        clickClothDetailPopupHandler={clickClothDetailPopupHandler}
+        render(<ClosetItem 
+            user_cloth_id="1"
+            source_url="https://image.msscdn.net/images/goods_img/20190228/969580/969580_1_500.jpg?t=20190228191158"
+            weardate="2022-11-04"
+            type='트러커 재킷'
+            color="그레이"
+            pattern="None"
+            clickClothDetailPopupHandler={clickClothDetailPopupHandler}
         />);
         //render(<Modal isOpen={clothDetailModalOpen} onRequestClose={setClothDetailModalOpen}></Modal>);
         screen.findByTestId("cloth-img");

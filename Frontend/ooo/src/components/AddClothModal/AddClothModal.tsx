@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import { createUserCloth } from "../../store/slices/userCloth";
+import TypeFilter from "../TypeFilter/TypeFilter"
 
 // const TodoModal = (props: any) => (
 //     <Modal
@@ -41,7 +42,16 @@ const AddClothModal = () => {
 	const [pattern, setPattern] = useState<string>("");
 	const [fileImage, setFileImage] = useState("");
 	const [submitted, setSubmitted] = useState<boolean>(false);
+	const [clothTypeOption, setClothTypeOption] = useState<string>("");
+
 	const dispatch = useDispatch<AppDispatch>();
+
+	const TYPEOPTIONS = [
+		{ value: "Type" },
+		{ value: "상의" },
+		{ value: "하의" },
+		{ value: "아우터" },
+	];
 
 	const clickAddClothHandler = async () => {
 		const data = {
@@ -61,10 +71,12 @@ const AddClothModal = () => {
 		// }
 	};
 
-	
-
 	const saveFileImage = (e: any) => {
 		setFileImage(URL.createObjectURL(e.target.files[0]));
+	};
+
+	const handleClothTypeOptionChange = (e: any) => {
+		console.log(e)
 	};
 
 	// if (submitted) {
@@ -98,26 +110,20 @@ const AddClothModal = () => {
 				<div className="CenterDiv"></div>
 				<div className="UploadedClothInfoDiv">
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Name</text>
-						<br></br>
-						<input
-							type="text"
-							id="cloth-info-input"
-							data-testid="cloth-info-input-name"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-						/>
-					</div>
-					<div className="UploadedClothInfoDiv-sub">
 						<text id="UploadedClothInfoDiv-text">Type</text>
 						<br></br>
-						<input
-							type="text"
-							id="cloth-info-input"
-							data-testid="cloth-info-input-type"
-							value={type}
-							onChange={(e) => setType(e.target.value)}
-						/>
+						<select id="type-select" data-testid="select-component" onChange={(e) => setClothTypeOption(e.target.value)}>
+							{TYPEOPTIONS.map((option, index) => (
+								<option key={index} value={option.value} >
+									{option.value}
+								</option>
+							))}
+						</select>
+					</div>
+					<div className="UploadedClothInfoDiv-sub">
+						<text id="UploadedClothInfoDiv-text">세부 Type</text>
+						<br></br>
+						<TypeFilter metaType={clothTypeOption} selectHandler={handleClothTypeOptionChange}></TypeFilter>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
 						<text id="UploadedClothInfoDiv-text">Color</text>

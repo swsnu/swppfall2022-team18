@@ -44,8 +44,9 @@
 
 
 #type-select {
-	margin-left: 100%;
-	margin-top: 15%;
+	/* margin-left: 100%; */
+	margin-left: 40px;
+	/* margin-top: 15%; */
 	padding: 8px 8px;
 	line-height: 20px;
 	border: 1px solid;

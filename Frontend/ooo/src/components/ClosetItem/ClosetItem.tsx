@@ -10,7 +10,9 @@ import Modal from "react-modal";
 import ClothDetailModal from "../../components/ClothDetailModal/ClothDetailModal";
 
 export interface IProps {
+	user_cloth_id: string;
 	source_url: string;
+	weardate: string;
 	type: string;
 	color: string;
 	pattern: string;
@@ -23,7 +25,6 @@ const ClosetItem = (props: IProps) => {
 	const clickClothDetailPopupHandler = () => {
 		setClothDetailModalOpen(true);
 	};
-
 
 	return (
 		<div className="ClosetItem">
@@ -45,7 +46,14 @@ const ClosetItem = (props: IProps) => {
 				data-testid="detail-modal"
 				isOpen={clothDetailModalOpen}
 			>
-				<ClothDetailModal></ClothDetailModal>
+				<ClothDetailModal
+					id={props.user_cloth_id}
+					cloth_image={props.source_url}
+					cloth_weardate={props.weardate}
+					cloth_type={props.type}
+					cloth_color={props.color}
+					cloth_pattern={props.pattern}
+				></ClothDetailModal>
 				<div id="close-buton-div">
 					<button
 						id="modal-close-button"

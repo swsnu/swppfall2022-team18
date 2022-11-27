@@ -26,7 +26,8 @@ describe("<ClothDetaillModal />", () => {
             <Provider store={store}>
                 <MemoryRouter>
                     <Routes>
-                        <Route path="/" element={<ClothDetailModal />} />
+                        {/* <Route path="/" element={<ClothDetailModal />} /> */}
+                        <Route path="/" element={<ClothDetailModal id="1" cloth_image="test" cloth_weardate="test" cloth_color="test" cloth_pattern="test" cloth_type="test"/>} />
                     </Routes>
                 </MemoryRouter>
             </Provider>

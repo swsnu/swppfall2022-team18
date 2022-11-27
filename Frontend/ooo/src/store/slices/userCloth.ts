@@ -11,6 +11,7 @@ export interface UserClothType {
 	color: string;
 	type: string;
 	pattern: string;
+	dates: string;
 }
 export interface TodayOutfitType {
 	id: number;
@@ -21,19 +22,20 @@ export interface TodayOutfitType {
 	userClothes: UserClothType[]
 }
 
-
 export interface UserClothState {
 	userClothes: UserClothType[];
 	selectedUserCloth: UserClothType | null;
 	recommendOutfit: TodayOutfitType | null;
 }
 
-
-
 const initialState: UserClothState = {
 	userClothes: [],
 	selectedUserCloth: null,
 	recommendOutfit: null
+};
+
+const headers = {
+	username: localStorage.getItem("username"),
 };
 
 export const fetchUserClothes = createAsyncThunk(
@@ -60,29 +62,61 @@ export const fetchRecommendOutfit = createAsyncThunk(
 			return response.data
 		}
 		else return null
-
-		
 	}
 )
 
 export const createUserCloth = createAsyncThunk(
 	"closet/createUserCloth",
 	async (
-		td: Pick<UserClothType, "name" | "image_link" | "color" | "type" | "pattern">,
+		data: Pick<UserClothType, "name" | "image_link" | "color" | "type" | "pattern">,
 		{ dispatch }
 	) => {
-		const response = await axios.post("/api/ooo/closet/", td);
+		const response = await axios.post(
+			"/api/ooo/closet/",
+			{
+				headers,
+				body: data
+			}
+		);
 		dispatch(userClothActions.createUserCloth(response.data));
+		// console.log(response.data);
+		// return response.data;
 	}
 );
 
-// export const editUserCloth = createAsyncThunk(
-// 	"closet/editUserCloth",
-//     async (td: Pick<UserClothType, "title" | "content">, { dispatch }) => {
-//         const response = await axios.put(`/api/ooo/closet/${id}/`, td);
-//         dispatch(userClothActions.editUserCloth(response.data));
-//     }
-// );
+export const editUserCloth = createAsyncThunk(
+	"closet/editUserCloth",
+    async (
+		data: Pick<UserClothType, "id" | "color" | "type" | "pattern">,
+		{ dispatch }
+	) => {
+        const response = await axios.put(
+			`/api/ooo/closet/${data.id}/`,
+			{
+				headers,
+				body: data
+			}
+		);
+        dispatch(userClothActions.editUserCloth(response.data));
+    }
+);
+
+export const addWearDate = createAsyncThunk(
+	"closet/addWearDate",
+    async (
+		data: Pick<UserClothType, "id" | "dates">,
+		{ dispatch }
+	) => {
+        const response = await axios.post(
+			`/api/ooo/closet/${data.id}/`,
+			{
+				headers,
+				body: data
+			}
+		);
+        dispatch(userClothActions.addWearDate(response.data));
+    }
+);
 
 export const deleteUserCloth = createAsyncThunk(
 	"closet/deleteUserCloth",
@@ -103,12 +137,6 @@ export const userClothSlice = createSlice({
 		// 	);
 		// 	state.selectedUserCloth = target ?? null;
 		// },
-		deleteUserCloth: (state, action: PayloadAction<{ targetId: number }>) => {
-			const deleted = state.userClothes.filter((userCloth) => {
-				return userCloth.id !== action.payload.targetId;
-			});
-			state.userClothes = deleted;
-		},
 		createUserCloth: (
 			state,
 			action: PayloadAction<{
@@ -119,6 +147,7 @@ export const userClothSlice = createSlice({
 				color: string;
 				type: string;
 				pattern: string;
+				dates: string;
 			}>
 		) => {
 			const newUserCloth = {
@@ -129,8 +158,59 @@ export const userClothSlice = createSlice({
 				color: action.payload.color,
 				type: action.payload.type,
 				pattern: action.payload.pattern,
+				dates: ""
 			};
 			state.userClothes.push(newUserCloth);
+		},
+		editUserCloth: (
+			state,
+			action: PayloadAction<{
+				targetId: number
+				name: string;
+				image_link: string;
+				user: number;
+				color: string;
+				type: string;
+				pattern: string;
+			}>
+		) => {
+			const fetchTargetItem = state.userClothes.filter((userCloth) => {
+				console.log(userCloth)
+				// return userCloth.id == action.payload.targetId;
+			});
+			state.userClothes = fetchTargetItem;
+			// const editedUserCloth = {
+			// 	id: state.userClothes[state.userClothes.length - 1].id + 1, // temporary
+			// 	name: action.payload.name,
+			// 	image_link: action.payload.image_link,
+			// 	user: action.payload.user,
+			// 	color: action.payload.color,
+			// 	type: action.payload.type,
+			// 	pattern: action.payload.pattern,
+			// };
+			// state.userClothes.
+		},
+		deleteUserCloth: (state, action: PayloadAction<{ targetId: number }>) => {
+			const deleted = state.userClothes.filter((userCloth) => {
+				return userCloth.id !== action.payload.targetId;
+			});
+			state.userClothes = deleted;
+		},
+		addWearDate: (
+			state,
+			action: PayloadAction<{
+				targetId: number;
+				weardate: string;
+			}>
+		) => {
+			// const newWearDate = {
+			// 	// id: state.userClothes[state.userClothes.length - 1].id + 1, // temporary
+			// 	date: action.payload.weardate,
+			// };
+			// const targetItem = state.userClothes.filter((userCloth) => {
+			// 	return userCloth.id === action.payload.targetId;
+			// }
+			// state.userClothes.push(action.payload.weardate);
 		},
 	},
 	extraReducers: (builder) => {
