@@ -158,7 +158,9 @@ export default function Closet() {
 							return(
 								<ClosetItem
 									key={index}
+									user_cloth_id={String(cloth.id)}
 									source_url={cloth.image_link}
+									weardate={cloth.dates}
 									type={cloth.type}
 									color={cloth.color}
 									pattern={cloth.pattern}
