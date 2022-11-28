@@ -143,7 +143,7 @@ def closet(request):
             return HttpResponse('Unauthorized', status=401)
 
         try:
-            req_data = json.loads(request.body.decode())#["body"]
+            req_data = json.loads(request.body.decode())["body"]
 
             name = req_data['name']
             image_link = req_data['image_link']
