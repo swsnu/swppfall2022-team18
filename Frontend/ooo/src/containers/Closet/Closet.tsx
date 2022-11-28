@@ -49,9 +49,12 @@ export default function Closet() {
 	const [addClothModalOpen, setAddClothModalOpen] = useState(false);
 	const [filteredList, setFilteredList] = useState<UserClothType[]>([]);
 
-
 	const clickAddClothPopupHandler = () => {
 		setAddClothModalOpen(true);
+	};
+
+	const clickAddClothPopupCloseHandler = () => {
+		setAddClothModalOpen(!addClothModalOpen);
 	};
 
 	const getType = (t:string) => {
@@ -119,9 +122,12 @@ export default function Closet() {
 					<div className="ClosetHead">
 						<text id="Closet-text-main">Closet</text>
 						<div id='Closet-select-div'>
-							<select id="type-select" 
-							data-testid="select-component"
-							onChange={(e) => {filter_list(e.target.value)}}>
+							<select
+								id="type-select"
+								data-testid="select-component"
+								// defaultValue="Type"
+								onChange={(e) => {filter_list(e.target.value)}}
+							>
 								{TYPEOPTIONS.map((option, index) => (
 									<option key={index} value={option.value} >
 										{option.value}
@@ -138,7 +144,9 @@ export default function Closet() {
 							isOpen={addClothModalOpen}
 							// onRequestClose={() => setAddClothModalOpen(false)}
 						>
-							<AddClothModal></AddClothModal>
+							<AddClothModal
+								modal_close={clickAddClothPopupCloseHandler}
+							></AddClothModal>
 							<div id="close-buton-div">
 								<button
 									id="modal-close-button"
@@ -152,7 +160,7 @@ export default function Closet() {
 							</div>
 						</Modal>
 					</div>
-
+					<div className="ClosetItems">
 					{
 						filteredList.length !== 0 ? filteredList.map((cloth, index) => {
 							return(
@@ -166,12 +174,12 @@ export default function Closet() {
 									pattern={cloth.pattern}
 								/>
 							)
-						})
-					:
-					<div>
-						<text id='add-cloth-text'>옷을 추가해보세요!</text>
-					</div>
+						}) :
+						<div>
+							<text id='add-cloth-text'>옷을 추가해보세요!</text>
+						</div>
 					}
+					</div>
 				</div>
 			</div>
 		</div>

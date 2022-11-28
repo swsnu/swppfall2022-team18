@@ -17,19 +17,13 @@ export interface IProps {
 	cloth_type: string;
 	cloth_color: string;
 	cloth_pattern: string;
-	// clickClothDetailPopupHandler?: () => void;
+	modal_close: () => void;
 }
 
 const ClothDetailModal = (cloth: IProps) => {
 	const navigate = useNavigate();
-	// const { id } = useParams();
-	console.log(cloth.id);
+	// console.log(cloth.id);
 
-	// const [name, setName] = useState<string>("");
-	// const [image_id, setImageId] = useState<number>();
-	// const [type, setType] = useState<string>("");
-	// const [color, setColor] = useState<string>("");
-	// const [pattern, setPattern] = useState<string>("");
 	const [submitted, setSubmitted] = useState<boolean>(false);
 	const [clothType, setClothType] = useState(cloth.cloth_type);
 	const [clothColor, setClothColor] = useState(cloth.cloth_color);
@@ -42,17 +36,6 @@ const ClothDetailModal = (cloth: IProps) => {
 	useEffect(() => {
 		dispatch(fetchUserCloth(Number(cloth.id)));
 	}, [cloth.id]);
-
-	// const clickDeleteClothHandler = async () => {
-	//     const data = { cloth_id: Number(id) };
-	//     const result = await dispatch(deleteUserCloth(data));
-	//     // console.log(result);
-	//     if (result.type === `${deleteUserCloth.typePrefix}/fulfilled`) {
-	//         setSubmitted(true);
-	//     } else {
-	//         alert("Error on delete Cloth");
-	//     }
-	// };
 
 	// const cloth = {
 	// 	cloth_color: "그레이",
@@ -70,9 +53,9 @@ const ClothDetailModal = (cloth: IProps) => {
 	};
 
 	const clickDeleteClothHandler = async () => {
-		// const data = { targetId: Number(id) };
 		const result = await dispatch(deleteUserCloth(Number(cloth.id)));
-		console.log(result);
+		cloth.modal_close();
+		navigate("/closet/");
 	};
 
 	const clickSaveWearDateHandler = async () => {
@@ -84,10 +67,6 @@ const ClothDetailModal = (cloth: IProps) => {
 		const result = await dispatch(addWearDate(data));
 		console.log(result);
 	};
-
-	// if (submitted) {
-	// 	navigate("/closet/");
-	// }
 
 	const handleDoubleClick = () => {
 		setIsEditable(true);
@@ -179,7 +158,7 @@ const ClothDetailModal = (cloth: IProps) => {
 					{/* <text id="weardate-text-modal">{cloth.cloth_weardate}</text> */}
 					<DatePicker
 						dateFormat="yyyy/MM/dd"
-						highlightDates={JSON.parse(cloth.cloth_weardate).map((date:any)=>new Date(date))}
+						highlightDates={cloth.cloth_weardate ? JSON.parse(cloth.cloth_weardate).map((date:any)=>new Date(date)) : []}
 						selected={wearDate}
 						onChange={(date: any) => setWearDate(date)}
 						inline
