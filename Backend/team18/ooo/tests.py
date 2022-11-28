@@ -506,7 +506,7 @@ class signinUserCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
-        response = client.post(
+        response = client.post(0
             '/api/ooo/outfit/',
             json.dumps({            
                 'body':{
