@@ -4,90 +4,44 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
 import { AppDispatch } from "../../store";
 import "./OutfitDetail.css";
-import { fetchOutfit, selectOutfit } from "../../store/slices/outfit";
+import outfit, { fetchOutfit, fetchSampleCloth, selectOutfit } from "../../store/slices/outfit";
 import Header from "../../components/Header/Header";
 import { logoutUser } from "../../api/user";
-import outfit_1 from "../../assets/images/outfit_1.jpg";
-import samplecloth_1 from "../../assets/images/samplecloth_1.jpg";
-import samplecloth_2 from "../../assets/images/samplecloth_2.jpg";
 import Modal from "react-modal";
 import SampleClothModal from "../../components/SampleClothModal/SampleClothModal";
 
-const OutfitDetail = () => {
-	// const { id } = useParams();
 
-	// const dispatch = useDispatch<AppDispatch>();
+const OutfitDetail = () => {
+	const { id } = useParams();
+
+	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
 	const [modalOpen, setModalOpen] = useState(false);
 	const [selectedCloth, setSelectedCloth] = useState(0);
 	const [userHave, setUserHave] = useState(false);
-	// const outfitState = useSelector(selectOutfit);
+	const outfitState = useSelector(selectOutfit);
 
-	// useEffect(() => {
-	// 	dispatch(fetchOutfit(Number(id)));
-	// }, []);
+	useEffect(() => {
+		dispatch(fetchOutfit(Number(id)));
+	}, []);
 
-	const selectedOutfit = {
-		codi_name: "나쁠게 없어!",
-		rank: 58575,
-		explain:
-			"트러커 재킷과 스트라이프 패턴 티셔츠를 코디하고 데님 팬츠로 심플하게 연출한 캠퍼스 룩",
-		codi_link:
-			"https://www.musinsa.com/app/styles/views/8679?use_yn_360=&style_type=&brand=&model=&tag_no=&max_rt=&min_rt=&display_cnt=60&list_kind=big&sort=view_cnt&page=1",
-		cloth_links: [
-			"https://www.musinsa.com/app/goods/952064/0",
-			"https://www.musinsa.com/app/goods/858911/0",
-		],
-		codi_image:
-			"https://image.msscdn.net/images/style/detail/8679/detail_8679_1_500.jpg",
-	};
-
-	const sampleClothes = [
-		{
-			cloth_color: "중청",
-			cloth_name: "와이드 데님 팬츠 (LIGHT BLUE)",
-			cloth_link: "https://www.musinsa.com/app/goods/858911/0",
-			cloth_num: 858911,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20180914/858911/858911_6_500.jpg?t=20220628150414",
-			cloth_pattern: "None",
-			cloth_type: "데님 팬츠",
-		},
-		{
-			cloth_color: "갈색",
-			cloth_name: "TRUCKER JACKET(2COLOR)",
-			cloth_link: "https://www.musinsa.com/app/goods/952064/0",
-			cloth_num: 952064,
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20190213/952064/952064_3_500.jpg?t=20220628164752",
-			cloth_pattern: "None",
-			cloth_type: "트러커 재킷",
-		},
-	];
-
-	const userClothes = [
-		{
-			image_id: "1",
-			cloth_image:
-				"https://image.msscdn.net/images/goods_img/20180914/858911/858911_6_500.jpg?t=20220628150414",
-		},
-	];
 
 	const clickPurchaseButtonHander = (purchase_link: string) => {
 		navigate("/Redirect", { state: { url: purchase_link } });
 	};
 
-	const clickClothHandler = (id: number) => {
+	const clickClothHandler = async(id: number) => {
 		//use modal
 		setModalOpen(true);
-		if (id == 858911) {
-			setSelectedCloth(0);
-			setUserHave(true);
-		} else {
-			setSelectedCloth(1);
+		await dispatch(fetchSampleCloth(id))
+		setSelectedCloth(id);
+		if (outfitState.userCloth === null){
 			setUserHave(false);
 		}
-		console.log(selectedCloth);
+		else{
+			setUserHave(true);
+
+		}
 	};
 
 	const [isSending, setIsSending] = useState(false);
@@ -124,44 +78,45 @@ const OutfitDetail = () => {
 			</div>
 			<div className="OutfitDetail-body">
 				<div className="Outfit-image">
-					<img id="-outfit-img" src={selectedOutfit.codi_image} />
+					<img id="-outfit-img" src={outfitState.selectedOutfit?.image_link} alt='로딩 중'/>
 				</div>
 				<div className="OutfitDetailData">
 					<button
 						id="outfit-purchase-button"
 						data-testid="outfit-purchase-button"
-						onClick={() => clickPurchaseButtonHander(selectedOutfit.codi_link)}
+						onClick={() => clickPurchaseButtonHander(outfitState.selectedOutfit !== null ? outfitState.selectedOutfit.purchase_link : "")}
 					>
 						Purchase Button
 					</button>
-					<div className="OutfitName">{selectedOutfit.codi_name}</div>
-					<div className="OutfitInfo">{selectedOutfit.explain}</div>
+					<div className="OutfitName">{outfitState.selectedOutfit?.outfit_name}</div>
+					<div className="OutfitInfo">{outfitState.selectedOutfit?.outfit_info}</div>
 					<text id="samplecloth-title">구성하는 옷들</text>
 					<div className="sampleClothes">
-						{sampleClothes.map((sc) => {
+						{outfitState.sampleClothes.map((sc) => {
 							return (
-								<div className="sampleCloth-image" key={sc.cloth_num}>
+								<div className="sampleCloth-image" key={sc.id}>
 									<img
 										id="samplecloth-img"
 										data-testid="samplecloth-image"
-										src={sc.cloth_image}
-										onClick={() => clickClothHandler(sc.cloth_num)}
+										src={sc.image_link}
+										onClick={() => clickClothHandler(sc.id)}
+										alt = '로딩 중'
 									></img>
 								</div>
 							);
 						})}
 					</div>
 				</div>
-				<Modal id="sample-modal" isOpen={modalOpen}>
+				<Modal id="sample-modal" isOpen={modalOpen} ariaHideApp={false}>
 					<SampleClothModal
 						userHave={userHave}
-						userCloth_url={userClothes[0].cloth_image}
-						sampleCloth_url={sampleClothes[selectedCloth].cloth_image}
-						type={sampleClothes[selectedCloth].cloth_type}
-						color={sampleClothes[selectedCloth].cloth_color}
-						pattern={sampleClothes[selectedCloth].cloth_pattern}
-						sampleCloth_name={sampleClothes[selectedCloth].cloth_name}
-						sampleCloth_link={sampleClothes[selectedCloth].cloth_link}
+						userCloth_url={outfitState.userCloth === null ? "" : outfitState.userCloth.image_link}
+						sampleCloth_url={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.image_link}
+						type={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.type}
+						color={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.color}
+						pattern={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.pattern}
+						sampleCloth_name={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.name}
+						sampleCloth_link={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.purchase_link}
 					></SampleClothModal>
 					<div id="close-buton-div">
 						<button
@@ -169,7 +124,7 @@ const OutfitDetail = () => {
 							data-testid="modal-close-button"
 							onClick={() => {
 								setModalOpen(false);
-								setSelectedCloth(0);
+								setSelectedCloth(-1);
 								setUserHave(false);
 							}}
 						>

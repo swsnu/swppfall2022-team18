@@ -14,12 +14,12 @@ import userEvent from "@testing-library/user-event";
 const stubInitialOutfitState: OutfitState = {
 	outfits: [
 		{
-			id: 1,
+			id: 0,
 			outfit_info: "",
 			outfit_name: "",
 			popularity: 1,
 			image_link: "",
-			purchase_link: "",
+			purchase_link: ""
 		},
 	],
 	selectedOutfit: null,
@@ -31,6 +31,7 @@ const stubInitialOutfitState: OutfitState = {
 		recommend: false,
 	},
 	sampleClothes: [],
+	sampleCloth: null,
 	userCloth: null,
 	cursor: 0,
 	isLast: false,

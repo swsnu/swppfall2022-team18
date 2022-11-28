@@ -11,16 +11,13 @@ import {
 	fetchUserCloth,
 	createUserCloth,
 	deleteUserCloth,
+	UserClothType,
 } from "../../store/slices/userCloth";
 import { AppDispatch } from "../../store";
 import Modal from "react-modal";
 
 import AddClothModal from "../../components/AddClothModal/AddClothModal";
 // import ClothDetailModal from '../../components/ClothDetailModal/ClothDetailModal'
-
-interface IProps {
-	title: string;
-}
 
 type ClosetItem = {
 	id: number;
@@ -30,34 +27,43 @@ type ClosetItem = {
 	pattern: string;
 };
 
-export default function Closet(props: IProps) {
+export default function Closet() {
 	const type_tree =  [
-		['상의', ['반소매 티셔츠', '피케/카라 티셔츠', '긴소매 티셔츠', '맨투맨/스웨트셔츠', '민소매 티셔츠', '후드 티셔츠', '셔츠/블라우스', '니트/스웨터', '기타 상의']], 
-		['바지', ['데님 팬츠', '숏 팬츠', '코튼 팬츠', '레깅스', '슈트 팬츠/슬랙스', '점프 슈트/오버올', '트레이닝/조거 팬츠', '기타 바지']], 
-		['아우터', ['후드 집업', '환절기 코트', '블루종/MA-1', '겨울 싱글 코트', '레더/라이더스 재킷', '겨울 더블 코트',
+		[['상의'], ['반소매 티셔츠', '피케/카라 티셔츠', '긴소매 티셔츠', '맨투맨/스웨트셔츠', '민소매 티셔츠', '후드 티셔츠', '셔츠/블라우스', '니트/스웨터', '기타 상의']], 
+		[['바지'], ['데님 팬츠', '숏 팬츠', '코튼 팬츠', '레깅스', '슈트 팬츠/슬랙스', '점프 슈트/오버올', '트레이닝/조거 팬츠', '기타 바지']], 
+		[['아우터'], ['후드 집업', '환절기 코트', '블루종/MA-1', '겨울 싱글 코트', '레더/라이더스 재킷', '겨울 더블 코트',
 				'무스탕/퍼', '겨울 기타 코트', '롱패딩/롱헤비 아우터', '트러커 재킷', '슈트/블레이저 재킷', '숏패딩/숏헤비 아우터', '카디건', '패딩 베스트', '아노락 재킷',
 				'베스트', '플리스/뽀글이', '사파리/헌팅 재킷', '트레이닝 재킷', '나일론/코치 재킷', '스타디움 재킷', '기타 아우터']]]
 	
+	const TYPEOPTIONS = [
+		{ value: "Type" },
+		{ value: "상의" },
+		{ value: "바지" },
+		{ value: "아우터" },
+	];
 	
-
-
 	const navigate = useNavigate();
-	const { title } = props;
-
 	const userClothState = useSelector(selectUserCloth);
 	const dispatch = useDispatch<AppDispatch>();
 
-	useEffect(() => {
-		dispatch(fetchUserClothes());
-	}, []);
-
 	const [addClothModalOpen, setAddClothModalOpen] = useState(false);
+	const [filteredList, setFilteredList] = useState<UserClothType[]>([]);
+
 
 	const clickAddClothPopupHandler = () => {
 		setAddClothModalOpen(true);
 	};
 
+	const getType = (t:string) => {
+		for(let i =0; i< type_tree.length; i++){
+			if(t in type_tree[i][1]){
+				return type_tree[i][0]
+			}
+		}
+		return ""
+	}
 
+	//for logout
 	const [isSending, setIsSending] = useState(false)
 	const checkLoginned = () => {
 		if(localStorage.getItem("username") !== null){
@@ -65,6 +71,21 @@ export default function Closet(props: IProps) {
 		}
 		else return false
 	};
+
+	const filter_list = (t:string) => {
+		if(t === 'type'){
+			setFilteredList(userClothState.userClothes)
+		}
+		else{
+			const tmpUserCloth = userClothState.userClothes.filter((cloth) => {t === getType(cloth.type)})
+			setFilteredList(tmpUserCloth)
+		}
+	}
+
+	useEffect(() => {
+		dispatch(fetchUserClothes());
+		filter_list('type');
+	}, []);
 
 
 	useEffect(() => {
@@ -97,7 +118,18 @@ export default function Closet(props: IProps) {
 				<div className="ClosetDiv">
 					<div className="ClosetHead">
 						<text id="Closet-text-main">Closet</text>
-						<button id="add-cloth-button" onClick={clickAddClothPopupHandler}>
+						<div id='Closet-select-div'>
+							<select id="type-select" 
+							data-testid="select-component"
+							onChange={(e) => {filter_list(e.target.value)}}>
+								{TYPEOPTIONS.map((option, index) => (
+									<option key={index} value={option.value} >
+										{option.value}
+									</option>
+								))}
+							</select>
+						</div>
+						<button id="add-cloth-button" data-testid="add-cloth-button" onClick={clickAddClothPopupHandler}>
 							Add
 						</button>
 						<Modal
@@ -109,7 +141,7 @@ export default function Closet(props: IProps) {
 					</div>
 
 					{
-						userClothState.userClothes.map((cloth, index) => {
+						filteredList.length !== 0 ? filteredList.map((cloth, index) => {
 							return(
 								<ClosetItem
 								key={index}
@@ -120,10 +152,11 @@ export default function Closet(props: IProps) {
 							/>
 							)
 						})
+					:
+					<div>
+						<text id='add-cloth-text'>옷을 추가해보세요!</text>
+					</div>
 					}
-
-					{/* closetItem 컴포넌트 가져오고, onclick clickClothDetailPopupHandler 달기 */}
-					{/* 상의 div, 하의 div 나눠서 가져와야 함. 제목도 달고 */}
 				</div>
 			</div>
 		</div>
