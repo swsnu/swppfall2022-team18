@@ -82,17 +82,19 @@ export default function Home() {
 							<div className="Closet-item-box"
 							data-testid='ClosetItem'>
 								{userClothes.userClothes.length !== 0 ? userClothes.userClothes.map((cloth, index) => {
-									return(
-										<ClosetItem
-											key={index}
-											user_cloth_id={String(cloth.id)}
-											source_url={cloth.image_link} //나중에 바꿔야함.
-											weardate={cloth.dates}
-											type={cloth.type}
-											color={cloth.color}
-											pattern={cloth.pattern}
-										/>
-									)
+									while (index < 6) {
+										return(
+											<ClosetItem
+												key={index}
+												user_cloth_id={String(cloth.id)}
+												source_url={cloth.image_link} //나중에 바꿔야함.
+												weardate={cloth.dates}
+												type={cloth.type}
+												color={cloth.color}
+												pattern={cloth.pattern}
+											/>
+										)
+									}
 								})
 							:
 							<div>
