@@ -13,6 +13,7 @@ export interface IProps {
 	user_cloth_id: string;
 	source_url: string;
 	weardate: string;
+	metatype: string;
 	type: string;
 	color: string;
 	pattern: string;
@@ -52,11 +53,12 @@ const ClosetItem = (props: IProps) => {
 			>
 				<ClothDetailModal
 					id={props.user_cloth_id}
-					cloth_image={props.source_url}
-					cloth_weardate={props.weardate}
-					cloth_type={props.type}
-					cloth_color={props.color}
-					cloth_pattern={props.pattern}
+					image={props.source_url}
+					weardate={props.weardate}
+					metatype={props.metatype}
+					type={props.type}
+					color={props.color}
+					pattern={props.pattern}
 					modal_close={clickClothDetailPopupCloseHandler}
 				></ClothDetailModal>
 				<div id="close-buton-div">

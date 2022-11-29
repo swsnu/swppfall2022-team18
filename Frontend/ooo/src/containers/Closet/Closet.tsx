@@ -169,6 +169,7 @@ export default function Closet() {
 									user_cloth_id={String(cloth.id)}
 									source_url={cloth.image_link}
 									weardate={cloth.dates}
+									metatype={cloth.name}
 									type={cloth.type}
 									color={cloth.color}
 									pattern={cloth.pattern}

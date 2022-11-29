@@ -89,6 +89,7 @@ export default function Home() {
 												user_cloth_id={String(cloth.id)}
 												source_url={cloth.image_link} //나중에 바꿔야함.
 												weardate={cloth.dates}
+												metatype={cloth.name}
 												type={cloth.type}
 												color={cloth.color}
 												pattern={cloth.pattern}

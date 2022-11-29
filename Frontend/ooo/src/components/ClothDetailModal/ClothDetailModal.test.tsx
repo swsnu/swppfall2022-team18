@@ -27,7 +27,21 @@ describe("<ClothDetaillModal />", () => {
                 <MemoryRouter>
                     <Routes>
                         {/* <Route path="/" element={<ClothDetailModal />} /> */}
-                        <Route path="/" element={<ClothDetailModal id="1" cloth_image="test" cloth_weardate="test" cloth_color="test" cloth_pattern="test" cloth_type="test" modal_close={()=>{}}/>} />
+                        <Route
+                            path="/"
+                            element={
+                                <ClothDetailModal
+                                    id="1"
+                                    image="test"
+                                    weardate="2022-11-04"
+                                    metatype="아우터"
+                                    type="트러커 재킷"
+                                    color="그레이"
+                                    pattern="None"
+                                    modal_close={()=>{}}
+                                />
+                            }
+                        />
                     </Routes>
                 </MemoryRouter>
             </Provider>

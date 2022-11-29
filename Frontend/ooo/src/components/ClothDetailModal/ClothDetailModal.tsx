@@ -5,18 +5,19 @@ import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import { fetchUserCloth, editUserCloth, deleteUserCloth, addWearDate } from "../../store/slices/userCloth";
-// import { TypeFilter } from "../TypeFilter/TypeFilter"
+import TypeFilter from "../TypeFilter/TypeFilter"
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export interface IProps {
 	id: string;
-	cloth_image: string;
-	cloth_weardate: string;
-	cloth_type: string;
-	cloth_color: string;
-	cloth_pattern: string;
+	image: string;
+	weardate: string;
+	metatype: string;
+	type: string;
+	color: string;
+	pattern: string;
 	modal_close: () => void;
 }
 
@@ -24,12 +25,11 @@ const ClothDetailModal = (cloth: IProps) => {
 	const navigate = useNavigate();
 	// console.log(cloth.id);
 
-	const [submitted, setSubmitted] = useState<boolean>(false);
-	const [clothType, setClothType] = useState(cloth.cloth_type);
-	const [clothColor, setClothColor] = useState(cloth.cloth_color);
-	const [clothPattern, setClothPattern] = useState(cloth.cloth_pattern);
-	const [isEditable, setIsEditable] = useState(false);
+	const [type, setType] = useState(cloth.type);
+	const [color, setColor] = useState(cloth.color);
+	const [pattern, setPattern] = useState(cloth.pattern);
 	const [wearDate, setWearDate] = useState(new Date());
+	const [isEditable, setIsEditable] = useState(false);
 
 	const dispatch = useDispatch<AppDispatch>();
 
@@ -38,19 +38,32 @@ const ClothDetailModal = (cloth: IProps) => {
 	}, [cloth.id]);
 
 	// const cloth = {
-	// 	cloth_color: "그레이",
+	// 	color: "그레이",
 	// 	cloth_name: "(SS19) Denim Trucker Jacket Grey",
 	// 	cloth_link: "https://www.musinsa.com/app/goods/969580/0",
 	// 	cloth_num: 969580,
-	// 	cloth_image:
+	// 	image:
 	// 		"https://image.msscdn.net/images/goods_img/20190228/969580/969580_1_500.jpg?t=20190228191158",
-	// 	cloth_pattern: "None",
-	// 	cloth_type: "트러커 재킷",
+	// 	pattern: "None",
+	// 	type: "트러커 재킷",
 	// };
 
 	const clickMoveToRecommendedStyleHandler = () => {
 		navigate("/outfit/");
 	};
+
+	const clickEditClothHandler = async () => {
+		setIsEditable(false);
+		// PUT edit 처리
+		const data = {
+			id: Number(cloth.id),
+			type: type,
+			color: color,
+			pattern: pattern,
+		};
+		const result = dispatch(editUserCloth(data));
+		console.log(result);
+	}
 
 	const clickDeleteClothHandler = async () => {
 		const result = await dispatch(deleteUserCloth(Number(cloth.id)));
@@ -68,35 +81,6 @@ const ClothDetailModal = (cloth: IProps) => {
 		console.log(result);
 	};
 
-	const handleDoubleClick = () => {
-		setIsEditable(true);
-	};
-
-	const handleClothTypeChange = (e: any) => {
-		setClothType(e.target.value);
-	};
-	const handleClothColorChange = (e: any) => {
-		setClothColor(e.target.value);
-	};
-	const handleClothPatternChange = (e: any) => {
-		setClothPattern(e.target.value);
-	};
-
-	const handleKeyDown = (e: any) => {
-		if (e.key === "Enter") {
-			setIsEditable(false);
-			// PUT edit 처리
-			const data = {
-				id: Number(cloth.id),
-				type: clothType,
-				color: clothColor,
-				pattern: clothPattern,
-			};
-			const result = dispatch(editUserCloth(data));
-			console.log(result);
-		}
-	};
-
 	return (
 		<div className="ClothDetailModal">
 			<div className="ClothDetailModalHead">
@@ -104,61 +88,54 @@ const ClothDetailModal = (cloth: IProps) => {
 			</div>
 			<div className="ClothDetailModalTop">
 				<div className="ClothImage-modal">
-					<img id="cloth-img-modal" data-testid="cloth-img-modal" src={cloth.cloth_image}></img>
+					<img id="cloth-img-modal" data-testid="cloth-img-modal" src={cloth.image}></img>
 				</div>
 				<div className="ClothLable-modal">
 					<text id="type-label-modal">
 						<b>종류</b>
 					</text>
-					{/* <text id="type-text-modal">{cloth.cloth_type}</text> */}
+					{/* <text id="type-text-modal">{cloth.type}</text> */}
 					{isEditable ? (
-						<input
-							type="text"
-							value={clothType}
-							onChange={handleClothTypeChange}
-							onKeyDown={handleKeyDown}
-						/>
+						<TypeFilter metaType={cloth.metatype} selectHandler={setType}></TypeFilter>
 					) : (
-						<text id="type-text-modal" onDoubleClick={handleDoubleClick}>{clothType}</text>
+						<text id="type-text-modal">{type}</text>
 					)}
 					<br></br>
 					<text id="color-label-modal">
 						<b>색상</b>
 					</text>
-					{/* <text id="color-text-modal">{cloth.cloth_color}</text> */}
+					{/* <text id="color-text-modal">{cloth.color}</text> */}
 					{isEditable ? (
 						<input
 							type="text"
-							value={clothColor}
-							onChange={handleClothColorChange}
-							onKeyDown={handleKeyDown}
+							value={color}
+							onChange={(e) => setColor(e.target.value)}
 						/>
 					) : (
-						<text id="type-text-modal" onDoubleClick={handleDoubleClick}>{clothColor}</text>
+						<text id="type-text-modal">{color}</text>
 					)}
 					<br></br>
 					<text id="stripe-label-modal">
 						<b>무늬</b>
 					</text>
-					{/* <text id="stripe-text-modal">{cloth.cloth_pattern}</text> */}
+					{/* <text id="stripe-text-modal">{cloth.pattern}</text> */}
 					{isEditable ? (
 						<input
 							type="text"
-							value={clothPattern}
-							onChange={handleClothPatternChange}
-							onKeyDown={handleKeyDown}
+							value={pattern}
+							onChange={(e) => setPattern(e.target.value)}
 						/>
 					) : (
-						<text id="type-text-modal" onDoubleClick={handleDoubleClick}>{clothPattern}</text>
+						<text id="type-text-modal">{pattern}</text>
 					)}
 					<br></br>
 				</div>
 				<div className="ClothWearDate-modal">
 					<b>입은 날짜</b><br></br>
-					{/* <text id="weardate-text-modal">{cloth.cloth_weardate}</text> */}
+					{/* <text id="weardate-text-modal">{cloth.weardate}</text> */}
 					<DatePicker
 						dateFormat="yyyy/MM/dd"
-						highlightDates={cloth.cloth_weardate ? JSON.parse(cloth.cloth_weardate).map((date:any)=>new Date(date)) : []}
+						highlightDates={cloth.weardate ? JSON.parse(cloth.weardate).map((date:any)=>new Date(date)) : []}
 						selected={wearDate}
 						onChange={(date: any) => setWearDate(date)}
 						inline
@@ -177,6 +154,23 @@ const ClothDetailModal = (cloth: IProps) => {
 					>
 						Get Recommendation
 					</button>
+				</div>
+				<div className="edit-cloth-detail">
+					{isEditable ? (
+						<button
+							id="edit-cloth-button"
+							onClick={() => clickEditClothHandler()}
+						>
+							Finish Edit
+						</button>
+					) : (
+						<button
+							id="edit-cloth-button"
+							onClick={() => setIsEditable(true)}
+						>
+							Edit Cloth
+						</button>
+					)}
 				</div>
 				<div className="delete-cloth-modal">
 					<button
