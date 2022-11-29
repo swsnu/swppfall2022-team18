@@ -6,6 +6,7 @@ import { renderWithProviders } from "../../test-utils/mocks";
 import AddClothModal from './AddClothModal';
 // import {store} from '../../store'
 import axios from "axios";
+import React from "react";
 
 const mockNavigate = jest.fn()
 jest.mock("react-router", () => ({

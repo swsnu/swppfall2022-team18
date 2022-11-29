@@ -119,7 +119,9 @@ export default function Closet() {
 					<div className="ClosetHead">
 						<text id="Closet-text-main">Closet</text>
 						<div id='Closet-select-div'>
-							<select id="type-select" onChange={(e) => {filter_list(e.target.value)}}>
+							<select id="type-select" 
+							data-testid="select-component"
+							onChange={(e) => {filter_list(e.target.value)}}>
 								{TYPEOPTIONS.map((option, index) => (
 									<option key={index} value={option.value} >
 										{option.value}
@@ -127,7 +129,7 @@ export default function Closet() {
 								))}
 							</select>
 						</div>
-						<button id="add-cloth-button" onClick={clickAddClothPopupHandler}>
+						<button id="add-cloth-button" data-testid="add-cloth-button" onClick={clickAddClothPopupHandler}>
 							Add
 						</button>
 						<Modal

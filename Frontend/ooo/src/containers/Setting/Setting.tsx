@@ -101,14 +101,14 @@ export default function Setting() {
                         <input id='name-input' defaultValue={name} disabled={true}></input>
                     </div>
                     <div id='text-input'>
-                        <text id='name-text'>비밀번호</text>
-                        <input id='name-input' 
+                        <text id='name-text' >비밀번호</text>
+                        <input id='name-input' data-testid="password-input" 
                         onChange={(event) => {setPassword(event.target.value)}}
                         value={password}></input>
                     </div>
                     <div id='text-input'>
                         <text id='name-text'>비밀번호확인</text>
-                        <input id='name-input' 
+                        <input id='name-input' data-testid="password-check-input" 
                         onChange={(event) => {setCheckPassword(event.target.value)}}
                         value={checkPassword}></input>
                     </div>
@@ -116,8 +116,8 @@ export default function Setting() {
                         <text>{errMsg}</text>
                     </div>
                     <div id='text-input'>
-                        <button id='deleteButton' onClick={() => {clickWithdrawBtnHandler()}}>회원탈퇴</button>
-                        <button id='okButton' 
+                        <button id='deleteButton' data-testid="delete-button" onClick={() => {clickWithdrawBtnHandler()}}>회원탈퇴</button>
+                        <button id='okButton' data-testid="ok"
                         disabled={errMsg === "" ? false : true}
                         onClick={() => {clickEditBtnHandler()}}>확인</button>
                     </div>

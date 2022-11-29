@@ -28,6 +28,7 @@ const stubInitialOutfitState: OutfitState = {
 		recommend: false,
 	},
 	sampleClothes: [],
+	sampleCloth: null,
 	userCloth: null,
 	cursor: 0,
 	isLast: false,
