@@ -496,94 +496,14 @@ def csv_to_db(file_name):
         df = open(file_name, 'r', encoding='utf-8-sig')
         dic_list = csv.DictReader(df)
         for dic in dic_list:
-            color = ""
-            print(dic)
-            if dic['cloth_color'] == 1:
-                color = '흰색'
-            elif dic['cloth_color'] == 2:
-                color = '검정색'
-            elif dic['cloth_color'] == 3:
-                color = '회색'
-            elif dic['cloth_color'] == 4:
-                color = '갈색'
-            elif dic['cloth_color'] == 5:
-                color = '베이지색'
-            elif dic['cloth_color'] == 6:
-                color = '녹색'
-            elif dic['cloth_color'] == 7:
-                color = '파란색'
-            elif dic['cloth_color'] == 8:
-                color = '보라색'
-            elif dic['cloth_color'] == 9:
-                color = '노란색'
-            elif dic['cloth_color'] == 10:
-                color = '분홍색'
-            elif dic['cloth_color'] == 11:
-                color = '빨간색'
-            elif dic['cloth_color'] == 12:
-                color = '주황색'
-            elif dic['cloth_color'] == 13:
-                color = '은색'
-            elif dic['cloth_color'] == 15:
-                color = '기타색상'
-            elif dic['cloth_color'] == 16:
-                color = '데님'
-            elif dic['cloth_color'] == 23:
-                color = '아이보리'
-            elif dic['cloth_color'] == 24:
-                color = '라이트 그레이'
-            elif dic['cloth_color'] == 25:
-                color = '다크 그레이'
-            elif dic['cloth_color'] == 26:
-                color = '카멜'
-            elif dic['cloth_color'] == 28:
-                color = '카키 베이지'
-            elif dic['cloth_color'] == 29:
-                color = '샌드'
-            elif dic['cloth_color'] == 30:
-                color = '카키'
-            elif dic['cloth_color'] == 31:
-                color = '라이트 그린'
-            elif dic['cloth_color'] == 32:
-                color = '민트'
-            elif dic['cloth_color'] == 34:
-                color = '올리브 그린'
-            elif dic['cloth_color'] == 35:
-                color = '다크 그린'
-            elif dic['cloth_color'] == 36:
-                color = '네이비'
-            elif dic['cloth_color'] == 37:
-                color = '스카이 블루'
-            elif dic['cloth_color'] == 39:
-                color = '라벤더'
-            elif dic['cloth_color'] == 44:
-                color = '라이트 옐로우'
-            elif dic['cloth_color'] == 45:
-                color = '라이트 핑크'
-            elif dic['cloth_color'] == 48:
-                color = '페일 핑크'
-            elif dic['cloth_color'] == 49:
-                color = '버건디'
-            elif dic['cloth_color'] == 51:
-                color = '딥레드'
-            elif dic['cloth_color'] == 56:
-                color = '로즈골드'
-            elif dic['cloth_color'] == 57:
-                color = '연청'
-            elif dic['cloth_color'] == 58:
-                color = '중청'
-            elif dic['cloth_color'] == 59:
-                color = '진청'
-            elif dic['cloth_color'] == 60:
-                color = '흑청'
-            label, created = LabelSet.objects.get_or_create(type = dic['cloth_type'], color = color, pattern = dic['cloth_pattern'])
+            label, created = LabelSet.objects.get_or_create(type = dic['cloth_type'], color = dic['cloth_color'], pattern = dic['cloth_pattern'])
             label.save()
             outfit_list = []
             print('y')
             for list in Outfit.objects.filter(purchase_link = dic['codi_link']):
                 outfit_list.append(list)
             print(outfit_list)
-            sample_cloth = SampleCloth(name = dic['cloth_name'], image_link = dic['cloth_image'], purchase_link = dic['cloth_link'], type = dic['cloth_type'], color = color, pattern = dic['cloth_pattern'], label_set = label)
+            sample_cloth = SampleCloth(name = dic['cloth_name'], image_link = dic['cloth_image'], purchase_link = dic['cloth_link'], type = dic['cloth_type'], color = dic['cloth_color'], pattern = dic['cloth_pattern'], label_set = label)
             sample_cloth.save()
             sample_cloth.outfit.set(outfit_list)
             sample_cloth.save()
