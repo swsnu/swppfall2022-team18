@@ -62,4 +62,50 @@ describe("<SampleClothModal/>", () => {
 		fireEvent.click(purchaseButton);
 		expect(mockNavigate).toHaveBeenCalled();
 	});
+	it("should render Not userHave clothes with undefined props", () => {
+		render(
+			<SampleClothModal
+				userHave={false}
+				userCloth_url={undefined}
+				sampleCloth_url={undefined}
+				type={undefined}
+				color={undefined}
+				pattern={undefined}
+				sampleCloth_name={undefined}
+				sampleCloth_link={undefined}
+			></SampleClothModal>
+		);
+		const purchaseButton = screen.getByText("Purchase Button");
+		fireEvent.click(purchaseButton);
+		expect(mockNavigate).toHaveBeenCalled();
+		screen.getAllByText('샘플 이미지가 없습니다.')
+		screen.getAllByText('유저 옷 이미지가 없습니다.')
+		screen.getAllByText('샘플 이름이 없습니다.')
+		screen.getAllByText('Type : 옷 타입을 정의할 수 없습니다.')
+		screen.getAllByText('Color : 옷 색상을 정의할 수 없습니다.')
+		screen.getAllByText('Pattern : 옷 패턴을 정의할 수 없습니다.')
+	});
+	it("should render userHave clothes with undefined props", () => {
+		render(
+			<SampleClothModal
+				userHave={true}
+				userCloth_url={undefined}
+				sampleCloth_url={undefined}
+				type={undefined}
+				color={undefined}
+				pattern={undefined}
+				sampleCloth_name={undefined}
+				sampleCloth_link={undefined}
+			></SampleClothModal>
+		);
+		const purchaseButton = screen.getByText("Purchase Button");
+		fireEvent.click(purchaseButton);
+		expect(mockNavigate).toHaveBeenCalled();
+		screen.getAllByText('샘플 이미지가 없습니다.')
+		screen.getAllByText('유저 옷 이미지가 없습니다.')
+		screen.getAllByText('샘플 이름이 없습니다.')
+		screen.getAllByText('Type : 옷 타입을 정의할 수 없습니다.')
+		screen.getAllByText('Color : 옷 색상을 정의할 수 없습니다.')
+		screen.getAllByText('Pattern : 옷 패턴을 정의할 수 없습니다.')
+	});
 });
