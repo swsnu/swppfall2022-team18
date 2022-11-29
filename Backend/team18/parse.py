@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import requests
 import selenium
 from selenium import webdriver
@@ -16,19 +18,20 @@ django.setup()
 from ooo.models import Outfit, SampleCloth, LabelSet
 
 #코디에 속해있는 옷 링크(테스트 용)
-cloth_list = []
-top_cloth_data_list =[]
-bottom_cloth_data_list =[]
-outer_cloth_data_list =[]
-codi_data_list = []
-error_link = []
-error_top_cloth_link = []
-error_bottom_cloth_link=[]
-error_outer_cloth_link=[]
-# 코디 데이터 파싱
+# cloth_list = []
+# top_cloth_data_list =[]
+# bottom_cloth_data_list =[]
+# outer_cloth_data_list =[]
+# codi_data_list = []
+# error_link = []
+# error_top_cloth_link = []
+# error_bottom_cloth_link=[]
+# error_outer_cloth_link=[]
+# # 코디 데이터 파싱
 
 def parse_outfit_data():
         
+
     driver = webdriver.Chrome()
     time.sleep(3)
     driver.implicitly_wait(2)
@@ -160,50 +163,52 @@ def parse_outfit_data():
             # 코디 데이터 저장 (아직 테스트 불가)
             # Outfit.create(outfit_info = explain, popularity = rank, img = codi_image, purchase_link = codi_link, cloth_list = cloth_links)
 
-# 옷 데이터 파싱 저장할 때 코디 데이터랑 연결, label set 만들어줘야함.
-def parse_top_cloth_data():
+
+# # 옷 데이터 파싱 저장할 때 코디 데이터랑 연결, label set 만들어줘야함.
+# def parse_top_cloth_data():
     
-    cloth_list = csv_to_list('cloth_list.csv')
-    #cloth_list = ['https://www.musinsa.com/app/goods/2149254','https://www.musinsa.com/app/goods/659554']
-    print(cloth_list)
-    driver = webdriver.Chrome()
-    driver.implicitly_wait(2)
+#     cloth_list = csv_to_list('cloth_list.csv')
+#     #cloth_list = ['https://www.musinsa.com/app/goods/2149254','https://www.musinsa.com/app/goods/659554']
+#     print(cloth_list)
+#     driver = webdriver.Chrome()
+#     driver.implicitly_wait(2)
     
-    LOADING_TIME = 15
-    # 상의 페이지로 들어감.
-    driver.get("https://www.musinsa.com/categories/item/001")
-    time.sleep(5)
-    driver.implicitly_wait(LOADING_TIME)
-    driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
-    time.sleep(5)
-    driver.implicitly_wait(LOADING_TIME)
-    # 상의 색깔별로 들어감. 
-    color_num = 1
-    for li in driver.find_elements('xpath','//*[@id="toolTip"]/li'):
-        try:
-            cloth_color = color_num
-            li.click()
-            time.sleep(5)
-            driver.implicitly_wait(LOADING_TIME)
-            #색상 별 총 페이지 수
-            page_cnt = int(driver.find_element('class name',"totalPagingNum").text)
-            #이제부터 상의-색상별 의상 페이지 이동
-            for c in range(1,page_cnt+1):
-                #해당 페이지의 옷들 접근
-                try:
-                    driver.get('https://www.musinsa.com/categories/item/001?d_cat_cd=001&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
-                    time.sleep(5)
-                    driver.implicitly_wait(LOADING_TIME)
-                    driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
-                    time.sleep(5)
-                    driver.implicitly_wait(LOADING_TIME)
-                    cloth_cnt = len(driver.find_elements('xpath','//*[@id="searchList"]/li'))
-                    print(cloth_cnt, flush=True)
+#     LOADING_TIME = 15
+#     # 상의 페이지로 들어감.
+#     driver.get("https://www.musinsa.com/categories/item/001")
+#     time.sleep(5)
+#     driver.implicitly_wait(LOADING_TIME)
+#     driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
+#     time.sleep(5)
+#     driver.implicitly_wait(LOADING_TIME)
+#     # 상의 색깔별로 들어감. 
+#     color_num = 1
+#     for li in driver.find_elements('xpath','//*[@id="toolTip"]/li'):
+#         try:
+#             cloth_color = color_num
+#             li.click()
+#             time.sleep(5)
+#             driver.implicitly_wait(LOADING_TIME)
+#             #색상 별 총 페이지 수
+#             page_cnt = int(driver.find_element('class name',"totalPagingNum").text)
+#             #이제부터 상의-색상별 의상 페이지 이동
+#             for c in range(1,page_cnt+1):
+#                 #해당 페이지의 옷들 접근
+#                 try:
+#                     driver.get('https://www.musinsa.com/categories/item/001?d_cat_cd=001&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
+#                     time.sleep(5)
+#                     driver.implicitly_wait(LOADING_TIME)
+#                     driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
+#                     time.sleep(5)
+#                     driver.implicitly_wait(LOADING_TIME)
+#                     cloth_cnt = len(driver.find_elements('xpath','//*[@id="searchList"]/li'))
+#                     print(cloth_cnt, flush=True)
                     
-                    for l in range(1,cloth_cnt+1):
-                        try:
-                            print(l,flush=True)
+#                     for l in range(1,cloth_cnt+1):
+#                         try:
+#                             print(l,flush=True)
                         
+
                             driver.get('https://www.musinsa.com/categories/item/001?d_cat_cd=001&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
                             time.sleep(5)
                             driver.implicitly_wait(LOADING_TIME)
@@ -265,14 +270,16 @@ def parse_top_cloth_data():
             pass
         color_num+=1
     driver.quit()
+
         
-def parse_bottom_cloth_data():
+# def parse_bottom_cloth_data():
     
-    cloth_list = csv_to_list('cloth_list.csv')
+#     cloth_list = csv_to_list('cloth_list.csv')
     
-    driver = webdriver.Chrome()
-    driver.implicitly_wait(2)
+#     driver = webdriver.Chrome()
+#     driver.implicitly_wait(2)
     
+
     LOADING_TIME = 15
     # 상의 페이지로 들어감.
     driver.get("https://www.musinsa.com/categories/item/003")
@@ -303,11 +310,12 @@ def parse_bottom_cloth_data():
                     driver.implicitly_wait(LOADING_TIME)
                     cloth_cnt = len(driver.find_elements('xpath','//*[@id="searchList"]/li'))
                     print(cloth_cnt, flush=True)
+
                     
-                    for l in range(1,cloth_cnt+1):
-                        try:
-                            print(l,flush=True)
-                        
+#                     for l in range(1,cloth_cnt+1):
+#                         try:
+#                             print(l,flush=True)
+
                             driver.get('https://www.musinsa.com/categories/item/003?d_cat_cd=003&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
                             time.sleep(5)
                             driver.implicitly_wait(LOADING_TIME)
@@ -368,14 +376,16 @@ def parse_bottom_cloth_data():
             pass
         color_num+=1
     driver.quit()
+
                     
-def parse_outer_cloth_data():
+# def parse_outer_cloth_data():
     
-    cloth_list = csv_to_list('cloth_list.csv')
+#     cloth_list = csv_to_list('cloth_list.csv')
     
-    driver = webdriver.Chrome()
-    driver.implicitly_wait(2)
+#     driver = webdriver.Chrome()
+#     driver.implicitly_wait(2)
     
+
     LOADING_TIME = 15
     # 상의 페이지로 들어감.
     driver.get("https://www.musinsa.com/categories/item/002")
@@ -406,11 +416,13 @@ def parse_outer_cloth_data():
                     driver.implicitly_wait(LOADING_TIME)
                     cloth_cnt = len(driver.find_elements('xpath','//*[@id="searchList"]/li'))
                     print(cloth_cnt, flush=True)
+
                     
-                    for l in range(1,cloth_cnt+1):
-                        try:
-                            print(l,flush=True)
+#                     for l in range(1,cloth_cnt+1):
+#                         try:
+#                             print(l,flush=True)
                         
+
                             driver.get('https://www.musinsa.com/categories/item/002?d_cat_cd=002&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
                             time.sleep(5)
                             driver.implicitly_wait(LOADING_TIME)
@@ -471,18 +483,19 @@ def parse_outer_cloth_data():
             pass
         color_num+=1
     driver.quit()
+
     
-    #얘를 csv_to_db 로 바꿔야 함.
-#def list_to_csv():
-#    df_outfit = pd.DataFrame(codi_data_list)
-#    df_top = pd.DataFrame(top_cloth_data_list)
-#    df_bottom = pd.DataFrame(bottom_cloth_data_list)
-#    df_outer = pd.DataFrame(outer_cloth_data_list)
-#    print(df_outfit.head(5))
-#    df_outfit.to_csv("codi_data.csv",encoding='utf-8-sig')
-#    df_top.to_csv("top_cloth_data.csv",encoding='utf-8-sig')
-#    df_bottom.to_csv("bottom_cloth_data.csv",encoding='utf-8-sig')
-#    df_outer.to_csv("outer_cloth_data.csv",encoding='utf-8-sig')
+#     #얘를 csv_to_db 로 바꿔야 함.
+# #def list_to_csv():
+# #    df_outfit = pd.DataFrame(codi_data_list)
+# #    df_top = pd.DataFrame(top_cloth_data_list)
+# #    df_bottom = pd.DataFrame(bottom_cloth_data_list)
+# #    df_outer = pd.DataFrame(outer_cloth_data_list)
+# #    print(df_outfit.head(5))
+# #    df_outfit.to_csv("codi_data.csv",encoding='utf-8-sig')
+# #    df_top.to_csv("top_cloth_data.csv",encoding='utf-8-sig')
+# #    df_bottom.to_csv("bottom_cloth_data.csv",encoding='utf-8-sig')
+# #    df_outer.to_csv("outer_cloth_data.csv",encoding='utf-8-sig')
 
 def csv_to_db(file_name):
     if file_name == 'codi_data.csv':
@@ -530,4 +543,6 @@ def csv_to_list(filename):
 csv_to_db('codi_data.csv') #csv 파일에 적힌 데이터 db로 옮기기 원하는 csv파일 파라미터로 주기
 csv_to_db('top_cloth_data.csv')
 csv_to_db('bottom_cloth_data.csv')
+
 csv_to_db('outer_cloth_data.csv')
+

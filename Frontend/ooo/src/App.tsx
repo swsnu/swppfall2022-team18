@@ -9,6 +9,7 @@ import Redirect from "./containers/Redirect/Redirect";
 import React from "react";
 import Signup from "./containers/Signup/Signup";
 import Setting from "./containers/Setting/Setting";
+import ClothDetailModal from "./components/ClothDetailModal/ClothDetailModal";
 // import axios from 'axios';
 // import { useCookies } from 'react-cookie';
 

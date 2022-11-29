@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import { createUserCloth } from "../../store/slices/userCloth";
+import TypeFilter from "../TypeFilter/TypeFilter"
 
 // const TodoModal = (props: any) => (
 //     <Modal
@@ -19,29 +20,33 @@ import { createUserCloth } from "../../store/slices/userCloth";
 
 //   export default TodoModal
 
-// export interface IProps {
-//     // name: string,
-//     // image_link?: number,
-//     // type: string,
-//     // color: string,
-//     // pattern: string
-//     // setModalOpen: (e:boolean) => void,
-// }
+export interface IProps {
+    modal_close: () => void
+}
 
-const AddClothModal = () => {
+const AddClothModal = (props: IProps) => {
 	const navigate = useNavigate();
 
 	// const closeModal = () => {
 	//     props.setModalOpen(false);
 	// };
 
-	const [name, setName] = useState<string>("");
+	const [name, setName] = useState<string>("");	// 상의, 하의, 아우터
 	const [type, setType] = useState<string>("");
 	const [color, setColor] = useState<string>("");
 	const [pattern, setPattern] = useState<string>("");
 	const [fileImage, setFileImage] = useState("");
 	const [submitted, setSubmitted] = useState<boolean>(false);
+	// const [clothTypeOption, setClothTypeOption] = useState<string>("");
+
 	const dispatch = useDispatch<AppDispatch>();
+
+	const TYPEOPTIONS = [
+		{ value: "Type" },
+		{ value: "상의" },
+		{ value: "하의" },
+		{ value: "아우터" },
+	];
 
 	const clickAddClothHandler = async () => {
 		const data = {
@@ -52,24 +57,17 @@ const AddClothModal = () => {
 			pattern: pattern,
 		};
 		const result = await dispatch(createUserCloth(data));
-		console.log(result);
-
-		// if (result.type === `${createUserCloth.typePrefix}/fulfilled`) {
-		// 	setSubmitted(true);
-		// } else {
-		// 	alert("Error on create UserCloth");
-		// }
+		props.modal_close();
+		navigate("/closet/");
 	};
-
-	
 
 	const saveFileImage = (e: any) => {
 		setFileImage(URL.createObjectURL(e.target.files[0]));
 	};
 
-	// if (submitted) {
-	// 	navigate("/closet/");
-	// }
+	// const handleClothTypeOptionChange = (e: any) => {
+	// 	setType(e.target.value)
+	// };
 
 	return (
 		<div className="AddClothModal">
@@ -98,26 +96,20 @@ const AddClothModal = () => {
 				<div className="CenterDiv"></div>
 				<div className="UploadedClothInfoDiv">
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Name</text>
-						<br></br>
-						<input
-							type="text"
-							id="cloth-info-input"
-							data-testid="cloth-info-input-name"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-						/>
-					</div>
-					<div className="UploadedClothInfoDiv-sub">
 						<text id="UploadedClothInfoDiv-text">Type</text>
 						<br></br>
-						<input
-							type="text"
-							id="cloth-info-input"
-							data-testid="cloth-info-input-type"
-							value={type}
-							onChange={(e) => setType(e.target.value)}
-						/>
+						<select id="type-select" data-testid="select-component" onChange={(e) => setName(e.target.value)}>
+							{TYPEOPTIONS.map((option, index) => (
+								<option key={index} value={option.value} >
+									{option.value}
+								</option>
+							))}
+						</select>
+					</div>
+					<div className="UploadedClothInfoDiv-sub">
+						<text id="UploadedClothInfoDiv-text">세부 Type</text>
+						<br></br>
+						<TypeFilter metaType={name} selectHandler={setType}></TypeFilter>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
 						<text id="UploadedClothInfoDiv-text">Color</text>

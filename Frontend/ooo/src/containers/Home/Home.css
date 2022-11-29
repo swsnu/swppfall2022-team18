@@ -49,15 +49,15 @@
 	flex-direction: row;
 	align-content: center;
 	justify-content: center;
-	height: 60%;
+	margin-top: 5%;
 }
 
 .Home .HomeTop .Closet-image .Closet-item-box {
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 	align-content: center;
 	justify-content: center;
-	height: 60%;
 }
 
 .Home .HomeTop .Closet-button {
