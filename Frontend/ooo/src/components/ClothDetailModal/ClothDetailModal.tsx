@@ -71,14 +71,15 @@ const ClothDetailModal = (cloth: IProps) => {
 		navigate("/closet/");
 	};
 
-	const clickSaveWearDateHandler = async () => {
+	const clickSaveWearDateHandler = async (addOrDelete: boolean) => {
 		const wearDateStr = `${wearDate.getFullYear()}/${wearDate.getMonth()+1}/${wearDate.getDate()}`
 		const data = {
 			id: Number(cloth.id),
+			addOrDelete: addOrDelete,	// add: true, delete: false
 			dates: String(wearDateStr)
 		};
 		const result = await dispatch(addWearDate(data));
-		console.log(result);
+		alert(`입은 날짜가 ${addOrDelete ? '기록' : '삭제'}되었습니다: ${wearDateStr}`);
 	};
 
 	return (
@@ -142,9 +143,15 @@ const ClothDetailModal = (cloth: IProps) => {
 					/>
 					<button
 						id="save-weardate-button"
-						onClick={() => clickSaveWearDateHandler()}
+						onClick={() => clickSaveWearDateHandler(true)}
 					>
 						입은 날짜 추가하기
+					</button>
+					<button
+						id="delete-weardate-button"
+						onClick={() => clickSaveWearDateHandler(false)}
+					>
+						입은 날짜 삭제하기
 					</button>
 				</div>
 				<div className="ClothButton-modal">

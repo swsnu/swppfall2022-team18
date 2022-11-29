@@ -215,11 +215,14 @@ def closet_item(request, cloth_id):
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
 
-        if dates not in dates_history:
+        if dates in dates_history: # delete weardate
+            dates_history.remove(dates)
+        else: # add new weardate
             dates_history.append(dates)
-            target_item_obj.dates = json.dumps(dates_history)
+        
+        target_item_obj.dates = json.dumps(dates_history)
 
-            target_item_obj.save()
+        target_item_obj.save()
 
         return HttpResponse(status=200)
 
@@ -238,8 +241,7 @@ def closet_item(request, cloth_id):
                 type=type, color=color, pattern=pattern
             )
             label_set = label_set_obj
-            # old_date = req_data['old_date']
-            # new_date = req_data['new_date']
+            # date = req_data['dates']    # date to delete
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
 
@@ -248,11 +250,9 @@ def closet_item(request, cloth_id):
         target_item_obj.pattern = pattern
         target_item_obj.label_set = label_set
 
-        # if old_date in dates_history:
-        #     old_date_idx = dates_history.index(old_date)
-        #     dates_history[old_date_idx] = new_date
-        # else:
-        #     dates_history.append(new_date)
+        # if date in dates_history:
+        #     dates_history.remove(date)
+
         # target_item_obj.dates = json.dumps(dates_history)
 
         target_item_obj.save()
