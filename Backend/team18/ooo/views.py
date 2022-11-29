@@ -542,6 +542,7 @@ def outfit(request, outfit_id):
             'outfit': json_outfit,
             "sampleclothes": json_samplecloth_list
         }
+        print(json_samplecloth_list)
         return JsonResponse(content, status=200)
 
     return HttpResponseNotAllowed(['GET'], status=405)

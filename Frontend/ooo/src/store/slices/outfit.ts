@@ -58,8 +58,8 @@ export interface OutfitState {
 	selectedOutfit: OutfitType | null;
 	filter: FilterType;
 	sampleClothes: SampleClothType[];
-	userCloth: UserClothType | null;
 	sampleCloth: SampleClothType | null;
+	userCloth: UserClothType | null;
 	cursor: number;
 	isLast: boolean;
 }
@@ -92,8 +92,8 @@ const initialState: OutfitState = {
 		recommend: false,
 	},
 	sampleClothes: [],
+	sampleCloth:null,
 	userCloth: null,
-	sampleCloth: null,
 	cursor: 0,
 	isLast: false,
 };
