@@ -230,8 +230,6 @@ def closet_item(request, cloth_id):
         try:
             req_data = json.loads(request.body.decode())["body"]
 
-            name = req_data['name']
-            image_link = req_data['image_link']
             type = req_data['type']
             color = req_data['color']
             pattern = req_data['pattern']
@@ -240,24 +238,22 @@ def closet_item(request, cloth_id):
                 type=type, color=color, pattern=pattern
             )
             label_set = label_set_obj
-            old_date = req_data['old_date']
-            new_date = req_data['new_date']
+            # old_date = req_data['old_date']
+            # new_date = req_data['new_date']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
 
-        target_item_obj.name = name
-        target_item_obj.image_link = image_link
         target_item_obj.type = type
         target_item_obj.color = color
         target_item_obj.pattern = pattern
         target_item_obj.label_set = label_set
 
-        if old_date in dates_history:
-            old_date_idx = dates_history.index(old_date)
-            dates_history[old_date_idx] = new_date
-        else:
-            dates_history.append(new_date)
-        target_item_obj.dates = json.dumps(dates_history)
+        # if old_date in dates_history:
+        #     old_date_idx = dates_history.index(old_date)
+        #     dates_history[old_date_idx] = new_date
+        # else:
+        #     dates_history.append(new_date)
+        # target_item_obj.dates = json.dumps(dates_history)
 
         target_item_obj.save()
 

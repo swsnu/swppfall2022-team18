@@ -87,7 +87,7 @@ export const createUserCloth = createAsyncThunk(
 export const editUserCloth = createAsyncThunk(
 	"closet/editUserCloth",
     async (
-		data: Pick<UserClothType, "id" | "color" | "type" | "pattern">,
+		data: Pick<UserClothType, "id" | "type" | "color" |"pattern">,
 		{ dispatch }
 	) => {
         const response = await axios.put(
@@ -151,7 +151,7 @@ export const userClothSlice = createSlice({
 			}>
 		) => {
 			const newUserCloth = {
-				id: state.userClothes[state.userClothes.length - 1].id + 1, // temporary
+				id: state.userClothes[state.userClothes.length - 1].id + 1,
 				name: action.payload.name,
 				image_link: action.payload.image_link,
 				user: action.payload.user,
@@ -166,29 +166,19 @@ export const userClothSlice = createSlice({
 			state,
 			action: PayloadAction<{
 				targetId: number
-				name: string;
-				image_link: string;
-				user: number;
-				color: string;
 				type: string;
+				color: string;
 				pattern: string;
 			}>
 		) => {
-			const fetchTargetItem = state.userClothes.filter((userCloth) => {
-				console.log(userCloth)
-				// return userCloth.id == action.payload.targetId;
+			const fetchTargetItem = state.userClothes.find((targetCloth) => {
+				console.log(targetCloth)
+				if (targetCloth.id == action.payload.targetId) {
+					targetCloth.type = action.payload.type
+					targetCloth.color = action.payload.color
+					targetCloth.pattern = action.payload.pattern
+				}
 			});
-			state.userClothes = fetchTargetItem;
-			// const editedUserCloth = {
-			// 	id: state.userClothes[state.userClothes.length - 1].id + 1, // temporary
-			// 	name: action.payload.name,
-			// 	image_link: action.payload.image_link,
-			// 	user: action.payload.user,
-			// 	color: action.payload.color,
-			// 	type: action.payload.type,
-			// 	pattern: action.payload.pattern,
-			// };
-			// state.userClothes.
 		},
 		deleteUserCloth: (state, action: PayloadAction<{ targetId: number }>) => {
 			const deleted = state.userClothes.filter((userCloth) => {
