@@ -27,10 +27,6 @@ export interface IProps {
 const AddClothModal = (props: IProps) => {
 	const navigate = useNavigate();
 
-	// const closeModal = () => {
-	//     props.setModalOpen(false);
-	// };
-
 	const [name, setName] = useState<string>("");	// 상의, 하의, 아우터
 	const [type, setType] = useState<string>("");
 	const [color, setColor] = useState<string>("");
@@ -64,10 +60,6 @@ const AddClothModal = (props: IProps) => {
 	const saveFileImage = (e: any) => {
 		setFileImage(URL.createObjectURL(e.target.files[0]));
 	};
-
-	// const handleClothTypeOptionChange = (e: any) => {
-	// 	setType(e.target.value)
-	// };
 
 	return (
 		<div className="AddClothModal">
@@ -147,52 +139,3 @@ const AddClothModal = (props: IProps) => {
 };
 
 export default AddClothModal;
-
-// const [file, setFile] = useState('');
-// const [previewURL, setPreviewURL] = useState('');
-// const [preview, setPreview] = useState();
-// // const fileRef= useRef();
-
-// const handleFileOnChange = (event: any) => {
-//     event.preventDefault();
-//     let file = event.target.files[0];
-//     let reader = new FileReader();
-
-//     reader.onloadend = (e) => {
-//         setFile(file);
-//         if (reader.result) { setPreviewURL(reader.result.toString()); }
-//     }
-//     if(file) { reader.readAsDataURL(file); }
-// }
-
-// useEffect(() => {
-//     setPreview(<img className='img_preview' src={previewURL}></img>);
-//     return () => {}
-// }, [previewURL])
-///
-
-// const [imgBase64, setImgBase64] = useState(""); // 파일 base64
-// const [imgFile, setImgFile] = useState(null);	//파일
-
-// const handleChangeFile = (event: any) => {
-//     console.log("HI")
-//     const reader = new FileReader();
-
-//     reader.onloadend = () => {
-//         const base64 = reader.result;
-//         if (base64) {
-//             console.log(base64)
-//             setImgBase64(base64.toString());
-//         }
-//     }
-//     if (event.target.files[0]) {
-//         console.log(event.target.files[0])
-//         reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
-//         setImgFile(event.target.files[0]); // 파일 상태 업데이트
-//     }
-// }
-
-// const handleFileButtonClick = (e) => {//버튼 대신 클릭하기
-//     e.preventDefault();
-//     fileRef.current.click(); // file 불러오는 버튼을 대신 클릭함
-// }

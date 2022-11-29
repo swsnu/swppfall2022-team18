@@ -23,7 +23,6 @@ export interface IProps {
 
 const ClothDetailModal = (cloth: IProps) => {
 	const navigate = useNavigate();
-	// console.log(cloth.id);
 
 	const [type, setType] = useState(cloth.type);
 	const [color, setColor] = useState(cloth.color);
@@ -54,12 +53,11 @@ const ClothDetailModal = (cloth: IProps) => {
 
 	const clickEditClothHandler = async () => {
 		setIsEditable(false);
-		// PUT edit 처리
 		const data = {
 			id: Number(cloth.id),
 			type: type,
 			color: color,
-			pattern: pattern,
+			pattern: pattern
 		};
 		const result = dispatch(editUserCloth(data));
 		console.log(result);
@@ -95,7 +93,6 @@ const ClothDetailModal = (cloth: IProps) => {
 					<text id="type-label-modal">
 						<b>종류</b>
 					</text>
-					{/* <text id="type-text-modal">{cloth.type}</text> */}
 					{isEditable ? (
 						<TypeFilter metaType={cloth.metatype} selectHandler={setType}></TypeFilter>
 					) : (
@@ -105,7 +102,6 @@ const ClothDetailModal = (cloth: IProps) => {
 					<text id="color-label-modal">
 						<b>색상</b>
 					</text>
-					{/* <text id="color-text-modal">{cloth.color}</text> */}
 					{isEditable ? (
 						<input
 							type="text"
@@ -119,7 +115,6 @@ const ClothDetailModal = (cloth: IProps) => {
 					<text id="stripe-label-modal">
 						<b>무늬</b>
 					</text>
-					{/* <text id="stripe-text-modal">{cloth.pattern}</text> */}
 					{isEditable ? (
 						<input
 							type="text"
@@ -133,7 +128,6 @@ const ClothDetailModal = (cloth: IProps) => {
 				</div>
 				<div className="ClothWearDate-modal">
 					<b>입은 날짜</b><br></br>
-					{/* <text id="weardate-text-modal">{cloth.weardate}</text> */}
 					<DatePicker
 						dateFormat="yyyy/MM/dd"
 						highlightDates={cloth.weardate ? JSON.parse(cloth.weardate).map((date:any)=>new Date(date)) : []}

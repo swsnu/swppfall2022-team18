@@ -241,7 +241,6 @@ def closet_item(request, cloth_id):
                 type=type, color=color, pattern=pattern
             )
             label_set = label_set_obj
-            # date = req_data['dates']    # date to delete
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
 
@@ -249,11 +248,6 @@ def closet_item(request, cloth_id):
         target_item_obj.color = color
         target_item_obj.pattern = pattern
         target_item_obj.label_set = label_set
-
-        # if date in dates_history:
-        #     dates_history.remove(date)
-
-        # target_item_obj.dates = json.dumps(dates_history)
 
         target_item_obj.save()
 
