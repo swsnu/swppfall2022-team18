@@ -51,8 +51,8 @@ const FilterModal = (props: IProps) => {
 			value == "하의 종류" ||
 			value == "아우터 종류"
 		) {
-			setMetaType(null);
-		} else setMetaType(value);
+			setType(null);
+		} else setType(value);
 	};
 
 	const clickColorOptionHandler = (value: string) => {

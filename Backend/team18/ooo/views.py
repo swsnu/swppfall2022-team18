@@ -359,7 +359,7 @@ def outfit_list(request):
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
 
-        print(filter_userhave)
+        print(req_data)
 
         using_labelset = False
 

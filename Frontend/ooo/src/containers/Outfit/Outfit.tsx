@@ -152,6 +152,46 @@ export default function Outfit(props: IProps) {
 		navigate(navigateLink);
 	};
 
+	const clickTypeDeleteButton = () => {
+		if (filters.color == null && filters.pattern == null) {
+			setClothFilter(false);
+		}
+		const newFilter = {
+			type: null,
+			color: filters.color,
+			pattern: filters.pattern,
+		};
+		setFilters(newFilter);
+		setPage(1);
+	};
+
+	const clickColorDeleteButton = () => {
+		if (filters.type == null && filters.pattern == null) {
+			setClothFilter(false);
+		}
+		const newFilter = {
+			type: filters.type,
+			color: null,
+			pattern: filters.pattern,
+		};
+		setFilters(newFilter);
+		setPage(1);
+	};
+
+	const clickPatternDeleteButton = () => {
+		if (filters.type == null && filters.color == null) {
+			setClothFilter(false);
+		}
+		const newFilter = {
+			type: filters.type,
+			color: filters.color,
+			pattern: null,
+		};
+		setFilters(newFilter);
+		setPage(1);
+		console.log(filters);
+	};
+
 	return (
 		<div className="OutfitPage">
 			<Header
@@ -187,6 +227,49 @@ export default function Outfit(props: IProps) {
 					>
 						Filter
 					</button>
+					<div className="now-filter-div">
+						현재 필터 :
+						{filters.type != null ? (
+							<div className="now-type-filter-div">
+								옷 종류 : {filters.type}
+								<button
+									className="type-filter-delete-button"
+									onClick={() => clickTypeDeleteButton()}
+								>
+									delete
+								</button>
+							</div>
+						) : (
+							<></>
+						)}
+						{filters.color != null ? (
+							<div className="now-color-filter-div">
+								색 : {filters.color}
+								<button
+									className="color-filter-delete-button"
+									onClick={() => clickColorDeleteButton()}
+								>
+									delete
+								</button>
+							</div>
+						) : (
+							<></>
+						)}
+						{filters.pattern != null ? (
+							<div className="now-pattern-filter-div">
+								패턴 : {filters.pattern}
+								<button
+									className="pattern-filter-delete-button"
+									onClick={() => clickPatternDeleteButton()}
+								>
+									delete
+								</button>
+							</div>
+						) : (
+							<></>
+						)}
+					</div>
+
 					<button id="filter-reset-button" onClick={() => clickResetHandler()}>
 						Reset
 					</button>
