@@ -2,7 +2,6 @@
 views of ooo
 '''
 import json
-import ast
 
 from json.decoder import JSONDecodeError
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
@@ -13,18 +12,19 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import Outfit, SampleCloth, UserCloth, Closet, LabelSet
-from datetime import date, datetime, timedelta
-from rest_framework import serializers
+from datetime import date, timedelta
 from .serializers import SampleClothSerializer, OutfitSerializer, UserClothSerializer
 
 type_tree =  [
-    ['상의', ['반소매 티셔츠', '피케/카라 티셔츠', '긴소매 티셔츠', '맨투맨/스웨트셔츠', '민소매 티셔츠', '후드 티셔츠', '셔츠/블라우스', '니트/스웨터', '기타 상의']], 
-    ['바지', ['데님 팬츠', '숏 팬츠', '코튼 팬츠', '레깅스', '슈트 팬츠/슬랙스', '점프 슈트/오버올', '트레이닝/조거 팬츠', '기타 바지']], 
-    ['아우터', ['후드 집업', '환절기 코트', '블루종/MA-1', '겨울 싱글 코트', '레더/라이더스 재킷', '겨울 더블 코트',
-             '무스탕/퍼', '겨울 기타 코트', '롱패딩/롱헤비 아우터', '트러커 재킷', '슈트/블레이저 재킷', '숏패딩/숏헤비 아우터', '카디건', '패딩 베스트', '아노락 재킷',
-             '베스트', '플리스/뽀글이', '사파리/헌팅 재킷', '트레이닝 재킷', '나일론/코치 재킷', '스타디움 재킷', '기타 아우터']]]
-
-
+    ['상의', ['반소매 티셔츠', '피케/카라 티셔츠', '긴소매 티셔츠',
+      '맨투맨/스웨트셔츠', '민소매 티셔츠', '후드 티셔츠', '셔츠/블라우스', '니트/스웨터', '기타 상의']],
+    ['바지', ['데님 팬츠', '숏 팬츠', '코튼 팬츠', '레깅스',
+    '슈트 팬츠/슬랙스', '점프 슈트/오버올', '트레이닝/조거 팬츠', '기타 바지']],
+    ['아우터', ['후드 집업', '환절기 코트', '블루종/MA-1', '겨울 싱글 코트',
+    '레더/라이더스 재킷', '겨울 더블 코트', '무스탕/퍼', '겨울 기타 코트',
+    '롱패딩/롱헤비 아우터', '트러커 재킷', '슈트/블레이저 재킷', '숏패딩/숏헤비 아우터',
+    '카디건', '패딩 베스트', '아노락 재킷','베스트', '플리스/뽀글이', '사파리/헌팅 재킷',
+    '트레이닝 재킷', '나일론/코치 재킷', '스타디움 재킷', '기타 아우터']]]
 
 def index():
     '''
@@ -42,18 +42,14 @@ def signup(request):
         print(req_data)
         username = req_data['username']
         password = req_data['password']
-        
         #check duplicate username
         try:
             dup_user = User.objects.get(username=username)
         except User.DoesNotExist:
             new_user = User.objects.create_user(username=username, password=password)
             Closet.objects.create(user=new_user)
-
             return HttpResponse(status=201)
         return HttpResponse(status=404)
-        
-        
     return HttpResponseNotAllowed(['POST'], status=405)
 
 #@csrf_exempt
@@ -91,11 +87,9 @@ def userinfo(request):
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized', status=401)
     user = User.objects.get(username = request.user.username)
-    
+
     if request.method == 'GET':
-        data = {
-            'username': request.user.username,
-        }
+        data = {'username': request.user.username,}
         return HttpResponse(data, status=200)
     elif request.method == 'PUT':
         try:
@@ -103,7 +97,7 @@ def userinfo(request):
             password = req_data['password']
 
         except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest()
+            return HttpResponseBadRequest(e)
         
         ## 여기가 왜 안되지?
         # user.set_password(password)
@@ -136,7 +130,8 @@ def closet(request):
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
 
-        closet_item_list = [closet for closet in UserCloth.objects.filter(closet=user_closet).values()]
+        closet_item_list = [closet for closet in 
+            UserCloth.objects.filter(closet=user_closet).values()]
         return JsonResponse(closet_item_list, safe=False)
     elif request.method == 'POST':
         if not request.user.is_authenticated:
@@ -159,7 +154,7 @@ def closet(request):
             label_set = label_set_obj
 
         except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest()
+            return HttpResponseBadRequest(e)
 
         closet_item = UserCloth(
             name=name,
@@ -213,7 +208,7 @@ def closet_item(request, cloth_id):
             req_data = json.loads(request.body.decode())["body"]
             dates = req_data['dates']
         except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest()
+            return HttpResponseBadRequest(e)
 
         if dates not in dates_history:
             dates_history.append(dates)
@@ -241,7 +236,7 @@ def closet_item(request, cloth_id):
             # old_date = req_data['old_date']
             # new_date = req_data['new_date']
         except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest()
+            return HttpResponseBadRequest(e)
 
         target_item_obj.type = type
         target_item_obj.color = color
@@ -357,7 +352,7 @@ def outfit_list(request):
             filter_userhave = req_data["userHave"]
             filter_recommend = req_data["recommend"]
         except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest()
+            return HttpResponseBadRequest(e)
 
         print(req_data)
 
@@ -389,15 +384,19 @@ def outfit_list(request):
                 samplecloth_list = samplecloth_list + sampleclothes
 
             if using_labelset:
-                filtered_samplecloth_list = [x for x in samplecloth_list if x.label_set == filter_labelset]
+                filtered_samplecloth_list = [x for x in samplecloth_list 
+                    if x.label_set == filter_labelset]
             else:
                 filtered_samplecloth_list = samplecloth_list
                 if filter_type:
-                    filtered_samplecloth_list = [x for x in samplecloth_list if x.type == filter_type]
+                    filtered_samplecloth_list = [x for x in samplecloth_list 
+                        if x.type == filter_type]
                 if filter_color:
-                    filtered_samplecloth_list = [x for x in samplecloth_list if x.color == filter_color]
+                    filtered_samplecloth_list = [x for x in samplecloth_list 
+                        if x.color == filter_color]
                 if filter_pattern:
-                    filtered_samplecloth_list = [x for x in samplecloth_list if x.pattern == filter_pattern]
+                    filtered_samplecloth_list = [x for x in samplecloth_list 
+                        if x.pattern == filter_pattern]
 
             all_outfits = []
             for samplecloth in filtered_samplecloth_list:
@@ -562,7 +561,8 @@ def sample_cloth(request, samplecloth_id):
 
         user_closet = Closet.objects.get(user=request.user)
         try:
-            usercloth = UserCloth.objects.get(Q(closet=user_closet) & Q(label_set=samplecloth.label_set))
+            usercloth = UserCloth.objects.get(Q(closet=user_closet) 
+                & Q(label_set=samplecloth.label_set))
             usercloth_serialize = UserClothSerializer(usercloth)
             json_usercloth = {
                 "id": usercloth_serialize.data['id'],
@@ -682,7 +682,8 @@ def today_outfit(request):
         for recommend_samplecloth in recommend_samplecloth_list:
             #should not user Usercloth filter or get.
             #It should find usercloth in clean_usercloth_list
-            recommend_usercloth = [usercloth for usercloth in clean_usercloth_list if usercloth.label_set == recommend_samplecloth.label_set]
+            recommend_usercloth = [usercloth for usercloth in clean_usercloth_list 
+                if usercloth.label_set == recommend_samplecloth.label_set]
             recommend_usercloth = recommend_usercloth[0:1]
             recommend_usercloth_list = recommend_usercloth_list + recommend_usercloth
         json_userclothes = []

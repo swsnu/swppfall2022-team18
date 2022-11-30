@@ -7,7 +7,7 @@ import FilterModal from "../../components/FilterModal/FilterModal";
 import "./Outfit.css";
 import Modal from "react-modal";
 import { AppDispatch } from "../../store";
-import outfit, { selectOutfit } from "../../store/slices/outfit";
+import { selectOutfit } from "../../store/slices/outfit";
 import {
 	fetchFilteredOutfits,
 	FilterPostInputType,

@@ -4,7 +4,6 @@ import { MemoryRouter, Route, Routes } from "react-router";
 import { getMockStore } from "../../test-utils/mocks";
 import Outfit from "./Outfit";
 import React from "react";
-import { store } from "../../store";
 import { IProps as FilterModalProps } from "../../components/FilterModal/FilterModal";
 import { IProps as HeaderProps } from "../../components/Header/Header";
 import { OutfitState } from "../../store/slices/outfit";

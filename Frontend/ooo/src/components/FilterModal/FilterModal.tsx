@@ -35,7 +35,7 @@ const FilterModal = (props: IProps) => {
 	const MetaTypeOptions = [
 		{ value: "옷 종류" },
 		{ value: "상의" },
-		{ value: "바지" },
+		{ value: "하의" },
 		{ value: "아우터" },
 	];
 
