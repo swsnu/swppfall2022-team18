@@ -114,6 +114,9 @@ export const addWearDate = createAsyncThunk(
 				body: data
 			}
 		);
+		if(response.status === 200){
+			return response.data
+		}
         dispatch(userClothActions.addWearDate(response.data));
     }
 );

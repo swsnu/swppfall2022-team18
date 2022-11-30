@@ -24,9 +24,14 @@ export interface IProps {
 const ClothDetailModal = (cloth: IProps) => {
 	const navigate = useNavigate();
 
+	const defaultDates = cloth.weardate ?
+		JSON.parse(cloth.weardate).map((date:any) => new Date(date)) :
+		[]
+
 	const [type, setType] = useState(cloth.type);
 	const [color, setColor] = useState(cloth.color);
 	const [pattern, setPattern] = useState(cloth.pattern);
+	const [highlightDates, setHighlightDates] = useState(defaultDates)
 	const [wearDate, setWearDate] = useState(new Date());
 	const [isEditable, setIsEditable] = useState(false);
 	const [addOrDelete, setAddOrDelete] = useState(true); // add: true, delete: false
@@ -37,19 +42,18 @@ const ClothDetailModal = (cloth: IProps) => {
 		dispatch(fetchUserCloth(Number(cloth.id)));
 	}, [cloth.id]);
 
-	// const cloth = {
-	// 	color: "그레이",
-	// 	cloth_name: "(SS19) Denim Trucker Jacket Grey",
-	// 	cloth_link: "https://www.musinsa.com/app/goods/969580/0",
-	// 	cloth_num: 969580,
-	// 	image:
-	// 		"https://image.msscdn.net/images/goods_img/20190228/969580/969580_1_500.jpg?t=20190228191158",
-	// 	pattern: "None",
-	// 	type: "트러커 재킷",
-	// };
+
+	useEffect(() => {
+		console.log();
+	}, [highlightDates]);
 
 	const clickMoveToRecommendedStyleHandler = () => {
-		navigate("/outfit/");
+		const clothData = {
+			type: type,
+			color: color,
+			pattern: pattern
+		}
+		navigate("/outfit/",  { state: clothData });
 	};
 
 	const clickEditClothHandler = async () => {
@@ -61,7 +65,6 @@ const ClothDetailModal = (cloth: IProps) => {
 			pattern: pattern
 		};
 		const result = dispatch(editUserCloth(data));
-		console.log(result);
 	}
 
 	const clickDeleteClothHandler = async () => {
@@ -70,12 +73,17 @@ const ClothDetailModal = (cloth: IProps) => {
 		navigate("/closet/");
 	};
 
+	const dateFormat = (date: any) => {
+		return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`
+	}
+
 	const setWearDateHandler = (clickedDate: any) => {
 		setWearDate(clickedDate);
 
-		if (cloth.weardate) {
-			const parsedWearDates = JSON.parse(cloth.weardate)
-			const clickedDateStr = `${clickedDate.getFullYear()}/${clickedDate.getMonth()+1}/${clickedDate.getDate()}`
+		// if clicked date is in weardate list, set addOrDelete = false
+		const parsedWearDates = highlightDates.map((d: any) => dateFormat(d));
+		if (parsedWearDates) {
+			const clickedDateStr = dateFormat(clickedDate);
 			const exist = parsedWearDates.includes(clickedDateStr);
 
 			if (exist) setAddOrDelete(false)
@@ -87,13 +95,20 @@ const ClothDetailModal = (cloth: IProps) => {
 	}
 
 	const clickSaveWearDateHandler = async (addOrDelete: boolean) => {
-		const wearDateStr = `${wearDate.getFullYear()}/${wearDate.getMonth()+1}/${wearDate.getDate()}`
+		const wearDateStr = dateFormat(wearDate)
 		const data = {
 			id: Number(cloth.id),
 			dates: String(wearDateStr)
 		};
 		const result = await dispatch(addWearDate(data));
 		alert(`입은 날짜가 ${addOrDelete ? '기록' : '삭제'}되었습니다: ${wearDateStr}`);
+
+		if (result.payload.dates) {
+			setHighlightDates(JSON.parse(result.payload.dates).map((date:any) => new Date(date)));
+		}
+		else {
+			setHighlightDates([]);
+		}
 	};
 
 	return (
@@ -146,7 +161,7 @@ const ClothDetailModal = (cloth: IProps) => {
 					<b>입은 날짜</b><br></br>
 					<DatePicker
 						dateFormat="yyyy/MM/dd"
-						highlightDates={cloth.weardate ? JSON.parse(cloth.weardate).map((date:any)=>new Date(date)) : []}
+						highlightDates={highlightDates}
 						selected={wearDate}
 						onChange={(clickedDate: any) => setWearDateHandler(clickedDate)}
 						inline
