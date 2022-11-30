@@ -13,11 +13,6 @@ export interface UserClothType {
 	pattern: string;
 	dates: string;
 }
-export interface UserClothWearDate {
-	id: number;
-	addOrDelete: boolean;
-	dates: string;
-}
 export interface TodayOutfitType {
 	id: number;
 	outfit_info: string;
@@ -109,7 +104,7 @@ export const editUserCloth = createAsyncThunk(
 export const addWearDate = createAsyncThunk(
 	"closet/addWearDate",
     async (
-		data: UserClothWearDate,
+		data: Pick<UserClothType, "id" | "dates">,
 		{ dispatch }
 	) => {
         const response = await axios.post(

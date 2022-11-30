@@ -29,6 +29,7 @@ const ClothDetailModal = (cloth: IProps) => {
 	const [pattern, setPattern] = useState(cloth.pattern);
 	const [wearDate, setWearDate] = useState(new Date());
 	const [isEditable, setIsEditable] = useState(false);
+	const [addOrDelete, setAddOrDelete] = useState(true); // add: true, delete: false
 
 	const dispatch = useDispatch<AppDispatch>();
 
@@ -69,11 +70,26 @@ const ClothDetailModal = (cloth: IProps) => {
 		navigate("/closet/");
 	};
 
+	const setWearDateHandler = (clickedDate: any) => {
+		setWearDate(clickedDate);
+
+		if (cloth.weardate) {
+			const parsedWearDates = JSON.parse(cloth.weardate)
+			const clickedDateStr = `${clickedDate.getFullYear()}/${clickedDate.getMonth()+1}/${clickedDate.getDate()}`
+			const exist = parsedWearDates.includes(clickedDateStr);
+
+			if (exist) setAddOrDelete(false)
+			else setAddOrDelete(true)
+		}
+		else {
+			setAddOrDelete(true)
+		}
+	}
+
 	const clickSaveWearDateHandler = async (addOrDelete: boolean) => {
 		const wearDateStr = `${wearDate.getFullYear()}/${wearDate.getMonth()+1}/${wearDate.getDate()}`
 		const data = {
 			id: Number(cloth.id),
-			addOrDelete: addOrDelete,	// add: true, delete: false
 			dates: String(wearDateStr)
 		};
 		const result = await dispatch(addWearDate(data));
@@ -132,10 +148,18 @@ const ClothDetailModal = (cloth: IProps) => {
 						dateFormat="yyyy/MM/dd"
 						highlightDates={cloth.weardate ? JSON.parse(cloth.weardate).map((date:any)=>new Date(date)) : []}
 						selected={wearDate}
-						onChange={(date: any) => setWearDate(date)}
+						onChange={(clickedDate: any) => setWearDateHandler(clickedDate)}
 						inline
 					/>
-					<button
+					{addOrDelete ? (
+						<button id="save-weardate-button" onClick={() => clickSaveWearDateHandler(true)}>
+							입은 날짜 추가하기
+						</button>
+					) : (<button id="delete-weardate-button" onClick={() => clickSaveWearDateHandler(false)}>
+							입은 날짜 삭제하기
+						</button>
+					)}
+					{/* <button
 						id="save-weardate-button"
 						onClick={() => clickSaveWearDateHandler(true)}
 					>
@@ -146,7 +170,7 @@ const ClothDetailModal = (cloth: IProps) => {
 						onClick={() => clickSaveWearDateHandler(false)}
 					>
 						입은 날짜 삭제하기
-					</button>
+					</button> */}
 				</div>
 				<div className="ClothButton-modal">
 					<button
