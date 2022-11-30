@@ -234,6 +234,7 @@ export default function Outfit(props: IProps) {
 								옷 종류 : {filters.type}
 								<button
 									className="type-filter-delete-button"
+									data-testid="type-filter-delete-button"
 									onClick={() => clickTypeDeleteButton()}
 								>
 									delete
@@ -247,6 +248,7 @@ export default function Outfit(props: IProps) {
 								색 : {filters.color}
 								<button
 									className="color-filter-delete-button"
+									data-testid="color-filter-delete-button"
 									onClick={() => clickColorDeleteButton()}
 								>
 									delete
@@ -260,6 +262,7 @@ export default function Outfit(props: IProps) {
 								패턴 : {filters.pattern}
 								<button
 									className="pattern-filter-delete-button"
+									data-testid="pattern-filter-delete-button"
 									onClick={() => clickPatternDeleteButton()}
 								>
 									delete

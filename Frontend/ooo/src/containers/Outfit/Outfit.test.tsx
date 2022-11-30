@@ -88,7 +88,9 @@ jest.mock(
 				<button
 					id="done-button"
 					data-testid="done-button"
-					onClick={() => props.clickDoneHandler(null, null, null)}
+					onClick={() =>
+						props.clickDoneHandler("mockType", "mockColor", "MockPattern")
+					}
 				>
 					Done
 				</button>
@@ -227,5 +229,55 @@ describe("<Outfit />", () => {
 		fireEvent.click(beforePageButton);
 		const firstPageButton = screen.getByTestId("first-page-button");
 		fireEvent.click(firstPageButton);
+	});
+
+	it("should handle type delete button", () => {
+		render(outfit);
+		const filterButton = screen.getByText("Filter");
+		fireEvent.click(filterButton);
+		const doneButton = screen.getByText("Done");
+		fireEvent.click(doneButton);
+
+		const colorDeleteButton = screen.getByTestId("color-filter-delete-button");
+		fireEvent.click(colorDeleteButton);
+		const patternDeleteButton = screen.getByTestId(
+			"pattern-filter-delete-button"
+		);
+		fireEvent.click(patternDeleteButton);
+		const typeDeleteButton = screen.getByTestId("type-filter-delete-button");
+		fireEvent.click(typeDeleteButton);
+	});
+
+	it("should handle color delete button", () => {
+		render(outfit);
+		const filterButton = screen.getByText("Filter");
+		fireEvent.click(filterButton);
+		const doneButton = screen.getByText("Done");
+		fireEvent.click(doneButton);
+
+		const typeDeleteButton = screen.getByTestId("type-filter-delete-button");
+		fireEvent.click(typeDeleteButton);
+		const patternDeleteButton = screen.getByTestId(
+			"pattern-filter-delete-button"
+		);
+		fireEvent.click(patternDeleteButton);
+		const colorDeleteButton = screen.getByTestId("color-filter-delete-button");
+		fireEvent.click(colorDeleteButton);
+	});
+
+	it("should handle pattern delete button", () => {
+		render(outfit);
+		const filterButton = screen.getByText("Filter");
+		fireEvent.click(filterButton);
+		const doneButton = screen.getByText("Done");
+		fireEvent.click(doneButton);
+		const typeDeleteButton = screen.getByTestId("type-filter-delete-button");
+		fireEvent.click(typeDeleteButton);
+		const colorDeleteButton = screen.getByTestId("color-filter-delete-button");
+		fireEvent.click(colorDeleteButton);
+		const patternDeleteButton = screen.getByTestId(
+			"pattern-filter-delete-button"
+		);
+		fireEvent.click(patternDeleteButton);
 	});
 });
