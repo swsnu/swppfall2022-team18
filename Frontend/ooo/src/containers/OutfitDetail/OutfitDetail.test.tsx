@@ -73,7 +73,7 @@ const stubInitialOutfitState: OutfitState = {
 
 const stubInitialUserClothState: UserClothState = {
 	userClothes: [
-		{id: 1, name:"", image_link:"", user:1, color:"black", type:"shirt", pattern:"no"}
+		{id: 1, name:"", image_link:"", user:1, color:"black", type:"shirt", pattern:"no", dates:"test"}
 	],
 	selectedUserCloth: null,
 	recommendOutfit: {
@@ -83,7 +83,7 @@ const stubInitialUserClothState: UserClothState = {
 		popularity: 1,
 		image_link: "",
 		userClothes: [
-			{id: 1, name:"", image_link:"", user:1, color:"black", type:"shirt", pattern:"no"}
+			{id: 1, name:"", image_link:"", user:1, color:"black", type:"shirt", pattern:"no",  dates:"test"}
 		],
 	},
 };
@@ -100,6 +100,11 @@ jest.mock("react-router", () => ({
 	...jest.requireActual("react-router"),
 	useNavigate : () => mockNavigate,
 }))
+const mockDispatch = jest.fn();
+jest.mock("react-redux", () => ({
+    ...jest.requireActual("react-redux"),
+    useDispatch: () => mockDispatch,
+}));
 
 
 

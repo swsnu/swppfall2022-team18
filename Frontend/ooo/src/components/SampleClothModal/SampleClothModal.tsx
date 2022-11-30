@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 export interface Iprops {
 	userHave: boolean;
-	userCloth_url: string;
-	sampleCloth_url: string;
-	type: string;
-	color: string;
-	pattern: string;
-	sampleCloth_name: string;
-	sampleCloth_link: string;
+	userCloth_url: string | undefined;
+	sampleCloth_url: string | undefined;
+	type: string | undefined;
+	color: string | undefined;
+	pattern: string | undefined;
+	sampleCloth_name: string | undefined;
+	sampleCloth_link: string | undefined;
 }
 
 const SampleClothModal = (props: Iprops) => {

@@ -10,7 +10,10 @@ import Modal from "react-modal";
 import ClothDetailModal from "../../components/ClothDetailModal/ClothDetailModal";
 
 export interface IProps {
+	user_cloth_id: string;
 	source_url: string;
+	weardate: string;
+	metatype: string;
 	type: string;
 	color: string;
 	pattern: string;
@@ -24,6 +27,9 @@ const ClosetItem = (props: IProps) => {
 		setClothDetailModalOpen(true);
 	};
 
+	const clickClothDetailPopupCloseHandler = () => {
+		setClothDetailModalOpen(!clothDetailModalOpen);
+	};
 
 	return (
 		<div className="ClosetItem">
@@ -45,7 +51,16 @@ const ClosetItem = (props: IProps) => {
 				data-testid="detail-modal"
 				isOpen={clothDetailModalOpen}
 			>
-				<ClothDetailModal></ClothDetailModal>
+				<ClothDetailModal
+					id={props.user_cloth_id}
+					image={props.source_url}
+					weardate={props.weardate}
+					metatype={props.metatype}
+					type={props.type}
+					color={props.color}
+					pattern={props.pattern}
+					modal_close={clickClothDetailPopupCloseHandler}
+				></ClothDetailModal>
 				<div id="close-buton-div">
 					<button
 						id="modal-close-button"
@@ -59,11 +74,11 @@ const ClosetItem = (props: IProps) => {
 				</div>
 			</Modal>
 			<div className="ClothLable">
-				<text id="type-label">종류</text>
+				<text id="type-label"><b>종류</b></text>
 				<text id="type-text">{props.type}</text>
-				<text id="color-label">색상</text>
+				<text id="color-label"><b>색상</b></text>
 				<text id="color-text">{props.color}</text>
-				<text id="stripe-label">무늬</text>
+				<text id="stripe-label"><b>무늬</b></text>
 				<text id="stripe-text">{props.pattern}</text>
 			</div>
 		</div>

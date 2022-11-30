@@ -32,7 +32,7 @@ describe("<AddClothModal />", () => {
                 pattern: "test_pattern",
             },
         });
-        renderWithProviders(<AddClothModal />);
+        renderWithProviders(<AddClothModal modal_close={()=>{}} />);
 
         const UploadClothDiv = screen.getByTestId("UploadClothDiv");
         expect(UploadClothDiv.classList.contains("fileImage")).toBe(false);
