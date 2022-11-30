@@ -92,7 +92,7 @@ const initialState: OutfitState = {
 		recommend: false,
 	},
 	sampleClothes: [],
-	sampleCloth:null,
+	sampleCloth: null,
 	userCloth: null,
 	cursor: 0,
 	isLast: false,
@@ -150,12 +150,12 @@ export const fetchSampleCloth = createAsyncThunk(
 		const response = await axios.get(`/api/ooo/outfit/samplecloth/${id}/`, {
 			headers,
 		});
-		if(response.status === 200){
-			return response.data
+		if (response.status === 200) {
+			return response.data;
+		} else {
+			return null;
 		}
-		else{
-			return null
-		}
+		// return response.data;
 	}
 );
 
@@ -196,7 +196,7 @@ export const outfitSlice = createSlice({
 			state.sampleClothes = action.payload.sampleclothes;
 		});
 		builder.addCase(fetchSampleCloth.fulfilled, (state, action) => {
-			if(action.payload.usercloth.id !== -1){
+			if (action.payload.usercloth.id !== -1) {
 				state.userCloth = action.payload.usercloth;
 			}
 			state.sampleCloth = action.payload.samplecloth;

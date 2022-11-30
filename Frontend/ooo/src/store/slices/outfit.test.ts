@@ -109,7 +109,12 @@ describe("outfit reducer", () => {
 	});
 
 	it("should handle fetchSampleCloth", async () => {
-		axios.get = jest.fn().mockResolvedValue({ data: { usercloth: fakeUserCloth, samplecloth: fakeCloth} });
+		axios.get = jest
+			.fn()
+			.mockResolvedValue({
+				status: 200,
+				data: { usercloth: fakeUserCloth, samplecloth: fakeCloth },
+			});
 		await store.dispatch(fetchSampleCloth(1));
 		// expect(store.getState().outfit.userCloth).toEqual(fakeUserCloth)
 	});
