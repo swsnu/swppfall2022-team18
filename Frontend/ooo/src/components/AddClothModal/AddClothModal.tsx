@@ -1,27 +1,13 @@
 import "./AddClothModal.css";
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { createUserCloth } from "../../store/slices/userCloth";
+import { selectUserCloth, fetchUserClothes, createUserCloth } from "../../store/slices/userCloth";
 import TypeFilter from "../TypeFilter/TypeFilter"
 
-// const TodoModal = (props: any) => (
-//     <Modal
-//       isOpen={!!props.selectedTodo}
-//       contentLabel="Selected Todo"
-//       onRequestClose={props.onModalClose}
-//     >
-//       <h3>Selected Option</h3>
-//       {props.selectedTodo && <p>{props.selectedTodo}</p>}
-//       <button onClick={props.onModalClose}>Okay</button>
-//     </Modal>
-// )
-
-//   export default TodoModal
-
 export interface IProps {
-    modal_close: () => void
+    modal_close: (metaType: string) => void
 }
 
 const AddClothModal = (props: IProps) => {
@@ -32,17 +18,21 @@ const AddClothModal = (props: IProps) => {
 	const [color, setColor] = useState<string>("");
 	const [pattern, setPattern] = useState<string>("");
 	const [fileImage, setFileImage] = useState("");
-	const [submitted, setSubmitted] = useState<boolean>(false);
-	// const [clothTypeOption, setClothTypeOption] = useState<string>("");
+	// const [submitted, setSubmitted] = useState<boolean>(false);
 
 	const dispatch = useDispatch<AppDispatch>();
 
-	const TYPEOPTIONS = [
+	const METATYPEOPTIONS = [
 		{ value: "Type" },
 		{ value: "상의" },
 		{ value: "하의" },
 		{ value: "아우터" },
 	];
+
+	// useEffect(() => {
+	// 	alert('useffect')
+	// 	dispatch(fetchUserClothes());
+	// }, [submitted]);
 
 	const clickAddClothHandler = async () => {
 		const data = {
@@ -53,8 +43,9 @@ const AddClothModal = (props: IProps) => {
 			pattern: pattern,
 		};
 		const result = await dispatch(createUserCloth(data));
-		props.modal_close();
-		navigate("/closet/");
+		props.modal_close(name);
+		// setSubmitted(true);
+		// window.location.reload();
 	};
 
 	const saveFileImage = (e: any) => {
@@ -91,7 +82,7 @@ const AddClothModal = (props: IProps) => {
 						<text id="UploadedClothInfoDiv-text">Type</text>
 						<br></br>
 						<select id="type-select" data-testid="select-component" onChange={(e) => setName(e.target.value)}>
-							{TYPEOPTIONS.map((option, index) => (
+							{METATYPEOPTIONS.map((option, index) => (
 								<option key={index} value={option.value} >
 									{option.value}
 								</option>
