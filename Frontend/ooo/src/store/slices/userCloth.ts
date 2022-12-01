@@ -87,7 +87,7 @@ export const createUserCloth = createAsyncThunk(
 export const editUserCloth = createAsyncThunk(
 	"closet/editUserCloth",
     async (
-		data: Pick<UserClothType, "id" | "type" | "color" |"pattern">,
+		data: Pick<UserClothType, "id" | "type" | "color" | "pattern">,
 		{ dispatch }
 	) => {
         const response = await axios.put(
@@ -114,6 +114,9 @@ export const addWearDate = createAsyncThunk(
 				body: data
 			}
 		);
+		if(response.status === 200){
+			return response.data
+		}
         dispatch(userClothActions.addWearDate(response.data));
     }
 );

@@ -1,5 +1,6 @@
 import { logoutUser } from "../../api/user";
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header/Header";
@@ -24,6 +25,9 @@ export interface IProps {
 export default function Outfit(props: IProps) {
 	const dispatch = useDispatch<AppDispatch>();
 	const outfitState = useSelector(selectOutfit);
+	// const { state } = useLocation();
+	console.log("OUTFIT STATE WITH PROPS")
+	// console.log(state);
 
 	const [userHave, setUserHave] = useState(false);
 	const [recommend, setRecommend] = useState(false);
