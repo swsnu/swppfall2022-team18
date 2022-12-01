@@ -219,7 +219,12 @@ def closet_item(request, cloth_id):
 
         target_item_obj.save()
 
-        return HttpResponse(status=200)
+        response_dict = {
+            "id": target_item_obj.id,
+            "dates": target_item_obj.dates,
+        }
+
+        return JsonResponse(response_dict, status=200)
 
     elif request.method == 'PUT':
         if not request.user.is_authenticated:
