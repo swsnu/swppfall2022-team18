@@ -35,15 +35,21 @@ const AddClothModal = (props: IProps) => {
 	// }, [submitted]);
 
 	const clickAddClothHandler = async () => {
-		const data = {
-			name: name,
-			image_link: fileImage,
-			type: type,
-			color: color,
-			pattern: pattern,
-		};
-		const result = await dispatch(createUserCloth(data));
-		props.modal_close(name);
+		if (name && fileImage && type && color && pattern) {
+			const data = {
+				name: name,
+				image_link: fileImage,
+				type: type,
+				color: color,
+				pattern: pattern,
+			};
+			const result = await dispatch(createUserCloth(data));
+			props.modal_close(name);
+		}
+		else {
+			if (!fileImage) alert('옷 사진을 업로드해주세요.')
+			else if (!name || !type || !color || !pattern) alert('정보를 모두 입력해주세요.')
+		}
 		// setSubmitted(true);
 		// window.location.reload();
 	};
