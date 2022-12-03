@@ -46,25 +46,37 @@ export default function Closet() {
 	const userClothState = useSelector(selectUserCloth);
 	const dispatch = useDispatch<AppDispatch>();
 
+	const [filterOption, setFilterOption] = useState("Type");
 	const [addClothModalOpen, setAddClothModalOpen] = useState(false);
+	const [submitted, setSubmitted] = useState<boolean>();
 	const [filteredList, setFilteredList] = useState<UserClothType[]>([]);
 
 	const clickAddClothPopupHandler = () => {
 		setAddClothModalOpen(true);
 	};
 
-	const clickAddClothPopupCloseHandler = () => {
+	const clickAddClothPopupCloseHandler = (metaType: string) => {
 		setAddClothModalOpen(!addClothModalOpen);
+		setFilterOption(metaType); // 추가한 metatype을 return받아서 setfilteroption해줘야함
+		setSubmitted(true);
 	};
 
-	const getType = (t:string) => {
-		for(let i =0; i< type_tree.length; i++){
-			if(type_tree[i][1].includes(t)){
-				return type_tree[i][0]
-			}
-		}
-		return ""
-	}
+	const clickOnDeleteHandler = (metaType: string) => {
+		setFilterOption(metaType); // 추가한 metatype을 return받아서 setfilteroption해줘야함
+		setSubmitted(true);
+	};
+
+	useEffect(() => {
+		dispatch(fetchUserClothes());
+		filter_list('Type');
+	}, []);
+
+	useEffect(() => {
+		// alert('진입')
+		dispatch(fetchUserClothes());
+		filter_list(filterOption); // setFilterOption 후에 set된 filteroption을 넣어줘야함
+		setSubmitted(false);
+	}, [submitted]);
 
 	//for logout
 	const [isSending, setIsSending] = useState(false)
@@ -75,22 +87,6 @@ export default function Closet() {
 		else return false
 	};
 
-	const filter_list = (t:string) => {
-		if(t === 'Type'){
-			setFilteredList(userClothState.userClothes)
-		}
-		else{
-			const tmpUserCloth = userClothState.userClothes.filter((cloth) => { return t == getType(cloth.type); })
-			setFilteredList(tmpUserCloth)
-		}
-	}
-
-	useEffect(() => {
-		dispatch(fetchUserClothes());
-		filter_list('type');
-	}, []);
-
-
 	useEffect(() => {
 		const redirect = () => {
 			if (!checkLoginned()) {
@@ -99,6 +95,26 @@ export default function Closet() {
 		};
 		redirect();
 	}, [isSending]);
+
+	const getType = (t:string) => {
+		for(let i =0; i< type_tree.length; i++){
+			if(type_tree[i][1].includes(t)){
+				return type_tree[i][0]
+			}
+		}
+		return ""
+	}
+
+	const filter_list = (t:string) => {
+		if(t === 'Type'){
+			setFilteredList(userClothState.userClothes)
+		}
+		else{
+			const tmpUserCloth = userClothState.userClothes.filter((cloth) => { return t == getType(cloth.type); })
+			// alert(JSON.stringify(tmpUserCloth))
+			setFilteredList(tmpUserCloth)
+		}
+	}
 
 	return (
 		<div className="Closet">
@@ -173,6 +189,7 @@ export default function Closet() {
 									type={cloth.type}
 									color={cloth.color}
 									pattern={cloth.pattern}
+									tmp={clickOnDeleteHandler}
 								/>
 							)
 						}) :
