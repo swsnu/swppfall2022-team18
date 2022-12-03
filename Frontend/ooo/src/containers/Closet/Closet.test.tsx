@@ -78,10 +78,10 @@ const stubInitialUserClothState: UserClothState = {
 	recommendOutfit: {
 		id: 1,
 		outfit_info: "",
-		outfit_name: "",
+
 		popularity: 1,
 		image_link: "",
-		userClothes: [
+		userclothes: [
 			{id: 1, name:"", image_link:"", user:1, color:"black", type:"shirt", pattern:"no", dates:"test"}
 		],
 	},

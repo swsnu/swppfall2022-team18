@@ -7,19 +7,18 @@ export interface UserClothType {
 	id: number;
 	name: string;
 	image_link: string;
-	user: number;
 	color: string;
 	type: string;
 	pattern: string;
+	user: number;
 	dates: string;
 }
 export interface TodayOutfitType {
 	id: number;
 	outfit_info: string;
-	outfit_name: string
 	popularity: number;
 	image_link: string;
-	userClothes: UserClothType[]
+	userclothes: UserClothType[]
 }
 
 export interface UserClothState {

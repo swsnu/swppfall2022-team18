@@ -19,7 +19,6 @@ export default function Home() {
 	const userClothes = useSelector(selectUserCloth);
 	const outfit = useSelector(selectOutfit);
 	const [Loading, setLoading] = useState(false);
-
 	//for logout
 	const [isSending, setIsSending] = useState(false)
 	const checkLoginned = () => {
@@ -131,7 +130,7 @@ export default function Home() {
 									data-testid = 'TodayOutfit-lable'>
 										<text id="today-outfit-info-text">{userClothes.recommendOutfit.outfit_info}</text>
 										{
-											userClothes.recommendOutfit.userClothes.map((value, index) => {
+											userClothes.recommendOutfit.userclothes.map((value, index) => {
 												return(
 													<div key={index}>
 														<text id="today-cloth-name">{value.name}</text>

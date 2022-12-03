@@ -7,6 +7,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from downloader import download
 import re
+import os
 from django.core.files import File
 
 class LabelSet(models.Model):
@@ -66,18 +67,26 @@ class Outfit(models.Model):
     
     def save(self, *args, **kwargs):
     # ImageField에 파일이 없고, url이 존재하는 경우에만 실행
+        # super().save()
         if self.image_link and not self.image:
-
             if self.image_link:
-                temp_file = download(self.image_link)
                 file_name = '{name}.jpg'.format(
                     name = re.sub(r'[^0-9]', '', self.image_link)[0:-1]
                 )
-                self.image.save(file_name, File(temp_file))
+                if os.path.isfile('./media/images/' + file_name):
+                    f = open('./media/images/' + file_name, 'rb')
+                    myImage = File(f)
+                    self.image.save(file_name, myImage)
+                else:
+                    print(self.id)
+                    temp_file = download(self.image_link)
+                    self.image.save(file_name, File(temp_file))
                 super().save()
             else:
                 super().save()
+
         
+            
 class SampleCloth(models.Model):
     '''
     SampleCloth : clothes that are included in Outfit
@@ -103,13 +112,18 @@ class SampleCloth(models.Model):
     def save(self, *args, **kwargs):
     # ImageField에 파일이 없고, url이 존재하는 경우에만 실행
         if self.image_link and not self.image:
-
             if self.image_link:
-                temp_file = download(self.image_link)
                 file_name = '{name}.jpg'.format(
                     name = re.sub(r'[^0-9]', '', self.image_link)[0:-1]
                 )
-                self.image.save(file_name, File(temp_file))
+                if os.path.isfile('./media/images/' + file_name):
+                    f = open('./media/images/' + file_name, 'rb')
+                    myImage = File(f)
+                    self.image.save(file_name, myImage)
+                else:
+                    temp_file = download(self.image_link)
+                    self.image.save(file_name, File(temp_file))
+                    
                 super().save()
             else:
                 super().save()

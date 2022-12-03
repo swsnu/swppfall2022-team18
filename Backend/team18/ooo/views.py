@@ -32,7 +32,7 @@ def index():
     '''
     return HttpResponse("Hello, world")
 
-#@csrf_exempt
+@csrf_exempt
 def signup(request):
     '''
     signup : django default user
@@ -147,7 +147,7 @@ def closet(request):
             type = req_data['type']
             color = req_data['color']
             pattern = req_data['pattern']
-
+            print(type + color + pattern)
             label_set_obj, _ = LabelSet.objects.get_or_create(
                 type=type, color=color, pattern=pattern
             )
@@ -334,6 +334,8 @@ def outfit_list(request):
             'cursor': newCursor,
             'outfits': json_outfit_list
         }
+        print('content')
+        print(content)
 
         return JsonResponse(content, status=200)
 
@@ -534,8 +536,6 @@ def outfit(request, outfit_id):
             print(json_samplecloth)
             json_samplecloth_list.append(json_samplecloth)
 
-        
-
         content = {
             'outfit': json_outfit,
             "sampleclothes": json_samplecloth_list
@@ -655,6 +655,7 @@ def today_outfit(request):
             sampleclothes = list(SampleCloth.objects.filter(label_set=labelset))
             samplecloth_list = samplecloth_list + sampleclothes
 
+        
         all_outfits = []
         for samplecloth in samplecloth_list:
             samplecloth_include_outfit = list(samplecloth.outfit.all())
@@ -673,6 +674,9 @@ def today_outfit(request):
             for cloth in outfit_cloth_list:
                 if not cloth in samplecloth_list:
                     can_recommend = False
+            check_samplecloth_cnt = SampleCloth.objects.filter(outfit=outfit)
+            if len(check_samplecloth_cnt) < 2:
+                can_recommend = False
             if can_recommend:
                 recommend.append(outfit)
                 recommend_samplecloth_list = outfit_cloth_list
@@ -692,7 +696,6 @@ def today_outfit(request):
             json_usercloth = {
                 "id": recommend_usercloth.id,
                 "name": recommend_usercloth.name,
-
                 "image_link": usercloth_serialize.data['image'],
                 "type": recommend_usercloth.type,
                 "color": recommend_usercloth.color,
@@ -713,7 +716,6 @@ def today_outfit(request):
                 "image_link": outfit_serialize.data['image'],
                 "userclothes" : json_userclothes
             }
-
         return JsonResponse(json_outfit, status=200)
             
     return HttpResponseNotAllowed(['GET'], status=405)
