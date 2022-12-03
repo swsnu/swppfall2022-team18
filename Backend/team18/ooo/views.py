@@ -167,7 +167,20 @@ def closet(request):
             # dates - created as default value []
         )
         closet_item.save()
-        return HttpResponse(status=200)
+
+        response_dict = {
+            "name": name,
+            "image_link": image_link,
+            "image": "",
+            "closet_id": user_closet.id,
+            "type": type,
+            "color": color,
+            "pattern": pattern,
+            "label_set_id": label_set.id,
+            "user": request.user.id
+        }
+
+        return JsonResponse(response_dict, status=200)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'], status=405)
 

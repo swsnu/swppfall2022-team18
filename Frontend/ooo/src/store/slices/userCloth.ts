@@ -79,7 +79,6 @@ export const createUserCloth = createAsyncThunk(
 			}
 		);
 		dispatch(userClothActions.createUserCloth(response.data));
-		// console.log(response.data);
 		// return response.data;
 	}
 );
@@ -146,10 +145,12 @@ export const userClothSlice = createSlice({
 				id: number;
 				name: string;
 				image_link: string;
+				image: string;
 				user: number;
 				color: string;
 				type: string;
 				pattern: string;
+				label_set_id: number;
 				dates: string;
 			}>
 		) => {
@@ -157,10 +158,12 @@ export const userClothSlice = createSlice({
 				id: state.userClothes[state.userClothes.length - 1].id + 1,
 				name: action.payload.name,
 				image_link: action.payload.image_link,
+				image: action.payload.image,
 				user: action.payload.user,
 				color: action.payload.color,
 				type: action.payload.type,
 				pattern: action.payload.pattern,
+				label_set_id: action.payload.label_set_id,
 				dates: ""
 			};
 			state.userClothes.push(newUserCloth);
@@ -196,14 +199,7 @@ export const userClothSlice = createSlice({
 				weardate: string;
 			}>
 		) => {
-			// const newWearDate = {
-			// 	// id: state.userClothes[state.userClothes.length - 1].id + 1, // temporary
-			// 	date: action.payload.weardate,
-			// };
-			// const targetItem = state.userClothes.filter((userCloth) => {
-			// 	return userCloth.id === action.payload.targetId;
-			// }
-			// state.userClothes.push(action.payload.weardate);
+			//
 		},
 	},
 	extraReducers: (builder) => {

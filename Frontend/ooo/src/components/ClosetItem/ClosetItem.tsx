@@ -1,11 +1,11 @@
 import "./ClosetItem.css";
 import React from "react";
-//import { deleteUserCloth } from "../../store/slices/userCloth";
-import { useState } from "react";
-//import { useDispatch, useSelector } from "react-redux";
+import { fetchUserClothes } from "../../store/slices/userCloth";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 //import { useParams } from "react-router";
 //import { NavLink, useNavigate, useLocation } from "react-router-dom";
-//import { AppDispatch } from "../../store";
+import { AppDispatch } from "../../store";
 import Modal from "react-modal";
 import ClothDetailModal from "../../components/ClothDetailModal/ClothDetailModal";
 
@@ -18,10 +18,16 @@ export interface IProps {
 	color: string;
 	pattern: string;
 	clickClothDetailPopupHandler?: () => void;
+	tmp?: (metatype: string) => void;
+	// clickOnDeleteHandler?: (metaType: string) => void;
 }
 
 const ClosetItem = (props: IProps) => {
+	const dispatch = useDispatch<AppDispatch>();
+
 	const [clothDetailModalOpen, setClothDetailModalOpen] = useState(false);
+	// const [submitted, setSubmitted] = useState<boolean>();
+	// const [filteredList, setFilteredList] = useState<UserClothType[]>([]);
 
 	const clickClothDetailPopupHandler = () => {
 		setClothDetailModalOpen(true);
@@ -29,7 +35,17 @@ const ClosetItem = (props: IProps) => {
 
 	const clickClothDetailPopupCloseHandler = () => {
 		setClothDetailModalOpen(!clothDetailModalOpen);
+		if (props.tmp) {
+			props.tmp(props.metatype)
+		}
+		// setSubmitted(true);
 	};
+
+	// useEffect(() => {
+	// 	// alert('진입')
+	// 	dispatch(fetchUserClothes());
+	// 	setSubmitted(false);
+	// }, [submitted]);
 
 	return (
 		<div className="ClosetItem">
