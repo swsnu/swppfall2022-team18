@@ -9,13 +9,14 @@ import os
 from selenium.webdriver.chrome.options import Options
 import re
 import csv
+import pandas as pd
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE","team18.settings")
 
 import django
 django.setup()
 
-from ooo.models import Outfit, SampleCloth, LabelSet
+from ooo.models import Outfit, SampleCloth, LabelSet, UserCloth
 
 #코디에 속해있는 옷 링크(테스트 용)
 # cloth_list = []
@@ -161,52 +162,52 @@ def parse_outfit_data():
                 pass
     driver.quit()
             # 코디 데이터 저장 (아직 테스트 불가)
-            # Outfit.create(outfit_info = explain, popularity = rank, img = codi_image, purchase_link = codi_link, cloth_list = cloth_links)
+    Outfit.create(outfit_info = explain, popularity = rank, img = codi_image, purchase_link = codi_link, cloth_list = cloth_links)
 
 
-# # 옷 데이터 파싱 저장할 때 코디 데이터랑 연결, label set 만들어줘야함.
-# def parse_top_cloth_data():
+# 옷 데이터 파싱 저장할 때 코디 데이터랑 연결, label set 만들어줘야함.
+def parse_top_cloth_data():
     
-#     cloth_list = csv_to_list('cloth_list.csv')
-#     #cloth_list = ['https://www.musinsa.com/app/goods/2149254','https://www.musinsa.com/app/goods/659554']
-#     print(cloth_list)
-#     driver = webdriver.Chrome()
-#     driver.implicitly_wait(2)
+    cloth_list = csv_to_list('cloth_list.csv')
+    #cloth_list = ['https://www.musinsa.com/app/goods/2149254','https://www.musinsa.com/app/goods/659554']
+    print(cloth_list)
+    driver = webdriver.Chrome()
+    driver.implicitly_wait(2)
     
-#     LOADING_TIME = 15
-#     # 상의 페이지로 들어감.
-#     driver.get("https://www.musinsa.com/categories/item/001")
-#     time.sleep(5)
-#     driver.implicitly_wait(LOADING_TIME)
-#     driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
-#     time.sleep(5)
-#     driver.implicitly_wait(LOADING_TIME)
-#     # 상의 색깔별로 들어감. 
-#     color_num = 1
-#     for li in driver.find_elements('xpath','//*[@id="toolTip"]/li'):
-#         try:
-#             cloth_color = color_num
-#             li.click()
-#             time.sleep(5)
-#             driver.implicitly_wait(LOADING_TIME)
-#             #색상 별 총 페이지 수
-#             page_cnt = int(driver.find_element('class name',"totalPagingNum").text)
-#             #이제부터 상의-색상별 의상 페이지 이동
-#             for c in range(1,page_cnt+1):
-#                 #해당 페이지의 옷들 접근
-#                 try:
-#                     driver.get('https://www.musinsa.com/categories/item/001?d_cat_cd=001&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
-#                     time.sleep(5)
-#                     driver.implicitly_wait(LOADING_TIME)
-#                     driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
-#                     time.sleep(5)
-#                     driver.implicitly_wait(LOADING_TIME)
-#                     cloth_cnt = len(driver.find_elements('xpath','//*[@id="searchList"]/li'))
-#                     print(cloth_cnt, flush=True)
+    LOADING_TIME = 15
+    # 상의 페이지로 들어감.
+    driver.get("https://www.musinsa.com/categories/item/001")
+    time.sleep(5)
+    driver.implicitly_wait(LOADING_TIME)
+    driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
+    time.sleep(5)
+    driver.implicitly_wait(LOADING_TIME)
+    # 상의 색깔별로 들어감. 
+    color_num = 1
+    for li in driver.find_elements('xpath','//*[@id="toolTip"]/li'):
+        try:
+            cloth_color = color_num
+            li.click()
+            time.sleep(5)
+            driver.implicitly_wait(LOADING_TIME)
+            #색상 별 총 페이지 수
+            page_cnt = int(driver.find_element('class name',"totalPagingNum").text)
+            #이제부터 상의-색상별 의상 페이지 이동
+            for c in range(1,page_cnt+1):
+                #해당 페이지의 옷들 접근
+                try:
+                    driver.get('https://www.musinsa.com/categories/item/001?d_cat_cd=001&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
+                    time.sleep(5)
+                    driver.implicitly_wait(LOADING_TIME)
+                    driver.find_element('xpath','/html/body/div[2]/div[3]/div[13]/button[2]').click()
+                    time.sleep(5)
+                    driver.implicitly_wait(LOADING_TIME)
+                    cloth_cnt = len(driver.find_elements('xpath','//*[@id="searchList"]/li'))
+                    print(cloth_cnt, flush=True)
                     
-#                     for l in range(1,cloth_cnt+1):
-#                         try:
-#                             print(l,flush=True)
+                    for l in range(1,cloth_cnt+1):
+                        try:
+                            print(l,flush=True)
                         
 
                             driver.get('https://www.musinsa.com/categories/item/001?d_cat_cd=001&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
@@ -272,12 +273,12 @@ def parse_outfit_data():
     driver.quit()
 
         
-# def parse_bottom_cloth_data():
+def parse_bottom_cloth_data():
     
-#     cloth_list = csv_to_list('cloth_list.csv')
+    cloth_list = csv_to_list('cloth_list.csv')
     
-#     driver = webdriver.Chrome()
-#     driver.implicitly_wait(2)
+    driver = webdriver.Chrome()
+    driver.implicitly_wait(2)
     
 
     LOADING_TIME = 15
@@ -312,9 +313,9 @@ def parse_outfit_data():
                     print(cloth_cnt, flush=True)
 
                     
-#                     for l in range(1,cloth_cnt+1):
-#                         try:
-#                             print(l,flush=True)
+                    for l in range(1,cloth_cnt+1):
+                        try:
+                            print(l,flush=True)
 
                             driver.get('https://www.musinsa.com/categories/item/003?d_cat_cd=003&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
                             time.sleep(5)
@@ -378,12 +379,12 @@ def parse_outfit_data():
     driver.quit()
 
                     
-# def parse_outer_cloth_data():
+def parse_outer_cloth_data():
     
-#     cloth_list = csv_to_list('cloth_list.csv')
+    cloth_list = csv_to_list('cloth_list.csv')
     
-#     driver = webdriver.Chrome()
-#     driver.implicitly_wait(2)
+    driver = webdriver.Chrome()
+    driver.implicitly_wait(2)
     
 
     LOADING_TIME = 15
@@ -418,9 +419,9 @@ def parse_outfit_data():
                     print(cloth_cnt, flush=True)
 
                     
-#                     for l in range(1,cloth_cnt+1):
-#                         try:
-#                             print(l,flush=True)
+                    for l in range(1,cloth_cnt+1):
+                        try:
+                            print(l,flush=True)
                         
 
                             driver.get('https://www.musinsa.com/categories/item/002?d_cat_cd=002&brand=&list_kind=small&sort=pop_category&sub_sort=&page={}&display_cnt=90&group_sale=&exclusive_yn=&sale_goods=&timesale_yn=&ex_soldout=&kids=&color={}&price1=&price2=&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure='.format(c,color_num))
@@ -485,42 +486,149 @@ def parse_outfit_data():
     driver.quit()
 
     
-#     #얘를 csv_to_db 로 바꿔야 함.
-# #def list_to_csv():
-# #    df_outfit = pd.DataFrame(codi_data_list)
-# #    df_top = pd.DataFrame(top_cloth_data_list)
-# #    df_bottom = pd.DataFrame(bottom_cloth_data_list)
-# #    df_outer = pd.DataFrame(outer_cloth_data_list)
-# #    print(df_outfit.head(5))
-# #    df_outfit.to_csv("codi_data.csv",encoding='utf-8-sig')
-# #    df_top.to_csv("top_cloth_data.csv",encoding='utf-8-sig')
-# #    df_bottom.to_csv("bottom_cloth_data.csv",encoding='utf-8-sig')
-# #    df_outer.to_csv("outer_cloth_data.csv",encoding='utf-8-sig')
+    #얘를 csv_to_db 로 바꿔야 함.
+#def list_to_csv():
+#    df_outfit = pd.DataFrame(codi_data_list)
+#    df_top = pd.DataFrame(top_cloth_data_list)
+#    df_bottom = pd.DataFrame(bottom_cloth_data_list)
+#    df_outer = pd.DataFrame(outer_cloth_data_list)
+#    print(df_outfit.head(5))
+#    df_outfit.to_csv("codi_data.csv",encoding='utf-8-sig')
+#    df_top.to_csv("top_cloth_data.csv",encoding='utf-8-sig')
+#    df_bottom.to_csv("bottom_cloth_data.csv",encoding='utf-8-sig')
+#    df_outer.to_csv("outer_cloth_data.csv",encoding='utf-8-sig')
 
-def csv_to_db(file_name):
+def csv_to_db(file_name, start_index):
+    colors_match = {
+        '블랙' : ['검정','black', 'blk', 'bk'],
+        '그레이':['회색','gray', 'grey', 'gry','실버','silver','챠콜', '차콜','charcoal'],
+        '베이지':['beige'],
+        '네이비':['navy'],
+        '데님': ['denim'],
+        '아이보리': ['ivory','샌드','sand','오트밀','크림','cream'],
+        '카키': ['khaki',],
+        '기타색상':['컬러','color',],
+        '블루':['blue', 'bl','스카이', '인디고'],
+        '브라운': ['코코아','brown','cocoa','카멜', 'camel'],
+        '화이트': ['흰색','white', 'wht',],
+        '그린':['green','올리브', 'olive', '카고'],
+        '레드':['red','버건디','burgundy','딥레드',],
+        '오렌지':['orange',],
+        '연청':['light blue'],
+        '진청':['dark blue'],
+        '청':[],
+        '옐로우': ['엘로우','yellow','머스타드','mustard','골드','gold','로즈골드',],
+        '퍼플':['purple','라벤더','lavender', 'violet',],
+        '핑크':['pink',],
+        '민트':['mint',],
+    }
+    
     if file_name == 'codi_data.csv':
-        df = open(file_name, 'r', encoding='utf-8-sig')
-        dic_list = csv.DictReader(df)
-        for dic in dic_list:
-            print(dic)
-            outfit = Outfit(outfit_name=dic['codi_name'], outfit_info=dic['explain'], popularity=dic['rank'], image_link = dic['codi_image'], purchase_link = dic['codi_link'])
-            outfit.save()
+        df = pd.read_csv(file_name, header=0)
+        # print(df.loc[start_index, 'codi_name'])
+        cnt = 0
+        for i in range(start_index, len(df.index)):
+            if cnt == 2000:
+                time.sleep(300)
+                cnt = 0
+            
+            # check is in db
+            try: 
+                tmp_outfit = Outfit.objects.get(outfit_name=df.loc[i, 'codi_name'], outfit_info=df.loc[i, 'explain'], popularity=df.loc[i, 'rank'], image_link = df.loc[i, 'codi_image'], purchase_link = df.loc[i, 'codi_link'])
+            except Outfit.DoesNotExist:
+                outfit = Outfit(outfit_name=df.loc[i, 'codi_name'], outfit_info=df.loc[i, 'explain'], popularity=df.loc[i, 'rank'], image_link = df.loc[i, 'codi_image'], purchase_link = df.loc[i, 'codi_link'])
+                outfit.save()
+                cnt += 1
+            except Outfit.MultipleObjectsReturned:
+                pass
+            
+        # time.sleep(300)
+        # df = open(file_name, 'r', encoding='utf-8-sig')
+        # dic_list = csv.DictReader(df)
+        # print('{} start'.format(file_name))
+        # for dic in dic_list:
+        #     outfit = Outfit(outfit_name=dic['codi_name'], outfit_info=dic['explain'], popularity=dic['rank'], image_link = dic['codi_image'], purchase_link = dic['codi_link'])
+        #     outfit.save()
+        # print('{} end'.format(file_name))
+        # if min(start_index+2000, len(df.index)) == len(df.index):
+        #     print("End")
+        # else:
+        #     print('Next index is {}'.format(start_index+2000))
     else:
-        df = open(file_name, 'r', encoding='utf-8-sig')
-        dic_list = csv.DictReader(df)
-        for dic in dic_list:
-            label, created = LabelSet.objects.get_or_create(type = dic['cloth_type'], color = dic['cloth_color'], pattern = dic['cloth_pattern'])
-            label.save()
+        df = pd.read_csv(file_name, header=0)
+        cnt = 0
+        # for i in range(start_index, start_index+10):
+        for i in range(start_index, len(df.index)):
+            if cnt == 3000:
+                time.sleep(300)
+                cnt = 0
+            
+            color = df.loc[i, 'cloth_color']
+            
+            for key in colors_match:
+                if color == key:
+                    break;
+                else:
+                    if color in colors_match[key]:
+                        color = key
+                    else:
+                        pass
+            
+            label, created = LabelSet.objects.get_or_create(type = df.loc[i, 'cloth_type'], color = color, pattern = df.loc[i, 'cloth_pattern'])
+            if created:
+                label.save()
             outfit_list = []
-            print('y')
-            for list in Outfit.objects.filter(purchase_link = dic['codi_link']):
-                outfit_list.append(list)
-            print(outfit_list)
-            sample_cloth = SampleCloth(name = dic['cloth_name'], image_link = dic['cloth_image'], purchase_link = dic['cloth_link'], type = dic['cloth_type'], color = dic['cloth_color'], pattern = dic['cloth_pattern'], label_set = label)
+            # print('y')
+            for l in Outfit.objects.filter(purchase_link = df.loc[i, 'codi_link']):
+                outfit_list.append(l)
+            # print(outfit_list)
+            
+            #############################################3
+            # check it is in db
+            sample_cloth = SampleCloth(name = df.loc[i, 'cloth_name'], image_link = df.loc[i, 'cloth_image'], purchase_link = df.loc[i, 'cloth_link'], type = df.loc[i, 'cloth_type'], color = color, pattern = df.loc[i, 'cloth_pattern'], label_set = label)
             sample_cloth.save()
+            time.sleep(0.1)
             sample_cloth.outfit.set(outfit_list)
             sample_cloth.save()
-            print("save")
+            cnt += 1
+            # try:
+            #     s = SampleCloth.objects.get(name = df.loc[i, 'cloth_name'], image_link = df.loc[i, 'cloth_image'], purchase_link = df.loc[i, 'cloth_link'], type = df.loc[i, 'cloth_type'], color = color, pattern = df.loc[i, 'cloth_pattern'], label_set = label)
+            # except SampleCloth.DoesNotExist:
+            #     sample_cloth = SampleCloth(name = df.loc[i, 'cloth_name'], image_link = df.loc[i, 'cloth_image'], purchase_link = df.loc[i, 'cloth_link'], type = df.loc[i, 'cloth_type'], color = color, pattern = df.loc[i, 'cloth_pattern'], label_set = label)
+            #     sample_cloth.save()
+            #     time.sleep(0.1)
+            #     sample_cloth.outfit.set(outfit_list)
+            #     sample_cloth.save()
+            #     cnt += 1
+            # except SampleCloth.MultipleObjectsReturned:
+            #     pass
+            
+        # time.sleep(300)
+        
+        
+        
+        # if min(start_index+2000, len(df.index)) == len(df.index):
+        #     print("End")
+        # else:
+        #     print('Next index is {}'.format(start_index+2000))
+        # df = open(file_name, 'r', encoding='utf-8-sig')
+        # dic_list = csv.DictReader(df)
+        # print('{} start'.format(file_name))
+        # for dic in dic_list:
+        #     label, created = LabelSet.objects.get_or_create(type = dic['cloth_type'], color = dic['cloth_color'], pattern = dic['cloth_pattern'])
+        #     label.save()
+        #     outfit_list = []
+        #     # print('y')
+        #     for l in Outfit.objects.filter(purchase_link = dic['codi_link']):
+        #         outfit_list.append(l)
+        #     # print(outfit_list)
+        #     sample_cloth = SampleCloth(name = dic['cloth_name'], image_link = dic['cloth_image'], purchase_link = dic['cloth_link'], type = dic['cloth_type'], color = dic['cloth_color'], pattern = dic['cloth_pattern'], label_set = label)
+        #     sample_cloth.save()
+        #     sample_cloth.outfit.set(outfit_list)
+        #     sample_cloth.save()
+        # print('{} end'.format(file_name))
+            
+            # print("save")
     ##이슈
     # sample cloth에 outfit 리스트로 들어가야함.
     # outfit에 구성 옷의 링크 리스트 추가 -> 옷 저장할 때 코디 찾으려면 해야함.
@@ -534,15 +642,226 @@ def csv_to_list(filename):
         lists.append(item)
     return lists
 
+
+def add_color(filename, outfilename):
+    #중청 == 청
+    #
+    colors = ['블랙','검정', '그레이','회색', '베이지', '네이비', '데님',
+            '아이보리', '카키', '기타색상',
+            '블루', '스카이', '브라운', '코코아', '화이트', '흰색',
+            '그린', '샌드', '레드', '오렌지', 
+            '연청','진청','light blue','dark blue',
+            '청', '올리브', '카고', '인디고', '오트밀',
+            '옐로우', '엘로우', '퍼플', '핑크', '민트', '카멜',
+            '머스타드', '버건디', '라벤더', '딥레드',
+            '실버', '골드', '로즈골드', '챠콜', '차콜', '크림', '컬러',
+            'black', 'blk', 'bk', 'gray', 'grey', 'gry', 'beige', 'navy', 'denim',
+            'ivory', 'khaki', 'blue', 'bl', 'brown','white', 'wht', 'green', 
+            'sand', 'red', 'orange', 'yellow', 'purple', 'pink', 'mint', 'cocoa',
+            'camel', 'mustard', 'burgundy', 'lavender', 'violet', 'silver', 'gold', 'charcoal', 'cream', 'olive', 'color']
+    df = pd.read_csv(filename, header=0)
+    df['cloth_color'] = 'None'
+    for i in df.index:
+        for c in colors:
+            if c in df.loc[i, 'cloth_name'].lower():
+                df.loc[i, 'cloth_color'] = c
+                break;
+        
+    df.to_csv(outfilename, sep=',', header=True, index=False)
+    # records = SampleCloth.objects.all()
+    # for r in records:
+    #     for c in colors:
+    #         if c in r.name.lower():
+    #             if r.color == c:
+    #                 break
+    #             else:
+    #                 r.color = c
+    #                 r.save()
+    #                 break
+
+
+def lable_db():
+    #lable set, user cloth, sample cloth 에 대해서 적용
+
+    colors_match = {
+        '블랙' : ['검정','black', 'blk', 'bk'],
+        '그레이':['회색','gray', 'grey', 'gry','실버','silver','챠콜', '차콜','charcoal'],
+        '베이지':['beige'],
+        '네이비':['navy'],
+        '데님': ['denim'],
+        '아이보리': ['ivory','샌드','sand','오트밀','크림','cream'],
+        '카키': ['khaki',],
+        '기타색상':['컬러','color',],
+        '블루':['blue', 'bl','스카이', '인디고'],
+        '브라운': ['코코아','brown','cocoa','카멜', 'camel'],
+        '화이트': ['흰색','white', 'wht',],
+        '그린':['green','올리브', 'olive', '카고'],
+        '레드':['red','버건디','burgundy','딥레드',],
+        '오렌지':['orange',],
+        '연청':['light blue'],
+        '진청':['dark blue'],
+        '청':[],
+        '옐로우': ['엘로우','yellow','머스타드','mustard','골드','gold','로즈골드',],
+        '퍼플':['purple','라벤더','lavender', 'violet',],
+        '핑크':['pink',],
+        '민트':['mint',],
+    }
+    
+    records_lableset = LabelSet.objects.all()
+    records_samplecloth = SampleCloth.objects.all()
+    
+    for r in records_lableset:
+        for key in colors_match:
+            if r.color == key:
+                break;
+            else:
+                if r.color in colors_match[key]:
+                    r.color = key
+                    r.save()
+                else:
+                    continue
+    
+    for r in records_samplecloth:
+        for key in colors_match:
+            if r.color == key:
+                break;
+            else:
+                if r.color in colors_match[key]:
+                    r.color = key
+                    r.save()
+                else:
+                    continue
+
+    
+    ###################################################################################################33
+    # 없는 거 지우는 거
+    
+    ################################################################################################3
+    # del_outfit.delete()
+    
+    # outfits = Outfit.objects.all()
+    # for outfit in outfits:
+    #     sample_cloth_list = SampleCloth.objects.filter(outfit=outfit)
+    #     if len(sample_cloth_list) == 1:
+    #         print(outfit.id)
+            # sample =  sample_cloth_list[0]
+            # sample_file_name = '{name}.jpg'.format(name = re.sub(r'[^0-9]', '', sample.image_link)[0:-1])
+            # sample_file_name = './media/images/' + sample_file_name
+            # if os.path.isfile(sample_file_name):
+            #     os.remove(sample_file_name)
+            # else:
+            #     pass
+            # sample.delete()
+            
+            
+            # file_name = '{name}.jpg'.format(name = re.sub(r'[^0-9]', '', outfit.image_link)[0:-1])
+            # file_name = './media/images/' + file_name
+            
+            # if os.path.isfile(file_name):
+            #     os.remove(file_name)
+            # else:
+            #     pass
+            # outfit.delete()
+
+def label_set_merge():
+    labels = LabelSet.objects.all()
+    dup_lists = []
+    for l in labels:
+        dup_lables = LabelSet.objects.filter(type=l.type, color=l.color, pattern=l.pattern)
+        if len(list(dup_lables)) == 0:
+            continue
+        elif len(list(dup_lables)) > 1:
+            print('-'*30)
+            for dl in dup_lables:
+                samples = SampleCloth.objects.filter(label_set = dl)
+                print(len(samples))
+    
+
+
+
+def connect_cloth_outfit(file_name):
+    df = pd.read_csv(file_name, header=0)
+    ids = []
+    for i in range(0, len(df.index)):
+        try:
+            lable =  LabelSet.objects.get(type = df.loc[i, 'cloth_type'], color = df.loc[i, 'cloth_color'], pattern = df.loc[i, 'cloth_pattern'])
+        except LabelSet.DoesNotExist:
+            continue
+        except LabelSet.MultipleObjectsReturned:
+            lable =  LabelSet.objects.filter(type = df.loc[i, 'cloth_type'], color = df.loc[i, 'cloth_color'], pattern = df.loc[i, 'cloth_pattern'])
+            print('duplicated label')
+            for l in lable:
+                print(l.id)
+            break
+
+        outfit_list = []
+        for l in Outfit.objects.filter(purchase_link = df.loc[i, 'codi_link']):
+            outfit_list.append(l)
+        
+        try:
+            s = SampleCloth.objects.get(name = df.loc[i, 'cloth_name'], image_link = df.loc[i, 'cloth_image'], purchase_link = df.loc[i, 'cloth_link'], type = df.loc[i, 'cloth_type'], color = df.loc[i, 'cloth_color'], pattern = df.loc[i, 'cloth_pattern'], label_set = lable)
+            s.outfit.set(outfit_list)
+            s.save()
+            ids.append(s.id)
+        except SampleCloth.DoesNotExist:
+            continue
+        except SampleCloth.MultipleObjectsReturned:
+            ss = SampleCloth.objects.filter(name = df.loc[i, 'cloth_name'], image_link = df.loc[i, 'cloth_image'], purchase_link = df.loc[i, 'cloth_link'], type = df.loc[i, 'cloth_type'], color = df.loc[i, 'cloth_color'], pattern = df.loc[i, 'cloth_pattern'], label_set = lable)
+            for s in ss:
+                if s.id in ids:
+                    continue
+                else:
+                    s.outfit.set(outfit_list)
+                    s.save()
+                    ids.append(s.id)
+                    break
+
+
+
+def check_file():
+    pass
+    # dir_path = './media/images/'
+    # outfits = Outfit.objects.all()
+    # sample = SampleCloth.objects.all()
+    
+    # outfit_image_link = [str(o.image).split('/')[1] for o in outfits]
+    # sample_image_link = [str(s.image).split('/')[1] for s in sample]
+    # used_file = []
+    # not_used_file = []
+    # for path in os.listdir(dir_path):
+    #     if path in outfit_image_link or path in sample_image_link:
+    #         used_file.append(path)
+    #     else:
+    #         not_used_file.append(path)
+    #         # os.remove('./media/images/' + path)
+    # print(len(used_file))
+    # print(len(not_used_file))
+
+    # samples = SampleCloth.objects.all()
+    # for s in samples:
+    #     s.save()
+
 #parse_outfit_data() #코디 데이터 크롤링하는 함수
 #parse_top_cloth_data() #상의 데이터 크롤링하는 함수
 #parse_outer_cloth_data() #아우터 데이터 크롤링하는 함수
 #parse_bottom_cloth_data() #하의 데이터 크롤링하는 함수
 #list_to_csv() # list를 csv 파일로 변환하는 함수인데 지금 쓸 필요 없음
 #csv_to_list('cloth_list.csv') #csv 파일 list로 변환 변환하고자하는 파일 명 파라미터로 주기.
-csv_to_db('codi_data.csv') #csv 파일에 적힌 데이터 db로 옮기기 원하는 csv파일 파라미터로 주기
-csv_to_db('top_cloth_data.csv')
-csv_to_db('bottom_cloth_data.csv')
 
-csv_to_db('outer_cloth_data.csv')
+check_file()
 
+# csv_to_db('codi_data.csv', 0) #csv 파일에 적힌 데이터 db로 옮기기 원하는 csv파일 파라미터로 주기(2000개씩)
+# time.sleep(300)
+# csv_to_db('top.csv', 0)
+# time.sleep(300)
+# csv_to_db('bottom.csv', 0)
+# time.sleep(300)
+# csv_to_db('outer.csv', 0)
+# LabelSet.objects.all().delete()
+# add_color('bottom_cloth_data.csv', 'bottom.csv')
+# lable_db()
+# LabelSet.objects.all().delete()
+# label_set_merge()
+# connect_cloth_outfit('top.csv')
+# connect_cloth_outfit('bottom.csv')
+# connect_cloth_outfit('outer.csv')

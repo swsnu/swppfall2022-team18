@@ -7,6 +7,16 @@ export interface UserClothType {
 	id: number;
 	name: string;
 	image_link: string;
+	color: string;
+	type: string;
+	pattern: string;
+	// user: number;
+	dates: string;
+}
+export interface TempUserClothType {
+	id: number;
+	name: string;
+	image: File;
 	user: number;
 	color: string;
 	type: string;
@@ -16,10 +26,9 @@ export interface UserClothType {
 export interface TodayOutfitType {
 	id: number;
 	outfit_info: string;
-	outfit_name: string
 	popularity: number;
 	image_link: string;
-	userClothes: UserClothType[]
+	userclothes: UserClothType[]
 }
 
 export interface UserClothState {
@@ -68,17 +77,28 @@ export const fetchRecommendOutfit = createAsyncThunk(
 export const createUserCloth = createAsyncThunk(
 	"closet/createUserCloth",
 	async (
-		data: Pick<UserClothType, "name" | "image_link" | "color" | "type" | "pattern">,
+		data: Pick<TempUserClothType, "name" | "image" | "color" | "type" | "pattern">,
 		{ dispatch }
 	) => {
+		const formData = new FormData();
+		formData.append('name',data.name)
+		formData.append("image",data.image)
+		formData.append('color',data.color)
+		formData.append('type',data.type)
+		formData.append('pattern', data.pattern)
+		formData.append('enctype',"multipart/form-data")
 		const response = await axios.post(
-			"/api/ooo/closet/",
+			"/api/ooo/closet/",formData,
 			{
-				headers,
-				body: data
+				headers:headers
+				// headers:{
+				// 	'Context-Type':'multipare/form-data',
+				// 	username: localStorage.getItem("username"),
+				// },
 			}
 		);
 		dispatch(userClothActions.createUserCloth(response.data));
+		// console.log(response.data);
 		// return response.data;
 	}
 );
