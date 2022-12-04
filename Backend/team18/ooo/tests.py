@@ -2,7 +2,7 @@ import json
 from datetime import date, timedelta
 from django.test import TestCase, Client
 from .models import User, Closet, UserCloth, LabelSet, SampleCloth, Outfit
-
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 # Create your tests here.
 class SigninUserCase(TestCase):
@@ -23,8 +23,10 @@ class SigninUserCase(TestCase):
         #usercloth-labelset pair = (1,1) (2,2) (3,3) (4,3) (5,4)
         #sample-labelset pair = (1,1) (2,2) (3,4) )(4,4 (5,5)
         #outfit-sample set = (1: 1,2) (2: 3,4,5) (3: 2,4)
+        new_photo1 = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=open('./media/test/3432_mXFtHKq.jpg', 'rb').read(), content_type='image/jpeg')
         UserCloth.objects.create(
-            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            image_link = new_photo1,
             closet = closet2,
             type = "test_type_1",
             color = 'test_color_1',
@@ -32,7 +34,8 @@ class SigninUserCase(TestCase):
             label_set = labelset_1
         )
         UserCloth.objects.create(
-            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            image_link = new_photo1,
             closet = closet2,
             type = "test_type_2",
             color = 'test_color_2',
@@ -40,7 +43,8 @@ class SigninUserCase(TestCase):
             label_set = labelset_2
         )
         UserCloth.objects.create(
-            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            image_link = new_photo1,
             closet = closet2,
             type = "test_type_3",
             color = 'test_color_3',
@@ -48,7 +52,8 @@ class SigninUserCase(TestCase):
             label_set = labelset_3
         )
         UserCloth.objects.create(
-            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            image_link = new_photo1,
             closet = closet2,
             type = "test_type_3",
             color = 'test_color_3',
@@ -56,7 +61,8 @@ class SigninUserCase(TestCase):
             label_set = labelset_3
         )
         UserCloth.objects.create(
-            image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            image_link = new_photo1,
             closet = closet2,
             type = "test_type_4",
             color = 'test_color_4',
@@ -67,23 +73,27 @@ class SigninUserCase(TestCase):
         outfit1 = Outfit.objects.create(
             popularity = 100,
             image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = new_photo1,
             purchase_link = "purchase link 1"
         )
 
         outfit2 = Outfit.objects.create(
             popularity = 200,
             image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = new_photo1,
             purchase_link = "purchase link 2"
         )
 
         outfit3 = Outfit.objects.create(
             popularity = 300,
             image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = new_photo1,
             purchase_link = "purchase link 3"
         )
         
         samplecloth1 = SampleCloth.objects.create(
             image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = new_photo1,
             purchase_link = "cloth purchase link 1",
             type = "test_type_1",
             color = 'test_color_1',
@@ -94,6 +104,7 @@ class SigninUserCase(TestCase):
 
         samplecloth2 = SampleCloth.objects.create(
             image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = new_photo1,
             purchase_link = "cloth purchase link 2",
             type = "test_type_2",
             color = 'test_color_2',
@@ -104,6 +115,7 @@ class SigninUserCase(TestCase):
 
         samplecloth3 = SampleCloth.objects.create(
             image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = new_photo1,
             purchase_link = "cloth purchase link 3",
             type = "test_type_4",
             color = 'test_color_4',
@@ -114,6 +126,7 @@ class SigninUserCase(TestCase):
 
         samplecloth4 = SampleCloth.objects.create(
             image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = new_photo1,
             purchase_link = "cloth purchase link 4",
             type = "test_type_4",
             color = 'test_color_4',
@@ -124,6 +137,7 @@ class SigninUserCase(TestCase):
 
         samplecloth5 = SampleCloth.objects.create(
             image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = new_photo1,
             purchase_link = "cloth purchase link 5",
             type = "test_type_5",
             color = 'test_color_5',
@@ -134,6 +148,7 @@ class SigninUserCase(TestCase):
 
         samplecloth6 = SampleCloth.objects.create(
             image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = new_photo1,
             purchase_link = "cloth purchase link 2",
             type = "test_type_2",
             color = 'test_color_2',
@@ -144,6 +159,7 @@ class SigninUserCase(TestCase):
 
         samplecloth7 = SampleCloth.objects.create(
             image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
+            # image_link = new_photo1,
             purchase_link = "cloth purchase link 4",
             type = "test_type_4",
             color = 'test_color_4',
@@ -248,13 +264,15 @@ class SigninUserCase(TestCase):
         )
         self.assertEqual(response.status_code, 400)
 
+        new_photo = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=open('./media/test/3432_mXFtHKq.jpg', 'rb').read(), content_type='image/jpeg')
+        
         #using labelset
         response = client.post(
             '/api/ooo/closet/',
             json.dumps({
                 "body" : {
                     'name': 'name1',
-                    'image_link': "image_link_1",
+                    'image_link': 'test',
                     'type': 'test_type_1',
                     'color': 'test_color_1',
                     'pattern': 'test_pattern_1'
@@ -270,7 +288,7 @@ class SigninUserCase(TestCase):
             json.dumps({
                 "body" : {
                     'name': 'name1',
-                    'image_link': "image_link_1",
+                    'image_link': 'test',
                     'type': 'test_type_1',
                     'color': 'test_color_1',
                     'pattern': 'test_pattern_3'
@@ -297,12 +315,12 @@ class SigninUserCase(TestCase):
         )
         self.assertEqual(response.status_code, 401)
 
+        new_photo = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=open('./media/test/3432_mXFtHKq.jpg', 'rb').read(), content_type='image/jpeg')
+        
         response = client.put(
             '/api/ooo/closet/1/',
              json.dumps({
                     "body" : {
-                    'name': 'name1',
-                    'image_link': "image_link_1",
                     'type': 'type1',
                     'color': 'color1',
                     'pattern': 'pattern1'
@@ -349,7 +367,6 @@ class SigninUserCase(TestCase):
             json.dumps({
             "body": {
                 'name': 'name1',
-                'image_link': "image_link_1",
                 'type': 'type1',
                 'color': 'color1',
                 'pattern': 'pattern1',
@@ -367,7 +384,6 @@ class SigninUserCase(TestCase):
             json.dumps({
             "body": {
                 'name': 'name1',
-                'image_link': "image_link_1",
                 'type': 'test_type_1',
                 'color': 'test_color_1',
                 'pattern': 'test_pattern_1',
