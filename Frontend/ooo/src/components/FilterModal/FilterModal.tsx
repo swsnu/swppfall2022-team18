@@ -18,18 +18,37 @@ const FilterModal = (props: IProps) => {
 	const [metaType, setMetaType] = useState<string | null>(null);
 
 	const ColorOptions = [
-		{ value: "Color" },
-		{ value: "black" },
-		{ value: "white" },
-		{ value: "blue" },
-		{ value: "red" },
-		{ value: "etc" },
+		{ value: "Color"},
+		{ value: "블랙" },
+		{ value: "그레이" },
+		{ value: "베이지" },
+		{ value: "네이비" },
+		{ value: "데님" },
+		{ value: "아이보리" },
+		{ value: "카키" },
+		{ value: "기타색상" },
+		{ value: "블루" },
+		{ value: "브라운" },
+		{ value: "화이트" },
+		{ value: "그린" },
+		{ value: "레드" },
+		{ value: "오렌지" },
+		{ value: "연청" },
+		{ value: "진청" },
+		{ value: "청" },
+		{ value: "옐로우" },
+		{ value: "퍼플" },
+		{ value: "핑크" },
+		{ value: "민트" },
 	];
 
 	const PatternOptions = [
-		{ value: "Pattern" },
-		{ value: "stripe" },
-		{ value: "none" },
+		{ value: "Pattern"},
+		{ value: "None" },
+		{ value: "로고" },
+		{ value: "스트라이프" },
+		{ value: "체크" },
+		{ value: "자수" },
 	];
 
 	const MetaTypeOptions = [
@@ -42,7 +61,9 @@ const FilterModal = (props: IProps) => {
 	const clickMetaTypeOptionHandler = (value: string) => {
 		if (value == "옷 종류") {
 			setMetaType(null);
-		} else setMetaType(value);
+		} else {
+			setMetaType(value);
+		}
 	};
 
 	const clickTypeOptionHandler = (value: string) => {
@@ -70,12 +91,12 @@ const FilterModal = (props: IProps) => {
 	return (
 		<div className="FilterModal">
 			<div>
-				<select id="type-select">
+				<select id="type-select"
+				onChange={(e) => clickMetaTypeOptionHandler(e.target.value)}>
 					{MetaTypeOptions.map((option, index) => (
 						<option
 							key={index}
 							value={option.value}
-							onClick={() => clickMetaTypeOptionHandler(option.value)}
 						>
 							{option.value}
 						</option>
@@ -87,24 +108,26 @@ const FilterModal = (props: IProps) => {
 					selectHandler={clickTypeOptionHandler}
 				></TypeFilter>
 			</div>
-			<select id="color-select">
+			<select id="color-select"
+			onChange={(e) => clickColorOptionHandler(e.target.value)}>
 				{ColorOptions.map((option, index) => (
 					<option
 						key={index}
 						value={option.value}
-						onClick={() => clickColorOptionHandler(option.value)}
+						onClick={() => {clickColorOptionHandler(option.value)}}
 					>
 						{option.value}
 					</option>
 				))}
 			</select>
 
-			<select id="pattern-select">
+			<select id="pattern-select"
+			onChange={(e) => clickPatternOptionHandler(e.target.value)}>
 				{PatternOptions.map((option, index) => (
 					<option
 						key={index}
 						value={option.value}
-						onClick={() => clickPatternOptionHandler(option.value)}
+						onClick={() => {clickPatternOptionHandler(option.value)}}
 					>
 						{option.value}
 					</option>

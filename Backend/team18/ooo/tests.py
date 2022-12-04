@@ -1,14 +1,16 @@
-from django.test import TestCase, Client
 import json
+from datetime import date, timedelta
+from django.test import TestCase, Client
 from .models import User, Closet, UserCloth, LabelSet, SampleCloth, Outfit
-from datetime import date, datetime, timedelta
+
 
 # Create your tests here.
-class signinUserCase(TestCase):
+class SigninUserCase(TestCase):
     def setUp(self):
         user1 = User.objects.create_user(username='testuser1', password='1234')
         user2 = User.objects.create_user(username='testuser2', password='1234')
-        closet1 = Closet.objects.create(user=user1)
+        # closet1 = Closet.objects.create(user=user1)
+        Closet.objects.create(user=user1)
         closet2 = Closet.objects.create(user=user2)
 
         labelset_1 = LabelSet.objects.create(type='test_type_1', color='test_color_1', pattern='test_pattern_1')        
@@ -150,9 +152,9 @@ class signinUserCase(TestCase):
         ) 
         samplecloth7.outfit.set([outfit3])
 
+
     def test_csrf(self):
-        # By default, csrf checks are disabled in test client
-        # To test csrf protection we enforce csrf checks here
+        """ By default, csrf checks are disabled in test client """
         client = Client(enforce_csrf_checks=True)
         response = client.post('/api/ooo/user/signup/',
                                json.dumps({"body":{"username": "chris", "password": "chris"}}),
@@ -170,7 +172,10 @@ class signinUserCase(TestCase):
                                 content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 201)                       
 
+    
     def test_signin_and_out(self):
+        """test signin and signout"""
+        
         client = Client(enforce_csrf_checks=False)
 
         response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'wrongname', 'password': 'wrongpassword'}}),
@@ -194,7 +199,9 @@ class signinUserCase(TestCase):
         response = client.get('/api/ooo/user/signout/')
         self.assertEqual(response.status_code, 401)
 
+    
     def test_closet(self):
+        """test closet"""
         client = Client(enforce_csrf_checks=False)
         #before login
         response = client.get('/api/ooo/closet/')
@@ -273,7 +280,9 @@ class signinUserCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
+    
     def test_closet_item(self):
+        """test closet_item"""
         client = Client(enforce_csrf_checks=False)
         #before login
         response = client.get('/api/ooo/closet/1/')
@@ -379,8 +388,9 @@ class signinUserCase(TestCase):
         response = client.delete('/api/ooo/closet/10/')
         self.assertEqual(response.status_code, 404)
 
-
+    
     def test_outfit_list(self):
+        """test outfit_list"""
         client = Client(enforce_csrf_checks=False)
         #before login
         response = client.get('/api/ooo/outfit/')
@@ -576,7 +586,10 @@ class signinUserCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
+    
     def test_outfit(self):
+        """test outfit"""
+        
         client = Client(enforce_csrf_checks=False)
         #before login
         response = client.get('/api/ooo/outfit/1/')
@@ -599,7 +612,9 @@ class signinUserCase(TestCase):
         self.assertEqual(response.status_code, 404)
 
 
+    
     def test_sample_cloth(self):
+        """test sample cloth"""
         client = Client(enforce_csrf_checks=False)
         #before login
         response = client.get('/api/ooo/outfit/samplecloth/1/')
@@ -625,7 +640,10 @@ class signinUserCase(TestCase):
         response = client.get('/api/ooo/outfit/samplecloth/10/')
         self.assertEqual(response.status_code, 404)
     
+    
+    
     def test_today_outfit(self):
+        """test today_outfit"""
         client = Client(enforce_csrf_checks=False)
         #before login
         response = client.get('/api/ooo/outfit/today/')
@@ -644,7 +662,6 @@ class signinUserCase(TestCase):
         print(response.content)
 
         today = date.today()
-        zero_day = timedelta(days=0)
         one_day = timedelta(days=1)
 
 

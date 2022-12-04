@@ -819,6 +819,12 @@ def connect_cloth_outfit(file_name):
 
 
 def check_file():
+    labelSet = LabelSet.objects.all()
+    pattern_list = []
+    for l in labelSet:
+        if l.pattern not in pattern_list:
+            pattern_list.append(l.pattern)
+    print(pattern_list)
     pass
     # dir_path = './media/images/'
     # outfits = Outfit.objects.all()

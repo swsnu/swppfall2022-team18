@@ -1,6 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Routes, Route, useNavigate } from 'react-router-dom';
-import { getMockStore, renderWithProviders } from '../../test-utils/mocks'
 import { Provider } from "react-redux";
 import Setting from "./Setting"
 import axios from "axios";
@@ -8,6 +7,7 @@ import React from "react";
 import { store } from "../../store";
 import { IProps as HeaderProps } from "../../components/Header/Header";
 
+// eslint-disable-next-line
 jest.mock("../../components/Header/Header", () => (props: HeaderProps) => (
 	<div data-testid="spyHeader">
 		<div

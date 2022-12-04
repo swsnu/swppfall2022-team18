@@ -10,7 +10,7 @@ import axios from "axios";
 import React from "react";
 import { IProps as HeaderProps } from "../../components/Header/Header";
 
-
+// eslint-disable-next-line
 jest.mock("../../components/Header/Header", () => (props: HeaderProps) => (
 	<div data-testid="spyHeader">
 		<div
