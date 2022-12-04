@@ -1,7 +1,5 @@
-import { fireEvent, getByTestId, getByText, render, screen } from "@testing-library/react";
-import { useNavigate } from "react-router-dom";
+import { fireEvent, render, screen } from "@testing-library/react";
 import ClosetItem from './ClosetItem';
-import Modal from 'react-modal';
 import React from "react";
 
 const mockNavigate = jest.fn()

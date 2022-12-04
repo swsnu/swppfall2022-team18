@@ -1,9 +1,9 @@
 import "./AddClothModal.css";
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { selectUserCloth, fetchUserClothes, createUserCloth } from "../../store/slices/userCloth";
+import {  createUserCloth } from "../../store/slices/userCloth";
 import TypeFilter from "../TypeFilter/TypeFilter"
 
 export interface IProps {
@@ -11,7 +11,6 @@ export interface IProps {
 }
 
 const AddClothModal = (props: IProps) => {
-	const navigate = useNavigate();
 
 	const [name, setName] = useState<string>("");	// 상의, 하의, 아우터
 	const [type, setType] = useState<string>("");
@@ -44,7 +43,7 @@ const AddClothModal = (props: IProps) => {
 				color: color,
 				pattern: pattern,
 			};
-			const result = await dispatch(createUserCloth(data));
+			await dispatch(createUserCloth(data));
 			props.modal_close(name);
 		}
 		else {

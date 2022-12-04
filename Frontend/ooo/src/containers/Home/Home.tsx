@@ -1,5 +1,5 @@
 import { logoutUser } from "../../api/user";
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header/Header";

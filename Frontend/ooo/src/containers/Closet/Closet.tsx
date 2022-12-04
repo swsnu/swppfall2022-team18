@@ -8,9 +8,6 @@ import ClosetItem from "../../components/ClosetItem/ClosetItem";
 import {
 	selectUserCloth,
 	fetchUserClothes,
-	fetchUserCloth,
-	createUserCloth,
-	deleteUserCloth,
 	UserClothType,
 } from "../../store/slices/userCloth";
 import { AppDispatch } from "../../store";

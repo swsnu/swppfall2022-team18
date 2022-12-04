@@ -1,7 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter, Routes, Route, useNavigate } from 'react-router-dom';
-import { getMockStore, renderWithProviders } from '../../test-utils/mocks';
-import AxiosMockAdapter from "axios-mock-adapter";
+import { MemoryRouter, Routes, Route} from 'react-router-dom';
+import { getMockStore } from '../../test-utils/mocks';
 import OutfitDetail from "./OutfitDetail"
 import { Provider } from "react-redux";
 import { UserClothState } from "../../store/slices/userCloth";

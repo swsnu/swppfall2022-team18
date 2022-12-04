@@ -1,6 +1,5 @@
 import { logoutUser } from "../../api/user";
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header/Header";

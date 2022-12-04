@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { useNavigate } from "react-router-dom";
 import { Provider } from "react-redux";
 // import { renderWithProviders } from "../../test-utils/mocks";
 import { MemoryRouter, Route, Routes } from "react-router-dom";

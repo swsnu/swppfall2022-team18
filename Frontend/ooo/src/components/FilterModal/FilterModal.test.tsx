@@ -6,7 +6,7 @@ import FilterModal from "./FilterModal";
 import React from "react";
 import { OutfitState } from "../../store/slices/outfit";
 import { UserClothState } from "../../store/slices/userCloth";
-import TypeFilter, {
+import  {
 	IProps as TypeFilterProps,
 } from "../TypeFilter/TypeFilter";
 import userEvent from "@testing-library/user-event";

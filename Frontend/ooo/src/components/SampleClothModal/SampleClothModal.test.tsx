@@ -1,7 +1,4 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Provider } from "react-redux";
-import { MemoryRouter, Route, Routes } from "react-router";
-import { getMockStore } from "../../test-utils/mocks";
 import SampleClothModal from "./SampleClothModal";
 import React from "react";
 

@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { useNavigate } from "react-router-dom";
 import OutfitPreview from './OutfitPreview';
 import React from "react";
 

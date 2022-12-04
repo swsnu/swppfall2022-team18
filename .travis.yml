@@ -19,6 +19,7 @@ jobs:
         - pip install -r requirements.txt
         - pip install coveralls
         - gem install coveralls-lcov
+        - pip install Pillow==8.4
         - cd ..
         - cd Frontend/ooo
         - yarn install

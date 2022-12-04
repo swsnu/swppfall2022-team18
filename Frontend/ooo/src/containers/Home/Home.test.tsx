@@ -1,8 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { useNavigate } from "react-router-dom";
 import { Provider } from "react-redux";
 import React from "react";
-import { renderWithProviders, getMockStore } from '../../test-utils/mocks';
+import { getMockStore } from '../../test-utils/mocks';
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import { OutfitState } from "../../store/slices/outfit";
