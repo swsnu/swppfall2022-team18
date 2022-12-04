@@ -73,7 +73,7 @@ const stubInitialOutfitState: OutfitState = {
 
 const stubInitialUserClothState: UserClothState = {
 	userClothes: [
-		{id: 1, name:"", image_link:"", user:1, color:"black", type:"shirt", pattern:"no", dates:"test"}
+		{id: 1, name:"", image_link:"", color:"black", type:"shirt", pattern:"no", dates:"test"}
 	],
 	selectedUserCloth: null,
 	recommendOutfit: {
@@ -82,7 +82,7 @@ const stubInitialUserClothState: UserClothState = {
 		popularity: 1,
 		image_link: "",
 		userclothes: [
-			{id: 1, name:"", image_link:"", user:1, color:"black", type:"shirt", pattern:"no",  dates:"test"}
+			{id: 1, name:"", image_link:"", color:"black", type:"shirt", pattern:"no",  dates:"test"}
 		],
 	},
 };

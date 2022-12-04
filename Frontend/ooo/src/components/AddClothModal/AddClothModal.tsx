@@ -18,6 +18,7 @@ const AddClothModal = (props: IProps) => {
 	const [color, setColor] = useState<string>("");
 	const [pattern, setPattern] = useState<string>("");
 	const [fileImage, setFileImage] = useState("");
+	const [file, setFile] = useState<File>();
 	// const [submitted, setSubmitted] = useState<boolean>(false);
 
 	const dispatch = useDispatch<AppDispatch>();
@@ -35,10 +36,10 @@ const AddClothModal = (props: IProps) => {
 	// }, [submitted]);
 
 	const clickAddClothHandler = async () => {
-		if (name && fileImage && type && color && pattern) {
+		if (name && file && type && color && pattern) {
 			const data = {
 				name: name,
-				image_link: fileImage,
+				image: file,
 				type: type,
 				color: color,
 				pattern: pattern,
@@ -56,6 +57,7 @@ const AddClothModal = (props: IProps) => {
 
 	const saveFileImage = (e: any) => {
 		setFileImage(URL.createObjectURL(e.target.files[0]));
+		setFile(e.target.files[0])
 	};
 
 	return (
