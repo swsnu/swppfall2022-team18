@@ -23,7 +23,7 @@ class SigninUserCase(TestCase):
         #usercloth-labelset pair = (1,1) (2,2) (3,3) (4,3) (5,4)
         #sample-labelset pair = (1,1) (2,2) (3,4) )(4,4 (5,5)
         #outfit-sample set = (1: 1,2) (2: 3,4,5) (3: 2,4)
-        new_photo1 = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=open('./media/test/3432_mXFtHKq.jpg', 'rb').read(), content_type='image/jpeg')
+        new_photo1 = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=open('./3432_mXFtHKq.jpg', 'rb').read(), content_type='image/jpeg')
         UserCloth.objects.create(
             # image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             image_link = new_photo1,
@@ -263,9 +263,6 @@ class SigninUserCase(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, 400)
-
-        new_photo = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=open('./media/test/3432_mXFtHKq.jpg', 'rb').read(), content_type='image/jpeg')
-        
         #using labelset
         response = client.post(
             '/api/ooo/closet/',
@@ -314,9 +311,6 @@ class SigninUserCase(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, 401)
-
-        new_photo = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=open('./media/test/3432_mXFtHKq.jpg', 'rb').read(), content_type='image/jpeg')
-        
         response = client.put(
             '/api/ooo/closet/1/',
              json.dumps({
