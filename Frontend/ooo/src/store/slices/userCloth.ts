@@ -7,6 +7,16 @@ export interface UserClothType {
 	id: number;
 	name: string;
 	image_link: string;
+	color: string;
+	type: string;
+	pattern: string;
+	// user: number;
+	dates: string;
+}
+export interface TempUserClothType {
+	id: number;
+	name: string;
+	image: File;
 	user: number;
 	color: string;
 	type: string;
@@ -16,10 +26,9 @@ export interface UserClothType {
 export interface TodayOutfitType {
 	id: number;
 	outfit_info: string;
-	outfit_name: string
 	popularity: number;
 	image_link: string;
-	userClothes: UserClothType[]
+	userclothes: UserClothType[]
 }
 
 export interface UserClothState {
@@ -68,14 +77,24 @@ export const fetchRecommendOutfit = createAsyncThunk(
 export const createUserCloth = createAsyncThunk(
 	"closet/createUserCloth",
 	async (
-		data: Pick<UserClothType, "name" | "image_link" | "color" | "type" | "pattern">,
+		data: Pick<TempUserClothType, "name" | "image" | "color" | "type" | "pattern">,
 		{ dispatch }
 	) => {
+		const formData = new FormData();
+		formData.append('name',data.name)
+		formData.append("image",data.image)
+		formData.append('color',data.color)
+		formData.append('type',data.type)
+		formData.append('pattern', data.pattern)
+		formData.append('enctype',"multipart/form-data")
 		const response = await axios.post(
-			"/api/ooo/closet/",
+			"/api/ooo/closet/",formData,
 			{
-				headers,
-				body: data
+				headers:headers
+				// headers:{
+				// 	'Context-Type':'multipare/form-data',
+				// 	username: localStorage.getItem("username"),
+				// },
 			}
 		);
 		dispatch(userClothActions.createUserCloth(response.data));
@@ -146,10 +165,12 @@ export const userClothSlice = createSlice({
 				id: number;
 				name: string;
 				image_link: string;
+				image: string;
 				user: number;
 				color: string;
 				type: string;
 				pattern: string;
+				label_set_id: number;
 				dates: string;
 			}>
 		) => {
@@ -157,10 +178,12 @@ export const userClothSlice = createSlice({
 				id: state.userClothes[state.userClothes.length - 1].id + 1,
 				name: action.payload.name,
 				image_link: action.payload.image_link,
+				image: action.payload.image,
 				user: action.payload.user,
 				color: action.payload.color,
 				type: action.payload.type,
 				pattern: action.payload.pattern,
+				label_set_id: action.payload.label_set_id,
 				dates: ""
 			};
 			state.userClothes.push(newUserCloth);
@@ -196,14 +219,7 @@ export const userClothSlice = createSlice({
 				weardate: string;
 			}>
 		) => {
-			// const newWearDate = {
-			// 	// id: state.userClothes[state.userClothes.length - 1].id + 1, // temporary
-			// 	date: action.payload.weardate,
-			// };
-			// const targetItem = state.userClothes.filter((userCloth) => {
-			// 	return userCloth.id === action.payload.targetId;
-			// }
-			// state.userClothes.push(action.payload.weardate);
+			//
 		},
 	},
 	extraReducers: (builder) => {

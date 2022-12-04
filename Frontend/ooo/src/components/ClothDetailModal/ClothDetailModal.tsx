@@ -70,7 +70,6 @@ const ClothDetailModal = (cloth: IProps) => {
 	const clickDeleteClothHandler = async () => {
 		const result = await dispatch(deleteUserCloth(Number(cloth.id)));
 		cloth.modal_close();
-		navigate("/closet/");
 	};
 
 	const dateFormat = (date: any) => {
