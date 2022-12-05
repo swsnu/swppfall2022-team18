@@ -25,7 +25,7 @@ export default function Outfit(props: IProps) {
 	const dispatch = useDispatch<AppDispatch>();
 	const outfitState = useSelector(selectOutfit);
 	// const { state } = useLocation();
-	console.log("OUTFIT STATE WITH PROPS")
+	// console.log("OUTFIT STATE WITH PROPS")
 	// console.log(state);
 
 	const [userHave, setUserHave] = useState(false);

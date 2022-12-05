@@ -335,17 +335,17 @@ def outfit_list(request):
     '''
         filter outfit
     '''
+    
     if request.method == 'GET':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
-
+        
         cursor = int(request.GET.get('cursor', '99999999999999').replace('/',''))
         page_size = int(request.GET.get('pageSize', '3').replace('/',''))
-
         all_outfits = list(Outfit.objects.all().order_by("-popularity"))
         outfits_count = len(all_outfits)
         response_outfit_range = min(outfits_count, cursor + page_size + 1)
-
+        
         if min(outfits_count, cursor + page_size + 1) == outfits_count:
             cursor = 0
             response_outfit_range = 12

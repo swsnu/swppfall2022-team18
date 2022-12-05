@@ -22,7 +22,7 @@ export interface IProps {
 
 const ClothDetailModal = (cloth: IProps) => {
 	const navigate = useNavigate();
-
+	console.log(cloth.weardate ? cloth.weardate : "no")
 	const defaultDates = cloth.weardate ?
 		JSON.parse(cloth.weardate).map((date:any) => new Date(date)) :
 		[]
