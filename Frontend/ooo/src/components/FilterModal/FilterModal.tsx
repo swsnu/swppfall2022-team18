@@ -70,13 +70,12 @@ const FilterModal = (props: IProps) => {
 	return (
 		<div className="FilterModal">
 			<div>
-				<select id="type-select">
+				<select
+					id="type-select"
+					onChange={(e) => clickMetaTypeOptionHandler(e.target.value)}
+				>
 					{MetaTypeOptions.map((option, index) => (
-						<option
-							key={index}
-							value={option.value}
-							onClick={() => clickMetaTypeOptionHandler(option.value)}
-						>
+						<option key={index} value={option.value}>
 							{option.value}
 						</option>
 					))}
@@ -87,24 +86,30 @@ const FilterModal = (props: IProps) => {
 					selectHandler={clickTypeOptionHandler}
 				></TypeFilter>
 			</div>
-			<select id="color-select">
+			<select
+				id="color-select"
+				onChange={(e) => clickColorOptionHandler(e.target.value)}
+			>
 				{ColorOptions.map((option, index) => (
 					<option
 						key={index}
 						value={option.value}
-						onClick={() => clickColorOptionHandler(option.value)}
+						// onClick={() => clickColorOptionHandler(option.value)}
 					>
 						{option.value}
 					</option>
 				))}
 			</select>
 
-			<select id="pattern-select">
+			<select
+				id="pattern-select"
+				onChange={(e) => clickPatternOptionHandler(e.target.value)}
+			>
 				{PatternOptions.map((option, index) => (
 					<option
 						key={index}
 						value={option.value}
-						onClick={() => clickPatternOptionHandler(option.value)}
+						// onClick={() => clickPatternOptionHandler(option.value)}
 					>
 						{option.value}
 					</option>

@@ -4,7 +4,7 @@ views of ooo
 import json
 from json.decoder import JSONDecodeError
 from datetime import date, timedelta
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.http.response import HttpResponseNotAllowed, HttpResponseNotFound
 from django.http.response import HttpResponseBadRequest
