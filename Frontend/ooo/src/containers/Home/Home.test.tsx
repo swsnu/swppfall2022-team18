@@ -1,8 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { useNavigate } from "react-router-dom";
 import { Provider } from "react-redux";
 import React from "react";
-import { renderWithProviders, getMockStore } from '../../test-utils/mocks';
+import { getMockStore } from '../../test-utils/mocks';
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import { OutfitState } from "../../store/slices/outfit";
@@ -12,6 +11,7 @@ import { IProps as OutfitPreviewProps } from "../../components/OutfitPreview/Out
 import { IProps as ClosetItemProps } from "../../components/ClosetItem/ClosetItem";
 import axios from 'axios';
 
+// eslint-disable-next-line
 jest.mock("../../components/Header/Header", () => (props: HeaderProps) => (
 	<div data-testid="spyHeader">
 		<div
@@ -41,9 +41,8 @@ jest.mock("../../components/Header/Header", () => (props: HeaderProps) => (
 	</div>
 ));
 
-jest.mock(
-	"../../components/OutfitPreview/OutfitPreview",
-	() => (props: OutfitPreviewProps) =>
+// eslint-disable-next-line
+jest.mock("../../components/OutfitPreview/OutfitPreview",() => (props: OutfitPreviewProps) =>
 		(
 			<div data-testid="spyOutfitPreview">
 				<div className="OutfitImage">
@@ -63,10 +62,8 @@ jest.mock(
 		)
 );
 
-jest.mock(
-	"../../components/ClosetItem/ClosetItem",
-	() => (props: ClosetItemProps) =>
-		(
+// eslint-disable-next-line
+jest.mock("../../components/ClosetItem/ClosetItem",() => (props: ClosetItemProps) =>(
 			<div data-testid="spyClosetItem">
 				<div
 					className="ClothImage"

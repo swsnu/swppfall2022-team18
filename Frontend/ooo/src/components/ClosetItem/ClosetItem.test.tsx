@@ -1,7 +1,6 @@
-import { fireEvent, getByTestId, getByText, render, screen } from "@testing-library/react";
-import { useNavigate } from "react-router-dom";
+import { fireEvent, render, screen } from "@testing-library/react";
 import ClosetItem from './ClosetItem';
-import Modal from 'react-modal';
+import React from "react";
 
 const mockNavigate = jest.fn()
 jest.mock("react-router", () => ({
@@ -18,7 +17,7 @@ useDispatch: () => mockDispatch,
 describe("<ClosetItem />",()=>{
     it("should render without errors",()=>{
         const clickClothDetailPopupHandler = jest.fn();
-        let clothDetailModalOpen = false;
+        const clothDetailModalOpen = false;
         const setClothDetailModalOpen = jest.fn(()=>{!clothDetailModalOpen});
         render(<ClosetItem 
             user_cloth_id="1"

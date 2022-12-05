@@ -13,6 +13,7 @@ import { OutfitState } from '../../store/slices/outfit';
 import { UserClothState } from '../../store/slices/userCloth';
 import userEvent from "@testing-library/user-event";
 
+// eslint-disable-next-line
 jest.mock("../../components/Header/Header", () => (props: HeaderProps) => (
     <div data-testid="spyHeader">
         <div className="headerText" data-testid='logo' onClick={props.clickHeaderHandler}>
@@ -26,6 +27,7 @@ jest.mock("../../components/Header/Header", () => (props: HeaderProps) => (
     </div>
 ));
 
+// eslint-disable-next-line
 jest.mock("../../components/ClosetItem/ClosetItem", () => (props: ClosetItemProps) => (
     <div data-testid = "spyClosetItem">
         <div className="ClothImage" data-testid = 'clothimg' onClick={props.clickClothDetailPopupHandler}>

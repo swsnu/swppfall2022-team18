@@ -4,6 +4,7 @@ views of ooo
 import json
 
 from json.decoder import JSONDecodeError
+from datetime import date, timedelta
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.http.response import HttpResponseNotAllowed, HttpResponseNotFound
@@ -12,7 +13,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import Outfit, SampleCloth, UserCloth, Closet, LabelSet
-from datetime import date, timedelta
+
 from .serializers import SampleClothSerializer, OutfitSerializer, UserClothSerializer
 
 type_tree =  [
@@ -44,7 +45,8 @@ def signup(request):
         password = req_data['password']
         #check duplicate username
         try:
-            dup_user = User.objects.get(username=username)
+            # dup_user = User.objects.get(username=username)
+            User.objects.get(username=username)
         except User.DoesNotExist:
             new_user = User.objects.create_user(username=username, password=password)
             Closet.objects.create(user=new_user)
@@ -84,6 +86,9 @@ def signout(request):
 
 
 def userinfo(request):
+    '''
+    userinfo : for edit user infomation
+    '''
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized', status=401)
     user = User.objects.get(username = request.user.username)
@@ -106,9 +111,12 @@ def userinfo(request):
         request.user.save()
         name = request.user.username
         user = authenticate(request, username=name, password=password)
-        if user is not None:
-            login(request, user)
-            return HttpResponse(status=204)
+        if user is None:
+            return HttpResponse(status=404)
+        
+        login(request, user)
+        return HttpResponse(status=204)
+        
     elif request.method == 'DELETE':
         # user.delete()
         request.user.delete()
@@ -116,7 +124,7 @@ def userinfo(request):
     else:
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'], status=405)
 #@csrf_exempt
-def closet(request):
+def closets(request):
     '''
     closet : get or create user's closet items
     '''
@@ -129,10 +137,10 @@ def closet(request):
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
 
-        closet_item_list = [closet for closet in UserCloth.objects.filter(closet=user_closet)]
+        closet_item_list = UserCloth.objects.filter(closet=user_closet)
         json_closet_list = []
-        for closet in closet_item_list:
-            closet_serialize = UserClothSerializer(closet)
+        for item in closet_item_list:
+            closet_serialize = UserClothSerializer(item)
             json_closet = {
                 "id" : closet_serialize.data['id'],
                 "name": closet_serialize.data['name'],
@@ -172,7 +180,8 @@ def closet(request):
                 type = type, color = color, pattern= pattern
             )
             label_set = label_set_obj
-        except (KeyError, JSONDecodeError) as e:
+        except (KeyError, JSONDecodeError) as error:
+            print(error)
             return HttpResponseBadRequest()
 
         closet_item = UserCloth(
@@ -200,11 +209,11 @@ def closet_item(request, cloth_id):
 
     try:
         target_item_obj = UserCloth.objects.get(id=cloth_id)
-        jsonDec = json.decoder.JSONDecoder()
+        json_dec = json.decoder.JSONDecoder()
         if target_item_obj.dates == '':
             dates_history = []
         else:
-            dates_history = jsonDec.decode(target_item_obj.dates)
+            dates_history = json_dec.decode(target_item_obj.dates)
     except UserCloth.DoesNotExist:
         return HttpResponseNotFound()
 
@@ -236,7 +245,8 @@ def closet_item(request, cloth_id):
         try:
             req_data = json.loads(request.body.decode())["body"]
             dates = req_data['dates']
-        except (KeyError, JSONDecodeError) as e:
+        except (KeyError, JSONDecodeError) as error:
+            print(error)
             return HttpResponseBadRequest()
 
         if dates not in dates_history:
@@ -264,7 +274,8 @@ def closet_item(request, cloth_id):
             label_set = label_set_obj
             # old_date = req_data['old_date']
             # new_date = req_data['new_date']
-        except (KeyError, JSONDecodeError) as e:
+        except (KeyError, JSONDecodeError) as error:
+            print(error)
             return HttpResponseBadRequest()
 
         target_item_obj.type = type
@@ -321,38 +332,40 @@ def token(request):
 # @ensure_csrf_cookie
 #@csrf_exempt
 def outfit_list(request):
+    '''
+        filter outfit
+    '''
+    
     if request.method == 'GET':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
-
+        
         cursor = int(request.GET.get('cursor', '99999999999999').replace('/',''))
         page_size = int(request.GET.get('pageSize', '3').replace('/',''))
-
         all_outfits = list(Outfit.objects.all().order_by("-popularity"))
         outfits_count = len(all_outfits)
         response_outfit_range = min(outfits_count, cursor + page_size + 1)
-
+        
         if min(outfits_count, cursor + page_size + 1) == outfits_count:
             cursor = 0
             response_outfit_range = 12
         
-        outfit_list = all_outfits[cursor:response_outfit_range]
+        outfits = all_outfits[cursor:response_outfit_range]
         # outfit_list = all_outfits[0:1]
         is_last = False
 
-        if len(outfit_list) != page_size + 1:
+        if len(outfits) != page_size + 1:
             is_last = True
         
         if not is_last:
-            outfit_list.pop()
-            newCursor = cursor + page_size
+            outfits.pop()
+            new_cursor = cursor + page_size
         else:
-            newCursor = 0
+            new_cursor = 0
         
         json_outfit_list = []
-        for outfit in outfit_list:
-
-            outfit_serialize = OutfitSerializer(outfit)
+        for outfit_item in outfits:
+            outfit_serialize = OutfitSerializer(outfit_item)
             json_outfit = {
                 "id" : outfit_serialize.data['id'],
                 "outfit_info": outfit_serialize.data['outfit_info'],
@@ -364,7 +377,7 @@ def outfit_list(request):
 
         content = {
             'isLast': is_last,
-            'cursor': newCursor,
+            'cursor': new_cursor,
             'outfits': json_outfit_list
         }
         return JsonResponse(content, status=200)
@@ -382,8 +395,8 @@ def outfit_list(request):
             filter_pattern = req_data["pattern"]
             filter_userhave = req_data["userHave"]
             filter_recommend = req_data["recommend"]
-        except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest(e)
+        except (KeyError, JSONDecodeError) as error:
+            return HttpResponseBadRequest(error)
 
         # print(req_data)
 
@@ -399,8 +412,7 @@ def outfit_list(request):
                 using_labelset = False
 
         closet = Closet.objects.get(user=request.user)
-        
-        if filter_recommend == True or filter_userhave == True:
+        if filter_recommend is True or filter_userhave is True:
             usercloth_list = list(UserCloth.objects.filter(closet=closet))
 
             labelset_list = []
@@ -415,6 +427,7 @@ def outfit_list(request):
                 samplecloth_list = samplecloth_list + sampleclothes
 
             if using_labelset:
+                
                 filtered_samplecloth_list = [x for x in samplecloth_list 
                     if x.label_set == filter_labelset]
             else:
@@ -488,9 +501,9 @@ def outfit_list(request):
         
         if not is_last:
             outfit_list.pop()
-            newCursor = cursor + page_size
+            new_cursor = cursor + page_size
         else:
-            newCursor = 0
+            new_cursor = 0
 
         json_outfit_list = []
         for outfit in outfit_list:
@@ -512,7 +525,7 @@ def outfit_list(request):
             'userHave': filter_userhave,
             'recommend': filter_recommend,
             'isLast': is_last,
-            'cursor': newCursor,
+            'cursor': new_cursor,
             'outfits': json_outfit_list
         }
 
@@ -527,6 +540,9 @@ def outfit_list(request):
 # @ensure_csrf_cookie
 #@csrf_exempt
 def outfit(request, outfit_id):
+    """
+        get all outfit 
+    """
     if request.method == 'GET':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
@@ -645,6 +661,9 @@ def sample_cloth(request, samplecloth_id):
 # @ensure_csrf_cookie
 #@csrf_exempt
 def today_outfit(request):
+    """
+        recommend outfit
+    """
     if request.method == 'GET':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
@@ -656,14 +675,14 @@ def today_outfit(request):
         three_day = timedelta(days=3)
         zero_day = timedelta(days=0)
 
-        jsonDec = json.decoder.JSONDecoder()
+        json_dec = json.decoder.JSONDecoder()
 
         clean_usercloth_list = []
         for usercloth in usercloth_list:
             if usercloth.dates == '':
                 usercloth_days = []
             else:
-                usercloth_days = jsonDec.decode(usercloth.dates)
+                usercloth_days = json_dec.decode(usercloth.dates)
             if len(usercloth_days) == 0:
                 clean_usercloth_list.append(usercloth)
             else: 
@@ -692,24 +711,24 @@ def today_outfit(request):
             samplecloth_include_outfit = list(samplecloth.outfit.all())
             all_outfits = all_outfits + samplecloth_include_outfit
 
-        outfit_list = list(set(all_outfits))
-        outfit_list = sorted(outfit_list, key=lambda outfit: outfit.popularity, reverse=True)
+        outfits = list(set(all_outfits))
+        outfits = sorted(outfits, key=lambda outfit: outfit.popularity, reverse=True)
 
         recommend = []
         recommend_samplecloth_list = []
         recommend_usercloth_list = []
-        for outfit in outfit_list:
-            outfit_cloth_list = list(outfit.sample_cloth.all())
+        for outfit_item in outfits:
+            outfit_cloth_list = list(outfit_item.sample_cloth.all())
 
             can_recommend = True
             for cloth in outfit_cloth_list:
                 if not cloth in samplecloth_list:
                     can_recommend = False
-            check_samplecloth_cnt = SampleCloth.objects.filter(outfit=outfit)
+            check_samplecloth_cnt = SampleCloth.objects.filter(outfit=outfit_item)
             if len(check_samplecloth_cnt) < 2:
                 can_recommend = False
             if can_recommend:
-                recommend.append(outfit)
+                recommend.append(outfit_item)
                 recommend_samplecloth_list = outfit_cloth_list
                 break
         
@@ -736,17 +755,16 @@ def today_outfit(request):
             }
             json_userclothes.append(json_usercloth)
 
-        if recommend == []:
+        if not recommend:
             return HttpResponse(status=404)
-        else:
-            outfit_serialize = OutfitSerializer(recommend[0])
-            json_outfit = {
-                "id" : outfit_serialize.data['id'],   
-                "outfit_info": outfit_serialize.data['outfit_info'],
-                "popularity" : outfit_serialize.data['popularity'],
-                "image_link": outfit_serialize.data['image'],
-                "userclothes" : json_userclothes
-            }
+        outfit_serialize = OutfitSerializer(recommend[0])
+        json_outfit = {
+            "id" : outfit_serialize.data['id'],   
+            "outfit_info": outfit_serialize.data['outfit_info'],
+            "popularity" : outfit_serialize.data['popularity'],
+            "image_link": outfit_serialize.data['image'],
+            "userclothes" : json_userclothes
+        }
         return JsonResponse(json_outfit, status=200)
             
     return HttpResponseNotAllowed(['GET'], status=405)

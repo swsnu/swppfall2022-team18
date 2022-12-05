@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import Login from "./containers/Login/Login";
 import Home from "./containers/Home/Home";
 import Closet from "./containers/Closet/Closet";
@@ -9,7 +9,6 @@ import Redirect from "./containers/Redirect/Redirect";
 import React from "react";
 import Signup from "./containers/Signup/Signup";
 import Setting from "./containers/Setting/Setting";
-import ClothDetailModal from "./components/ClothDetailModal/ClothDetailModal";
 // import axios from 'axios';
 // import { useCookies } from 'react-cookie';
 
