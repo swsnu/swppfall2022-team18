@@ -70,6 +70,9 @@
 		],
 		"transformIgnorePatterns": [
 			"node_modules/(?!axios)"
-		]
+		],
+		"moduleNameMapper": {
+			"\\.(css|scss)$": "<rootDir>/src/styleMock.ts"
+		}
 	}
 }

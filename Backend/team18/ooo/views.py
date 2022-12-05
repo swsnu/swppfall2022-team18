@@ -556,7 +556,7 @@ def outfit(request, outfit_id):
         except Outfit.DoesNotExist:
             return HttpResponseNotFound()
 
-        sample_cloth_list = SampleCloth.objects.filter(outfit=outfit)
+        sample_cloth_list = SampleCloth.objects.filter(outfit=chosen_outfit)
 
         outfit_serialize = OutfitSerializer(chosen_outfit)
         json_outfit = {
