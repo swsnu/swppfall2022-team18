@@ -634,7 +634,7 @@ class SigninUserCase(TestCase):
         self.assertEqual(response.status_code, 204)
 
         #get outfit 1
-        response = client.get('/api/ooo/outfit/1/')
+        response = client.get('/api/ooo/outfit/3/')
         self.assertEqual(response.status_code, 200)
 
         #get outfit 10 (doesn't exist)

@@ -1,6 +1,6 @@
 import "./ClosetItem.css";
 import React from "react";
-import { useState} from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 //import { useParams } from "react-router";
 //import { NavLink, useNavigate, useLocation } from "react-router-dom";
@@ -22,7 +22,6 @@ export interface IProps {
 }
 
 const ClosetItem = (props: IProps) => {
-
 	const [clothDetailModalOpen, setClothDetailModalOpen] = useState(false);
 	// const [submitted, setSubmitted] = useState<boolean>();
 	// const [filteredList, setFilteredList] = useState<UserClothType[]>([]);
@@ -34,7 +33,7 @@ const ClosetItem = (props: IProps) => {
 	const clickClothDetailPopupCloseHandler = () => {
 		setClothDetailModalOpen(!clothDetailModalOpen);
 		if (props.tmp) {
-			props.tmp(props.metatype)
+			props.tmp(props.metatype);
 		}
 		// setSubmitted(true);
 	};
@@ -47,7 +46,6 @@ const ClosetItem = (props: IProps) => {
 
 	return (
 		<div className="ClosetItem">
-
 			<div
 				className="ClothImage"
 				data-testid="clothimg"
@@ -88,12 +86,18 @@ const ClosetItem = (props: IProps) => {
 				</div>
 			</Modal>
 			<div className="ClothLable">
-				<text id="type-label"><b>종류</b></text>
-				<text id="type-text">{props.type}</text>
-				<text id="color-label"><b>색상</b></text>
-				<text id="color-text">{props.color}</text>
-				<text id="stripe-label"><b>무늬</b></text>
-				<text id="stripe-text">{props.pattern}</text>
+				<div id="type-label">
+					<b>종류</b>
+				</div>
+				<div id="type-text">{props.type}</div>
+				<div id="color-label">
+					<b>색상</b>
+				</div>
+				<div id="color-text">{props.color}</div>
+				<div id="stripe-label">
+					<b>무늬</b>
+				</div>
+				<div id="stripe-text">{props.pattern}</div>
 			</div>
 		</div>
 	);

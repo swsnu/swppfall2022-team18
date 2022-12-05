@@ -2,7 +2,6 @@
 views of ooo
 '''
 import json
-
 from json.decoder import JSONDecodeError
 from datetime import date, timedelta
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
@@ -13,7 +12,6 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import Outfit, SampleCloth, UserCloth, Closet, LabelSet
-
 from .serializers import SampleClothSerializer, OutfitSerializer, UserClothSerializer
 
 type_tree =  [
@@ -88,6 +86,7 @@ def signout(request):
 def userinfo(request):
     '''
     userinfo : for edit user infomation
+
     '''
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized', status=401)
@@ -96,6 +95,7 @@ def userinfo(request):
     if request.method == 'GET':
         data = {'username': request.user.username,}
         return HttpResponse(data, status=200)
+
     if request.method == 'PUT':
         try:
             req_data = json.loads(request.body.decode())["body"]
@@ -111,6 +111,7 @@ def userinfo(request):
         request.user.save()
         name = request.user.username
         user = authenticate(request, username=name, password=password)
+
         if user is None:
             return HttpResponse(status=404)
         
@@ -121,8 +122,8 @@ def userinfo(request):
         # user.delete()
         request.user.delete()
         return HttpResponse(status=204)
-    
     return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'], status=405)
+
 #@csrf_exempt
 def closets(request):
     '''
@@ -195,6 +196,7 @@ def closets(request):
         )
         closet_new_item.save()
         return HttpResponse(status=200)
+
     return HttpResponseNotAllowed(['GET', 'POST'], status=405)
 
 #@csrf_exempt
@@ -410,6 +412,7 @@ def outfit_list(request):
                 using_labelset = False
 
         closet = Closet.objects.get(user=request.user)
+
         if filter_recommend is True or filter_userhave is True:
             usercloth_list = list(UserCloth.objects.filter(closet=closet))
 
@@ -553,6 +556,7 @@ def outfit(request, outfit_id):
         sample_cloth_list = SampleCloth.objects.filter(outfit=outfit_item)
 
         outfit_serialize = OutfitSerializer(outfit_item)
+
         json_outfit = {
             "id" : outfit_serialize.data['id'],
             "outfit_info": outfit_serialize.data['outfit_info'],
@@ -593,7 +597,12 @@ def outfit(request, outfit_id):
 # @ensure_csrf_cookie
 #@csrf_exempt
 def sample_cloth(request, samplecloth_id):
-    """ sample cloth get"""
+
+    '''
+    response with chosen samplecloth data and usercloth data
+    that have same labelset
+    '''
+
     if request.method == 'GET':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
@@ -660,15 +669,15 @@ def sample_cloth(request, samplecloth_id):
 # @ensure_csrf_cookie
 #@csrf_exempt
 def today_outfit(request):
-    """
-        recommend outfit
-    """
+    '''
+    recommend today_outfit by check usercloth tags and wear dates
+    '''
     if request.method == 'GET':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
 
-        closet = Closet.objects.get(user=request.user)
-        usercloth_list = list(UserCloth.objects.filter(closet=closet))
+        users_closet = Closet.objects.get(user=request.user)
+        usercloth_list = list(UserCloth.objects.filter(closet=users_closet))
         
         today = date.today()
         three_day = timedelta(days=3)
@@ -710,12 +719,14 @@ def today_outfit(request):
             samplecloth_include_outfit = list(samplecloth.outfit.all())
             all_outfits = all_outfits + samplecloth_include_outfit
 
+
         outfits = list(set(all_outfits))
         outfits = sorted(outfits, key=lambda outfit: outfit.popularity, reverse=True)
 
         recommend = []
         recommend_samplecloth_list = []
         recommend_usercloth_list = []
+
         for outfit_item in outfits:
             outfit_cloth_list = list(outfit_item.sample_cloth.all())
 
