@@ -6,7 +6,7 @@ import FilterModal from "./FilterModal";
 import React from "react";
 import { OutfitState } from "../../store/slices/outfit";
 import { UserClothState } from "../../store/slices/userCloth";
-import TypeFilter, {
+import  {
 	IProps as TypeFilterProps,
 } from "../TypeFilter/TypeFilter";
 import userEvent from "@testing-library/user-event";
@@ -133,12 +133,12 @@ describe("<FilterModal/>", () => {
 	it("should handle ColorOptionHandler", () => {
 		render(filterModal);
 		const selectElement = screen.getAllByRole("combobox", {})[1];
-		userEvent.selectOptions(selectElement, "black");
+		userEvent.selectOptions(selectElement, "블랙");
 		const defaultOption = screen.getByRole("option", {
 			name: "Color",
 		}) as HTMLOptionElement;
 		const selectedOption = screen.getByRole("option", {
-			name: "black",
+			name: "블랙",
 		}) as HTMLOptionElement;
 		fireEvent.click(selectedOption);
 		expect(defaultOption.selected).toBeFalsy();
@@ -149,12 +149,12 @@ describe("<FilterModal/>", () => {
 	it("should handle PatternOptionHandler", () => {
 		render(filterModal);
 		const selectElement = screen.getAllByRole("combobox", {})[2];
-		userEvent.selectOptions(selectElement, "none");
+		userEvent.selectOptions(selectElement, "None");
 		const defaultOption = screen.getByRole("option", {
 			name: "Pattern",
 		}) as HTMLOptionElement;
 		const selectedOption = screen.getByRole("option", {
-			name: "none",
+			name: "None",
 		}) as HTMLOptionElement;
 		fireEvent.click(selectedOption);
 		expect(defaultOption.selected).toBeFalsy();

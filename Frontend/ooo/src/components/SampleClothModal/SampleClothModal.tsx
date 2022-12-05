@@ -31,7 +31,7 @@ const SampleClothModal = (props: Iprops) => {
 				<text id="samplecloth-title">Clothes Data</text>
 				<div className="Body">
 					<div className="sampleDiv">
-						<img className="sample-image" src={props.sampleCloth_url} alt='샘플 이미지가 없습니다.'></img>
+						<img className="sample-image" data-testid = "no-sample-image-text" src={props.sampleCloth_url} alt='샘플 이미지가 없습니다.'></img>
 						<text id="sample-image-title">코디 이미지</text>
 					</div>
 					<div className="userDiv">

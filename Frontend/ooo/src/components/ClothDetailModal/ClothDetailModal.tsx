@@ -1,7 +1,6 @@
 import "./ClothDetailModal.css";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import { fetchUserCloth, editUserCloth, deleteUserCloth, addWearDate } from "../../store/slices/userCloth";
@@ -23,7 +22,7 @@ export interface IProps {
 
 const ClothDetailModal = (cloth: IProps) => {
 	const navigate = useNavigate();
-
+	console.log(cloth.weardate ? cloth.weardate : "no")
 	const defaultDates = cloth.weardate ?
 		JSON.parse(cloth.weardate).map((date:any) => new Date(date)) :
 		[]
@@ -64,11 +63,11 @@ const ClothDetailModal = (cloth: IProps) => {
 			color: color,
 			pattern: pattern
 		};
-		const result = dispatch(editUserCloth(data));
+		await dispatch(editUserCloth(data));
 	}
 
 	const clickDeleteClothHandler = async () => {
-		const result = await dispatch(deleteUserCloth(Number(cloth.id)));
+		await dispatch(deleteUserCloth(Number(cloth.id)));
 		cloth.modal_close();
 	};
 

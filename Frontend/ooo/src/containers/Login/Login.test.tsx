@@ -1,6 +1,4 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter, Routes, Route, useNavigate } from 'react-router-dom';
-import { getMockStore, renderWithProviders } from '../../test-utils/mocks'
 import Login from "./Login"
 import axios from "axios";
 import React from "react";

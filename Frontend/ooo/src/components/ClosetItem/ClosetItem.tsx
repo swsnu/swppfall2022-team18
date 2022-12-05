@@ -1,8 +1,7 @@
 import "./ClosetItem.css";
 import React from "react";
-import { fetchUserClothes } from "../../store/slices/userCloth";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState} from "react";
+import { useDispatch } from "react-redux";
 //import { useParams } from "react-router";
 //import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { AppDispatch } from "../../store";
@@ -23,7 +22,6 @@ export interface IProps {
 }
 
 const ClosetItem = (props: IProps) => {
-	const dispatch = useDispatch<AppDispatch>();
 
 	const [clothDetailModalOpen, setClothDetailModalOpen] = useState(false);
 	// const [submitted, setSubmitted] = useState<boolean>();

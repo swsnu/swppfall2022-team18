@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { useNavigate } from "react-router-dom";
 import { Provider } from "react-redux";
 // import { renderWithProviders } from "../../test-utils/mocks";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import ClothDetailModal from './ClothDetailModal';
 import {store} from '../../store'
+import React from "react";
 
 const mockNavigate = jest.fn()
 jest.mock("react-router", () => ({
@@ -38,7 +38,7 @@ describe("<ClothDetaillModal />", () => {
                                     type="트러커 재킷"
                                     color="그레이"
                                     pattern="None"
-                                    modal_close={()=>{}}
+                                    modal_close={()=>{console.log("something")}}
                                 />
                             }
                         />

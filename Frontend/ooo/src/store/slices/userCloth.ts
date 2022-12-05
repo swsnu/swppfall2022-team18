@@ -90,7 +90,7 @@ export const createUserCloth = createAsyncThunk(
 		const response = await axios.post(
 			"/api/ooo/closet/",formData,
 			{
-				headers:headers
+				// headers:headers
 				// headers:{
 				// 	'Context-Type':'multipare/form-data',
 				// 	username: localStorage.getItem("username"),
