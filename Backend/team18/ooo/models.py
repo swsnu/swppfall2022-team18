@@ -61,14 +61,13 @@ class UserCloth(models.Model):
                 # temp_file.write(self.image_link)
                 # temp_file.seek(0)
                 temp_file = self.image_link
-                file_name = '{user}/{name}'.format(
-                    user = self.closet.user.id,
-                    name = self.image_link
-                )
+                file_name = f"{self.closet.user.id}/{self.image_link}"
                 self.image.save(file_name, File(temp_file))
-                super().save()
+                super().save(*args, **kwargs)
             else:
-                super().save()
+                super().save(*args, **kwargs)
+        else:
+            super().save(*args, **kwargs)
 
 
 class Outfit(models.Model):
@@ -87,9 +86,11 @@ class Outfit(models.Model):
         # super().save()
         if self.image_link and not self.image:
             if self.image_link:
-                file_name = '{name}.jpg'.format(
-                    name = re.sub(r'[^0-9]', '', self.image_link)[0:-1]
-                )
+                name = re.sub(r'[^0-9]', '', self.image_link)[0:-1]
+                file_name = f"{name}.jpg"
+                # file_name = '{name}.jpg'.format(
+                #     name = re.sub(r'[^0-9]', '', self.image_link)[0:-1]
+                # )
                 if os.path.isfile('./media/images/' + file_name):
                     with open('./media/images/' + file_name, 'rb') as file:
                         my_image = File(file)
@@ -97,9 +98,11 @@ class Outfit(models.Model):
                 else:
                     temp_file = download(self.image_link)
                     self.image.save(file_name, File(temp_file))
-                super().save()
+                super().save(*args, **kwargs)
             else:
-                super().save()
+                super().save(*args, **kwargs)
+        else:
+            super().save(*args, **kwargs)
 
         
             
@@ -129,9 +132,11 @@ class SampleCloth(models.Model):
     # ImageField에 파일이 없고, url이 존재하는 경우에만 실행
         if self.image_link and not self.image:
             if self.image_link:
-                file_name = '{name}.jpg'.format(
-                    name = re.sub(r'[^0-9]', '', self.image_link)[0:-1]
-                )
+                name = re.sub(r'[^0-9]', '', self.image_link)[0:-1]
+                file_name = f"{name}.jpg"
+                # file_name = '{name}.jpg'.format(
+                #     name = re.sub(r'[^0-9]', '', self.image_link)[0:-1]
+                # )
                 if os.path.isfile('./media/images/' + file_name):
                     with open('./media/images/' + file_name, 'rb') as file:
                         my_image = File(file)
@@ -140,6 +145,8 @@ class SampleCloth(models.Model):
                     temp_file = download(self.image_link)
                     self.image.save(file_name, File(temp_file))
                     
-                super().save()
+                super().save(*args, **kwargs)
             else:
-                super().save()
+                super().save(*args, **kwargs)
+        else:
+            super().save(*args, **kwargs)

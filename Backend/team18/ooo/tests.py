@@ -1,11 +1,14 @@
+"""import module """
 import json
 from datetime import date, timedelta
 from django.test import TestCase, Client
-from .models import User, Closet, UserCloth, LabelSet, SampleCloth, Outfit
 from django.core.files.uploadedfile import SimpleUploadedFile
+from .models import User, Closet, UserCloth, LabelSet, SampleCloth, Outfit
+
 
 # Create your tests here.
 class SigninUserCase(TestCase):
+    """test class"""
     def setUp(self):
         user1 = User.objects.create_user(username='testuser1', password='1234')
         user2 = User.objects.create_user(username='testuser2', password='1234')
@@ -23,7 +26,9 @@ class SigninUserCase(TestCase):
         #usercloth-labelset pair = (1,1) (2,2) (3,3) (4,3) (5,4)
         #sample-labelset pair = (1,1) (2,2) (3,4) )(4,4 (5,5)
         #outfit-sample set = (1: 1,2) (2: 3,4,5) (3: 2,4)
-        new_photo1 = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=open('./3432_mXFtHKq.jpg', 'rb').read(), content_type='image/jpeg')
+        with open('./3432_mXFtHKq.jpg', 'rb') as open_file:
+            content = open_file.read()
+        new_photo1 = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=content, content_type='image/jpeg')
         UserCloth.objects.create(
             # image_link = "https://image.msscdn.net/images/style/list/l_3_2019032513252400000019150.jpg",
             image_link = new_photo1,
