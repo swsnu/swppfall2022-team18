@@ -273,6 +273,7 @@ const ClothDetailModal = (cloth: IProps) => {
 					<b>입은 날짜</b>
 					<br></br>
 					<DatePicker
+						data-testid="date-picker"
 						dateFormat="yyyy/MM/dd"
 						highlightDates={highlightDates}
 						selected={wearDate}

@@ -120,10 +120,10 @@ describe("<FilterModal/>", () => {
 		expect(defaultOption.selected).toBeTruthy();
 	});
 
-	it("should handle ColorHandler", () => {
-		render(filterModal);
-		const GithubPicker = screen.getByTestId("color-select");
-	});
+	// it("should handle ColorHandler", () => {
+	// 	render(filterModal);
+	// 	const GithubPicker = screen.getByTestId("color-select");
+	// });
 
 	it("should handle PatternOptionHandler", () => {
 		render(filterModal);
