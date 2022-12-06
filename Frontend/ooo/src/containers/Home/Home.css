@@ -25,7 +25,7 @@
 .Home .HomeTop .ClosetDiv {
 	display: inline-block;
 	width: 50%;
-	min-width: 720px;
+	min-width: 1030px;
 	height: auto;
 	flex-direction: column;
 	margin-left: 5%;
@@ -44,18 +44,16 @@
 }
 
 .Home .HomeTop .Closet-image {
-	display: flex;
 	flex-direction: row;
 	align-content: center;
-	justify-content: center;
 	margin-top: 5%;
+	display: flex;
+	justify-content: left;
 }
 
 .Home .HomeTop .Closet-image .Closet-item-box {
 	display: flex;
-
 	flex-direction: row;
-	flex-wrap: wrap;
 	align-content: center;
 	justify-content: center;
 }
