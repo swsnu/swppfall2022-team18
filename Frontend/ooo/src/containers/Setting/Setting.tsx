@@ -1,15 +1,11 @@
 import { logoutUser, editUser, deleteUser } from '../../api/user';
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header/Header";
-import ClosetItem from "../../components/ClosetItem/ClosetItem";
 import "./Setting.css";
-import { AppDispatch } from "../../store";
 
 export default function Setting() {
 	const navigate = useNavigate();
-	const [Loading, setLoading] = useState(false);
 
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")

@@ -1,14 +1,82 @@
 import "./ClothDetailModal.css";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { fetchUserCloth, editUserCloth, deleteUserCloth, addWearDate } from "../../store/slices/userCloth";
-import TypeFilter from "../TypeFilter/TypeFilter"
+import {
+	fetchUserCloth,
+	editUserCloth,
+	deleteUserCloth,
+	addWearDate,
+} from "../../store/slices/userCloth";
+import TypeFilter from "../TypeFilter/TypeFilter";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { GithubPicker } from "react-color";
+
+const COLOROPTIONS = [
+	"#0e0e0e",
+	"#9c9c9b",
+	"#011e66",
+	"#2508ff",
+	"#1f4582",
+	"#b5cbde",
+	"#242d42",
+	"",
+	"#5b5a34",
+	"#06b002",
+	"#7f290c",
+	"#ff0000",
+	"#fe2900",
+	"#feea00",
+	"#f1c276",
+	"#feffed",
+	"#ffffff",
+	"#570070",
+	"#ff00a1",
+	"#00c4ab",
+	"rainbow",
+];
+const COLORREF = [
+	"블랙",
+	"그레이",
+	"네이비",
+	"블루",
+	"데님",
+	"연청",
+	"진청",
+	"청",
+	"카키",
+	"그린",
+	"브라운",
+	"레드",
+	"오렌지",
+	"옐로우",
+	"베이지",
+	"아이보리",
+	"화이트",
+	"퍼플",
+	"핑크",
+	"민트",
+	"기타색상",
+];
+
+const PatternOptions = [
+	{ value: "Pattern" },
+	{ value: "None" },
+	{ value: "로고" },
+	{ value: "스트라이프" },
+	{ value: "체크" },
+	{ value: "자수" },
+];
+
+const MetaTypeOptions = [
+	{ value: "옷 종류" },
+	{ value: "상의" },
+	{ value: "하의" },
+	{ value: "아우터" },
+];
 
 export interface IProps {
 	id: string;
@@ -23,15 +91,16 @@ export interface IProps {
 
 const ClothDetailModal = (cloth: IProps) => {
 	const navigate = useNavigate();
-
-	const defaultDates = cloth.weardate ?
-		JSON.parse(cloth.weardate).map((date:any) => new Date(date)) :
-		[]
+	console.log(cloth.weardate ? cloth.weardate : "no");
+	const defaultDates = cloth.weardate
+		? JSON.parse(cloth.weardate).map((date: any) => new Date(date))
+		: [];
 
 	const [type, setType] = useState(cloth.type);
 	const [color, setColor] = useState(cloth.color);
+	const [colorHex, setColorHex] = useState<string>("");
 	const [pattern, setPattern] = useState(cloth.pattern);
-	const [highlightDates, setHighlightDates] = useState(defaultDates)
+	const [highlightDates, setHighlightDates] = useState(defaultDates);
 	const [wearDate, setWearDate] = useState(new Date());
 	const [isEditable, setIsEditable] = useState(false);
 	const [addOrDelete, setAddOrDelete] = useState(true); // add: true, delete: false
@@ -42,18 +111,18 @@ const ClothDetailModal = (cloth: IProps) => {
 		dispatch(fetchUserCloth(Number(cloth.id)));
 	}, [cloth.id]);
 
-
 	useEffect(() => {
 		console.log();
 	}, [highlightDates]);
 
 	const clickMoveToRecommendedStyleHandler = () => {
 		const clothData = {
+			userHave: true,
 			type: type,
 			color: color,
-			pattern: pattern
-		}
-		navigate("/outfit/",  { state: clothData });
+			pattern: pattern,
+		};
+		navigate("/outfit/", { state: clothData });
 	};
 
 	const clickEditClothHandler = async () => {
@@ -62,19 +131,19 @@ const ClothDetailModal = (cloth: IProps) => {
 			id: Number(cloth.id),
 			type: type,
 			color: color,
-			pattern: pattern
+			pattern: pattern,
 		};
-		const result = dispatch(editUserCloth(data));
-	}
+		await dispatch(editUserCloth(data));
+	};
 
 	const clickDeleteClothHandler = async () => {
-		const result = await dispatch(deleteUserCloth(Number(cloth.id)));
+		await dispatch(deleteUserCloth(Number(cloth.id)));
 		cloth.modal_close();
 	};
 
 	const dateFormat = (date: any) => {
-		return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`
-	}
+		return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+	};
 
 	const setWearDateHandler = (clickedDate: any) => {
 		setWearDate(clickedDate);
@@ -85,29 +154,53 @@ const ClothDetailModal = (cloth: IProps) => {
 			const clickedDateStr = dateFormat(clickedDate);
 			const exist = parsedWearDates.includes(clickedDateStr);
 
-			if (exist) setAddOrDelete(false)
-			else setAddOrDelete(true)
+			if (exist) setAddOrDelete(false);
+			else setAddOrDelete(true);
+		} else {
+			setAddOrDelete(true);
 		}
-		else {
-			setAddOrDelete(true)
-		}
-	}
+	};
 
 	const clickSaveWearDateHandler = async (addOrDelete: boolean) => {
-		const wearDateStr = dateFormat(wearDate)
+		const wearDateStr = dateFormat(wearDate);
 		const data = {
 			id: Number(cloth.id),
-			dates: String(wearDateStr)
+			dates: String(wearDateStr),
 		};
 		const result = await dispatch(addWearDate(data));
-		alert(`입은 날짜가 ${addOrDelete ? '기록' : '삭제'}되었습니다: ${wearDateStr}`);
+		alert(
+			`입은 날짜가 ${addOrDelete ? "기록" : "삭제"}되었습니다: ${wearDateStr}`
+		);
 
 		if (result.payload.dates) {
-			setHighlightDates(JSON.parse(result.payload.dates).map((date:any) => new Date(date)));
-		}
-		else {
+			setHighlightDates(
+				JSON.parse(result.payload.dates).map((date: any) => new Date(date))
+			);
+		} else {
 			setHighlightDates([]);
 		}
+	};
+
+	const clickTypeOptionHandler = (value: string) => {
+		if (
+			value == "상의 종류" ||
+			value == "하의 종류" ||
+			value == "아우터 종류"
+		) {
+			setType("");
+		} else setType(value);
+	};
+
+	const colorHandler = (color: any) => {
+		setColorHex(color.hex);
+		const colorIdx = COLOROPTIONS.findIndex((item) => item == color.hex);
+		setColor(COLORREF[colorIdx]);
+	};
+
+	const clickPatternOptionHandler = (value: string) => {
+		if (value == "Pattern") {
+			setPattern("");
+		} else setPattern(value);
 	};
 
 	return (
@@ -117,14 +210,21 @@ const ClothDetailModal = (cloth: IProps) => {
 			</div>
 			<div className="ClothDetailModalTop">
 				<div className="ClothImage-modal">
-					<img id="cloth-img-modal" data-testid="cloth-img-modal" src={cloth.image}></img>
+					<img
+						id="cloth-img-modal"
+						data-testid="cloth-img-modal"
+						src={cloth.image}
+					></img>
 				</div>
 				<div className="ClothLable-modal">
 					<text id="type-label-modal">
 					▶ 종류
 					</text>
 					{isEditable ? (
-						<TypeFilter metaType={cloth.metatype} selectHandler={setType}></TypeFilter>
+						<TypeFilter
+							metaType={cloth.metatype}
+							selectHandler={clickTypeOptionHandler}
+						></TypeFilter>
 					) : (
 						<text id="type-text-modal">{type}</text>
 					)}
@@ -133,11 +233,16 @@ const ClothDetailModal = (cloth: IProps) => {
 					▶ 색상
 					</text>
 					{isEditable ? (
-						<input
-							type="text"
-							value={color}
-							onChange={(e) => setColor(e.target.value)}
-						/>
+						<>
+							{" "}
+							<GithubPicker
+								data-testid="cloth-info-input-color"
+								color={colorHex}
+								colors={COLOROPTIONS}
+								onChange={colorHandler}
+							/>
+							<text>{color}</text>
+						</>
 					) : (
 						<text id="type-text-modal">{color}</text>
 					)}
@@ -146,11 +251,19 @@ const ClothDetailModal = (cloth: IProps) => {
 					▶ 무늬
 					</text>
 					{isEditable ? (
-						<input
-							type="text"
-							value={pattern}
-							onChange={(e) => setPattern(e.target.value)}
-						/>
+						<>
+							<select
+								id="pattern-select"
+								onChange={(e) => clickPatternOptionHandler(e.target.value)}
+								value={pattern}
+							>
+								{PatternOptions.map((option, index) => (
+									<option key={index} value={option.value}>
+										{option.value}
+									</option>
+								))}
+							</select>
+						</>
 					) : (
 						<text id="type-text-modal">{pattern}</text>
 					)}
@@ -173,10 +286,26 @@ const ClothDetailModal = (cloth: IProps) => {
 						inline
 					/>
 					{addOrDelete ? (
-						<button id="save-weardate-button" onClick={() => clickSaveWearDateHandler(true)}>
+						<button
+							id="save-weardate-button"
+							onClick={() => clickSaveWearDateHandler(true)}
+						>
 							입은 날짜 추가하기
 						</button>
-					) : (<button id="delete-weardate-button" onClick={() => clickSaveWearDateHandler(false)}>
+					) : (
+						<button
+							id="delete-weardate-button"
+							onClick={() => clickSaveWearDateHandler(false)}
+						>
+							입은 날짜 삭제하기
+						</button>
+					)}
+				</div>
+				<div className="ClothButton-modal">
+					<button
+							id="delete-weardate-button"
+							onClick={() => clickSaveWearDateHandler(false)}
+						>
 							입은 날짜 삭제하기
 						</button>
 					)}
@@ -191,10 +320,7 @@ const ClothDetailModal = (cloth: IProps) => {
 							Finish Edit
 						</button>
 					) : (
-						<button
-							id="edit-cloth-button"
-							onClick={() => setIsEditable(true)}
-						>
+						<button id="edit-cloth-button" onClick={() => setIsEditable(true)}>
 							Edit Cloth
 						</button>
 					)}

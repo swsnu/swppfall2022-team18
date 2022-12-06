@@ -1,8 +1,7 @@
 import "./ClosetItem.css";
 import React from "react";
-import { fetchUserClothes } from "../../store/slices/userCloth";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 //import { useParams } from "react-router";
 //import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { AppDispatch } from "../../store";
@@ -36,9 +35,16 @@ const ClosetItem = (props: IProps) => {
 	const clickClothDetailPopupCloseHandler = () => {
 		setClothDetailModalOpen(!clothDetailModalOpen);
 		if (props.tmp) {
-			props.tmp(props.metatype)
+			props.tmp(props.metatype);
 		}
 		// setSubmitted(true);
+	};
+
+	const clickDetailCloseButtonHandler = () => {
+		setClothDetailModalOpen(false);
+		if (props.tmp) {
+			props.tmp(props.metatype);
+		}
 	};
 
 	// useEffect(() => {
@@ -49,7 +55,6 @@ const ClosetItem = (props: IProps) => {
 
 	return (
 		<div className="ClosetItem">
-
 			<div
 				className="ClothImage"
 				data-testid="clothimg"

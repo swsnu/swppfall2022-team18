@@ -1,7 +1,8 @@
+""" import module """
 from django.contrib import admin
-from django.contrib.admin.views.main import ChangeList
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
+# from django.contrib.admin.views.main import ChangeList
+# from django.contrib.auth.admin import UserAdmin
+# from django.contrib.auth.models import User
 from .models import Closet, UserCloth, LabelSet, SampleCloth, Outfit
 
 

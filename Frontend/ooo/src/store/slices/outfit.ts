@@ -105,7 +105,7 @@ export const fetchOutfits = createAsyncThunk(
 	"outfit/fetchOutfits",
 	async (cursor, pageSize) => {
 		const response = await axios.get<fetchOutputState>("/api/ooo/outfit/", {
-			headers,
+			// headers,
 			params: {
 				cursor: cursor,
 				pageSize: pageSize,
@@ -136,7 +136,7 @@ export const fetchOutfit = createAsyncThunk(
 	async (id: OutfitType["id"]) => {
 		console.log("fetchOutfit");
 		const response = await axios.get(`/api/ooo/outfit/${id}/`, {
-			headers,
+			// headers,
 		});
 		// console.log("fetchOutfit", response.data);
 		return response.data ?? null;
@@ -147,7 +147,7 @@ export const fetchSampleCloth = createAsyncThunk(
 	"outfit/fetchSampleCloth",
 	async (id: OutfitType["id"]) => {
 		const response = await axios.get(`/api/ooo/outfit/samplecloth/${id}/`, {
-			headers,
+			// headers,
 		});
 		if (response.status === 200) {
 			return response.data;

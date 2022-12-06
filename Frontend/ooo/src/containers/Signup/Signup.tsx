@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { signupUser } from "../../api/user";
 import "./Signup.css";
@@ -8,7 +8,6 @@ export default function Signup() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
-	const [Signup, setSignup] = useState(false);
 	const [wrongInput, setWrongInput] = useState("");
 
     const TEXTISEMPTY = "ID와 패스워드는 필수로 입력해야합니다."

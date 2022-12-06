@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
 import { AppDispatch } from "../../store";
 import "./OutfitDetail.css";
-import outfit, { fetchOutfit, fetchSampleCloth, selectOutfit } from "../../store/slices/outfit";
+import { fetchOutfit, fetchSampleCloth, selectOutfit } from "../../store/slices/outfit";
 import Header from "../../components/Header/Header";
 import { logoutUser } from "../../api/user";
 import Modal from "react-modal";

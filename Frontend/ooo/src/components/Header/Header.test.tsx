@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { useNavigate } from "react-router-dom";
 import Header from './Header'
+import React from "react";
+
 const mockNavigate = jest.fn()
 jest.mock("react-router", () => ({
     ...jest.requireActual("react-router"),
