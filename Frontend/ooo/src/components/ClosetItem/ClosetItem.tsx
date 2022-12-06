@@ -22,6 +22,8 @@ export interface IProps {
 }
 
 const ClosetItem = (props: IProps) => {
+	const dispatch = useDispatch<AppDispatch>();
+
 	const [clothDetailModalOpen, setClothDetailModalOpen] = useState(false);
 	// const [submitted, setSubmitted] = useState<boolean>();
 	// const [filteredList, setFilteredList] = useState<UserClothType[]>([]);

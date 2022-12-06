@@ -97,9 +97,30 @@ export const createUserCloth = createAsyncThunk(
 			// },
 		});
 		dispatch(userClothActions.createUserCloth(response.data));
-		// console.log(response.data);
 		// return response.data;
 	}
+);
+
+export const classifyColor = createAsyncThunk(
+	"closet/classifyColor",
+    async (
+		data: Pick<TempUserClothType, "image">,
+		// { dispatch }
+	) => {
+		const formData = new FormData();
+		formData.append("image",data.image)
+		formData.append('enctype',"multipart/form-data")
+        const response = await axios.post(
+			`/api/ooo/model/`,formData,
+			{
+				// headers,
+				// body: data
+			}
+		);
+		if(response.status === 200){
+			return response.data
+		}
+    }
 );
 
 export const editUserCloth = createAsyncThunk(
@@ -116,6 +137,14 @@ export const editUserCloth = createAsyncThunk(
 	}
 );
 
+export const deleteUserCloth = createAsyncThunk(
+	"closet/deleteUserCloth",
+	async (id: UserClothType["id"], { dispatch }) => {
+		await axios.delete(`/api/ooo/closet/${id}/`);
+		dispatch(userClothActions.deleteUserCloth({ targetId: id }));
+	}
+);
+
 export const addWearDate = createAsyncThunk(
 	"closet/addWearDate",
 	async (data: Pick<UserClothType, "id" | "dates">, { dispatch }) => {
@@ -127,14 +156,6 @@ export const addWearDate = createAsyncThunk(
 			return response.data;
 		}
 		dispatch(userClothActions.addWearDate(response.data));
-	}
-);
-
-export const deleteUserCloth = createAsyncThunk(
-	"closet/deleteUserCloth",
-	async (id: UserClothType["id"], { dispatch }) => {
-		await axios.delete(`/api/ooo/closet/${id}/`);
-		dispatch(userClothActions.deleteUserCloth({ targetId: id }));
 	}
 );
 
