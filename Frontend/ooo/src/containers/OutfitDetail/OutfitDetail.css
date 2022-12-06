@@ -39,8 +39,8 @@
 }
 
 #outfit-img {
-	width: 800px;
-	height: 500px;
+	width: fit-content;
+	height: fit-content;
 }
 
 .OutfitDetail .OutfitDetail-body .OutfitDetailData {

@@ -223,9 +223,6 @@ export default function Closet() {
 							isOpen={addClothModalOpen}
 							// onRequestClose={() => setAddClothModalOpen(false)}
 						>
-							<AddClothModal
-								modal_close={(metaType) => clickAddClothDoneHandler(metaType)}
-							></AddClothModal>
 							<div id="close-buton-div">
 								<button
 									id="modal-close-button"
@@ -238,7 +235,7 @@ export default function Closet() {
 								</button>
 							</div>
 							<AddClothModal
-								modal_close={clickAddClothPopupCloseHandler}
+								modal_close={(metaType) => clickAddClothDoneHandler(metaType)}
 							></AddClothModal>
 						</Modal>
 					</div>

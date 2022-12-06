@@ -301,15 +301,6 @@ const ClothDetailModal = (cloth: IProps) => {
 						</button>
 					)}
 				</div>
-				<div className="ClothButton-modal">
-					<button
-							id="delete-weardate-button"
-							onClick={() => clickSaveWearDateHandler(false)}
-						>
-							입은 날짜 삭제하기
-						</button>
-					)}
-				</div>
 				<div>
 				<div className="edit-cloth-detail">
 					{isEditable ? (

@@ -20,6 +20,7 @@
 	align-content: center;
 	width: 50%;
 	height: 100%;
+	margin-bottom: 4%;
 }
 
 #outfit-img {
@@ -29,14 +30,19 @@
 }
 
 .OutfitPreview .OutfitLable {
-	display: flex;
-	margin-top: 30%;
+	display:flex; 
+	margin-top: 10%;
 	width: 40%;
+	line-height: 1.3;
+    height: 15em;
 	text-align: left;
 	flex-direction: column;
+	word-wrap: break-word;
+	overflow:hidden;
 }
 
 #outfit-info-text {
+	text-overflow: ellipsis;
 	font-size: 10px;
 	font-weight: 100;
 	margin-bottom: 10%;

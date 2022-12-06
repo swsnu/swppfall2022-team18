@@ -192,6 +192,10 @@
 #outfit-info-text {
 	font-size: 20px;
 	color: black;
+	line-height: 1.4;
+    height: 4.2em;
+	word-wrap: break-word;
+	overflow:hidden;
 }
 
 .OutfitPage .OutfitBody .OutfitImages .page-buttons-div {
