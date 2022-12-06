@@ -13,6 +13,70 @@ import TypeFilter from "../TypeFilter/TypeFilter";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { GithubPicker } from "react-color";
+
+const COLOROPTIONS = [
+	"#0e0e0e",
+	"#9c9c9b",
+	"#011e66",
+	"#2508ff",
+	"#1f4582",
+	"#b5cbde",
+	"#242d42",
+	"",
+	"#5b5a34",
+	"#06b002",
+	"#7f290c",
+	"#ff0000",
+	"#fe2900",
+	"#feea00",
+	"#f1c276",
+	"#feffed",
+	"#ffffff",
+	"#570070",
+	"#ff00a1",
+	"#00c4ab",
+	"rainbow",
+];
+const COLORREF = [
+	"블랙",
+	"그레이",
+	"네이비",
+	"블루",
+	"데님",
+	"연청",
+	"진청",
+	"청",
+	"카키",
+	"그린",
+	"브라운",
+	"레드",
+	"오렌지",
+	"옐로우",
+	"베이지",
+	"아이보리",
+	"화이트",
+	"퍼플",
+	"핑크",
+	"민트",
+	"기타색상",
+];
+
+const PatternOptions = [
+	{ value: "Pattern" },
+	{ value: "None" },
+	{ value: "로고" },
+	{ value: "스트라이프" },
+	{ value: "체크" },
+	{ value: "자수" },
+];
+
+const MetaTypeOptions = [
+	{ value: "옷 종류" },
+	{ value: "상의" },
+	{ value: "하의" },
+	{ value: "아우터" },
+];
 
 export interface IProps {
 	id: string;
@@ -34,6 +98,7 @@ const ClothDetailModal = (cloth: IProps) => {
 
 	const [type, setType] = useState(cloth.type);
 	const [color, setColor] = useState(cloth.color);
+	const [colorHex, setColorHex] = useState<string>("");
 	const [pattern, setPattern] = useState(cloth.pattern);
 	const [highlightDates, setHighlightDates] = useState(defaultDates);
 	const [wearDate, setWearDate] = useState(new Date());
@@ -52,6 +117,7 @@ const ClothDetailModal = (cloth: IProps) => {
 
 	const clickMoveToRecommendedStyleHandler = () => {
 		const clothData = {
+			userHave: true,
 			type: type,
 			color: color,
 			pattern: pattern,
@@ -115,6 +181,28 @@ const ClothDetailModal = (cloth: IProps) => {
 		}
 	};
 
+	const clickTypeOptionHandler = (value: string) => {
+		if (
+			value == "상의 종류" ||
+			value == "하의 종류" ||
+			value == "아우터 종류"
+		) {
+			setType("");
+		} else setType(value);
+	};
+
+	const colorHandler = (color: any) => {
+		setColorHex(color.hex);
+		const colorIdx = COLOROPTIONS.findIndex((item) => item == color.hex);
+		setColor(COLORREF[colorIdx]);
+	};
+
+	const clickPatternOptionHandler = (value: string) => {
+		if (value == "Pattern") {
+			setPattern("");
+		} else setPattern(value);
+	};
+
 	return (
 		<div className="ClothDetailModal">
 			<div className="ClothDetailModalHead">
@@ -135,7 +223,7 @@ const ClothDetailModal = (cloth: IProps) => {
 					{isEditable ? (
 						<TypeFilter
 							metaType={cloth.metatype}
-							selectHandler={setType}
+							selectHandler={clickTypeOptionHandler}
 						></TypeFilter>
 					) : (
 						<text id="type-text-modal">{type}</text>
@@ -145,11 +233,16 @@ const ClothDetailModal = (cloth: IProps) => {
 						<b>색상</b>
 					</text>
 					{isEditable ? (
-						<input
-							type="text"
-							value={color}
-							onChange={(e) => setColor(e.target.value)}
-						/>
+						<>
+							{" "}
+							<GithubPicker
+								data-testid="cloth-info-input-color"
+								color={colorHex}
+								colors={COLOROPTIONS}
+								onChange={colorHandler}
+							/>
+							<text>{color}</text>
+						</>
 					) : (
 						<text id="type-text-modal">{color}</text>
 					)}
@@ -158,11 +251,19 @@ const ClothDetailModal = (cloth: IProps) => {
 						<b>무늬</b>
 					</text>
 					{isEditable ? (
-						<input
-							type="text"
-							value={pattern}
-							onChange={(e) => setPattern(e.target.value)}
-						/>
+						<>
+							<select
+								id="pattern-select"
+								onChange={(e) => clickPatternOptionHandler(e.target.value)}
+								value={pattern}
+							>
+								{PatternOptions.map((option, index) => (
+									<option key={index} value={option.value}>
+										{option.value}
+									</option>
+								))}
+							</select>
+						</>
 					) : (
 						<text id="type-text-modal">{pattern}</text>
 					)}

@@ -1,5 +1,5 @@
 import { logoutUser } from "../../api/user";
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header/Header";
@@ -20,12 +20,11 @@ export default function Home() {
 	const outfit = useSelector(selectOutfit);
 	const [Loading, setLoading] = useState(false);
 	//for logout
-	const [isSending, setIsSending] = useState(false)
+	const [isSending, setIsSending] = useState(false);
 	const checkLoginned = () => {
-		if(localStorage.getItem("username") !== null){
-			return true
-		}
-		else return false
+		if (localStorage.getItem("username") !== null) {
+			return true;
+		} else return false;
 	};
 
 	useEffect(() => {
@@ -37,36 +36,31 @@ export default function Home() {
 		redirect();
 	}, [isSending]);
 
-
-	
-	useEffect(()=>{
-	//closet list, outfitlist 받아오는 것
-		const getData = async() => {
-			setLoading(true)
-			dispatch(fetchUserClothes())
+	useEffect(() => {
+		//closet list, outfitlist 받아오는 것
+		const getData = async () => {
+			setLoading(true);
+			dispatch(fetchUserClothes());
 			dispatch(fetchOutfits());
 			dispatch(fetchRecommendOutfit());
-			setLoading(false)
-
-		}
-		getData()
-	},[])
-
+			setLoading(false);
+		};
+		getData();
+	}, []);
 
 	if (Loading) {
 		return <div>Loading..</div>;
 	} else {
 		return (
 			<div className="Home">
-				<div className="Home-header"
-					data-testid='Header'>
+				<div className="Home-header" data-testid="Header">
 					<Header
 						clickInfoHandler={() => {
 							navigate("/setting");
 						}}
-						clickLogoutHandler={async() => {
-							await logoutUser().catch((error) => console.log(error))
-							setIsSending(!isSending)
+						clickLogoutHandler={async () => {
+							await logoutUser().catch((error) => console.log(error));
+							setIsSending(!isSending);
 						}}
 						clickHeaderHandler={() => {
 							navigate("/home");
@@ -78,35 +72,35 @@ export default function Home() {
 					<div className="ClosetDiv">
 						<text id="Closet-text">Closet</text>
 						<div className="Closet-image">
-							<div className="Closet-item-box"
-							data-testid='ClosetItem'>
-								{userClothes.userClothes.length !== 0 ? userClothes.userClothes.map((cloth, index) => {
-									while (index < 6) {
-										return(
-											<ClosetItem
-												key={index}
-												user_cloth_id={String(cloth.id)}
-												source_url={cloth.image_link} //나중에 바꿔야함.
-												weardate={cloth.dates}
-												metatype={cloth.name}
-												type={cloth.type}
-												color={cloth.color}
-												pattern={cloth.pattern}
-											/>
-										)
-									}
-								})
-							:
-							<div>
-								<text id='add-cloth-text'>옷을 추가해보세요!</text>
-							</div>
-							}
+							<div className="Closet-item-box" data-testid="ClosetItem">
+								{userClothes.userClothes.length !== 0 ? (
+									userClothes.userClothes.map((cloth, index) => {
+										while (index < 6) {
+											return (
+												<ClosetItem
+													key={index}
+													user_cloth_id={String(cloth.id)}
+													source_url={cloth.image_link} //나중에 바꿔야함.
+													weardate={cloth.dates}
+													metatype={cloth.name}
+													type={cloth.type}
+													color={cloth.color}
+													pattern={cloth.pattern}
+												/>
+											);
+										}
+									})
+								) : (
+									<div>
+										<text id="add-cloth-text">옷을 추가해보세요!</text>
+									</div>
+								)}
 							</div>
 						</div>
 						<div className="Closet-button">
 							<button
 								id="more-button"
-								data-testid='more-btn'
+								data-testid="more-btn"
 								onClick={() => {
 									navigate("/closet");
 								}}
@@ -116,37 +110,46 @@ export default function Home() {
 						</div>
 					</div>
 					<div className="CenterDiv"></div>
-					<div className="TodayOutfit"
-					data-testid='TodayOutfit'>
+					<div className="TodayOutfit" data-testid="TodayOutfit">
 						<text id="TodayOutfit-text">Today{"'"}s Outfit</text>
 						<div className="TodayOutfit-content">
-							{
-								userClothes.recommendOutfit !== null ? 
+							{userClothes.recommendOutfit !== null ? (
 								<div>
-									<div className="TodayOutfit-image" >
-										<img id="today-outfit-img" src={userClothes.recommendOutfit.image_link} data-testid = 'today-outfit-img'></img>
+									<div className="TodayOutfit-image">
+										<img
+											id="today-outfit-img"
+											src={userClothes.recommendOutfit.image_link}
+											data-testid="today-outfit-img"
+										></img>
 									</div>
-									<div className="TodayOutfit-lable"
-									data-testid = 'TodayOutfit-lable'>
-										<text id="today-outfit-info-text">{userClothes.recommendOutfit.outfit_info}</text>
-										{
-											userClothes.recommendOutfit.userclothes.map((value, index) => {
-												return(
+									<div
+										className="TodayOutfit-lable"
+										data-testid="TodayOutfit-lable"
+									>
+										<text id="today-outfit-info-text">
+											{userClothes.recommendOutfit.outfit_info}
+										</text>
+										{userClothes.recommendOutfit.userclothes.map(
+											(value, index) => {
+												return (
 													<div key={index}>
 														<text id="today-cloth-name">{value.name}</text>
 													</div>
-												)
-											})
-										}
-										<button id="wear-button" data-testid='wear-button'>오늘 입기</button>
+												);
+											}
+										)}
+										<button id="wear-button" data-testid="wear-button">
+											오늘 입기
+										</button>
 									</div>
 								</div>
-								: <div>
-									<div className="TodayOutfit-image" >
-										<text id='add-cloth-text'> 옷을 추가해보세요! </text>
+							) : (
+								<div>
+									<div className="TodayOutfit-image">
+										<text id="add-cloth-text"> 옷을 추가해보세요! </text>
 									</div>
 								</div>
-							}
+							)}
 						</div>
 					</div>
 				</div>
@@ -157,28 +160,33 @@ export default function Home() {
 							<text id="Outfit-text">Outfit</text>
 							<button
 								id="outfit-more-button"
-								data-testid='more-btn'
+								data-testid="more-btn"
 								onClick={() => {
-									navigate("/outfit");
+									navigate("/outfit", {
+										state: {
+											userHave: false,
+											type: null,
+											color: null,
+											pattern: null,
+										},
+									});
 								}}
 							>
 								More
 							</button>
 						</div>
-						<div className="OutfitImage" data-testid='OutfitPreview'>
-							{
-								outfit.outfits.map((outfit, index) => {
-									return(
-										<div key={index} className='OutfitPreviewItem'>
-											<OutfitPreview
+						<div className="OutfitImage" data-testid="OutfitPreview">
+							{outfit.outfits.map((outfit, index) => {
+								return (
+									<div key={index} className="OutfitPreviewItem">
+										<OutfitPreview
 											key={index}
 											source_url={outfit.image_link.toString()}
 											info={outfit.outfit_info}
-											/>
-										</div>
-									)
-								})
-							}
+										/>
+									</div>
+								);
+							})}
 						</div>
 					</div>
 				</div>

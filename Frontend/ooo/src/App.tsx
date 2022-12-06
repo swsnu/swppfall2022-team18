@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./containers/Login/Login";
 import Home from "./containers/Home/Home";
 import Closet from "./containers/Closet/Closet";
@@ -25,24 +25,13 @@ function App() {
 				<Routes>
 					<Route path="/closet" element={<Closet />} />
 					<Route path="/home" element={<Home />} />
-					<Route
-						path="/outfit"
-						element={
-							<Outfit
-								userHave={false}
-								recommend={false}
-								type={null}
-								color={null}
-								pattern={null}
-							/>
-						}
-					/>
+					<Route path="/outfit" element={<Outfit />} />
 					<Route path="/outfit/:id" element={<OutfitDetail />} />
 					<Route path="/" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />
 					<Route path="*" element={<h1>Not Found</h1>} />
 					<Route path="/redirect" element={<Redirect />} />
-					<Route path="/setting" element={<Setting/>}/>
+					<Route path="/setting" element={<Setting />} />
 				</Routes>
 			</div>
 		</BrowserRouter>

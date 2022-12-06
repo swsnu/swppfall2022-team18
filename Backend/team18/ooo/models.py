@@ -97,7 +97,6 @@ class Outfit(models.Model):
         else:
             super().save(*args, **kwargs)
 
-        
             
 class SampleCloth(models.Model):
     '''

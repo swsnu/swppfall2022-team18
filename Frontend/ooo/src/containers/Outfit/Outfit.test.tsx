@@ -126,18 +126,7 @@ describe("<Outfit />", () => {
 			<Provider store={mockStore}>
 				<MemoryRouter>
 					<Routes>
-						<Route
-							path="/"
-							element={
-								<Outfit
-									userHave={false}
-									recommend={false}
-									type={null}
-									color={null}
-									pattern={null}
-								/>
-							}
-						/>
+						<Route path="/" element={<Outfit />} />
 					</Routes>
 				</MemoryRouter>
 			</Provider>

@@ -3,27 +3,84 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import {  createUserCloth } from "../../store/slices/userCloth";
-import TypeFilter from "../TypeFilter/TypeFilter"
+import { createUserCloth } from "../../store/slices/userCloth";
+import TypeFilter from "../TypeFilter/TypeFilter";
+import { GithubPicker } from "react-color";
 
 export interface IProps {
-    modal_close: (metaType: string) => void
+	modal_close: (metaType: string) => void;
 }
 
 const AddClothModal = (props: IProps) => {
-
-	const [name, setName] = useState<string>("");	// 상의, 하의, 아우터
-	const [type, setType] = useState<string>("");
-	const [color, setColor] = useState<string>("");
-	const [pattern, setPattern] = useState<string>("");
+	const [metaType, setMetaType] = useState<string | null>(null); // 상의, 하의, 아우터
+	const [type, setType] = useState<string | null>(null);
+	const [color, setColor] = useState<string | null>(null);
+	const [colorHex, setColorHex] = useState<string>("");
+	const [pattern, setPattern] = useState<string | null>(null);
 	const [fileImage, setFileImage] = useState("");
 	const [file, setFile] = useState<File>();
 	// const [submitted, setSubmitted] = useState<boolean>(false);
 
 	const dispatch = useDispatch<AppDispatch>();
 
-	const METATYPEOPTIONS = [
-		{ value: "Type" },
+	const COLOROPTIONS = [
+		"#0e0e0e",
+		"#9c9c9b",
+		"#011e66",
+		"#2508ff",
+		"#1f4582",
+		"#b5cbde",
+		"#242d42",
+		"",
+		"#5b5a34",
+		"#06b002",
+		"#7f290c",
+		"#ff0000",
+		"#fe2900",
+		"#feea00",
+		"#f1c276",
+		"#feffed",
+		"#ffffff",
+		"#570070",
+		"#ff00a1",
+		"#00c4ab",
+		"rainbow",
+	];
+	const COLORREF = [
+		"블랙",
+		"그레이",
+		"네이비",
+		"블루",
+		"데님",
+		"연청",
+		"진청",
+		"청",
+		"카키",
+		"그린",
+		"브라운",
+		"레드",
+		"오렌지",
+		"옐로우",
+		"베이지",
+		"아이보리",
+		"화이트",
+		"퍼플",
+		"핑크",
+		"민트",
+		"기타색상",
+	];
+
+	const PatternOptions = [
+		{ value: "Pattern" },
+		{ value: "None" },
+		{ value: "로고" },
+		{ value: "스트라이프" },
+		{ value: "체크" },
+		{ value: "자수" },
+	];
+
+	const MetaTypeOptions = [
+		{ value: "옷 종류" },
 		{ value: "상의" },
 		{ value: "하의" },
 		{ value: "아우터" },
@@ -35,20 +92,20 @@ const AddClothModal = (props: IProps) => {
 	// }, [submitted]);
 
 	const clickAddClothHandler = async () => {
-		if (name && file && type && color && pattern) {
+		if (metaType && file && type && color && pattern) {
 			const data = {
-				name: name,
+				name: metaType,
 				image: file,
 				type: type,
 				color: color,
 				pattern: pattern,
 			};
 			await dispatch(createUserCloth(data));
-			props.modal_close(name);
-		}
-		else {
-			if (!fileImage) alert('옷 사진을 업로드해주세요.')
-			else if (!name || !type || !color || !pattern) alert('정보를 모두 입력해주세요.')
+			props.modal_close(metaType);
+		} else {
+			if (!fileImage) alert("옷 사진을 업로드해주세요.");
+			else if (!metaType || !type || !color || !pattern)
+				alert("정보를 모두 입력해주세요.");
 		}
 		// setSubmitted(true);
 		// window.location.reload();
@@ -56,7 +113,43 @@ const AddClothModal = (props: IProps) => {
 
 	const saveFileImage = (e: any) => {
 		setFileImage(URL.createObjectURL(e.target.files[0]));
-		setFile(e.target.files[0])
+		setFile(e.target.files[0]);
+	};
+
+	const clickMetaTypeOptionHandler = (value: string) => {
+		if (value == "옷 종류") {
+			setMetaType(null);
+		} else {
+			setMetaType(value);
+		}
+	};
+
+	const clickTypeOptionHandler = (value: string) => {
+		if (
+			value == "상의 종류" ||
+			value == "하의 종류" ||
+			value == "아우터 종류"
+		) {
+			setType(null);
+		} else setType(value);
+	};
+
+	const clickColorOptionHandler = (value: string) => {
+		if (value == "Color") {
+			setColor(null);
+		} else setColor(value);
+	};
+
+	const colorHandler = (color: any) => {
+		setColorHex(color.hex);
+		const colorIdx = COLOROPTIONS.findIndex((item) => item == color.hex);
+		setColor(COLORREF[colorIdx]);
+	};
+
+	const clickPatternOptionHandler = (value: string) => {
+		if (value == "Pattern") {
+			setPattern(null);
+		} else setPattern(value);
 	};
 
 	return (
@@ -88,9 +181,12 @@ const AddClothModal = (props: IProps) => {
 					<div className="UploadedClothInfoDiv-sub">
 						<text id="UploadedClothInfoDiv-text">Type</text>
 						<br></br>
-						<select id="type-select" data-testid="select-component" onChange={(e) => setName(e.target.value)}>
-							{METATYPEOPTIONS.map((option, index) => (
-								<option key={index} value={option.value} >
+						<select
+							id="meta-type-select"
+							onChange={(e) => clickMetaTypeOptionHandler(e.target.value)}
+						>
+							{MetaTypeOptions.map((option, index) => (
+								<option key={index} value={option.value}>
 									{option.value}
 								</option>
 							))}
@@ -99,30 +195,39 @@ const AddClothModal = (props: IProps) => {
 					<div className="UploadedClothInfoDiv-sub">
 						<text id="UploadedClothInfoDiv-text">세부 Type</text>
 						<br></br>
-						<TypeFilter metaType={name} selectHandler={setType}></TypeFilter>
+						<TypeFilter
+							metaType={metaType}
+							selectHandler={clickTypeOptionHandler}
+						></TypeFilter>
 					</div>
+
 					<div className="UploadedClothInfoDiv-sub">
 						<text id="UploadedClothInfoDiv-text">Color</text>
 						<br></br>
-						<input
-							type="text"
-							id="cloth-info-input"
+						<GithubPicker
 							data-testid="cloth-info-input-color"
-							value={color}
-							onChange={(e) => setColor(e.target.value)}
+							color={colorHex}
+							colors={COLOROPTIONS}
+							onChange={colorHandler}
 						/>
+						<text>{color}</text>
 					</div>
+
 					<div className="UploadedClothInfoDiv-sub">
 						<text id="UploadedClothInfoDiv-text">Pattern</text>
 						<br></br>
-						<input
-							type="text"
-							id="cloth-info-input"
-							data-testid="cloth-info-input-pattern"
-							value={pattern}
-							onChange={(e) => setPattern(e.target.value)}
-						/>
+						<select
+							id="pattern-select"
+							onChange={(e) => clickPatternOptionHandler(e.target.value)}
+						>
+							{PatternOptions.map((option, index) => (
+								<option key={index} value={option.value}>
+									{option.value}
+								</option>
+							))}
+						</select>
 					</div>
+
 					<button
 						id="create-cloth-button"
 						data-testid="create-cloth-button"
