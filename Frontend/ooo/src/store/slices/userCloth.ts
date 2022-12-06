@@ -67,9 +67,10 @@ export const fetchRecommendOutfit = createAsyncThunk(
 	"outfit/today",
 	async () => {
 		const response = await axios.get("/api/ooo/outfit/today/");
-		if (response.status === 200) {
-			return response.data;
-		} else return null;
+		// if (response.status === 200) {
+		// 	return response.data;
+		// } else return null;
+		return response.data;
 	}
 );
 

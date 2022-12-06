@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { store } from "../../store";
 import userEvent from "@testing-library/user-event";
+import { classifyColor } from "../../store/slices/userCloth";
 
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
@@ -34,9 +35,16 @@ jest.mock(
 				<button
 					id="done-button"
 					data-testid="typefilter-done-button"
-					onClick={() => props.selectHandler("")}
+					onClick={() => props.selectHandler("상의 종류")}
 				>
 					Done
+				</button>
+				<button
+					id="extra-done-button"
+					data-testid="typefilter-extra-done-button"
+					onClick={() => props.selectHandler("반소매 티셔츠")}
+				>
+					Extra Done
 				</button>
 			</div>
 		)
@@ -127,14 +135,21 @@ describe("<AddClothModal />", () => {
 		render(addClothModal);
 		const typeFilterDoneButton = screen.getByTestId("typefilter-done-button");
 		fireEvent.click(typeFilterDoneButton);
+
+		const typeFilterExtraDoneButton = screen.getByTestId(
+			"typefilter-extra-done-button"
+		);
+		fireEvent.click(typeFilterExtraDoneButton);
 	});
 
 	it("should handle post image", () => {
 		render(addClothModal);
-		const uploadButton = screen.getByTestId("upload-cloth-button");
-		// const file = new File(["(⌐□_□)"], "testClothImage.png", {
-		// 	type: "image/png",
-		// });
+		const imageUploadButton = screen.getByTestId("upload-cloth-button");
+		const createClothButton = screen.getByTestId("create-cloth-button");
+		fireEvent.click(createClothButton);
+		const file = new File(["(⌐□_□)"], "testClothImage.png", {
+			type: "image/png",
+		});
 		// fireEvent.change(uploadButton, {
 		// 	target: { files: [file] },
 		// });

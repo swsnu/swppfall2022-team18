@@ -141,6 +141,15 @@ const stubInitialUserClothState: UserClothState = {
 			pattern: "no",
 			dates: "test",
 		},
+		{
+			id: 2,
+			name: "",
+			image_link: "",
+			color: "black",
+			type: "test-wrong-type",
+			pattern: "no",
+			dates: "test",
+		},
 	],
 	selectedUserCloth: null,
 	recommendOutfit: {
@@ -265,7 +274,9 @@ describe("<Closet />", () => {
 		const closetitems = screen.getAllByTestId("spyClosetItem")[0];
 		fireEvent.click(closetitems);
 		console.log("clickDeleteButton");
-		const deleteButton = screen.getByTestId("spyClosetItem-delete-button");
+		const deleteButton = screen.getAllByTestId(
+			"spyClosetItem-delete-button"
+		)[0];
 		fireEvent.click(deleteButton);
 	});
 });

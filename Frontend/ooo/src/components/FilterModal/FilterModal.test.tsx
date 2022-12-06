@@ -63,9 +63,16 @@ jest.mock(
 				<button
 					id="done-button"
 					data-testid="typefilter-done-button"
-					onClick={() => props.selectHandler("")}
+					onClick={() => props.selectHandler("상의 종류")}
 				>
 					Done
+				</button>
+				<button
+					id="extra-done-button"
+					data-testid="typefilter-extra-done-button"
+					onClick={() => props.selectHandler("반소매 티셔츠")}
+				>
+					Extra Done
 				</button>
 			</div>
 		)
@@ -154,6 +161,11 @@ describe("<FilterModal/>", () => {
 		render(filterModal);
 		const typeFilterDoneButton = screen.getByTestId("typefilter-done-button");
 		fireEvent.click(typeFilterDoneButton);
+
+		const typeFilterExtraDoneButton = screen.getByTestId(
+			"typefilter-extra-done-button"
+		);
+		fireEvent.click(typeFilterExtraDoneButton);
 	});
 
 	it("should handle clickDoneHandler", () => {

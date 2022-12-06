@@ -39,9 +39,16 @@ jest.mock(
 				<button
 					id="done-button"
 					data-testid="typefilter-done-button"
-					onClick={() => props.selectHandler("")}
+					onClick={() => props.selectHandler("상의 종류")}
 				>
 					Done
+				</button>
+				<button
+					id="extra-done-button"
+					data-testid="typefilter-extra-done-button"
+					onClick={() => props.selectHandler("반소매 티셔츠")}
+				>
+					Extra Done
 				</button>
 			</div>
 		)
@@ -123,9 +130,9 @@ describe("<ClothDetaillModal />", () => {
 	});
 	it("should render without errors", () => {
 		render(clothdetailmodal);
-		screen.getByText("종류");
-		screen.getByText("색상");
-		screen.getByText("무늬");
+		screen.getByText("▶ 종류");
+		screen.getByText("▶ 색상");
+		screen.getByText("▶ 무늬");
 		const moverecommendbutton = screen.getByText("Get Recommendation");
 		fireEvent.click(moverecommendbutton);
 		expect(mockNavigate).toHaveBeenCalledTimes(1);
@@ -133,9 +140,6 @@ describe("<ClothDetaillModal />", () => {
 
 	it("should render with weardate", () => {
 		render(clothdetailmodalWearDate);
-		screen.getByText("종류");
-		screen.getByText("색상");
-		screen.getByText("무늬");
 		const moverecommendbutton = screen.getByText("Get Recommendation");
 		fireEvent.click(moverecommendbutton);
 		expect(mockNavigate).toHaveBeenCalledTimes(1);
@@ -152,6 +156,7 @@ describe("<ClothDetaillModal />", () => {
 		render(clothdetailmodal);
 		const editButton = screen.getByText("Edit Cloth");
 		fireEvent.click(editButton);
+
 		const finishButton = screen.getByText("Finish Edit");
 		fireEvent.click(finishButton);
 	});
@@ -160,6 +165,20 @@ describe("<ClothDetaillModal />", () => {
 		render(clothdetailmodal);
 		const deleteButton = screen.getByText("Delete Cloth");
 		fireEvent.click(deleteButton);
+	});
+
+	it("should handle typeFilter", () => {
+		render(clothdetailmodal);
+		const editButton = screen.getByText("Edit Cloth");
+		fireEvent.click(editButton);
+
+		const typeFilterDoneButton = screen.getByTestId("typefilter-done-button");
+		fireEvent.click(typeFilterDoneButton);
+
+		const typeFilterExtraDoneButton = screen.getByTestId(
+			"typefilter-extra-done-button"
+		);
+		fireEvent.click(typeFilterExtraDoneButton);
 	});
 
 	it("should handle PatternOptionHandler", () => {

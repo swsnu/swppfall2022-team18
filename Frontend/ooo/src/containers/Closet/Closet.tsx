@@ -168,7 +168,6 @@ export default function Closet() {
 
 	const clickOnDeleteHandler = () => {
 		// setFilterOption(metaType); // 추가한 metatype을 return받아서 setfilteroption해줘야함
-		console.log("check");
 		setSubmitted(true);
 	};
 
@@ -240,7 +239,6 @@ export default function Closet() {
 						</Modal>
 					</div>
 					<div className="ClosetItems">
-				
 						{isLoading == true ? (
 							<>
 								<div className="loading-div">Loading...</div>
