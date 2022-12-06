@@ -1,7 +1,13 @@
 import { AnyAction, configureStore, EnhancedStore } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ThunkMiddleware } from "redux-thunk";
-import reducer, { fetchRecommendOutfit, UserClothState } from "./userCloth";
+import reducer, {
+	addWearDate,
+	classifyColor,
+	editUserCloth,
+	fetchRecommendOutfit,
+	UserClothState,
+} from "./userCloth";
 import {
 	fetchUserClothes,
 	fetchUserCloth,
@@ -82,22 +88,51 @@ describe("outfit reducer", () => {
 	});
 
 	it("should handle createUserCloth", async () => {
-		//
+		const file = new File(["(⌐□_□)"], "testClothImage.png", {
+			type: "image/png",
+		});
+		jest.spyOn(axios, "post").mockResolvedValue({ data: fakeUserCloth });
+		await store.dispatch(
+			createUserCloth({
+				name: "test",
+				image: file,
+				color: "black",
+				type: "shirt",
+				pattern: "stripe",
+			})
+		);
+	});
+
+	it("should handle createUserCloth is failed", async () => {
+		const file = new File(["(⌐□_□)"], "testClothImage.png", {
+			type: "image/png",
+		});
+		jest.spyOn(axios, "post").mockResolvedValue({ status: 400, data: null });
+		await store.dispatch(
+			createUserCloth({
+				name: "test",
+				image: file,
+				color: "black",
+				type: "shirt",
+				pattern: "stripe",
+			})
+		);
 	});
 
 	it("should handle classifyColor", async () => {
-		//
+		const file = new File(["(⌐□_□)"], "testClothImage.png", {
+			type: "image/png",
+		});
+		jest.spyOn(axios, "post").mockResolvedValue({ status: 200, data: null });
+		await store.dispatch(classifyColor({ image: file }));
 	});
 
 	it("should handle editUserCloth", async () => {
-		//
+		jest.spyOn(axios, "put").mockResolvedValue({ data: fakeUserCloth });
+		await store.dispatch(
+			editUserCloth({ id: 1, type: "", pattern: "", color: "" })
+		);
 	});
-
-	// it("should handle createUserCloth", async() => {
-	//     jest.spyOn(axios, "post").mockResolvedValue({data: fakeUserCloth})
-	//     await store.dispatch(createUserCloth({name:"test", image_link: "", color:"black", type:"shirt", pattern:"stripe"}))
-	//     // expect(store.getState().userCloth.userClothes).toEqual([fakeUserCloth])
-	// })
 
 	it("should handle deleteUserCloth", async () => {
 		axios.delete = jest.fn().mockResolvedValue({ data: null });
@@ -106,14 +141,10 @@ describe("outfit reducer", () => {
 	});
 
 	it("should handle addWearDate", async () => {
-		//
+		jest.spyOn(axios, "post").mockResolvedValue({
+			status: 200,
+			data: { targetId: 1, weardate: "2022/12/30" },
+		});
+		await store.dispatch(addWearDate({ id: 1, dates: "2022/12/30" }));
 	});
-
-	// it("should handle createUserCloth error", async() => {
-	//     const mockConsoleError = jest.fn()
-	//     console.error = mockConsoleError;
-	//     jest.spyOn(axios, "post").mockResolvedValue({response: {data: { title: ["error"]}}})
-	//     await store.dispatch(createUserCloth({name:"test", image:File(), color:"black", type:"shirt", pattern:"stripe"}))
-	//     expect(mockConsoleError).toBeCalled()
-	// })
 });
