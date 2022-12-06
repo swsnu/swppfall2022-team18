@@ -21,6 +21,7 @@ const OutfitPreview = (props: IProps) => {
 				></img>
 			</div>
 			<div className="OutfitLable">
+				<text id="name-label">▶ 코디 설명</text>
 				<text id="outfit-info-text" data-testid = 'outfit-info-text'>{props.info}</text>
 				{/* {props.cloth_names.map((cloth_name: string, index) => {
 					return (

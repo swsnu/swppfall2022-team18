@@ -1,6 +1,7 @@
 .Header {
-    display: flex;
+    display: inline-flex;
     flex-basis: 100%;
+    width: 100%;
     flex-direction: row;
     justify-content: center;
     align-content: center;
@@ -11,13 +12,16 @@
 .Header .headerText {
     display: flex;
     flex-basis: 100%;
+    padding-left: 13%;
     flex-direction: column;
+    justify-content: center;
+    align-content: center;
     padding-bottom: 60px;
     cursor: pointer;
 }
 
 .Header .headerButton {
-    display: flex;
+    display: inline-flex;
 }
 
 #appName {
@@ -31,26 +35,34 @@
 }
 
 #infoButton {
-    position: absolute;
-    right: 150px;
+    display: inline-flex;
+    margin-right: 5px;
+    padding-top: 8px;
     flex-direction: row;
-    top: 2%;
     background-color: white;
     border:none;
+    justify-content: center;
+    align-content: center;
+    margin-top: 10%;
+    width: 100px;
+    height: 15%;
     border-radius: 20px;
-    padding:10px;
     font-size: 20px;
 }
 
 #logoutButton {
-    position: absolute;
-    right: 40px;
+    margin-right: 5px;
+    padding-top: 8px;
+    display: inline-flex;
     flex-direction: row;
-    top: 2%;
-    border:none;
     background-color: white;
+    border:none;
+    justify-content: center;
+    align-content: center;
+    margin-top: 10%;
+    width: 100px;
+    height: 15%;
     border-radius: 20px;
-    padding:10px;
     font-size: 20px;
 }
 

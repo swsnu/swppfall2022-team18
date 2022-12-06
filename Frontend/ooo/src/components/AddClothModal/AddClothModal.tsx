@@ -88,17 +88,6 @@ const AddClothModal = (props: IProps) => {
 		{ value: "아우터" },
 	];
 
-	const COLOROPTIONS = [
-        '#0e0e0e', '#9c9c9b', '#011e66', '#2508ff', '#1f4582', '#b5cbde', '#242d42',
-        '', '#5b5a34', '#06b002', '#7f290c', '#ff0000', '#fe2900', '#feea00',
-		'#f1c276', '#feffed', '#ffffff', '#570070', '#ff00a1', '#00c4ab', 'rainbow',
-	]
-	const COLORREF = [
-        '블랙', '그레이', '네이비', '블루', '데님', '연청', '진청',
-		'청', '카키', '그린', '브라운', '레드', '오렌지', '옐로우',
-		'베이지', '아이보리', '화이트', '퍼플', '핑크', '민트', '기타색상'
-	]
-
 	// useEffect(() => {
 	// 	alert(color)
 	// }, [color]);
@@ -196,8 +185,8 @@ const AddClothModal = (props: IProps) => {
 				<div className="CenterDiv"></div>
 				<div className="UploadedClothInfoDiv">
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Type</text>
-						<br></br>
+
+						<text id="UploadedClothInfoDiv-text">▶ TYPE</text>
 						<select
 							id="meta-type-select"
 							onChange={(e) => clickMetaTypeOptionHandler(e.target.value)}
@@ -210,8 +199,7 @@ const AddClothModal = (props: IProps) => {
 						</select>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">세부 Type</text>
-						<br></br>
+						<text id="UploadedClothInfoDiv-text">▶ 세부 TYPE</text>
 						<TypeFilter
 							metaType={metaType}
 							selectHandler={clickTypeOptionHandler}
@@ -219,8 +207,6 @@ const AddClothModal = (props: IProps) => {
 					</div>
 
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Color</text>
-						<br></br>
 						<GithubPicker
 							data-testid="cloth-info-input-color"
 							color={colorHex}
@@ -231,8 +217,7 @@ const AddClothModal = (props: IProps) => {
 					</div>
 
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Pattern</text>
-						<br></br>
+						<text id="UploadedClothInfoDiv-text">▶ PATTERN</text>
 						<select
 							id="pattern-select"
 							onChange={(e) => clickPatternOptionHandler(e.target.value)}

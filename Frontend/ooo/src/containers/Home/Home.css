@@ -14,7 +14,7 @@
 }
 
 .Home .Home-header {
-	min-width: 2080px;
+	min-width: 1280px;
 }
 
 .Home .HomeTop {
@@ -23,9 +23,9 @@
 }
 /*cashing?*/
 .Home .HomeTop .ClosetDiv {
-	display: flex;
-	width: 44%;
-	min-width: 960px;
+	display: inline-block;
+	width: 50%;
+	min-width: 720px;
 	height: auto;
 	flex-direction: column;
 	margin-left: 5%;
@@ -34,14 +34,13 @@
 	border-radius: 40px;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
-	padding-bottom: 70px;
 }
 
 #Closet-text {
 	margin-top: 10px;
 	font-size: 60px;
 	color: black;
-	padding-right: 70%;
+	padding-right: 75%;
 }
 
 .Home .HomeTop .Closet-image {
@@ -54,6 +53,7 @@
 
 .Home .HomeTop .Closet-image .Closet-item-box {
 	display: flex;
+
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-content: center;
@@ -64,11 +64,10 @@
 	display: flex;
 	align-content: center;
 	justify-content: center;
-	margin-top: 40px;
 }
 
 #more-button {
-	margin-top: 30px;
+	margin-bottom: 30px;
 	background-color: black;
 	color: white;
 	border: none;
@@ -84,8 +83,9 @@
 
 .Home .HomeTop .TodayOutfit {
 	display: flex;
-	width: 44%;
-	min-width: 960px;
+	width: 38%;
+	min-width: 720px;
+	height: auto;
 	flex-direction: column;
 	margin-top: 2%;
 	margin-left: 2%;
@@ -96,28 +96,31 @@
 
 .Home .HomeTop .TodayOutfit .TodayOutfit-content {
 	display: flex;
+	flex-direction: row;
 	width: 100%;
-	height: 100%;
-	align-content: center;
-	justify-content: center;
+	height: auto;
+	align-content: flex-start;
+	justify-content: flex-start;
 	margin-top: 40px;
 }
 
 .Home .HomeTop .TodayOutfit .TodayOutfit-content .TodayOutfit-image {
-	display: flex;
+	display: inline-block;
 	align-content: center;
 	justify-content: center;
-	width: 70%;
-	height: 500px;
+	width: 50%;
+	height: 50%;
+	float: left;
 }
 
 .Home .HomeTop .TodayOutfit .TodayOutfit-content .TodayOutfit-lable {
-	display: flex;
+	display: inline-flex;
 	flex-direction: column;
-	align-content: center;
-	justify-content: center;
-	width: 30%;
-	height: 600px;
+	align-content: flex-start;
+	/* justify-content: flex-start; */
+	text-align: start;
+	width: 45%;
+	height: auto;
 }
 
 #TodayOutfit-text {
@@ -127,15 +130,25 @@
 	padding-right: 48%;
 }
 
+#name-label{
+	font-size: 22px;
+	font-weight: 1000;
+}
+
 #today-outfit-info-text {
-	font-size: 30px;
-	font-weight: 500;
-	margin-bottom: 20px;
+	font-size: 20px;
+	font-weight: 200;
+	margin-left: 2px;
+	line-height: 1.3;
+    height: 4em;
+	word-wrap: break-word;
+	overflow:hidden;
 }
 
 #today-cloth-name {
 	font-size: 20px;
 	font-weight: 200;
+	margin-left: 5px;
 }
 
 #wear-button {
@@ -146,7 +159,8 @@
 	padding: 10px;
 	font-size: 30px;
 	opacity: 0.7;
-	margin-top: 70%;
+	margin-top: 10px;
+	margin-bottom: 20px;
 }
 
 #wear-button:hover {
@@ -166,7 +180,7 @@
 .Home .HomeBottom .OutfitDiv {
 	display: flex;
 	width: 90%;
-	min-width: 1960px;
+	min-width: 1720px;
 	flex-direction: column;
 	margin-left: 5%;
 	margin-top: 2%;
@@ -189,7 +203,7 @@
 }
 
 #outfit-more-button {
-	margin-left: 85%;
+	margin-left: 83%;
 	background-color: black;
 	color: white;
 	border: none;
@@ -208,11 +222,14 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	margin-top: 20px;
+	align-content: flex-start;
 }
 
 .Home .HomeBottom .OutfitDiv .OutfitPreviewItem {
-	width: 27%;
+	width: 30%;
 	margin-left: 2%;
-	margin-right: 2%;
 	margin-bottom: 2%;
+	font-size: 20px;
+	font-weight: 200;
+	text-align: left;
 }
