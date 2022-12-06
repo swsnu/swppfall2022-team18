@@ -134,6 +134,12 @@ const AddClothModal = (props: IProps) => {
 		} else setType(value);
 	};
 
+	const clickColorOptionHandler = (value: string) => {
+		if (value == "Color") {
+			setColor(null);
+		} else setColor(value);
+	};
+
 	const colorHandler = (color: any) => {
 		setColorHex(color.hex);
 		const colorIdx = COLOROPTIONS.findIndex((item) => item == color.hex);

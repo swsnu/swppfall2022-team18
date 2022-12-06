@@ -166,8 +166,9 @@ export default function Closet() {
 		setSubmitted(true);
 	};
 
-	const clickOnDeleteHandler = (metaType: string) => {
+	const clickOnDeleteHandler = () => {
 		// setFilterOption(metaType); // 추가한 metatype을 return받아서 setfilteroption해줘야함
+		console.log("check");
 		setSubmitted(true);
 	};
 
@@ -257,7 +258,7 @@ export default function Closet() {
 												type={cloth.type}
 												color={cloth.color}
 												pattern={cloth.pattern}
-												tmp={(metaType) => clickOnDeleteHandler(metaType)}
+												tmp={clickOnDeleteHandler}
 											/>
 										);
 									})

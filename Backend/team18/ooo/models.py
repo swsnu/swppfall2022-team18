@@ -66,11 +66,8 @@ class UserCloth(models.Model):
                     name = self.image_link
                 )
                 self.image.save(file_name, File(temp_file))
-                super().save()
-            else:
-                super().save()
-        else:
-            super().save()
+                
+        super().save()
 
 
 class Outfit(models.Model):

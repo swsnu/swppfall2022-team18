@@ -96,10 +96,10 @@ const ClothDetailModal = (cloth: IProps) => {
 		? JSON.parse(cloth.weardate).map((date: any) => new Date(date))
 		: [];
 
-	const [type, setType] = useState<string | null>(cloth.type);
-	const [color, setColor] = useState<string | null>(cloth.color);
+	const [type, setType] = useState(cloth.type);
+	const [color, setColor] = useState(cloth.color);
 	const [colorHex, setColorHex] = useState<string>("");
-	const [pattern, setPattern] = useState<string | null>(cloth.pattern);
+	const [pattern, setPattern] = useState(cloth.pattern);
 	const [highlightDates, setHighlightDates] = useState(defaultDates);
 	const [wearDate, setWearDate] = useState(new Date());
 	const [isEditable, setIsEditable] = useState(false);
@@ -117,6 +117,7 @@ const ClothDetailModal = (cloth: IProps) => {
 
 	const clickMoveToRecommendedStyleHandler = () => {
 		const clothData = {
+			userHave: true,
 			type: type,
 			color: color,
 			pattern: pattern,
@@ -186,7 +187,7 @@ const ClothDetailModal = (cloth: IProps) => {
 			value == "하의 종류" ||
 			value == "아우터 종류"
 		) {
-			setType(null);
+			setType("");
 		} else setType(value);
 	};
 
@@ -198,7 +199,7 @@ const ClothDetailModal = (cloth: IProps) => {
 
 	const clickPatternOptionHandler = (value: string) => {
 		if (value == "Pattern") {
-			setPattern(null);
+			setPattern("");
 		} else setPattern(value);
 	};
 
