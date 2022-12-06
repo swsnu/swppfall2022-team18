@@ -90,19 +90,19 @@ def userinfo(request):
     '''
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized', status=401)
+    
     user = User.objects.get(username = request.user.username)
-
     if request.method == 'GET':
         data = {'username': request.user.username,}
         return HttpResponse(data, status=200)
-    
+
     if request.method == 'PUT':
         try:
             req_data = json.loads(request.body.decode())["body"]
             password = req_data['password']
 
-        except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest(e)
+        except (KeyError, JSONDecodeError) as error:
+            return HttpResponseBadRequest(error)
         
         ## 여기가 왜 안되지?
         # user.set_password(password)
@@ -118,13 +118,11 @@ def userinfo(request):
         login(request, user)
         return HttpResponse(status=204)
         
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
         # user.delete()
         request.user.delete()
         return HttpResponse(status=204)
-
     return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'], status=405)
-
 
 #@csrf_exempt
 def closets(request):
@@ -175,31 +173,30 @@ def closets(request):
             #label_set = label_set_obj
             name = request.POST['name']
             image_link = request.FILES.get('image')
-            closet = user_closet
-            type = request.POST['type']
+            input_type = request.POST['type']
             color = request.POST['color']
             pattern = request.POST['pattern']
             label_set_obj, _ = LabelSet.objects.get_or_create(
-                type = type, color = color, pattern= pattern
+                type = input_type, color = color, pattern= pattern
             )
             label_set = label_set_obj
         except (KeyError, JSONDecodeError) as error:
             print(error)
             return HttpResponseBadRequest()
 
-        closet_item = UserCloth(
+        closet_new_item = UserCloth(
             name=name,
             image_link=image_link,
-            closet=closet,
-            type=type,
+            closet=user_closet,
+            type=input_type,
             color=color,
             pattern=pattern,
             label_set=label_set,
             # dates - created as default value []
         )
-        closet_item.save()
+        closet_new_item.save()
         return HttpResponse(status=200)
-    
+
     return HttpResponseNotAllowed(['GET', 'POST'], status=405)
 
 #@csrf_exempt
@@ -241,7 +238,7 @@ def closet_item(request, cloth_id):
         }
         return JsonResponse(json_closet)
 
-    elif request.method == 'POST':
+    if request.method == 'POST':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
 
@@ -260,19 +257,19 @@ def closet_item(request, cloth_id):
 
         return HttpResponse(status=200)
 
-    elif request.method == 'PUT':
+    if request.method == 'PUT':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
 
         try:
             req_data = json.loads(request.body.decode())["body"]
 
-            type = req_data['type']
+            input_type = req_data['type']
             color = req_data['color']
             pattern = req_data['pattern']
 
             label_set_obj, _ = LabelSet.objects.get_or_create(
-                type=type, color=color, pattern=pattern
+                type=input_type, color=color, pattern=pattern
             )
             label_set = label_set_obj
             # old_date = req_data['old_date']
@@ -281,7 +278,7 @@ def closet_item(request, cloth_id):
             print(error)
             return HttpResponseBadRequest()
 
-        target_item_obj.type = type
+        target_item_obj.type = input_type
         target_item_obj.color = color
         target_item_obj.pattern = pattern
         target_item_obj.label_set = label_set
@@ -309,18 +306,18 @@ def closet_item(request, cloth_id):
         }
         return JsonResponse(json_closet, status=200)
 
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
 
         try:
             target_item_obj.delete()
             return HttpResponse(status=200)
-        except (KeyError, JSONDecodeError) as e:
+        except (KeyError, JSONDecodeError) as error:
+            print(error)
             return HttpResponseBadRequest()
 
-    else:
-        return HttpResponseNotAllowed(['GET', 'POST', 'PUT', 'DELETE'], status=405)
+    return HttpResponseNotAllowed(['GET', 'POST', 'PUT', 'DELETE'], status=405)
 
 @ensure_csrf_cookie
 def token(request):
@@ -385,7 +382,7 @@ def outfit_list(request):
         }
         return JsonResponse(content, status=200)
 
-    elif request.method == 'POST':
+    if request.method == 'POST':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
 
@@ -455,15 +452,15 @@ def outfit_list(request):
             all_outfits = sorted(all_outfits, key=lambda outfit: outfit.popularity, reverse=True)
             if filter_recommend == "True":
                 recommend = []
-                for outfit in all_outfits:
-                    outfit_cloth_list = list(outfit.sample_cloth.all())
+                for outfit_item in all_outfits:
+                    outfit_cloth_list = list(outfit_item.sample_cloth.all())
 
                     can_recommend = True
                     for cloth in outfit_cloth_list:
                         if not cloth in samplecloth_list:
                             can_recommend = False
                     if can_recommend:
-                        recommend.append(outfit)   
+                        recommend.append(outfit_item)   
                 all_outfits = recommend
  
         elif filter_type or filter_color or filter_pattern:
@@ -496,22 +493,22 @@ def outfit_list(request):
         outfits_count = len(all_outfits)
         response_outfit_range = min(outfits_count, cursor + page_size + 1)
 
-        outfit_list = all_outfits[cursor:response_outfit_range]
+        outfits = all_outfits[cursor:response_outfit_range]
 
         is_last = False
 
-        if len(outfit_list) != page_size + 1:
+        if len(outfits) != page_size + 1:
             is_last = True
         
         if not is_last:
-            outfit_list.pop()
+            outfits.pop()
             new_cursor = cursor + page_size
         else:
             new_cursor = 0
 
         json_outfit_list = []
-        for outfit in outfit_list:
-            outfit_serialize = OutfitSerializer(outfit)
+        for outfit_item in outfits:
+            outfit_serialize = OutfitSerializer(outfit_item)
             json_outfit = {
                 "id" : outfit_serialize.data['id'],
                 "outfit_info": outfit_serialize.data['outfit_info'],
@@ -552,13 +549,14 @@ def outfit(request, outfit_id):
             return HttpResponse('Unauthorized', status=401)
 
         try:
-            chosen_outfit = Outfit.objects.get(id=outfit_id)
+            outfit_item = Outfit.objects.get(id=outfit_id)
         except Outfit.DoesNotExist:
             return HttpResponseNotFound()
 
-        sample_cloth_list = SampleCloth.objects.filter(outfit=chosen_outfit)
+        sample_cloth_list = SampleCloth.objects.filter(outfit=outfit_item)
 
-        outfit_serialize = OutfitSerializer(chosen_outfit)
+        outfit_serialize = OutfitSerializer(outfit_item)
+
         json_outfit = {
             "id" : outfit_serialize.data['id'],
             "outfit_info": outfit_serialize.data['outfit_info'],
@@ -599,10 +597,12 @@ def outfit(request, outfit_id):
 # @ensure_csrf_cookie
 #@csrf_exempt
 def sample_cloth(request, samplecloth_id):
+
     '''
     response with chosen samplecloth data and usercloth data
     that have same labelset
     '''
+
     if request.method == 'GET':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
