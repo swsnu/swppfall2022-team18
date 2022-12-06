@@ -6,9 +6,7 @@ import FilterModal from "./FilterModal";
 import React from "react";
 import { OutfitState } from "../../store/slices/outfit";
 import { UserClothState } from "../../store/slices/userCloth";
-import  {
-	IProps as TypeFilterProps,
-} from "../TypeFilter/TypeFilter";
+import { IProps as TypeFilterProps } from "../TypeFilter/TypeFilter";
 import userEvent from "@testing-library/user-event";
 
 const stubInitialOutfitState: OutfitState = {
@@ -19,7 +17,7 @@ const stubInitialOutfitState: OutfitState = {
 			outfit_name: "",
 			popularity: 1,
 			image_link: "",
-			purchase_link: ""
+			purchase_link: "",
 		},
 	],
 	selectedOutfit: null,
@@ -73,23 +71,6 @@ jest.mock(
 		)
 );
 
-jest.mock(
-	"../TypeFilter/TypeFilter",
-	// eslint-disable-next-line react/display-name
-	() => (props: TypeFilterProps) =>
-		(
-			<div className="SpyFilterModal">
-				<button
-					id="done-button"
-					data-testid="typefilter-done-button"
-					onClick={() => props.selectHandler("상의 종류")}
-				>
-					Done
-				</button>
-			</div>
-		)
-);
-
 describe("<FilterModal/>", () => {
 	let filterModal: JSX.Element;
 	beforeAll(() => {
@@ -127,28 +108,26 @@ describe("<FilterModal/>", () => {
 		fireEvent.click(selectedOption);
 		expect(defaultOption.selected).toBeFalsy();
 		expect(selectedOption.selected).toBeTruthy();
-		fireEvent.click(defaultOption);
 	});
 
-	it("should handle ColorOptionHandler", () => {
+	it("should handle metaTypeOptionHandler branch", () => {
 		render(filterModal);
-		const selectElement = screen.getAllByRole("combobox", {})[1];
-		userEvent.selectOptions(selectElement, "블랙");
+		const selectElement = screen.getAllByRole("combobox", {})[0];
+		userEvent.selectOptions(selectElement, "옷 종류");
 		const defaultOption = screen.getByRole("option", {
-			name: "Color",
+			name: "옷 종류",
 		}) as HTMLOptionElement;
-		const selectedOption = screen.getByRole("option", {
-			name: "블랙",
-		}) as HTMLOptionElement;
-		fireEvent.click(selectedOption);
-		expect(defaultOption.selected).toBeFalsy();
-		expect(selectedOption.selected).toBeTruthy();
-		fireEvent.click(defaultOption);
+		expect(defaultOption.selected).toBeTruthy();
+	});
+
+	it("should handle ColorHandler", () => {
+		render(filterModal);
+		const GithubPicker = screen.getByTestId("color-select");
 	});
 
 	it("should handle PatternOptionHandler", () => {
 		render(filterModal);
-		const selectElement = screen.getAllByRole("combobox", {})[2];
+		const selectElement = screen.getAllByRole("combobox", {})[1];
 		userEvent.selectOptions(selectElement, "None");
 		const defaultOption = screen.getByRole("option", {
 			name: "Pattern",
@@ -160,6 +139,15 @@ describe("<FilterModal/>", () => {
 		expect(defaultOption.selected).toBeFalsy();
 		expect(selectedOption.selected).toBeTruthy();
 		fireEvent.click(defaultOption);
+	});
+	it("should handle PatternOptionHandler branch", () => {
+		render(filterModal);
+		const selectElement = screen.getAllByRole("combobox", {})[1];
+		userEvent.selectOptions(selectElement, "Pattern");
+		const defaultOption = screen.getByRole("option", {
+			name: "Pattern",
+		}) as HTMLOptionElement;
+		expect(defaultOption.selected).toBeTruthy();
 	});
 
 	it("should handle typeFilter", () => {

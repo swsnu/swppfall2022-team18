@@ -85,7 +85,7 @@ describe("<ClosetItem />", () => {
 									color="color"
 									pattern="pattern"
 									clickClothDetailPopupHandler={() => mockClickPopupHandler}
-									tmp={() => mockClickOnDeleteHandler}
+									tmp={(metatype) => mockClickOnDeleteHandler(metatype)}
 								/>
 							}
 						/>
@@ -118,11 +118,19 @@ describe("<ClosetItem />", () => {
 		fireEvent.click(closebutton);
 	});
 
-	it("should handle tmp branch", () => {
+	it("should handle tmp branch with detail modal", () => {
 		render(closetItemTmp);
 		const imgbutton = screen.getByTestId("clothimg");
 		fireEvent.click(imgbutton);
 		const closebutton = screen.getByTestId("spyModal-close-button");
+		fireEvent.click(closebutton);
+	});
+
+	it("should handle tmp branch", () => {
+		render(closetItemTmp);
+		const imgbutton = screen.getByTestId("clothimg");
+		fireEvent.click(imgbutton);
+		const closebutton = screen.getByTestId("modal-close-button");
 		fireEvent.click(closebutton);
 	});
 });

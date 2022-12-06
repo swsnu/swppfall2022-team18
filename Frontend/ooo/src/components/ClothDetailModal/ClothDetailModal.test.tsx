@@ -86,12 +86,12 @@ describe("<ClothDetaillModal />", () => {
 		);
 	});
 	it("should render without errors", () => {
-		// render(clothdetailmodal);
-		// screen.getByText("종류");
-		// screen.getByText("색상");
-		// screen.getByText("무늬");
-		// const moverecommendbutton = screen.getByText("Get Recommendation");
-		// fireEvent.click(moverecommendbutton);
-		// expect(mockNavigate).toHaveBeenCalledTimes(1);
+		render(clothdetailmodal);
+		screen.getByText("종류");
+		screen.getByText("색상");
+		screen.getByText("무늬");
+		const moverecommendbutton = screen.getByText("Get Recommendation");
+		fireEvent.click(moverecommendbutton);
+		expect(mockNavigate).toHaveBeenCalledTimes(1);
 	});
 });

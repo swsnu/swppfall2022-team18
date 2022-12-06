@@ -125,11 +125,11 @@ const FilterModal = (props: IProps) => {
 		} else setType(value);
 	};
 
-	const clickColorOptionHandler = (value: string) => {
-		if (value == "Color") {
-			setColor(null);
-		} else setColor(value);
-	};
+	// const clickColorOptionHandler = (value: string) => {
+	// 	if (value == "Color") {
+	// 		setColor(null);
+	// 	} else setColor(value);
+	// };
 
 	const clickPatternOptionHandler = (value: string) => {
 		if (value == "Pattern") {

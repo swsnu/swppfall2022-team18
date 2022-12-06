@@ -98,6 +98,18 @@ jest.mock(
 		)
 );
 
+jest.mock("react-router-dom", () => ({
+	...jest.requireActual("react-router-dom"),
+	useLocation: () => ({
+		state: {
+			userHave: false,
+			type: "",
+			color: "",
+			pattern: "",
+		},
+	}),
+}));
+
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
 	...jest.requireActual("react-router"),
@@ -132,6 +144,14 @@ describe("<Outfit />", () => {
 			</Provider>
 		);
 	});
+
+	// const clothData = {
+	//     userHave: true,
+	//     type: type,
+	//     color: color,
+	//     pattern: pattern,
+	// };
+	// navigate("/outfit/", { state: clothData });
 
 	it("should render Outfit page", () => {
 		render(outfit);
