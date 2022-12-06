@@ -256,14 +256,11 @@ export default function Outfit() {
 									data-testid="type-filter-delete-button"
 									onClick={() => clickTypeDeleteButton()}
 								>
-									delete
+									x
 								</button>
 							</div>
-						) : (
-							<div>
-								<p>None</p>
-							</div>
-						)}
+						) : <></>
+						}
 						{filters.color != null ? (
 							<div className="now-color-filter-div">
 								색 : {filters.color}
@@ -272,7 +269,7 @@ export default function Outfit() {
 									data-testid="color-filter-delete-button"
 									onClick={() => clickColorDeleteButton()}
 								>
-									delete
+									x
 								</button>
 							</div>
 						) : (
@@ -286,12 +283,19 @@ export default function Outfit() {
 									data-testid="pattern-filter-delete-button"
 									onClick={() => clickPatternDeleteButton()}
 								>
-									delete
+									x
 								</button>
 							</div>
 						) : (
 							<></>
 						)}
+						{filters.pattern === null && filters.color===null && filters.type===null?
+						<div>
+							<p>None</p>
+						</div>
+						:
+						<></>
+						}
 					</div>
 				</div>
 				<Modal id="filter-modal" isOpen={modalOpen}>

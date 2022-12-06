@@ -92,11 +92,11 @@ export default function Setting() {
                     <text id='myinfo-text'>내 정보 설정</text>
                     <div id='text-input'>
                         <text id='name-text'>아이디</text>
-                        <input id='name-input' defaultValue={name} disabled={true}></input>
+                        <input id='name-input' style={{marginLeft:'6.5rem'}} defaultValue={name} disabled={true}></input>
                     </div>
                     <div id='text-input'>
-                        <text id='name-text' >비밀번호</text>
-                        <input id='name-input' data-testid="password-input" 
+                        <text id='name-text'>비밀번호</text>
+                        <input id='name-input' style={{marginLeft:'4.5rem'}} data-testid="password-input" 
                         onChange={(event) => {setPassword(event.target.value)}}
                         value={password}></input>
                     </div>
