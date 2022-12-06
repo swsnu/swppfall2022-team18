@@ -2,6 +2,7 @@ import React from "react";
 import "./FilterModal.css";
 import { useState } from "react";
 import TypeFilter from "../TypeFilter/TypeFilter";
+import { GithubPicker } from "react-color";
 
 export interface IProps {
 	clickDoneHandler: (
@@ -16,6 +17,7 @@ const FilterModal = (props: IProps) => {
 	const [color, setColor] = useState<string | null>(null);
 	const [pattern, setPattern] = useState<string | null>(null);
 	const [metaType, setMetaType] = useState<string | null>(null);
+	const [colorHex, setColorHex] = useState<string>("");
 
 	const ColorOptions = [
 		{ value: "Color" },
@@ -58,6 +60,53 @@ const FilterModal = (props: IProps) => {
 		{ value: "아우터" },
 	];
 
+	const COLOROPTIONS = [
+		"#0e0e0e",
+		"#9c9c9b",
+		"#011e66",
+		"#2508ff",
+		"#1f4582",
+		"#b5cbde",
+		"#242d42",
+		"",
+		"#5b5a34",
+		"#06b002",
+		"#7f290c",
+		"#ff0000",
+		"#fe2900",
+		"#feea00",
+		"#f1c276",
+		"#feffed",
+		"#ffffff",
+		"#570070",
+		"#ff00a1",
+		"#00c4ab",
+		"rainbow",
+	];
+	const COLORREF = [
+		"블랙",
+		"그레이",
+		"네이비",
+		"블루",
+		"데님",
+		"연청",
+		"진청",
+		"청",
+		"카키",
+		"그린",
+		"브라운",
+		"레드",
+		"오렌지",
+		"옐로우",
+		"베이지",
+		"아이보리",
+		"화이트",
+		"퍼플",
+		"핑크",
+		"민트",
+		"기타색상",
+	];
+
 	const clickMetaTypeOptionHandler = (value: string) => {
 		if (value == "옷 종류") {
 			setMetaType(null);
@@ -88,6 +137,12 @@ const FilterModal = (props: IProps) => {
 		} else setPattern(value);
 	};
 
+	const colorHandler = (color: any) => {
+		setColorHex(color.hex);
+		const colorIdx = COLOROPTIONS.findIndex((item) => item == color.hex);
+		setColor(COLORREF[colorIdx]);
+	};
+
 	return (
 		<div className="FilterModal">
 			<div>
@@ -108,20 +163,15 @@ const FilterModal = (props: IProps) => {
 				></TypeFilter>
 			</div>
 
-			<select
-				id="color-select"
-				onChange={(e) => clickColorOptionHandler(e.target.value)}
-			>
-				{ColorOptions.map((option, index) => (
-					<option
-						key={index}
-						value={option.value}
-						// onClick={() => clickColorOptionHandler(option.value)}
-					>
-						{option.value}
-					</option>
-				))}
-			</select>
+			<br></br>
+			<text>Color</text>
+			<GithubPicker
+				data-testid="color-select"
+				color={colorHex}
+				colors={COLOROPTIONS}
+				onChange={colorHandler}
+			/>
+			<text>{color}</text>
 
 			<select
 				id="pattern-select"
