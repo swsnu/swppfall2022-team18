@@ -329,6 +329,7 @@ def token(request):
 #outfit part start
 # @ensure_csrf_cookie
 #@csrf_exempt
+@ensure_csrf_cookie
 def outfit_list(request):
     '''
         filter outfit
