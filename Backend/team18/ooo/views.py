@@ -463,7 +463,7 @@ def outfit_list(request):
         except (KeyError, JSONDecodeError) as error:
             return HttpResponseBadRequest(error)
 
-        # print(req_data)
+        print(filter_recommend)
 
         using_labelset = False
 
@@ -515,7 +515,7 @@ def outfit_list(request):
 
             all_outfits = list(set(all_outfits))
             all_outfits = sorted(all_outfits, key=lambda outfit: outfit.popularity, reverse=True)
-            if filter_recommend == "True":
+            if filter_recommend == True or filter_recommend == "True":
                 recommend = []
                 for outfit_item in all_outfits:
                     outfit_cloth_list = list(outfit_item.sample_cloth.all())

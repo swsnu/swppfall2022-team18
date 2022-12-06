@@ -40,6 +40,13 @@ const ClosetItem = (props: IProps) => {
 		// setSubmitted(true);
 	};
 
+	const clickDetailCloseButtonHandler = () => {
+		setClothDetailModalOpen(false);
+		if (props.tmp) {
+			props.tmp(props.metatype);
+		}
+	};
+
 	// useEffect(() => {
 	// 	// alert('진입')
 	// 	dispatch(fetchUserClothes());
@@ -80,7 +87,7 @@ const ClosetItem = (props: IProps) => {
 						id="modal-close-button"
 						data-testid="modal-close-button"
 						onClick={() => {
-							setClothDetailModalOpen(false);
+							clickDetailCloseButtonHandler();
 						}}
 					>
 						닫기

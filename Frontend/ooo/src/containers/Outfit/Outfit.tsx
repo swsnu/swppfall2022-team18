@@ -1,6 +1,6 @@
 import { logoutUser } from "../../api/user";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header/Header";
 import FilterModal from "../../components/FilterModal/FilterModal";
@@ -21,20 +21,23 @@ export interface IProps {
 	pattern: string | null;
 }
 
-export default function Outfit(props: IProps) {
+export default function Outfit() {
 	const dispatch = useDispatch<AppDispatch>();
 	const outfitState = useSelector(selectOutfit);
 	// const { state } = useLocation();
 	// console.log("OUTFIT STATE WITH PROPS")
 	// console.log(state);
 
-	const [userHave, setUserHave] = useState(false);
+	const { state } = useLocation();
+	console.log(state);
+
+	const [userHave, setUserHave] = useState(state.userHave);
 	const [recommend, setRecommend] = useState(false);
 	const [clothFilter, setClothFilter] = useState(false);
 	const [filters, setFilters] = useState({
-		type: props.type,
-		color: props.color,
-		pattern: props.pattern,
+		type: state.type,
+		color: state.color,
+		pattern: state.pattern,
 	});
 	const [modalOpen, setModalOpen] = useState(false);
 	const [isLast, setIsLast] = useState(outfitState.isLast);
@@ -50,6 +53,13 @@ export default function Outfit(props: IProps) {
 			return true;
 		} else return false;
 	};
+	// if (state) {
+	// 	setFilters({
+	// 		type: state.type,
+	// 		color: state.color,
+	// 		pattern: state.pattern,
+	// 	});
+	// }
 
 	useEffect(() => {
 		//login check, redirect to login page
