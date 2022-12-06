@@ -42,7 +42,7 @@ export default function Login() {
 
 	const clickSignUpHandler = () => {
 		navigate("/signup");
-	}
+	};
 
 	if (login) {
 		return <Navigate to="/home" />;
@@ -82,7 +82,9 @@ export default function Login() {
 							{!wrongInput ? (
 								<div></div>
 							) : (
-								<text data-testid="wrong-text" id="wrong-text">ID, Password가 틀렸습니다.</text>
+								<text data-testid="wrong-text" id="wrong-text">
+									ID, Password가 틀렸습니다.
+								</text>
 							)}
 						</div>
 						<div className="button-div">

@@ -4,16 +4,15 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 
-import {  classifyColor, createUserCloth } from "../../store/slices/userCloth";
-import TypeFilter from "../TypeFilter/TypeFilter"
-import { GithubPicker } from 'react-color';
+import { classifyColor, createUserCloth } from "../../store/slices/userCloth";
+import TypeFilter from "../TypeFilter/TypeFilter";
+import { GithubPicker } from "react-color";
 
 export interface IProps {
 	modal_close: (metaType: string) => void;
 }
 
 const AddClothModal = (props: IProps) => {
-
 	const [metaType, setMetaType] = useState<string | null>(null); // 상의, 하의, 아우터
 	const [type, setType] = useState<string | null>(null);
 	const [color, setColor] = useState<string | null>(null);
@@ -88,17 +87,6 @@ const AddClothModal = (props: IProps) => {
 		{ value: "아우터" },
 	];
 
-	const COLOROPTIONS = [
-        '#0e0e0e', '#9c9c9b', '#011e66', '#2508ff', '#1f4582', '#b5cbde', '#242d42',
-        '', '#5b5a34', '#06b002', '#7f290c', '#ff0000', '#fe2900', '#feea00',
-		'#f1c276', '#feffed', '#ffffff', '#570070', '#ff00a1', '#00c4ab', 'rainbow',
-	]
-	const COLORREF = [
-        '블랙', '그레이', '네이비', '블루', '데님', '연청', '진청',
-		'청', '카키', '그린', '브라운', '레드', '오렌지', '옐로우',
-		'베이지', '아이보리', '화이트', '퍼플', '핑크', '민트', '기타색상'
-	]
-
 	// useEffect(() => {
 	// 	alert(color)
 	// }, [color]);
@@ -124,15 +112,16 @@ const AddClothModal = (props: IProps) => {
 	};
 
 	const saveFileImage = async (e: any) => {
-		const uploadedImage = e.target.files[0]
+		const uploadedImage = e.target.files[0];
 		setFileImage(URL.createObjectURL(uploadedImage));
-		setFile(uploadedImage)
+		setFile(uploadedImage);
 
 		const data = {
-			image: uploadedImage
+			image: uploadedImage,
 		};
 		const result = await dispatch(classifyColor(data));
-		setColor(result.payload.color);};
+		setColor(result.payload.color);
+	};
 
 	const clickMetaTypeOptionHandler = (value: string) => {
 		if (value == "옷 종류") {
@@ -152,11 +141,11 @@ const AddClothModal = (props: IProps) => {
 		} else setType(value);
 	};
 
-	const clickColorOptionHandler = (value: string) => {
-		if (value == "Color") {
-			setColor(null);
-		} else setColor(value);
-	};
+	// const clickColorOptionHandler = (value: string) => {
+	// 	if (value == "Color") {
+	// 		setColor(null);
+	// 	} else setColor(value);
+	// };
 
 	const colorHandler = (color: any) => {
 		setColorHex(color.hex);
@@ -167,7 +156,8 @@ const AddClothModal = (props: IProps) => {
 	const clickPatternOptionHandler = (value: string) => {
 		if (value == "Pattern") {
 			setPattern(null);
-		} else setPattern(value);};
+		} else setPattern(value);
+	};
 
 	return (
 		<div className="AddClothModal">
@@ -200,6 +190,7 @@ const AddClothModal = (props: IProps) => {
 						<br></br>
 						<select
 							id="meta-type-select"
+							data-testid="meta-type-select"
 							onChange={(e) => clickMetaTypeOptionHandler(e.target.value)}
 						>
 							{MetaTypeOptions.map((option, index) => (
@@ -235,6 +226,7 @@ const AddClothModal = (props: IProps) => {
 						<br></br>
 						<select
 							id="pattern-select"
+							data-testid="pattern-select"
 							onChange={(e) => clickPatternOptionHandler(e.target.value)}
 						>
 							{PatternOptions.map((option, index) => (

@@ -69,6 +69,10 @@ jest.mock(
 					<text id="stripe-label">무늬</text>
 					<text id="stripe-text">{props.pattern}</text>
 				</div>
+				<button
+					data-testid="spyClosetItem-delete-button"
+					onClick={() => props.tmp}
+				></button>
 			</div>
 		)
 );
@@ -254,5 +258,14 @@ describe("<Closet />", () => {
 		fireEvent.click(addClothButton);
 		const modalDoneButton = screen.getByTestId("add-cloth-done-button");
 		fireEvent.click(modalDoneButton);
+	});
+
+	it("should handle cloth delete button", () => {
+		render(closet);
+		const closetitems = screen.getAllByTestId("spyClosetItem")[0];
+		fireEvent.click(closetitems);
+		console.log("clickDeleteButton");
+		const deleteButton = screen.getByTestId("spyClosetItem-delete-button");
+		fireEvent.click(deleteButton);
 	});
 });

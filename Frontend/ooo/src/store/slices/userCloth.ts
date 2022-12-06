@@ -103,24 +103,21 @@ export const createUserCloth = createAsyncThunk(
 
 export const classifyColor = createAsyncThunk(
 	"closet/classifyColor",
-    async (
-		data: Pick<TempUserClothType, "image">,
+	async (
+		data: Pick<TempUserClothType, "image">
 		// { dispatch }
 	) => {
 		const formData = new FormData();
-		formData.append("image",data.image)
-		formData.append('enctype',"multipart/form-data")
-        const response = await axios.post(
-			`/api/ooo/model/`,formData,
-			{
-				// headers,
-				// body: data
-			}
-		);
-		if(response.status === 200){
-			return response.data
+		formData.append("image", data.image);
+		formData.append("enctype", "multipart/form-data");
+		const response = await axios.post(`/api/ooo/model/`, formData, {
+			// headers,
+			// body: data
+		});
+		if (response.status === 200) {
+			return response.data;
 		}
-    }
+	}
 );
 
 export const editUserCloth = createAsyncThunk(

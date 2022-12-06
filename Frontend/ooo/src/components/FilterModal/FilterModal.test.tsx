@@ -161,10 +161,4 @@ describe("<FilterModal/>", () => {
 		const doneButton = screen.getByTestId("done-button");
 		fireEvent.click(doneButton);
 	});
-
-	it("should handle typeFilter", () => {
-		render(filterModal);
-		const typeFilterDoneButton = screen.getByTestId("typefilter-done-button");
-		fireEvent.click(typeFilterDoneButton);
-	});
 });

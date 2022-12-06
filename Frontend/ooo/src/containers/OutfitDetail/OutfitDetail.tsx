@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
 import { AppDispatch } from "../../store";
 import "./OutfitDetail.css";
-import { fetchOutfit, fetchSampleCloth, selectOutfit } from "../../store/slices/outfit";
+import {
+	fetchOutfit,
+	fetchSampleCloth,
+	selectOutfit,
+} from "../../store/slices/outfit";
 import Header from "../../components/Header/Header";
 import { logoutUser } from "../../api/user";
 import Modal from "react-modal";
 import SampleClothModal from "../../components/SampleClothModal/SampleClothModal";
-
 
 const OutfitDetail = () => {
 	const { id } = useParams();
@@ -25,22 +28,19 @@ const OutfitDetail = () => {
 		dispatch(fetchOutfit(Number(id)));
 	}, []);
 
-
 	const clickPurchaseButtonHander = (purchase_link: string) => {
 		navigate("/Redirect", { state: { url: purchase_link } });
 	};
 
-	const clickClothHandler = async(id: number) => {
+	const clickClothHandler = async (id: number) => {
 		//use modal
 		setModalOpen(true);
-		await dispatch(fetchSampleCloth(id))
+		await dispatch(fetchSampleCloth(id));
 		setSelectedCloth(id);
-		if (outfitState.userCloth === null){
+		if (outfitState.userCloth === null) {
 			setUserHave(false);
-		}
-		else{
+		} else {
 			setUserHave(true);
-
 		}
 	};
 
@@ -78,18 +78,32 @@ const OutfitDetail = () => {
 			</div>
 			<div className="OutfitDetail-body">
 				<div className="Outfit-image">
-					<img id="-outfit-img" src={outfitState.selectedOutfit?.image_link} alt='로딩 중'/>
+					<img
+						id="-outfit-img"
+						src={outfitState.selectedOutfit?.image_link}
+						alt="로딩 중"
+					/>
 				</div>
 				<div className="OutfitDetailData">
 					<button
 						id="outfit-purchase-button"
 						data-testid="outfit-purchase-button"
-						onClick={() => clickPurchaseButtonHander(outfitState.selectedOutfit !== null ? outfitState.selectedOutfit.purchase_link : "")}
+						onClick={() =>
+							clickPurchaseButtonHander(
+								outfitState.selectedOutfit !== null
+									? outfitState.selectedOutfit.purchase_link
+									: ""
+							)
+						}
 					>
 						Purchase Button
 					</button>
-					<div className="OutfitName">{outfitState.selectedOutfit?.outfit_name}</div>
-					<div className="OutfitInfo">{outfitState.selectedOutfit?.outfit_info}</div>
+					<div className="OutfitName">
+						{outfitState.selectedOutfit?.outfit_name}
+					</div>
+					<div className="OutfitInfo">
+						{outfitState.selectedOutfit?.outfit_info}
+					</div>
 					<text id="samplecloth-title">구성하는 옷들</text>
 					<div className="sampleClothes">
 						{outfitState.sampleClothes.map((sc) => {
@@ -100,7 +114,7 @@ const OutfitDetail = () => {
 										data-testid="samplecloth-image"
 										src={sc.image_link}
 										onClick={() => clickClothHandler(sc.id)}
-										alt = '로딩 중'
+										alt="로딩 중"
 									></img>
 								</div>
 							);
@@ -110,13 +124,41 @@ const OutfitDetail = () => {
 				<Modal id="sample-modal" isOpen={modalOpen} ariaHideApp={false}>
 					<SampleClothModal
 						userHave={userHave}
-						userCloth_url={outfitState.userCloth === null ? "" : outfitState.userCloth.image_link}
-						sampleCloth_url={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.image_link}
-						type={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.type}
-						color={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.color}
-						pattern={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.pattern}
-						sampleCloth_name={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.name}
-						sampleCloth_link={outfitState.sampleCloth === null ? "" : outfitState.sampleCloth.purchase_link}
+						userCloth_url={
+							outfitState.userCloth === null
+								? ""
+								: outfitState.userCloth.image_link
+						}
+						sampleCloth_url={
+							outfitState.sampleCloth === null
+								? ""
+								: outfitState.sampleCloth.image_link
+						}
+						type={
+							outfitState.sampleCloth === null
+								? ""
+								: outfitState.sampleCloth.type
+						}
+						color={
+							outfitState.sampleCloth === null
+								? ""
+								: outfitState.sampleCloth.color
+						}
+						pattern={
+							outfitState.sampleCloth === null
+								? ""
+								: outfitState.sampleCloth.pattern
+						}
+						sampleCloth_name={
+							outfitState.sampleCloth === null
+								? ""
+								: outfitState.sampleCloth.name
+						}
+						sampleCloth_link={
+							outfitState.sampleCloth === null
+								? ""
+								: outfitState.sampleCloth.purchase_link
+						}
 					></SampleClothModal>
 					<div id="close-buton-div">
 						<button
