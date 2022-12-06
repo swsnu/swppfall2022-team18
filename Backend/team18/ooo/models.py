@@ -69,6 +69,8 @@ class UserCloth(models.Model):
                 super().save()
             else:
                 super().save()
+        else:
+            super().save()
 
 
 class Outfit(models.Model):
@@ -100,6 +102,8 @@ class Outfit(models.Model):
                 super().save()
             else:
                 super().save()
+        else:
+            super().save()
 
         
             

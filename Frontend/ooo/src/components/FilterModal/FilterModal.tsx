@@ -92,7 +92,7 @@ const FilterModal = (props: IProps) => {
 		<div className="FilterModal">
 			<div>
 				<select
-					id="type-select"
+					id="meta-type-select"
 					onChange={(e) => clickMetaTypeOptionHandler(e.target.value)}
 				>
 					{MetaTypeOptions.map((option, index) => (
