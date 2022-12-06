@@ -72,6 +72,18 @@ const ClosetItem = (props: IProps) => {
 				data-testid="detail-modal"
 				isOpen={clothDetailModalOpen}
 			>
+				<div id="close-buton-div">
+					<button
+						id="modal-close-button"
+						data-testid="modal-close-button"
+						onClick={() => {
+							setClothDetailModalOpen(false);
+						}}
+					>
+						닫기
+					</button>
+				</div>
+				<div id = "modal-frame">
 				<ClothDetailModal
 					id={props.user_cloth_id}
 					image={props.source_url}
@@ -82,31 +94,15 @@ const ClosetItem = (props: IProps) => {
 					pattern={props.pattern}
 					modal_close={clickClothDetailPopupCloseHandler}
 				></ClothDetailModal>
-				<div id="close-buton-div">
-					<button
-						id="modal-close-button"
-						data-testid="modal-close-button"
-						onClick={() => {
-							clickDetailCloseButtonHandler();
-						}}
-					>
-						닫기
-					</button>
 				</div>
 			</Modal>
 			<div className="ClothLable">
-				<div id="type-label">
-					<b>종류</b>
-				</div>
-				<div id="type-text">{props.type}</div>
-				<div id="color-label">
-					<b>색상</b>
-				</div>
-				<div id="color-text">{props.color}</div>
-				<div id="stripe-label">
-					<b>무늬</b>
-				</div>
-				<div id="stripe-text">{props.pattern}</div>
+				<text id="type-label"><b>▶ 종류</b></text>
+				<text id="type-text">{props.type}</text>
+				<text id="color-label"><b>▶ 색상</b></text>
+				<text id="color-text">{props.color}</text>
+				<text id="stripe-label"><b>▶ 무늬</b></text>
+				<text id="stripe-text">{props.pattern}</text>
 			</div>
 		</div>
 	);

@@ -98,6 +98,7 @@ const OutfitDetail = () => {
 					>
 						Purchase Button
 					</button>
+<<<<<<< HEAD
 					<div className="OutfitName">
 						{outfitState.selectedOutfit?.outfit_name}
 					</div>
@@ -105,6 +106,12 @@ const OutfitDetail = () => {
 						{outfitState.selectedOutfit?.outfit_info}
 					</div>
 					<text id="samplecloth-title">구성하는 옷들</text>
+=======
+					<div className="OutfitName">{outfitState.selectedOutfit?.outfit_name}</div>
+					<text id="name-label">▶ 코디 설명</text>
+					<div className="OutfitInfo">{outfitState.selectedOutfit?.outfit_info}</div>
+					<text id="name-label">▶ 구성 옷</text>
+>>>>>>> 55ffd6f919d7ed01f8947e3ce484ba8278ee5ee4
 					<div className="sampleClothes">
 						{outfitState.sampleClothes.map((sc) => {
 							return (

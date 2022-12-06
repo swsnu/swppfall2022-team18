@@ -10,16 +10,19 @@
 .ClothDetailModal {
 	display: flex;
 	flex-basis: 100%;
-	height: auto;
+	height: 90%;
+	width: 100%;
 	flex-direction: column;
 }
 
 #ClothDetailModal-text {
 	font-size: 30px;
 	color: black;
+	margin-left: 25px;
 }
 
 .ClothDetailModal .ClothDetailModalTop {
+	margin-top: 10px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -38,21 +41,22 @@
 #cloth-img-modal {
 	height: 100%;
 	object-fit: contain;
+	margin-bottom: 10px;
 }
 
 .ClothDetailModal .ClothDetailModalTop .ClothLable-modal {
 	display: flex;
-	width: 40%;
 	flex-direction: column;
-	justify-content: center;
 	align-content: center;
-	margin-left: 20px;
+	text-align: start;
+	min-width: fit-content;
 	height: auto;
+	margin-right: 10px;
 }
 
 #type-label-modal {
 	font-size: 20px;
-	font-weight: 500;
+	font-weight: 1000;
 }
 
 #type-text-modal {
@@ -61,7 +65,7 @@
 }
 #color-label-modal {
 	font-size: 20px;
-	font-weight: 500;
+	font-weight: 1000;
 }
 
 #color-text-modal {
@@ -71,7 +75,7 @@
 
 #stripe-label-modal {
 	font-size: 20px;
-	font-weight: 500;
+	font-weight: 1000;
 }
 
 #stripe-text-modal {
@@ -80,17 +84,56 @@
 }
 
 #move-recommend-button {
-	margin-top: 20px;
+	margin-top: 21%;
+	margin-left: 1%;
+	margin-right: 2%;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 5px;
+	font-size: 20px;
+	opacity: 0.7;
+}
+
+#move-recommend-button:hover {
+	opacity: 1;
+}
+#save-weardate-button{
+	margin-top: 1%;
 	margin-left: 0%;
 	background-color: black;
 	color: white;
 	border: none;
 	border-radius: 30px;
 	padding: 5px;
-	font-size: 30px;
+	font-size: 15px;
 	opacity: 0.7;
 }
 
-#move-recommend-button:hover {
-	opacity: 1;
+#edit-cloth-button{
+	margin-top: 5%;
+	margin-left: 10px;
+	background-color: black;
+	color: white;
+	width: 120px;
+	border: none;
+	border-radius: 30px;
+	padding: 5px;
+	margin-bottom: 1%;
+	font-size: 20px;
+	opacity: 0.7;
+}
+
+#delete-cloth-button{
+	margin-top: 5%;
+	margin-left: 10px;
+	background-color: black;
+	color: white;
+	border: none;
+	width: 120px;
+	border-radius: 30px;
+	padding: 5px;
+	font-size: 20px;
+	opacity: 0.7;
 }

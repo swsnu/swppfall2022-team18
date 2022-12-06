@@ -186,8 +186,8 @@ const AddClothModal = (props: IProps) => {
 				<div className="CenterDiv"></div>
 				<div className="UploadedClothInfoDiv">
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Type</text>
-						<br></br>
+
+						<text id="UploadedClothInfoDiv-text">▶ TYPE</text>
 						<select
 							id="meta-type-select"
 							data-testid="meta-type-select"
@@ -201,8 +201,7 @@ const AddClothModal = (props: IProps) => {
 						</select>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">세부 Type</text>
-						<br></br>
+						<text id="UploadedClothInfoDiv-text">▶ 세부 TYPE</text>
 						<TypeFilter
 							metaType={metaType}
 							selectHandler={clickTypeOptionHandler}
@@ -210,8 +209,6 @@ const AddClothModal = (props: IProps) => {
 					</div>
 
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Color</text>
-						<br></br>
 						<GithubPicker
 							data-testid="cloth-info-input-color"
 							color={colorHex}
@@ -222,8 +219,7 @@ const AddClothModal = (props: IProps) => {
 					</div>
 
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Pattern</text>
-						<br></br>
+						<text id="UploadedClothInfoDiv-text">▶ PATTERN</text>
 						<select
 							id="pattern-select"
 							data-testid="pattern-select"

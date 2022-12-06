@@ -83,7 +83,6 @@ export default function Setting() {
 				></Header>
 			</div>
 			<div className="Setting-bottom">
-				<div className="Setting-left"></div>
 				<div className="Setting-right">
 					<text id="myinfo-text">내 정보 설정</text>
 					<div id="text-input">
@@ -133,7 +132,7 @@ export default function Setting() {
 								clickEditBtnHandler();
 							}}
 						>
-							확인
+							수정
 						</button>
 					</div>
 				</div>

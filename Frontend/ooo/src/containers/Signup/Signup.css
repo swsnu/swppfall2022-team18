@@ -126,6 +126,8 @@
 
 #username-input {
     padding-right: 50px;
+    width: 150px;
+    height: 20px;
 }
 
 #pw-text {
@@ -142,10 +144,14 @@
 
 #pw-input {
     padding-right: 50px;
+    width: 150px;
+    height: 20px;
 }
 
 #checkpw-input {
     padding-right: 50px;
+    width: 150px;
+    height: 20px;
 }
 
 #Signup-button {

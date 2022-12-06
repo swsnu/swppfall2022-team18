@@ -64,33 +64,33 @@ export default function Signup() {
 				<div className="form-margin-left"></div>
 				<div className="Signup-form">
 					<div className="Signup-text">
-						<text id="signin-signup-text">로그인 및 회원가입</text>
+						<text id="signin-signup-text">회원가입</text>
 					</div>
 					<div className="username-div">
-						<text id="username-text">ID</text>
 						<input
 							id="username-input"
 							data-testid="username-input"
 							type="text"
+							placeholder="아이디"
 							value={username}
 							onChange={(event) => setUsername(event.target.value)}
 						/>
 					</div>
 					<div className="pw-div">
-						<text id="pw-text">PW</text>
 						<input
 							id="pw-input"
 							data-testid="pw-input"
 							value={password}
+							placeholder="비밀번호"
 							onChange={(event) => setPassword(event.target.value)}
 						/>
 					</div>
 					<div className="checkpw-div">
-						<text id="checkpw-text">PW확인</text>
 						<input
 							id="checkpw-input"
 							data-testid="checkpw-input"
 							value={checkPassword}
+							placeholder="비밀번호 확인"
 							onChange={(event) => setCheckPassword(event.target.value)}
 						/>
 					</div>

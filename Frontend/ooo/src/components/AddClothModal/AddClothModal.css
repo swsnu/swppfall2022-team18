@@ -13,6 +13,7 @@
 	flex-direction: column;
 }
 
+
 #AddClothModal-text {
 	font-size: 30px;
 	color: black;
@@ -31,11 +32,11 @@
 	flex-direction: column;
 	margin-left: 5%;
 	margin-top: 2%;
+	margin-bottom: 2%;
 	/* border-color: black; */
 	border-radius: 40px;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
-	padding-bottom: 70px;
 }
 
 .AddClothModal .AddClothModalTop .UploadClothDiv .UploadedClothTempDiv {
@@ -43,8 +44,8 @@
 	margin-left: 40px;
 	margin-right: 65%;
 	background-color: lightgray;
-	width: 350px;
-	height: 400px;
+	width: 400px;
+	height: 450px;
 }
 
 #upload-cloth-button {
@@ -83,11 +84,11 @@
 	.AddClothModalTop
 	.UploadedClothInfoDiv
 	.UploadedClothInfoDiv-sub {
-	margin-top: 20px;
+	flex-direction: row;
+	margin-top: 0;
 }
 
 #UploadedClothInfoDiv-text {
-	margin-top: 10px;
 	margin-left: 40px;
 	font-size: 20px;
 	color: black;
