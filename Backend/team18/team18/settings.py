@@ -29,6 +29,8 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 # ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost']
 
 ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0', 'localhost', 'ec2-54-180-86-4.ap-northeast-2.compute.amazonaws.com', '54.180.86.4']
+CSRF_TRUSTED_ORIGINS=["https://recommendyouroutfit.shop"]
+
 SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', 31536000))
 SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False') == 'True' # default: False
 SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'False') == 'True' # default: False
