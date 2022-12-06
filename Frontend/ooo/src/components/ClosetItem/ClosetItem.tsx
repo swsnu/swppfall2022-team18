@@ -67,16 +67,6 @@ const ClosetItem = (props: IProps) => {
 				data-testid="detail-modal"
 				isOpen={clothDetailModalOpen}
 			>
-				<ClothDetailModal
-					id={props.user_cloth_id}
-					image={props.source_url}
-					weardate={props.weardate}
-					metatype={props.metatype}
-					type={props.type}
-					color={props.color}
-					pattern={props.pattern}
-					modal_close={clickClothDetailPopupCloseHandler}
-				></ClothDetailModal>
 				<div id="close-buton-div">
 					<button
 						id="modal-close-button"
@@ -88,13 +78,25 @@ const ClosetItem = (props: IProps) => {
 						닫기
 					</button>
 				</div>
+				<div id = "modal-frame">
+				<ClothDetailModal
+					id={props.user_cloth_id}
+					image={props.source_url}
+					weardate={props.weardate}
+					metatype={props.metatype}
+					type={props.type}
+					color={props.color}
+					pattern={props.pattern}
+					modal_close={clickClothDetailPopupCloseHandler}
+				></ClothDetailModal>
+				</div>
 			</Modal>
 			<div className="ClothLable">
-				<text id="type-label"><b>종류</b></text>
+				<text id="type-label"><b>▶ 종류</b></text>
 				<text id="type-text">{props.type}</text>
-				<text id="color-label"><b>색상</b></text>
+				<text id="color-label"><b>▶ 색상</b></text>
 				<text id="color-text">{props.color}</text>
-				<text id="stripe-label"><b>무늬</b></text>
+				<text id="stripe-label"><b>▶ 무늬</b></text>
 				<text id="stripe-text">{props.pattern}</text>
 			</div>
 		</div>

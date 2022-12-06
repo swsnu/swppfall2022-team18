@@ -92,8 +92,6 @@ export default function Setting() {
                 ></Header>
             </div>
             <div className="Setting-bottom">
-                <div className="Setting-left">
-                </div>
                 <div className="Setting-right">
                     <text id='myinfo-text'>내 정보 설정</text>
                     <div id='text-input'>
@@ -119,7 +117,7 @@ export default function Setting() {
                         <button id='deleteButton' data-testid="delete-button" onClick={() => {clickWithdrawBtnHandler()}}>회원탈퇴</button>
                         <button id='okButton' data-testid="ok"
                         disabled={errMsg === "" ? false : true}
-                        onClick={() => {clickEditBtnHandler()}}>확인</button>
+                        onClick={() => {clickEditBtnHandler()}}>수정</button>
                     </div>
                 </div>
             </div>

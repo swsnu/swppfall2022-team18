@@ -128,7 +128,9 @@ export default function Home() {
 									</div>
 									<div className="TodayOutfit-lable"
 									data-testid = 'TodayOutfit-lable'>
+										<text id="name-label">▶ 코디 설명</text>
 										<text id="today-outfit-info-text">{userClothes.recommendOutfit.outfit_info}</text>
+										<text id="name-label">▶ 구성 옷</text>
 										{
 											userClothes.recommendOutfit.userclothes.map((value, index) => {
 												return(

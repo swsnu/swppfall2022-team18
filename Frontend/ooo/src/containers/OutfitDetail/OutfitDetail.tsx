@@ -89,8 +89,9 @@ const OutfitDetail = () => {
 						Purchase Button
 					</button>
 					<div className="OutfitName">{outfitState.selectedOutfit?.outfit_name}</div>
+					<text id="name-label">▶ 코디 설명</text>
 					<div className="OutfitInfo">{outfitState.selectedOutfit?.outfit_info}</div>
-					<text id="samplecloth-title">구성하는 옷들</text>
+					<text id="name-label">▶ 구성 옷</text>
 					<div className="sampleClothes">
 						{outfitState.sampleClothes.map((sc) => {
 							return (

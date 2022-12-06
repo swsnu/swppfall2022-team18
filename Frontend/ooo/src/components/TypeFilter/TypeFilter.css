@@ -1,0 +1,11 @@
+#type-select {
+	/* margin-left: 100%; */
+	border: 1px solid;
+	border-radius: 4px;
+	color: inherit;
+	background-color: transparent;
+}
+
+#type-select:focus {
+	border-color: red;
+}

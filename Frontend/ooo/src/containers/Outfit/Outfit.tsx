@@ -198,21 +198,27 @@ export default function Outfit(props: IProps) {
 
 	return (
 		<div className="OutfitPage">
-			<Header
-				clickInfoHandler={() => {
-					navigate("/setting");
-				}}
-				clickLogoutHandler={async () => {
-					await logoutUser().catch((error) => console.log(error));
-					setIsSending(!isSending);
-				}}
-				clickHeaderHandler={() => {
-					navigate("/home");
-				}}
-			></Header>
+			<div
+			className="Outfit-header">
+				<Header
+					clickInfoHandler={() => {
+						navigate("/setting");
+					}}
+					clickLogoutHandler={async () => {
+						await logoutUser().catch((error) => console.log(error));
+						setIsSending(!isSending);
+					}}
+					clickHeaderHandler={() => {
+						navigate("/home");
+					}}
+				></Header>
+			</div>
 			<div className="OutfitBody">
 				<div className="OutfitTitle">Outfits</div>
 				<div className="OutfitButtons">
+					<button id="filter-reset-button" onClick={() => clickResetHandler()}>
+						Reset
+					</button>
 					<button
 						id={userHave ? "userhave-button-on" : "userhave-button"}
 						onClick={() => clickUserHaveHandler()}
@@ -245,7 +251,9 @@ export default function Outfit(props: IProps) {
 								</button>
 							</div>
 						) : (
-							<></>
+							<div>
+								<p>None</p>
+							</div>
 						)}
 						{filters.color != null ? (
 							<div className="now-color-filter-div">
@@ -276,10 +284,6 @@ export default function Outfit(props: IProps) {
 							<></>
 						)}
 					</div>
-
-					<button id="filter-reset-button" onClick={() => clickResetHandler()}>
-						Reset
-					</button>
 				</div>
 				<Modal id="filter-modal" isOpen={modalOpen}>
 					<FilterModal clickDoneHandler={clickDoneHandler}></FilterModal>
@@ -334,51 +338,52 @@ export default function Outfit(props: IProps) {
 						</>
 					)}
 
+					<div className="now-page-div">
+						<text>{page}</text>
+					</div>
 					<div className="page-buttons-div">
 						<div id="first-page-button-div">
 							{page == 1 ? (
-								<></>
+								<div></div>
 							) : (
-								<>
+								<div>
 									<button
 										id="first-page-button"
 										data-testid="first-page-button"
 										onClick={() => clickFirstPageHandler()}
 									>
-										처음으로
+										≪
 									</button>
-								</>
+								</div>
 							)}
 						</div>
 						<div id="before-page-button-div">
 							{page == 1 ? (
-								<></>
+								<div></div>
 							) : (
-								<>
+								<div>
 									<button
 										id="before-page-button"
 										data-testid="before-page-button"
 										onClick={() => clickBeforePageHandler()}
-									>
-										이전 페이지
+									>＜
 									</button>
-								</>
+								</div>
 							)}
 						</div>
-						<div className="now-page-div">{page}</div>
 						<div id="next-page-button-div">
 							{isLast == true ? (
-								<></>
+								<div></div>
 							) : (
-								<>
+								<div>
 									<button
 										id="next-page-button"
 										data-testid="next-page-button"
 										onClick={() => clickNextPageHandler()}
 									>
-										다음 페이지
+										＞
 									</button>
-								</>
+								</div>
 							)}
 						</div>
 					</div>

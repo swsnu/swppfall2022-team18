@@ -87,8 +87,7 @@ const AddClothModal = (props: IProps) => {
 				<div className="CenterDiv"></div>
 				<div className="UploadedClothInfoDiv">
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Type</text>
-						<br></br>
+						<text id="UploadedClothInfoDiv-text">▶ TYPE</text>
 						<select id="type-select" data-testid="select-component" onChange={(e) => setName(e.target.value)}>
 							{METATYPEOPTIONS.map((option, index) => (
 								<option key={index} value={option.value} >
@@ -98,13 +97,11 @@ const AddClothModal = (props: IProps) => {
 						</select>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">세부 Type</text>
-						<br></br>
+						<text id="UploadedClothInfoDiv-text">▶ 세부 TYPE</text>
 						<TypeFilter metaType={name} selectHandler={setType}></TypeFilter>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Color</text>
-						<br></br>
+						<text id="UploadedClothInfoDiv-text">▶ COLOR</text>
 						<input
 							type="text"
 							id="cloth-info-input"
@@ -114,8 +111,7 @@ const AddClothModal = (props: IProps) => {
 						/>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Pattern</text>
-						<br></br>
+						<text id="UploadedClothInfoDiv-text">▶ PATTERN</text>
 						<input
 							type="text"
 							id="cloth-info-input"

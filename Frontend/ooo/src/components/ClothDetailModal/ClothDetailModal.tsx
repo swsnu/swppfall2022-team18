@@ -121,7 +121,7 @@ const ClothDetailModal = (cloth: IProps) => {
 				</div>
 				<div className="ClothLable-modal">
 					<text id="type-label-modal">
-						<b>종류</b>
+					▶ 종류
 					</text>
 					{isEditable ? (
 						<TypeFilter metaType={cloth.metatype} selectHandler={setType}></TypeFilter>
@@ -130,7 +130,7 @@ const ClothDetailModal = (cloth: IProps) => {
 					)}
 					<br></br>
 					<text id="color-label-modal">
-						<b>색상</b>
+					▶ 색상
 					</text>
 					{isEditable ? (
 						<input
@@ -143,7 +143,7 @@ const ClothDetailModal = (cloth: IProps) => {
 					)}
 					<br></br>
 					<text id="stripe-label-modal">
-						<b>무늬</b>
+					▶ 무늬
 					</text>
 					{isEditable ? (
 						<input
@@ -154,10 +154,17 @@ const ClothDetailModal = (cloth: IProps) => {
 					) : (
 						<text id="type-text-modal">{pattern}</text>
 					)}
-					<br></br>
+					<div className="ClothButton-modal">
+					<button
+						id="move-recommend-button"
+						onClick={() => clickMoveToRecommendedStyleHandler()}
+					>
+						Get Recommendation
+					</button>
+				</div>
 				</div>
 				<div className="ClothWearDate-modal">
-					<b>입은 날짜</b><br></br>
+				<text id='stripe-label-modal'>▶ 입은 날짜</text>
 					<DatePicker
 						dateFormat="yyyy/MM/dd"
 						highlightDates={highlightDates}
@@ -174,14 +181,7 @@ const ClothDetailModal = (cloth: IProps) => {
 						</button>
 					)}
 				</div>
-				<div className="ClothButton-modal">
-					<button
-						id="move-recommend-button"
-						onClick={() => clickMoveToRecommendedStyleHandler()}
-					>
-						Get Recommendation
-					</button>
-				</div>
+				<div>
 				<div className="edit-cloth-detail">
 					{isEditable ? (
 						<button
@@ -207,6 +207,7 @@ const ClothDetailModal = (cloth: IProps) => {
 						Delete Cloth
 					</button>
 				</div>
+			</div>
 			</div>
 		</div>
 	);

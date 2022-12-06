@@ -160,9 +160,6 @@ export default function Closet() {
 							isOpen={addClothModalOpen}
 							// onRequestClose={() => setAddClothModalOpen(false)}
 						>
-							<AddClothModal
-								modal_close={clickAddClothPopupCloseHandler}
-							></AddClothModal>
 							<div id="close-buton-div">
 								<button
 									id="modal-close-button"
@@ -174,9 +171,13 @@ export default function Closet() {
 									닫기
 								</button>
 							</div>
+							<AddClothModal
+								modal_close={clickAddClothPopupCloseHandler}
+							></AddClothModal>
 						</Modal>
 					</div>
 					<div className="ClosetItems">
+				
 					{
 						filteredList.length !== 0 ? filteredList.map((cloth, index) => {
 							return(
