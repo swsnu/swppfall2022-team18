@@ -23,7 +23,6 @@
 	/* font-size: 20px; */
 	line-height: 20px;
 	border: 1px solid;
-	border-radius: 4px;
 	color: inherit;
 	background-color: transparent;
 	/* margin-bottom: 30px; */
@@ -40,7 +39,6 @@
 	font-size: 20px;
 	line-height: 20px;
 	border: 1px solid;
-	border-radius: 4px;
 	color: inherit;
 	background-color: transparent;
 	margin-bottom: 30px;
@@ -57,7 +55,6 @@
 	font-size: 20px;
 	line-height: 20px;
 	border: 1px solid;
-	border-radius: 4px;
 	color: inherit;
 	background-color: transparent;
 }
@@ -71,10 +68,8 @@
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 10px;
 	font-size: 40px;
-	opacity: 0.7;
 }
 
 #done-button:hover {

@@ -30,7 +30,6 @@
 	margin-left: 3%;
 	margin-top: 2%;
 	/* border-color: black; */
-	border-radius: 40px;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
 	padding-bottom: 50px;
@@ -60,7 +59,6 @@
 	padding: 8px 8px;
 	line-height: 20px;
 	border: 1px solid;
-	border-radius: 4px;
 	color: inherit;
 	background-color: transparent;
 }
@@ -80,12 +78,10 @@
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 	font-size: 20px;
-	opacity: 0.7;
 }
 
 #modal-close-button{
@@ -93,12 +89,10 @@
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 	font-size: 20px;
-	opacity: 0.7;
 }
 
 #add-cloth-button:hover {

@@ -90,10 +90,8 @@
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 5px;
 	font-size: 20px;
-	opacity: 0.7;
 }
 
 #move-recommend-button:hover {
@@ -105,10 +103,8 @@
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 5px;
 	font-size: 15px;
-	opacity: 0.7;
 }
 
 #edit-cloth-button{
@@ -118,11 +114,9 @@
 	color: white;
 	width: 120px;
 	border: none;
-	border-radius: 30px;
 	padding: 5px;
 	margin-bottom: 1%;
 	font-size: 20px;
-	opacity: 0.7;
 }
 
 #delete-cloth-button{
@@ -132,8 +126,6 @@
 	color: white;
 	border: none;
 	width: 120px;
-	border-radius: 30px;
 	padding: 5px;
 	font-size: 20px;
-	opacity: 0.7;
 }

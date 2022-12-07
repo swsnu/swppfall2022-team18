@@ -86,10 +86,8 @@
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 10px;
 	font-size: 30px;
-	opacity: 0.7;
 }
 
 #purchase-button:hover {

@@ -5,12 +5,10 @@
 	justify-content: center;
 	align-content: center;
 	background-color: #f8f8f8;
-	border-radius: 20px;
 }
 
 .OutfitPreview:hover {
 	background-color: #e3e3e3;
-	border-radius: 20px;
 }
 
 .OutfitPreview .OutfitImage {
