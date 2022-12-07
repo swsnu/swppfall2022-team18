@@ -207,8 +207,7 @@ export default function Outfit() {
 
 	return (
 		<div className="OutfitPage">
-			<div
-			className="Outfit-header">
+			<div className="Outfit-header">
 				<Header
 					clickInfoHandler={() => {
 						navigate("/setting");
@@ -379,7 +378,8 @@ export default function Outfit() {
 										id="before-page-button"
 										data-testid="before-page-button"
 										onClick={() => clickBeforePageHandler()}
-									>＜
+									>
+										＜
 									</button>
 								</div>
 							)}

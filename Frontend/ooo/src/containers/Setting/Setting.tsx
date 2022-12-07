@@ -1,5 +1,5 @@
-import { logoutUser, editUser, deleteUser } from '../../api/user';
-import React, { useEffect, useState} from "react";
+import { logoutUser, editUser, deleteUser } from "../../api/user";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import "./Setting.css";
@@ -7,45 +7,43 @@ import "./Setting.css";
 export default function Setting() {
 	const navigate = useNavigate();
 
-    const [name, setName] = useState("")
-    const [password, setPassword] = useState("")
-    const [checkPassword, setCheckPassword] = useState("")
-    const [errMsg, setErrMsg] = useState("");
+	const [name, setName] = useState("");
+	const [password, setPassword] = useState("");
+	const [checkPassword, setCheckPassword] = useState("");
+	const [errMsg, setErrMsg] = useState("");
 
 	//for logout
-	const [isSending, setIsSending] = useState(false)
+	const [isSending, setIsSending] = useState(false);
 	const checkLoginned = () => {
-		if(localStorage.getItem("username") !== null){
-			return true
-		}
-		else return false
+		if (localStorage.getItem("username") !== null) {
+			return true;
+		} else return false;
 	};
 
-    const getName = () => {
-        const n = localStorage.getItem("username")
-        if(n !== null) setName(n)
-    }
-    
-    const clickEditBtnHandler = async() => {
-        if(password === ""){
-            setErrMsg("비밀번호를 입력해주세요")
-        }
-        else{
-            await editUser(password).then(() => {
-                navigate("/home")
-            }).catch((e) => console.log(e))
-        }
-        
-        
-    }
+	const getName = () => {
+		const n = localStorage.getItem("username");
+		if (n !== null) setName(n);
+	};
 
-    const clickWithdrawBtnHandler = async() => {
-        await deleteUser().then(() => {
-            navigate("/")
-        }) .catch((e) => console.log(e))
-    
-        
-    }
+	const clickEditBtnHandler = async () => {
+		if (password === "") {
+			setErrMsg("비밀번호를 입력해주세요");
+		} else {
+			await editUser(password)
+				.then(() => {
+					navigate("/home");
+				})
+				.catch((e) => console.log(e));
+		}
+	};
+
+	const clickWithdrawBtnHandler = async () => {
+		await deleteUser()
+			.then(() => {
+				navigate("/");
+			})
+			.catch((e) => console.log(e));
+	};
 
 	useEffect(() => {
 		const redirect = () => {
@@ -54,20 +52,19 @@ export default function Setting() {
 			}
 		};
 		redirect();
-        getName();
+		getName();
 	}, [isSending]);
 
-    useEffect(() => {
-        const checkPw = () => {
-            if(password != checkPassword){
-                setErrMsg("비밀번호가 일치하지 않습니다.")
-            }
-            else{
-                setErrMsg("")
-            }
-        }
-        checkPw()
-    }, [checkPassword, password])
+	useEffect(() => {
+		const checkPw = () => {
+			if (password != checkPassword) {
+				setErrMsg("비밀번호가 일치하지 않습니다.");
+			} else {
+				setErrMsg("");
+			}
+		};
+		checkPw();
+	}, [checkPassword, password]);
 
 
     return (

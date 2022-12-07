@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { signupUser } from "../../api/user";
 import "./Signup.css";
@@ -7,12 +7,12 @@ import "./Signup.css";
 export default function Signup() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-    const [checkPassword, setCheckPassword] = useState("");
+	const [checkPassword, setCheckPassword] = useState("");
 	const [wrongInput, setWrongInput] = useState("");
 
-    const TEXTISEMPTY = "ID와 패스워드는 필수로 입력해야합니다."
-    const DUPLICATE_ID = "해당 ID가 이미 존재합니다."
-    const WRONG_PASSWORD = "패스워드 확인이 일치하지 않습니다."
+	const TEXTISEMPTY = "ID와 패스워드는 필수로 입력해야합니다.";
+	const DUPLICATE_ID = "해당 ID가 이미 존재합니다.";
+	const WRONG_PASSWORD = "패스워드 확인이 일치하지 않습니다.";
 	const navigate = useNavigate();
 
 	const checkSignupned = () => {
@@ -34,24 +34,25 @@ export default function Signup() {
 		redirect();
 	}, []);
 
-    const postSignUpHandler = async() => {
-        // check test empty
-        if (username === "" || password === ""){
-            setWrongInput(TEXTISEMPTY)
-        }
-        //check wrong_password
-        else if (password !== checkPassword){
-            setWrongInput(WRONG_PASSWORD)
-        }
-        else {
-            await signupUser(username, password).then(() => {
-                navigate("/")
-            }).catch((error) => {
-                console.log(error)
-                setWrongInput(DUPLICATE_ID)
-            })
-        }
-    }
+	const postSignUpHandler = async () => {
+		// check test empty
+		if (username === "" || password === "") {
+			setWrongInput(TEXTISEMPTY);
+		}
+		//check wrong_password
+		else if (password !== checkPassword) {
+			setWrongInput(WRONG_PASSWORD);
+		} else {
+			await signupUser(username, password)
+				.then(() => {
+					navigate("/");
+				})
+				.catch((error) => {
+					console.log(error);
+					setWrongInput(DUPLICATE_ID);
+				});
+		}
+	};
 
 	return (
 		<div className="Signup">
@@ -94,8 +95,9 @@ export default function Signup() {
 						/>
 					</div>
 					<div className="wrong-div">
-						<text data-testid="wrong-text" id="wrong-text">{wrongInput}</text>
-
+						<text data-testid="wrong-text" id="wrong-text">
+							{wrongInput}
+						</text>
 					</div>
 					<div className="button-div">
 						<button

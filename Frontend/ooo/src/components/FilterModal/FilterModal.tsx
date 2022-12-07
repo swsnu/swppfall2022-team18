@@ -19,31 +19,6 @@ const FilterModal = (props: IProps) => {
 	const [metaType, setMetaType] = useState<string | null>(null);
 	const [colorHex, setColorHex] = useState<string>("");
 
-	const ColorOptions = [
-		{ value: "Color" },
-		{ value: "블랙" },
-		{ value: "그레이" },
-		{ value: "베이지" },
-		{ value: "네이비" },
-		{ value: "데님" },
-		{ value: "아이보리" },
-		{ value: "카키" },
-		{ value: "기타색상" },
-		{ value: "블루" },
-		{ value: "브라운" },
-		{ value: "화이트" },
-		{ value: "그린" },
-		{ value: "레드" },
-		{ value: "오렌지" },
-		{ value: "연청" },
-		{ value: "진청" },
-		{ value: "청" },
-		{ value: "옐로우" },
-		{ value: "퍼플" },
-		{ value: "핑크" },
-		{ value: "민트" },
-	];
-
 	const PatternOptions = [
 		{ value: "Pattern" },
 		{ value: "None" },
@@ -125,11 +100,11 @@ const FilterModal = (props: IProps) => {
 		} else setType(value);
 	};
 
-	const clickColorOptionHandler = (value: string) => {
-		if (value == "Color") {
-			setColor(null);
-		} else setColor(value);
-	};
+	// const clickColorOptionHandler = (value: string) => {
+	// 	if (value == "Color") {
+	// 		setColor(null);
+	// 	} else setColor(value);
+	// };
 
 	const clickPatternOptionHandler = (value: string) => {
 		if (value == "Pattern") {
