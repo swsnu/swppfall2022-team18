@@ -4,7 +4,7 @@ views of ooo
 import os
 import json
 from json.decoder import JSONDecodeError
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.http.response import HttpResponseNotAllowed, HttpResponseNotFound
@@ -760,7 +760,7 @@ def today_outfit(request):
             if len(usercloth_days) == 0:
                 clean_usercloth_list.append(usercloth)
             else: 
-                last_day = date.fromisoformat(usercloth_days[len(usercloth_days)-1])
+                last_day = datetime.strptime(usercloth_days[len(usercloth_days)-1], '%Y/%m/%d').date()
                 #if today == last_day, it is OK to recommend
                 # print("day print",today)
                 # print(last_day)

@@ -155,7 +155,7 @@ export const addWearDate = createAsyncThunk(
 		if (response.status === 200) {
 			return response.data;
 		}
-		dispatch(userClothActions.addWearDate(response.data));
+		// dispatch(userClothActions.addWearDate(response.data));
 	}
 );
 
@@ -227,15 +227,6 @@ export const userClothSlice = createSlice({
 				return userCloth.id !== action.payload.targetId;
 			});
 			state.userClothes = deleted;
-		},
-		addWearDate: (
-			state,
-			action: PayloadAction<{
-				targetId: number;
-				weardate: string;
-			}>
-		) => {
-			//
 		},
 	},
 	extraReducers: (builder) => {
