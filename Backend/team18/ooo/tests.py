@@ -192,9 +192,9 @@ class SigninUserCase(TestCase):
     def test_csrf(self):
         """ By default, csrf checks are disabled in test client """
         client = Client(enforce_csrf_checks=True)
-        response = client.post('/api/ooo/user/signup/',
-                               json.dumps({"body":{"username": "chris", "password": "chris"}}),
-                               content_type='application/json')
+        # response = client.post('/api/ooo/user/signup/',
+        #                        json.dumps({"body":{"username": "chris", "password": "chris"}}),
+        #                        content_type='application/json')
         # self.assertEqual(response.status_code, 403) 
 
         response = client.get('/api/ooo/user/token/')
@@ -206,7 +206,7 @@ class SigninUserCase(TestCase):
         
         response = client.post('/api/ooo/user/signup/', json.dumps({"body":{"username": "chris", "password": "chris"}}),
                                 content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
-        # self.assertEqual(response.status_code, 2011)                       
+        self.assertEqual(response.status_code, 201)                       
 
     
     def test_signin_and_out(self):
@@ -284,12 +284,15 @@ class SigninUserCase(TestCase):
         )
         self.assertEqual(response.status_code, 400)
         #using labelset
+        with open('./3432_mXFtHKq.jpg', 'rb') as open_file:
+            content = open_file.read()
+        new_photo1 = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=content, content_type='image/jpeg')
         response = client.post(
             '/api/ooo/closet/',
             json.dumps({
                 "body" : {
                     'name': 'name1',
-                    'image_link': 'test',
+                    'image_link': new_photo1,
                     'type': 'test_type_1',
                     'color': 'test_color_1',
                     'pattern': 'test_pattern_1'
@@ -297,7 +300,7 @@ class SigninUserCase(TestCase):
             }),
             content_type='application/json'
         )
-        # self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
         #try to using labelset but failed
         response = client.post(
@@ -313,7 +316,7 @@ class SigninUserCase(TestCase):
             }),
             content_type='application/json'
         )
-        # self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     
     def test_closet_item(self):
@@ -722,5 +725,5 @@ class SigninUserCase(TestCase):
         self.assertEqual(response.status_code, 200)  
 
         response = client.get('/api/ooo/outfit/today/')
-        # self.assertEqual(response.status_code, 404) 
+        self.assertEqual(response.status_code, 404) 
         

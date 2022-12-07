@@ -1,22 +1,21 @@
-
 import axios from "axios";
 
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 
 export const signinUser = async (username: string, pw: string) => {
-	console.log("called");
+	//console.log("called");
 	await axios
 		.get("/api/ooo/user/token/")
 		.then((response) => {
-			console.log(response)
+			console.log(response);
 		})
 		.catch((error) => {
 			console.log(error.response);
 		});
 
 	const data = { username: username, password: pw };
-	console.log(data);
+	//console.log(data);
 	const option = {
 		method: "POST",
 		headers: {
@@ -44,39 +43,44 @@ export const signupUser = async (username: string, pw: string) => {
 		},
 		body: data,
 	};
-	console.log(option)
+	console.log(option);
 
-	const response = await axios.post("/api/ooo/user/signup/", option)
-	return response
-
+	const response = await axios.post("/api/ooo/user/signup/", option);
+	return response;
 };
 
 export const logoutUser = async () => {
 	await axios.get("/api/ooo/user/signout/").then(() => {
 		localStorage.removeItem("username");
-	})
+	});
 };
 
 export const editUser = async (pw: string) => {
-	const data = { password: pw}
+	const data = { password: pw };
 	const option = {
-		method: 'PUT',
+		method: "PUT",
 		headers: {
 			"Content-type": "application/json;charset=UTF-8",
 		},
-		body: data
-	}
-	await axios.put("/api/ooo/user/info/", option).then((response) => {
-		return response
-	}).catch((e) => {
-		console.log(e)
-	})
-}
+		body: data,
+	};
+	await axios
+		.put("/api/ooo/user/info/", option)
+		.then((response) => {
+			return response;
+		})
+		.catch((e) => {
+			console.log(e);
+		});
+};
 
 export const deleteUser = async () => {
-	await axios.delete("/api/ooo/user/info/").then(() => {
-		localStorage.removeItem("username");
-	}).catch((e) => {
-		console.log(e)
-	})
-}
+	await axios
+		.delete("/api/ooo/user/info/")
+		.then(() => {
+			localStorage.removeItem("username");
+		})
+		.catch((e) => {
+			console.log(e);
+		});
+};

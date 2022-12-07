@@ -127,6 +127,7 @@ export const fetchFilteredOutfits = createAsyncThunk(
 			}
 		);
 		console.log(response.data);
+		// dispatch(outfitActions.editFilter(response.data));
 		return response.data;
 	}
 );
@@ -149,12 +150,12 @@ export const fetchSampleCloth = createAsyncThunk(
 		const response = await axios.get(`/api/ooo/outfit/samplecloth/${id}/`, {
 			// headers,
 		});
-		if (response.status === 200) {
-			return response.data;
-		} else {
-			return null;
-		}
-		// return response.data;
+		// if (response.status === 200) {
+		// 	return response.data;
+		// } else {
+		// 	return null;
+		// }
+		return response.data;
 	}
 );
 

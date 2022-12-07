@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router";
-import { getMockStore } from "../../test-utils/mocks";
+import { getMockStore, renderWithProviders } from "../../test-utils/mocks";
 import Outfit from "./Outfit";
 import React from "react";
 import { IProps as FilterModalProps } from "../../components/FilterModal/FilterModal";
@@ -98,6 +98,18 @@ jest.mock(
 		)
 );
 
+jest.mock("react-router-dom", () => ({
+	...jest.requireActual("react-router-dom"),
+	useLocation: () => ({
+		state: {
+			userHave: false,
+			type: "",
+			color: "",
+			pattern: "",
+		},
+	}),
+}));
+
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
 	...jest.requireActual("react-router"),
@@ -133,7 +145,25 @@ describe("<Outfit />", () => {
 		);
 	});
 
+	// const clothData = {
+	//     userHave: true,
+	//     type: type,
+	//     color: color,
+	//     pattern: pattern,
+	// };
+	// navigate("/outfit/", { state: clothData });
+
 	it("should render Outfit page", () => {
+		render(outfit);
+	});
+
+	it("should return true when username is in localStorage", () => {
+		localStorage.setItem("username", "test_username");
+		render(outfit);
+	});
+
+	it("should return false when username is in localStorage", () => {
+		localStorage.removeItem("username");
 		render(outfit);
 	});
 

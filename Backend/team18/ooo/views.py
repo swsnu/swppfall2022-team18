@@ -4,7 +4,7 @@ views of ooo
 import os
 import json
 from json.decoder import JSONDecodeError
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.http.response import HttpResponseNotAllowed, HttpResponseNotFound
@@ -12,11 +12,11 @@ from django.http.response import HttpResponseBadRequest
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
 from django.db.models import Q
+from keras.models import load_model
+import numpy as np
 from .models import Outfit, SampleCloth, UserCloth, Closet, LabelSet
 from .serializers import SampleClothSerializer, OutfitSerializer, UserClothSerializer
-from keras.models import load_model
 from PIL import Image
-import numpy as np
 
 
 type_tree =  [
@@ -177,8 +177,8 @@ def classify_color(request):
         }
 
         return JsonResponse(response_dict, status=200)
-    else:
-        return HttpResponseNotAllowed(['POST'], status=405)
+
+    return HttpResponseNotAllowed(['POST'], status=405)
 
 #@csrf_exempt
 def closets(request):
@@ -194,8 +194,8 @@ def closets(request):
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
 
-        closet_item_list = [closet for closet in
-            UserCloth.objects.filter(closet=user_closet)]
+        closet_item_list = list(
+            UserCloth.objects.filter(closet=user_closet))
         json_closet_list = []
         for item in closet_item_list:
             closet_serialize = UserClothSerializer(item)
@@ -305,8 +305,8 @@ def closet_item(request, cloth_id):
         try:
             req_data = json.loads(request.body.decode())["body"]
             dates = req_data['dates']
-        except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest(e)
+        except (KeyError, JSONDecodeError) as error:
+            return HttpResponseBadRequest(error)
 
         if dates in dates_history: # delete weardate
             dates_history.remove(dates)
@@ -348,8 +348,8 @@ def closet_item(request, cloth_id):
             )
             label_set = label_set_obj
 
-        except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest(e)
+        except (KeyError, JSONDecodeError) as error:
+            return HttpResponseBadRequest(error)
 
         target_item_obj.type = input_type
         target_item_obj.color = color
@@ -379,8 +379,8 @@ def closet_item(request, cloth_id):
         try:
             target_item_obj.delete()
             return HttpResponse(status=200)
-        except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest(e)
+        except (KeyError, JSONDecodeError) as error:
+            return HttpResponseBadRequest(error)
 
     return HttpResponseNotAllowed(['GET', 'POST', 'PUT', 'DELETE'], status=405)
 
@@ -396,6 +396,7 @@ def token(request):
 #outfit part start
 # @ensure_csrf_cookie
 #@csrf_exempt
+# @ensure_csrf_cookie
 def outfit_list(request):
     '''
         filter outfit
@@ -515,7 +516,7 @@ def outfit_list(request):
 
             all_outfits = list(set(all_outfits))
             all_outfits = sorted(all_outfits, key=lambda outfit: outfit.popularity, reverse=True)
-            if filter_recommend == True or filter_recommend == "True":
+            if filter_recommend in (True, "True"):
                 recommend = []
                 for outfit_item in all_outfits:
                     outfit_cloth_list = list(outfit_item.sample_cloth.all())
@@ -759,7 +760,7 @@ def today_outfit(request):
             if len(usercloth_days) == 0:
                 clean_usercloth_list.append(usercloth)
             else: 
-                last_day = date.fromisoformat(usercloth_days[len(usercloth_days)-1])
+                last_day = datetime.strptime(usercloth_days[len(usercloth_days)-1], '%Y/%m/%d').date()
                 #if today == last_day, it is OK to recommend
                 # print("day print",today)
                 # print(last_day)
