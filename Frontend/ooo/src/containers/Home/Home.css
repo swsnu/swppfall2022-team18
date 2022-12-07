@@ -20,6 +20,7 @@
 
 .Home .HomeTop {
 	display: flex;
+	max-width: 1750px;
 	flex-direction: row;
 }
 /*cashing?*/
@@ -47,7 +48,6 @@
 	flex-direction: row;
 	align-content: center;
 	margin-top: 5%;
-	display: flex;
 	justify-content: left;
 }
 
@@ -163,6 +163,7 @@
 
 .Home .HomeBottom {
 	display: flex;
+	max-width: 1800px;
 	flex-direction: row;
 }
 
