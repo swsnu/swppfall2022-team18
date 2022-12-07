@@ -14,7 +14,8 @@
 }
 
 .Home .Home-header {
-	min-width: 1280px;
+	min-width: 1800px;
+	width: 100%;
 }
 
 .Home .HomeTop {
@@ -25,10 +26,10 @@
 .Home .HomeTop .ClosetDiv {
 	display: inline-block;
 	width: 50%;
-	min-width: 720px;
+	min-width: 1030px;
 	height: auto;
 	flex-direction: column;
-	margin-left: 5%;
+	margin-left: 3%;
 	margin-top: 2%;
 	/* border-color: black; */
 	border-radius: 40px;
@@ -44,18 +45,16 @@
 }
 
 .Home .HomeTop .Closet-image {
-	display: flex;
 	flex-direction: row;
 	align-content: center;
-	justify-content: center;
 	margin-top: 5%;
+	display: flex;
+	justify-content: left;
 }
 
 .Home .HomeTop .Closet-image .Closet-item-box {
 	display: flex;
-
 	flex-direction: row;
-	flex-wrap: wrap;
 	align-content: center;
 	justify-content: center;
 }
@@ -128,6 +127,7 @@
 	font-size: 60px;
 	color: black;
 	padding-right: 48%;
+	margin-left: 3%;
 }
 
 #name-label{
@@ -138,7 +138,7 @@
 #today-outfit-info-text {
 	font-size: 20px;
 	font-weight: 200;
-	margin-left: 2px;
+	margin-left: 1%;
 	line-height: 1.3;
     height: 4em;
 	word-wrap: break-word;
@@ -179,10 +179,10 @@
 
 .Home .HomeBottom .OutfitDiv {
 	display: flex;
-	width: 90%;
-	min-width: 1720px;
+	width: 95%;
+	min-width: 1770px;
 	flex-direction: column;
-	margin-left: 5%;
+	margin-left: 3%;
 	margin-top: 2%;
 	padding-bottom: 100px;
 	border-radius: 40px;

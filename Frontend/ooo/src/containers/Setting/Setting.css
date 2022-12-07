@@ -15,7 +15,7 @@
 }
 
 .Setting .Setting-header {
-	min-width: 1280px;
+	min-width: 1800px;
 }
 
 .Setting .Setting-bottom {
@@ -33,7 +33,7 @@
     border-width: 0.8px;
     margin-top: 10px;
     margin-bottom: 10px;
-    border-style:none solid none none;
+    border-style: none solid none none;
 }
 
 .Setting .Setting-bottom .Setting-right {
@@ -50,6 +50,7 @@
 
 #myinfo-text {
     font-size: 60px;
+    font-weight: 1000;
     margin-top: 40px;
     margin-bottom: 60px;
 }
@@ -66,6 +67,7 @@
     margin-top: 1%;
     font-size: 30px;
     padding: 5px;
+    margin-left: 10px;
     padding-right: 500px;
     border-radius: 10px;
 }
@@ -74,6 +76,7 @@
 	background-color: black;
 	color: white;
 	border: none;
+    margin-top: 20px;
 	border-radius: 10px;
 	padding: 10px;
 	font-size: 20px;
@@ -83,10 +86,12 @@
 #okButton{
     background-color: black;
 	color: white;
+    margin-top: 20px;
 	border: none;
 	border-radius: 10px;
 	padding: 10px;
     margin-top: 5%;
+    margin-left: 10px;
 	font-size: 20px;
 	opacity: 0.7;
 }
