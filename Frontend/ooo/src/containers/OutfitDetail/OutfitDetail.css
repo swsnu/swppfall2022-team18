@@ -26,6 +26,7 @@
 	display: flex;
 	width: 45%;
 	min-width: 720px;
+	min-height: fit-content;
 	height: auto;
 	flex-direction: column;
 	margin-left: 3%;
@@ -34,12 +35,12 @@
 	/* border-color: black; */
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
-	padding-bottom: 70px;
 }
 
-#outfit-img {
-	width: fit-content;
-	height: fit-content;
+#-outfit-img {
+	min-width: 300px;
+	height: 600px;
+	object-fit: contain;
 }
 
 .OutfitDetail .OutfitDetail-body .OutfitDetailData {
@@ -56,20 +57,20 @@
 }
 
 .OutfitDetail .OutfitDetail-body .OutfitDetailData .OutfitName {
-	margin-top: 10px;
 	font-size: 50px;
 	color: black;
-	padding-bottom: 15%;
 }
 
 #name-label{
-	margin-left: 10px;
+	margin-left: 25px;
+	margin-top: 5px;
 	font-size: 30px;
 	font-weight: 1000;
 }
 
 .OutfitDetail .OutfitDetail-body .OutfitDetailData .OutfitInfo {
 	margin-top: 10px;
+	margin-bottom: 30px;
 	color: black;
 	font-size: 25px;
 	margin-left: 30px;
@@ -78,8 +79,9 @@
 #outfit-purchase-button {
 	display: inline-block;
 	margin-left: 30px;
+	margin-bottom: 30px;
 	width: fit-content;
-	margin-top: 10%;
+	margin-top: 5%;
 	background-color: black;
 	color: white;
 	border: none;
