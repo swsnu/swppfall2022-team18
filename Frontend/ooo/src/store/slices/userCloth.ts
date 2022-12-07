@@ -170,6 +170,11 @@ export const userClothSlice = createSlice({
 		// 	);
 		// 	state.selectedUserCloth = target ?? null;
 		// },
+		initState: (
+			(state)=>{
+				state= initialState
+			}
+		),
 		createUserCloth: (
 			state,
 			action: PayloadAction<{
@@ -247,6 +252,9 @@ export const userClothSlice = createSlice({
 		});
 		builder.addCase(fetchRecommendOutfit.fulfilled, (state, action) => {
 			state.recommendOutfit = action.payload;
+		});
+		builder.addCase(fetchRecommendOutfit.rejected, (state, action) => {
+			state.recommendOutfit = null;
 		});
 	},
 });
