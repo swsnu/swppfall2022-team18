@@ -56,9 +56,11 @@ export default function Signup() {
 
 	return (
 		<div className="Signup">
+			<div className="Header">
 			<div className="header-div">
 				<text id="appName">oOo</text>
 				<text id="detailAppName">:recommend your outfit</text>
+			</div>
 			</div>
 			<div className="form">
 				<div className="form-margin-left"></div>

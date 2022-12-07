@@ -41,9 +41,9 @@ export default function Home() {
 		//closet list, outfitlist 받아오는 것
 		const getData = async () => {
 			setLoading(true);
-			dispatch(fetchUserClothes());
-			dispatch(fetchOutfits());
-			dispatch(fetchRecommendOutfit());
+			await dispatch(fetchUserClothes());
+			await dispatch(fetchOutfits());
+			await dispatch(fetchRecommendOutfit());
 			setLoading(false);
 		};
 		getData();
@@ -147,7 +147,7 @@ export default function Home() {
 											userClothes.recommendOutfit.userclothes.map((value, index) => {
 												return(
 													<div key={index}>
-														<text id="today-cloth-name">{value.name}</text>
+														<text id="today-cloth-name">{value.type}</text>
 													</div>
 												);
 											}
