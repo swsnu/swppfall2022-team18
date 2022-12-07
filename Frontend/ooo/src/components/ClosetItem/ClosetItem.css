@@ -1,6 +1,9 @@
 .ClosetItem {
 	display: flex;
 	width: 30%;
+	max-width: 500px;
+	min-height: 300px;
+	max-height: 300px;
 	flex-direction: row;
 	justify-content: center;
 	align-content: center;
@@ -11,12 +14,12 @@
 }
 
 .ClosetItem .ClothImage {
-	display: flex;
+	display: block;
 	flex-direction: column;
 	justify-content: center;
-	width: 80%;
 	height: 100%;
 }
+
 #modal-frame{
 	width: 90%;
 	height: 100%;

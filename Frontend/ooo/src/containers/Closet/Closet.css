@@ -9,12 +9,11 @@
 
 .Closet {
 	display: flex;
-	flex-basis: 100%;
 	flex-direction: column;
 }
 
 .Closet .Closet-header {
-	min-width: 1280px;
+	min-width: 1800px;
 }
 
 .Closet .ClosetTop {
@@ -23,31 +22,33 @@
 /*cashing?*/
 .Closet .ClosetTop .ClosetDiv {
 	display: flex;
-	width: 96%;
+	width: 94%;
 	min-width: 1280px;
 	height: auto;
+	flex-wrap: wrap;
 	flex-direction: column;
-	margin-left: 2%;
+	margin-left: 3%;
 	margin-top: 2%;
 	/* border-color: black; */
 	border-radius: 40px;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
-	padding-bottom: 70px;
+	padding-bottom: 50px;
 }
 
 .Closet .ClosetTop .ClosetDiv .ClosetHead {
 	display: flex;
 	margin-top: 10px;
 	flex-direction: row;
+	
 }
 
 .Closet .ClosetTop .ClosetDiv .ClosetItems {
-	display: flex;
-	float:left;
-	justify-content: left;
+	display: inline-flex;
 	flex-direction: row;
-	width: 1000px;
+	flex-wrap: wrap;
+	margin-left: 5%;
+	white-space: wrap;
 	margin-top: 20px;
 }
 
@@ -80,6 +81,20 @@
 	color: white;
 	border: none;
 	border-radius: 30px;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 20px;
+	opacity: 0.7;
+}
+
+#modal-close-button{
+	margin-left: 95%;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 30px;
+	padding: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 	font-size: 20px;
@@ -104,18 +119,4 @@
 .Closet .ClosetTop .Closet-image-sub {
 	display: flex;
 	flex-direction: row;
-	align-content: left;
-	justify-content: left;
-	height: 60%;
-}
-
-#modal-close-button{
-	background-color: black;
-	color: white;
-	border: none;
-	margin-left: 95%;
-	border-radius: 30px;
-	padding: 5px;
-	font-size: 15px;
-	opacity: 0.7;
 }
