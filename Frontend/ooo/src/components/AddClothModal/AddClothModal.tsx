@@ -186,7 +186,6 @@ const AddClothModal = (props: IProps) => {
 				<div className="CenterDiv"></div>
 				<div className="UploadedClothInfoDiv">
 					<div className="UploadedClothInfoDiv-sub">
-
 						<text id="UploadedClothInfoDiv-text">▶ TYPE</text>
 						<select
 							id="meta-type-select"

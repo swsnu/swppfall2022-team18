@@ -332,4 +332,14 @@ describe("<OutfitDetail/>", () => {
 		fireEvent.click(clothImagesWithUC[0]);
 		await screen.findByTestId("modal-close-button");
 	});
+
+	it("should return true when username is in localStorage", () => {
+		localStorage.setItem("username", "test_username");
+		render(outfitdetail);
+	});
+
+	it("should return false when username is in localStorage", () => {
+		localStorage.removeItem("username");
+		render(outfitdetail);
+	});
 });

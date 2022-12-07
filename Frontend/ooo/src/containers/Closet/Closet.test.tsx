@@ -279,4 +279,14 @@ describe("<Closet />", () => {
 		)[0];
 		fireEvent.click(deleteButton);
 	});
+
+	it("should return true when username is in localStorage", () => {
+		localStorage.setItem("username", "test_username");
+		render(closet);
+	});
+
+	it("should return false when username is in localStorage", () => {
+		localStorage.removeItem("username");
+		render(closet);
+	});
 });

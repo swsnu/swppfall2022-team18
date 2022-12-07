@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import React from "react";
-import { getMockStore } from '../../test-utils/mocks';
+import { getMockStore } from "../../test-utils/mocks";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import { OutfitState } from "../../store/slices/outfit";
@@ -9,7 +9,7 @@ import { UserClothState } from "../../store/slices/userCloth";
 import { IProps as HeaderProps } from "../../components/Header/Header";
 import { IProps as OutfitPreviewProps } from "../../components/OutfitPreview/OutfitPreview";
 import { IProps as ClosetItemProps } from "../../components/ClosetItem/ClosetItem";
-import axios from 'axios';
+import axios from "axios";
 
 // eslint-disable-next-line
 jest.mock("../../components/Header/Header", () => (props: HeaderProps) => (
@@ -41,8 +41,10 @@ jest.mock("../../components/Header/Header", () => (props: HeaderProps) => (
 	</div>
 ));
 
-// eslint-disable-next-line
-jest.mock("../../components/OutfitPreview/OutfitPreview",() => (props: OutfitPreviewProps) =>
+jest.mock(
+	"../../components/OutfitPreview/OutfitPreview",
+	// eslint-disable-next-line
+	() => (props: OutfitPreviewProps) =>
 		(
 			<div data-testid="spyOutfitPreview">
 				<div className="OutfitImage">
@@ -63,7 +65,11 @@ jest.mock("../../components/OutfitPreview/OutfitPreview",() => (props: OutfitPre
 );
 
 // eslint-disable-next-line
-jest.mock("../../components/ClosetItem/ClosetItem",() => (props: ClosetItemProps) =>(
+jest.mock(
+	"../../components/ClosetItem/ClosetItem",
+	// eslint-disable-next-line
+	() => (props: ClosetItemProps) =>
+		(
 			<div data-testid="spyClosetItem">
 				<div
 					className="ClothImage"
@@ -108,7 +114,16 @@ const stubInitialOutfitState: OutfitState = {
 		recommend: false,
 	},
 	sampleClothes: [
-		{id: 1, name:"", image_link:"", outfit:1, color:"black", type:"shirt", pattern:"no", purchase_link:""}
+		{
+			id: 1,
+			name: "",
+			image_link: "",
+			outfit: 1,
+			color: "black",
+			type: "shirt",
+			pattern: "no",
+			purchase_link: "",
+		},
 	],
 	sampleCloth: null,
 	userCloth: null,
@@ -118,7 +133,15 @@ const stubInitialOutfitState: OutfitState = {
 
 const stubInitialUserClothState: UserClothState = {
 	userClothes: [
-		{id: 1, name:"", image_link:"",  color:"black", type:"shirt", pattern:"no", dates:"test"}
+		{
+			id: 1,
+			name: "",
+			image_link: "",
+			color: "black",
+			type: "shirt",
+			pattern: "no",
+			dates: "test",
+		},
 	],
 	selectedUserCloth: null,
 	recommendOutfit: {
@@ -127,7 +150,15 @@ const stubInitialUserClothState: UserClothState = {
 		popularity: 1,
 		image_link: "",
 		userclothes: [
-			{id: 1, name:"", image_link:"",  color:"black", type:"shirt", pattern:"no", dates:"test"}
+			{
+				id: 1,
+				name: "",
+				image_link: "",
+				color: "black",
+				type: "shirt",
+				pattern: "no",
+				dates: "test",
+			},
 		],
 	},
 };
@@ -204,7 +235,7 @@ describe("<Home />", () => {
 		expect(mockNavigate).toHaveBeenCalled();
 	});
 
-	it("should handle header logout button", async() => {
+	it("should handle header logout button", async () => {
 		render(home);
 		jest.spyOn(axios, "get").mockResolvedValue({
 			data: { username: "test" },
@@ -212,27 +243,35 @@ describe("<Home />", () => {
 		const logoutbutton = screen.getAllByTestId("logout")[0];
 		fireEvent.click(logoutbutton);
 		await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
-	})
+	});
 
 	it("should handler info button", () => {
 		render(home);
 		const infoButton = screen.getAllByTestId("info")[0];
 		fireEvent.click(infoButton);
-	})
+	});
 
-	it("should handle closet more button", async() => {
+	it("should handle closet more button", async () => {
 		render(home);
-		const moreButton = screen.getAllByTestId("more-btn")[0]
-		fireEvent.click(moreButton)
+		const moreButton = screen.getAllByTestId("more-btn")[0];
+		fireEvent.click(moreButton);
 		await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
-	})
+	});
 
-	it("should handle outfit more button", async() => {
+	it("should handle outfit more button", async () => {
 		render(home);
-		const moreButton = screen.getAllByTestId("more-btn")[1]
-		fireEvent.click(moreButton)
+		const moreButton = screen.getAllByTestId("more-btn")[1];
+		fireEvent.click(moreButton);
 		await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
-	})
+	});
 
+	it("should return true when username is in localStorage", () => {
+		localStorage.setItem("username", "test_username");
+		render(home);
+	});
 
+	it("should return false when username is in localStorage", () => {
+		localStorage.removeItem("username");
+		render(home);
+	});
 });

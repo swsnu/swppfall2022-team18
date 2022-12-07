@@ -54,22 +54,22 @@ jest.mock(
 		)
 );
 
-// jest.mock(
-// 	"react-datepicker",
-// 	// eslint-disable-next-line react/display-name
-// 	() => (props: DatePickerProps) =>
-// 		<div className="SpyDatePicker">DatePicker</div>
-// );
-
-{
-	/* <DatePicker
-dateFormat="yyyy/MM/dd"
-highlightDates={highlightDates}
-selected={wearDate}
-onChange={(clickedDate: any) => setWearDateHandler(clickedDate)}
-inline
-/> */
+interface MockGithubPickerProps {
+	color: string[];
+	colors: string[];
+	onChange: (selectedColor: string) => void;
 }
+
+jest.mock("react-color/lib/components/github/Github", () => {
+	// Create a mocked version of the GithubPicker component
+	const MockGithubPicker = (props: MockGithubPickerProps) => (
+		<div data-testid="mockGitPicker" onClick={() => props.onChange("#0e0e0e")}>
+			Mock GithubPicker
+		</div>
+	);
+
+	return MockGithubPicker;
+});
 
 describe("<ClothDetaillModal />", () => {
 	let clothdetailmodal: JSX.Element;
@@ -179,6 +179,14 @@ describe("<ClothDetaillModal />", () => {
 			"typefilter-extra-done-button"
 		);
 		fireEvent.click(typeFilterExtraDoneButton);
+	});
+
+	it("should handle ColorHandler", () => {
+		render(clothdetailmodal);
+		const editButton = screen.getByText("Edit Cloth");
+		fireEvent.click(editButton);
+		const GithubPicker = screen.getByTestId("mockGitPicker");
+		fireEvent.click(GithubPicker);
 	});
 
 	it("should handle PatternOptionHandler", () => {

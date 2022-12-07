@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router";
-import { getMockStore } from "../../test-utils/mocks";
+import { getMockStore, renderWithProviders } from "../../test-utils/mocks";
 import Outfit from "./Outfit";
 import React from "react";
 import { IProps as FilterModalProps } from "../../components/FilterModal/FilterModal";
@@ -154,6 +154,16 @@ describe("<Outfit />", () => {
 	// navigate("/outfit/", { state: clothData });
 
 	it("should render Outfit page", () => {
+		render(outfit);
+	});
+
+	it("should return true when username is in localStorage", () => {
+		localStorage.setItem("username", "test_username");
+		render(outfit);
+	});
+
+	it("should return false when username is in localStorage", () => {
+		localStorage.removeItem("username");
 		render(outfit);
 	});
 

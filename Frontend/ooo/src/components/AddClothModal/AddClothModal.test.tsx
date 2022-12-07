@@ -13,6 +13,7 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { store } from "../../store";
 import userEvent from "@testing-library/user-event";
 import { classifyColor } from "../../store/slices/userCloth";
+import "jest-canvas-mock";
 
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
@@ -50,6 +51,23 @@ jest.mock(
 		)
 );
 
+interface MockGithubPickerProps {
+	color: string[];
+	colors: string[];
+	onChange: (selectedColor: string) => void;
+}
+
+jest.mock("react-color/lib/components/github/Github", () => {
+	// Create a mocked version of the GithubPicker component
+	const MockGithubPicker = (props: MockGithubPickerProps) => (
+		<div data-testid="mockGitPicker" onClick={() => props.onChange("#0e0e0e")}>
+			Mock GithubPicker
+		</div>
+	);
+
+	return MockGithubPicker;
+});
+
 describe("<AddClothModal />", () => {
 	let addClothModal: JSX.Element;
 	const mockclickAddClothDoneHandler = jest.fn();
@@ -70,6 +88,7 @@ describe("<AddClothModal />", () => {
 				</MemoryRouter>
 			</Provider>
 		);
+		global.URL.createObjectURL = jest.fn(() => "mockURL");
 	});
 
 	it("should render without errors", () => {
@@ -101,10 +120,11 @@ describe("<AddClothModal />", () => {
 		expect(defaultOption.selected).toBeTruthy();
 	});
 
-	// it("should handle ColorHandler", () => {
-	// 	render(addClothModal);
-	// 	const GithubPicker = screen.getByTestId("color-select");
-	// });
+	it("should handle ColorHandler", () => {
+		render(addClothModal);
+		const GithubPicker = screen.getByTestId("mockGitPicker");
+		fireEvent.click(GithubPicker);
+	});
 
 	it("should handle PatternOptionHandler", () => {
 		render(addClothModal);
@@ -143,6 +163,8 @@ describe("<AddClothModal />", () => {
 	});
 
 	it("should handle post image", () => {
+		global.URL.createObjectURL = jest.fn(() => "details");
+		mockDispatch.mockResolvedValue({ payload: { color: "testcolor" } });
 		render(addClothModal);
 		const imageUploadButton = screen.getByTestId("upload-cloth-button");
 		const createClothButton = screen.getByTestId("create-cloth-button");
@@ -150,9 +172,41 @@ describe("<AddClothModal />", () => {
 		const file = new File(["(⌐□_□)"], "testClothImage.png", {
 			type: "image/png",
 		});
-		// fireEvent.change(uploadButton, {
-		// 	target: { files: [file] },
-		// });
+		// const objectUrl = URL.createObjectURL(file);
+		fireEvent.change(imageUploadButton, {
+			target: { files: [file] },
+		});
+		fireEvent.click(createClothButton);
+
+		const selectMetaElement = screen.getAllByRole("combobox", {})[0];
+		userEvent.selectOptions(selectMetaElement, "상의");
+		const defaultMetaOption = screen.getByRole("option", {
+			name: "옷 종류",
+		}) as HTMLOptionElement;
+		const selectedMetaOption = screen.getByRole("option", {
+			name: "상의",
+		}) as HTMLOptionElement;
+		fireEvent.click(selectedMetaOption);
+
+		const typeFilterExtraDoneButton = screen.getByTestId(
+			"typefilter-extra-done-button"
+		);
+		fireEvent.click(typeFilterExtraDoneButton);
+
+		const selectElement = screen.getAllByRole("combobox", {})[1];
+		userEvent.selectOptions(selectElement, "None");
+		const defaultOption = screen.getByRole("option", {
+			name: "Pattern",
+		}) as HTMLOptionElement;
+		const selectedOption = screen.getByRole("option", {
+			name: "None",
+		}) as HTMLOptionElement;
+		fireEvent.click(selectedOption);
+
+		const GithubPicker = screen.getByTestId("mockGitPicker");
+		fireEvent.click(GithubPicker);
+
+		fireEvent.click(createClothButton);
 
 		// // let image = res.container.querySelector("#upload-cloth-button")
 		// let image = document.getElementById("UploadedClothPreviewDiv");

@@ -78,6 +78,23 @@ jest.mock(
 		)
 );
 
+interface MockGithubPickerProps {
+	color: string[];
+	colors: string[];
+	onChange: (selectedColor: string) => void;
+}
+
+jest.mock("react-color/lib/components/github/Github", () => {
+	// Create a mocked version of the GithubPicker component
+	const MockGithubPicker = (props: MockGithubPickerProps) => (
+		<div data-testid="mockGitPicker" onClick={() => props.onChange("#0e0e0e")}>
+			Mock GithubPicker
+		</div>
+	);
+
+	return MockGithubPicker;
+});
+
 describe("<FilterModal/>", () => {
 	let filterModal: JSX.Element;
 	beforeAll(() => {
@@ -127,10 +144,11 @@ describe("<FilterModal/>", () => {
 		expect(defaultOption.selected).toBeTruthy();
 	});
 
-	// it("should handle ColorHandler", () => {
-	// 	render(filterModal);
-	// 	const GithubPicker = screen.getByTestId("color-select");
-	// });
+	it("should handle ColorHandler", () => {
+		render(filterModal);
+		const GithubPicker = screen.getByTestId("mockGitPicker");
+		fireEvent.click(GithubPicker);
+	});
 
 	it("should handle PatternOptionHandler", () => {
 		render(filterModal);
