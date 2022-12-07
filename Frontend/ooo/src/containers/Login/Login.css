@@ -29,15 +29,6 @@
 }
 
 
-#appName {
-    font-size: 130px;
-    color: white;
-}
-
-#detailAppName {
-    font-size: 50px;
-    color: white;
-}
 
 .Login .form {
     display: flex;
@@ -58,7 +49,6 @@
     display: flex;
     flex-basis: 20%;
     flex-direction: column;
-    border-radius: 20px;
     background-color: black;
     opacity: 0.8;
     justify-content: center;
@@ -136,7 +126,6 @@
     flex-direction: row;
     background-color: white;
     border:none;
-    border-radius: 20px;
     padding:10px;
     font-size: 20px;
     margin-right: 20px;
@@ -146,20 +135,17 @@
     flex-direction: row;
     border:none;
     background-color: white;
-    border-radius: 20px;
     padding:10px;
     font-size: 20px;
 }
 
 #login-button:hover {
     background-color: black;
-    opacity: 0.8;
     color: white;
 }
 
 #signup-button:hover {
     background-color: black;
-    opacity: 0.8;
     color: white;
 }
 

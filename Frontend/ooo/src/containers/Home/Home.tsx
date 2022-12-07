@@ -142,9 +142,12 @@ export default function Home() {
 									</div>
 								</div>
 							) : (
-								<div>
-									<div className="TodayOutfit-image">
-										<text id="add-cloth-text"> 옷을 추가해보세요! </text>
+								<div style={{display: 'flex',
+									flexWrap: 'nowrap',
+									justifyContent: 'center',
+									alignItems: 'flex-end'}}>
+									<div className="TodayOutfit-image" style={{paddingLeft:'250px', width:'fit-content'}}>
+										<text id="add-cloth-text"> 옷 추가해보세요! </text>
 									</div>
 								</div>
 							)}

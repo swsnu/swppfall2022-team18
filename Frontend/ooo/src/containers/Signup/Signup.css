@@ -19,25 +19,12 @@
     display: flex;
     flex-basis: 100%;
     flex-direction: column;
-    justify-content: center;
     min-width: 1800px;
-    align-content: center;
     background-color: black;
-    opacity: 0.8;
     padding: 60px;
-    margin-bottom: 300px;
 }
 
 
-#appName {
-    font-size: 130px;
-    color: white;
-}
-
-#detailAppName {
-    font-size: 50px;
-    color: white;
-}
 
 .Signup .form {
     display: flex;
@@ -58,9 +45,7 @@
     display: flex;
     flex-basis: 20%;
     flex-direction: column;
-    border-radius: 20px;
     background-color: black;
-    opacity: 0.8;
     justify-content: center;
     align-content: center;
     padding:20px
@@ -159,7 +144,6 @@
     flex-direction: row;
     background-color: white;
     border:none;
-    border-radius: 20px;
     padding:10px;
     font-size: 20px;
     margin-right: 20px;
@@ -169,22 +153,15 @@
     flex-direction: row;
     border:none;
     background-color: white;
-    border-radius: 20px;
     padding:10px;
     font-size: 20px;
 }
 
 #Signup-button:hover {
     background-color: black;
-    opacity: 0.8;
     color: white;
 }
 
-#signup-button:hover {
-    background-color: black;
-    opacity: 0.8;
-    color: white;
-}
 
 #wrong-text {
     color: #FF6060;
