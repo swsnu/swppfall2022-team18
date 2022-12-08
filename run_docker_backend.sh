@@ -14,7 +14,7 @@ BACKEND_CONTAINER_DB_PATH="/app/db.sqlite3"
 
 # 
 
-sudo docker run --rm \
+sudo docker run -d --rm \
 --name "backend" \
 -v $ABSOLUTE_MEDIA_PATH:$BACKEND_CONTAINER_MEDIA_PATH \
 -v $ABSOLUTE_DB_PATH:$BACKEND_CONTAINER_DB_PATH \

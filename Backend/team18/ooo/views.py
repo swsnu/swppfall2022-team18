@@ -158,20 +158,16 @@ def classify_color(request):
         except (KeyError, JSONDecodeError) as error:
             print(error)
             return HttpResponseBadRequest()
-
-        model_path = os.path.dirname(os.getcwd()) + '/team18/model/colormodel_trained_89.h5'
+        # model.path = os.path.dirname(os.getcwd()) + '/team18/model/colormodel_trained_89.h5'
+        model_path = '/app/model/colormodel_trained_89.h5'
         model = load_model(model_path)
-
         image = Image.open(image_link)
-
         rgb = get_pixel(image, 200, 200)
         rgb = np.asarray(rgb)
         input_rgb = np.reshape(rgb, (-1, 3))
-
         color_class_confidence = model.predict(input_rgb)
         color_index = np.argmax(color_class_confidence, axis = 1)
         color = color_dict[int(color_index)]
-
         response_dict = {
             "color": color
         }

@@ -11,8 +11,7 @@ import { selectUserCloth } from "../../store/slices/userCloth";
 import { selectOutfit } from "../../store/slices/outfit";
 import { fetchUserClothes } from "../../store/slices/userCloth";
 import { fetchOutfits } from "../../store/slices/outfit";
-import { fetchRecommendOutfit, addWearDate } from "../../store/slices/userCloth";
-import { validateHeaderValue } from "http";
+import { fetchRecommendOutfit } from "../../store/slices/userCloth";
 
 export default function Home() {
 	const navigate = useNavigate();
@@ -48,21 +47,6 @@ export default function Home() {
 		};
 		getData();
 	}, []);
-
-	const dateFormat = (date: any) => {
-		return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-	};
-
-	const wearButtonHandler = () => {
-		const wearDateStr = dateFormat(new Date());
-		userClothes?.recommendOutfit?.userclothes.map((value, index) => {
-			const data = {
-				id: Number(value.id),
-				dates: String(wearDateStr),
-			};
-			const result = dispatch(addWearDate(data));
-		})
-	}
 
 	if (Loading) {
 		return <div>Loading..</div>;
@@ -152,7 +136,7 @@ export default function Home() {
 												);
 											}
 										)}
-										<button id="wear-button" data-testid="wear-button" onClick={wearButtonHandler}>
+										<button id="wear-button" data-testid="wear-button">
 											오늘 입기
 										</button>
 									</div>
