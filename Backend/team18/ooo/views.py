@@ -1,7 +1,6 @@
 '''
 views of ooo
 '''
-import os
 import json
 from json.decoder import JSONDecodeError
 from datetime import date, timedelta, datetime
@@ -14,9 +13,9 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from keras.models import load_model
 import numpy as np
+from PIL import Image
 from .models import Outfit, SampleCloth, UserCloth, Closet, LabelSet
 from .serializers import SampleClothSerializer, OutfitSerializer, UserClothSerializer
-from PIL import Image
 
 
 type_tree =  [
@@ -756,7 +755,8 @@ def today_outfit(request):
             if len(usercloth_days) == 0:
                 clean_usercloth_list.append(usercloth)
             else: 
-                last_day = datetime.strptime(usercloth_days[len(usercloth_days)-1], '%Y/%m/%d').date()
+                print(usercloth_days[len(usercloth_days)-1])
+                last_day = datetime.strptime(usercloth_days[len(usercloth_days)-1], '%Y-%m-%d').date()
                 #if today == last_day, it is OK to recommend
                 # print("day print",today)
                 # print(last_day)

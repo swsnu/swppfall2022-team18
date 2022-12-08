@@ -7,6 +7,19 @@ from .models import User, Closet, UserCloth, LabelSet, SampleCloth, Outfit
 
 
 # Create your tests here.
+
+# Define a custom JSON encoder class
+class UploadedFileEncoder(json.JSONEncoder):
+    """ encoder """
+    def default(self, o):
+        if isinstance(o, SimpleUploadedFile):
+            return {
+                'filename': o.name,
+                'content': o.read().decode('ISO-8859-1')
+            }
+        return super().default(o)
+    
+
 class SigninUserCase(TestCase):
     """test class"""
     def setUp(self):
@@ -285,14 +298,15 @@ class SigninUserCase(TestCase):
         self.assertEqual(response.status_code, 400)
         #using labelset
         with open('./3432_mXFtHKq.jpg', 'rb') as open_file:
-            content = open_file.read()
-        new_photo1 = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=content, content_type='image/jpeg')
+            content_file = open_file.read()
+        new_photo1 = SimpleUploadedFile(name='3432_mXFtHKq.jpg', content=content_file, content_type='image/jpeg')
+        json_string = json.dumps(new_photo1, cls=UploadedFileEncoder)
         response = client.post(
             '/api/ooo/closet/',
             json.dumps({
                 "body" : {
                     'name': 'name1',
-                    'image_link': new_photo1,
+                    'image_link': json_string,
                     'type': 'test_type_1',
                     'color': 'test_color_1',
                     'pattern': 'test_pattern_1'
