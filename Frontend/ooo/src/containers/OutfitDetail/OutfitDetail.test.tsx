@@ -253,10 +253,11 @@ describe("<OutfitDetail/>", () => {
 	});
 
 	it("should handle purchaseButtonHandler", async () => {
+		jest.spyOn(window, "open").mockImplementation();
 		render(outfitdetail);
 		const purchaseButton = screen.getByTestId("outfit-purchase-button");
 		fireEvent.click(purchaseButton);
-		await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
+		await waitFor(() => expect(window.open).toHaveBeenCalled());
 	});
 
 	it("should close modal", () => {

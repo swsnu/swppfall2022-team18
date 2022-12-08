@@ -20,7 +20,7 @@
 
 .Home .HomeTop {
 	display: flex;
-	max-width: 1750px;
+	width: 100%;
 	flex-direction: row;
 }
 /*cashing?*/
@@ -79,7 +79,7 @@
 
 .Home .HomeTop .TodayOutfit {
 	display: flex;
-	width: 38%;
+	width: 43%;
 	min-width: 720px;
 	height: auto;
 	flex-direction: column;
@@ -163,7 +163,7 @@
 
 .Home .HomeBottom {
 	display: flex;
-	max-width: 1800px;
+	width: 100%;
 	flex-direction: row;
 }
 

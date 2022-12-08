@@ -16,7 +16,9 @@ jobs:
             #secure: "98d4b5dec11e52863538a00ea274cc4f5be90279"
       install:
         - cd Backend
+        - cd team18
         - pip install -r requirements.txt
+        - cd ..
         - pip install coveralls
         - gem install coveralls-lcov
         - pip install Pillow==8.4

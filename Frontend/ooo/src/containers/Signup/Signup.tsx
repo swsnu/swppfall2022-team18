@@ -45,6 +45,7 @@ export default function Signup() {
 		} else {
 			await signupUser(username, password)
 				.then(() => {
+					alert("회원가입이 완료되었습니다.")
 					navigate("/");
 				})
 				.catch((error) => {
@@ -83,6 +84,7 @@ export default function Signup() {
 							id="pw-input"
 							data-testid="pw-input"
 							value={password}
+							type={'password'}
 							placeholder="비밀번호"
 							onChange={(event) => setPassword(event.target.value)}
 						/>
@@ -91,7 +93,7 @@ export default function Signup() {
 						<input
 							id="checkpw-input"
 							data-testid="checkpw-input"
-							value={checkPassword}
+							type={'password'}
 							placeholder="비밀번호 확인"
 							onChange={(event) => setCheckPassword(event.target.value)}
 						/>
