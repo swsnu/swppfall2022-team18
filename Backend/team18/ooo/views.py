@@ -1,7 +1,6 @@
 '''
 views of ooo
 '''
-import os
 import json
 from json.decoder import JSONDecodeError
 from datetime import date, timedelta, datetime
@@ -14,9 +13,9 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from keras.models import load_model
 import numpy as np
+from PIL import Image
 from .models import Outfit, SampleCloth, UserCloth, Closet, LabelSet
 from .serializers import SampleClothSerializer, OutfitSerializer, UserClothSerializer
-from PIL import Image
 
 
 type_tree =  [
@@ -158,20 +157,16 @@ def classify_color(request):
         except (KeyError, JSONDecodeError) as error:
             print(error)
             return HttpResponseBadRequest()
-
-        model_path = os.path.dirname(os.getcwd()) + '/team18/model/colormodel_trained_89.h5'
+        # model.path = os.path.dirname(os.getcwd()) + '/team18/model/colormodel_trained_89.h5'
+        model_path = '/app/model/colormodel_trained_89.h5'
         model = load_model(model_path)
-
         image = Image.open(image_link)
-
         rgb = get_pixel(image, 200, 200)
         rgb = np.asarray(rgb)
         input_rgb = np.reshape(rgb, (-1, 3))
-
         color_class_confidence = model.predict(input_rgb)
         color_index = np.argmax(color_class_confidence, axis = 1)
         color = color_dict[int(color_index)]
-
         response_dict = {
             "color": color
         }
@@ -760,7 +755,8 @@ def today_outfit(request):
             if len(usercloth_days) == 0:
                 clean_usercloth_list.append(usercloth)
             else: 
-                last_day = datetime.strptime(usercloth_days[len(usercloth_days)-1], '%Y/%m/%d').date()
+                print(usercloth_days[len(usercloth_days)-1])
+                last_day = datetime.strptime(usercloth_days[len(usercloth_days)-1], '%Y-%m-%d').date()
                 #if today == last_day, it is OK to recommend
                 # print("day print",today)
                 # print(last_day)

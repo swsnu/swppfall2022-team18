@@ -20,7 +20,7 @@
 
 .Home .HomeTop {
 	display: flex;
-	max-width: 1750px;
+	width: 100%;
 	flex-direction: row;
 }
 /*cashing?*/
@@ -79,12 +79,13 @@
 
 .Home .HomeTop .TodayOutfit {
 	display: flex;
-	width: 38%;
+	width: 43%;
 	min-width: 720px;
 	height: auto;
 	flex-direction: column;
 	margin-top: 2%;
-	margin-left: 2%;
+	margin-left: 20px;
+	margin-right: 3%;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
 }
@@ -163,17 +164,18 @@
 
 .Home .HomeBottom {
 	display: flex;
-	max-width: 1800px;
+	width: 100%;
 	flex-direction: row;
 }
 
 .Home .HomeBottom .OutfitDiv {
 	display: flex;
-	width: 95%;
+	width: 100%;
 	min-width: 1770px;
 	flex-direction: column;
 	margin-left: 3%;
 	margin-top: 2%;
+	margin-right: 3%;
 	padding-bottom: 100px;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;

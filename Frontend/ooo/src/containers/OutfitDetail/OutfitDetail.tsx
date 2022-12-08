@@ -29,7 +29,7 @@ const OutfitDetail = () => {
 	}, []);
 
 	const clickPurchaseButtonHander = (purchase_link: string) => {
-		navigate("/Redirect", { state: { url: purchase_link } });
+		window.open(purchase_link,'_blank')
 	};
 
 	const clickClothHandler = async (id: number) => {

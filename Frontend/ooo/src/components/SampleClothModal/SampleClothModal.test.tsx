@@ -25,6 +25,7 @@ describe("<SampleClothModal/>", () => {
 	});
 
 	it("should handle purchase link button", () => {
+		jest.spyOn(window, "open").mockImplementation();
 		render(
 			<SampleClothModal
 				userHave={true}
@@ -39,10 +40,11 @@ describe("<SampleClothModal/>", () => {
 		);
 		const purchaseButton = screen.getByText("Purchase Button");
 		fireEvent.click(purchaseButton);
-		expect(mockNavigate).toHaveBeenCalled();
+		expect(window.open).toHaveBeenCalled();
 	});
 
 	it("should render Not userHave clothes without errors", () => {
+		jest.spyOn(window, "open").mockImplementation();
 		render(
 			<SampleClothModal
 				userHave={false}
@@ -57,9 +59,10 @@ describe("<SampleClothModal/>", () => {
 		);
 		const purchaseButton = screen.getByText("Purchase Button");
 		fireEvent.click(purchaseButton);
-		expect(mockNavigate).toHaveBeenCalled();
+		expect(window.open).toHaveBeenCalled();
 	});
 	it("should render Not userHave clothes with undefined props", () => {
+		jest.spyOn(window, "open").mockImplementation();
 		render(
 			<SampleClothModal
 				userHave={false}
@@ -74,7 +77,6 @@ describe("<SampleClothModal/>", () => {
 		);
 		const purchaseButton = screen.getByText("Purchase Button");
 		fireEvent.click(purchaseButton);
-		expect(mockNavigate).toHaveBeenCalled();
 		// screen.getByTestId("no-sample-image-text")
 		// screen.getAllByText('유저 옷 이미지가 없습니다.')
 		// screen.getAllByText('샘플 이름이 없습니다.')
