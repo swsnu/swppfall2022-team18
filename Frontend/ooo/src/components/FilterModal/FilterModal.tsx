@@ -121,6 +121,7 @@ const FilterModal = (props: IProps) => {
 	return (
 		<div className="FilterModal">
 			<div>
+				<text>TYPE</text>
 				<select
 					id="meta-type-select"
 					onChange={(e) => clickMetaTypeOptionHandler(e.target.value)}
@@ -131,38 +132,42 @@ const FilterModal = (props: IProps) => {
 						</option>
 					))}
 				</select>
+			</div>
+			<div>
+				<text>TYPE DETAIL</text>
 				<TypeFilter
 					data-testid="typefilter"
 					metaType={metaType}
 					selectHandler={clickTypeOptionHandler}
 				></TypeFilter>
 			</div>
-
-			<br></br>
-			<text>Color</text>
-			<GithubPicker
-				data-testid="color-select"
-				color={colorHex}
-				colors={COLOROPTIONS}
-				onChange={colorHandler}
-			/>
-			<text>{color}</text>
-
-			<select
-				id="pattern-select"
-				onChange={(e) => clickPatternOptionHandler(e.target.value)}
-			>
-				{PatternOptions.map((option, index) => (
-					<option
-						key={index}
-						value={option.value}
-						// onClick={() => clickPatternOptionHandler(option.value)}
-					>
-						{option.value}
-					</option>
-				))}
-			</select>
-
+			<div style={{marginBottom:'5px'}}>
+				<text style={{paddingBottom:'5px'}}>COLOR</text>
+				<GithubPicker
+					data-testid="color-select"
+					color={colorHex}
+					colors={COLOROPTIONS}
+					onChange={colorHandler}
+				/>
+				<text>{color}</text>
+			</div>
+			<div>
+				<text>PATTERN</text>
+				<select
+					id="pattern-select"
+					onChange={(e) => clickPatternOptionHandler(e.target.value)}
+				>
+					{PatternOptions.map((option, index) => (
+						<option
+							key={index}
+							value={option.value}
+							// onClick={() => clickPatternOptionHandler(option.value)}
+						>
+							{option.value}
+						</option>
+					))}
+				</select>
+			</div>
 			<button
 				id="done-button"
 				data-testid="done-button"
