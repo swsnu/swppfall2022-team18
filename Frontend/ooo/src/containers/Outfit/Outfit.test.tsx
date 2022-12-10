@@ -1,10 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router";
-import { getMockStore } from "../../test-utils/mocks";
+import { getMockStore, renderWithProviders } from "../../test-utils/mocks";
 import Outfit from "./Outfit";
 import React from "react";
-import { store } from "../../store";
 import { IProps as FilterModalProps } from "../../components/FilterModal/FilterModal";
 import { IProps as HeaderProps } from "../../components/Header/Header";
 import { OutfitState } from "../../store/slices/outfit";
@@ -89,13 +88,27 @@ jest.mock(
 				<button
 					id="done-button"
 					data-testid="done-button"
-					onClick={() => props.clickDoneHandler(null, null, null)}
+					onClick={() =>
+						props.clickDoneHandler("mockType", "mockColor", "MockPattern")
+					}
 				>
 					Done
 				</button>
 			</div>
 		)
 );
+
+jest.mock("react-router-dom", () => ({
+	...jest.requireActual("react-router-dom"),
+	useLocation: () => ({
+		state: {
+			userHave: false,
+			type: "",
+			color: "",
+			pattern: "",
+		},
+	}),
+}));
 
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
@@ -125,25 +138,32 @@ describe("<Outfit />", () => {
 			<Provider store={mockStore}>
 				<MemoryRouter>
 					<Routes>
-						<Route
-							path="/"
-							element={
-								<Outfit
-									userHave={false}
-									recommend={false}
-									type={null}
-									color={null}
-									pattern={null}
-								/>
-							}
-						/>
+						<Route path="/" element={<Outfit />} />
 					</Routes>
 				</MemoryRouter>
 			</Provider>
 		);
 	});
 
+	// const clothData = {
+	//     userHave: true,
+	//     type: type,
+	//     color: color,
+	//     pattern: pattern,
+	// };
+	// navigate("/outfit/", { state: clothData });
+
 	it("should render Outfit page", () => {
+		render(outfit);
+	});
+
+	it("should return true when username is in localStorage", () => {
+		localStorage.setItem("username", "test_username");
+		render(outfit);
+	});
+
+	it("should return false when username is in localStorage", () => {
+		localStorage.removeItem("username");
 		render(outfit);
 	});
 
@@ -228,5 +248,55 @@ describe("<Outfit />", () => {
 		fireEvent.click(beforePageButton);
 		const firstPageButton = screen.getByTestId("first-page-button");
 		fireEvent.click(firstPageButton);
+	});
+
+	it("should handle type delete button", () => {
+		render(outfit);
+		const filterButton = screen.getByText("Filter");
+		fireEvent.click(filterButton);
+		const doneButton = screen.getByText("Done");
+		fireEvent.click(doneButton);
+
+		const colorDeleteButton = screen.getByTestId("color-filter-delete-button");
+		fireEvent.click(colorDeleteButton);
+		const patternDeleteButton = screen.getByTestId(
+			"pattern-filter-delete-button"
+		);
+		fireEvent.click(patternDeleteButton);
+		const typeDeleteButton = screen.getByTestId("type-filter-delete-button");
+		fireEvent.click(typeDeleteButton);
+	});
+
+	it("should handle color delete button", () => {
+		render(outfit);
+		const filterButton = screen.getByText("Filter");
+		fireEvent.click(filterButton);
+		const doneButton = screen.getByText("Done");
+		fireEvent.click(doneButton);
+
+		const typeDeleteButton = screen.getByTestId("type-filter-delete-button");
+		fireEvent.click(typeDeleteButton);
+		const patternDeleteButton = screen.getByTestId(
+			"pattern-filter-delete-button"
+		);
+		fireEvent.click(patternDeleteButton);
+		const colorDeleteButton = screen.getByTestId("color-filter-delete-button");
+		fireEvent.click(colorDeleteButton);
+	});
+
+	it("should handle pattern delete button", () => {
+		render(outfit);
+		const filterButton = screen.getByText("Filter");
+		fireEvent.click(filterButton);
+		const doneButton = screen.getByText("Done");
+		fireEvent.click(doneButton);
+		const typeDeleteButton = screen.getByTestId("type-filter-delete-button");
+		fireEvent.click(typeDeleteButton);
+		const colorDeleteButton = screen.getByTestId("color-filter-delete-button");
+		fireEvent.click(colorDeleteButton);
+		const patternDeleteButton = screen.getByTestId(
+			"pattern-filter-delete-button"
+		);
+		fireEvent.click(patternDeleteButton);
 	});
 });

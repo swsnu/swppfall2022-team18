@@ -1,0 +1,15 @@
+#type-select {
+	display: block;
+	/* width: 100%; */
+	padding: 8px 8px;
+	/* font-size: 20px; */
+	line-height: 20px;
+	border: 1px solid;
+	color: inherit;
+	background-color: transparent;
+	/* margin-bottom: 30px; */
+}
+
+#type-select:focus {
+	border-color: red;
+}

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { stat } from "fs";
 import { RootState } from "..";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
@@ -58,8 +57,8 @@ export interface OutfitState {
 	selectedOutfit: OutfitType | null;
 	filter: FilterType;
 	sampleClothes: SampleClothType[];
-	userCloth: UserClothType | null;
 	sampleCloth: SampleClothType | null;
+	userCloth: UserClothType | null;
 	cursor: number;
 	isLast: boolean;
 }
@@ -92,8 +91,8 @@ const initialState: OutfitState = {
 		recommend: false,
 	},
 	sampleClothes: [],
-	userCloth: null,
 	sampleCloth: null,
+	userCloth: null,
 	cursor: 0,
 	isLast: false,
 };
@@ -106,7 +105,7 @@ export const fetchOutfits = createAsyncThunk(
 	"outfit/fetchOutfits",
 	async (cursor, pageSize) => {
 		const response = await axios.get<fetchOutputState>("/api/ooo/outfit/", {
-			headers,
+			// headers,
 			params: {
 				cursor: cursor,
 				pageSize: pageSize,
@@ -128,6 +127,7 @@ export const fetchFilteredOutfits = createAsyncThunk(
 			}
 		);
 		console.log(response.data);
+		// dispatch(outfitActions.editFilter(response.data));
 		return response.data;
 	}
 );
@@ -137,7 +137,7 @@ export const fetchOutfit = createAsyncThunk(
 	async (id: OutfitType["id"]) => {
 		console.log("fetchOutfit");
 		const response = await axios.get(`/api/ooo/outfit/${id}/`, {
-			headers,
+			// headers,
 		});
 		// console.log("fetchOutfit", response.data);
 		return response.data ?? null;
@@ -148,14 +148,14 @@ export const fetchSampleCloth = createAsyncThunk(
 	"outfit/fetchSampleCloth",
 	async (id: OutfitType["id"]) => {
 		const response = await axios.get(`/api/ooo/outfit/samplecloth/${id}/`, {
-			headers,
+			// headers,
 		});
-		if(response.status === 200){
-			return response.data
-		}
-		else{
-			return null
-		}
+		// if (response.status === 200) {
+		// 	return response.data;
+		// } else {
+		// 	return null;
+		// }
+		return response.data;
 	}
 );
 
@@ -196,7 +196,7 @@ export const outfitSlice = createSlice({
 			state.sampleClothes = action.payload.sampleclothes;
 		});
 		builder.addCase(fetchSampleCloth.fulfilled, (state, action) => {
-			if(action.payload.usercloth.id !== -1){
+			if (action.payload.usercloth.id !== -1) {
 				state.userCloth = action.payload.usercloth;
 			}
 			state.sampleCloth = action.payload.samplecloth;

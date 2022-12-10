@@ -2,8 +2,6 @@
 urls.py
 '''
 from django.urls import path
-from django.conf import settings
-from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
@@ -12,7 +10,8 @@ urlpatterns = [
     path('user/signup/', views.signup, name='user/signup/'),
     path('user/signout/', views.signout, name='user/signout/'),
     path('user/info/', views.userinfo, name='user/info/'),
-    path('closet/', views.closet, name='closet/'),
+    path('model/', views.classify_color, name='model/'),
+    path('closet/', views.closets, name='closet/'),
     path('closet/<int:cloth_id>/', views.closet_item, name='closet/cloth_id/'),
     path('user/token/', views.token, name='user/token/'),
     path('outfit/', views.outfit_list, name='outfit/'),

@@ -80,12 +80,15 @@ const TypeFilter = (props: IProps) => {
 	} else if (metaType == "상의") {
 		return (
 			<>
-				<select id="type-select">
+				<select
+					id="type-select"
+					onChange={(e) => props.selectHandler(e.target.value)}
+				>
 					{TopTypeOptions.map((option, index) => (
 						<option
 							key={index}
 							value={option.value}
-							onClick={() => props.selectHandler(option.value)}
+							// onClick={() => props.selectHandler(option.value)}
 						>
 							{option.value}
 						</option>
@@ -96,12 +99,15 @@ const TypeFilter = (props: IProps) => {
 	} else if (metaType == "하의") {
 		return (
 			<>
-				<select id="type-select">
+				<select
+					id="type-select"
+					onChange={(e) => props.selectHandler(e.target.value)}
+				>
 					{BottomTypeOptions.map((option, index) => (
 						<option
 							key={index}
 							value={option.value}
-							onClick={() => props.selectHandler(option.value)}
+							// onClick={() => props.selectHandler(option.value)}
 						>
 							{option.value}
 						</option>
@@ -112,12 +118,15 @@ const TypeFilter = (props: IProps) => {
 	} else {
 		return (
 			<>
-				<select id="type-select">
+				<select
+					id="type-select"
+					onChange={(e) => props.selectHandler(e.target.value)}
+				>
 					{OuterTypeOptions.map((option, index) => (
 						<option
 							key={index}
 							value={option.value}
-							onClick={() => props.selectHandler(option.value)}
+							// onClick={() => props.selectHandler(option.value)}
 						>
 							{option.value}
 						</option>

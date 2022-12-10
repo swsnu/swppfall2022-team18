@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 export interface Iprops {
 	userHave: boolean;
-	userCloth_url: string;
-	sampleCloth_url: string;
-	type: string;
-	color: string;
-	pattern: string;
-	sampleCloth_name: string;
-	sampleCloth_link: string;
+	userCloth_url: string | undefined;
+	sampleCloth_url: string | undefined;
+	type: string | undefined;
+	color: string | undefined;
+	pattern: string | undefined;
+	sampleCloth_name: string | undefined;
+	sampleCloth_link: string | undefined;
 }
 
 const SampleClothModal = (props: Iprops) => {
@@ -18,7 +18,7 @@ const SampleClothModal = (props: Iprops) => {
 
 	const clickPurchaseButtonHander = () => {
 		if (props.sampleCloth_link as string){
-			navigate("/Redirect", { state: { url: props.sampleCloth_link } });
+			window.open(props.sampleCloth_link,'_blank')
 		}
 		else{
 			navigate('*');
@@ -31,7 +31,7 @@ const SampleClothModal = (props: Iprops) => {
 				<text id="samplecloth-title">Clothes Data</text>
 				<div className="Body">
 					<div className="sampleDiv">
-						<img className="sample-image" src={props.sampleCloth_url} alt='샘플 이미지가 없습니다.'></img>
+						<img className="sample-image" data-testid = "no-sample-image-text" src={props.sampleCloth_url} alt='샘플 이미지가 없습니다.'></img>
 						<text id="sample-image-title">코디 이미지</text>
 					</div>
 					<div className="userDiv">

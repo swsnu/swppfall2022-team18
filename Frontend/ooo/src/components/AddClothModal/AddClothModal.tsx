@@ -1,75 +1,163 @@
 import "./AddClothModal.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { createUserCloth } from "../../store/slices/userCloth";
 
-// const TodoModal = (props: any) => (
-//     <Modal
-//       isOpen={!!props.selectedTodo}
-//       contentLabel="Selected Todo"
-//       onRequestClose={props.onModalClose}
-//     >
-//       <h3>Selected Option</h3>
-//       {props.selectedTodo && <p>{props.selectedTodo}</p>}
-//       <button onClick={props.onModalClose}>Okay</button>
-//     </Modal>
-// )
+import { classifyColor, createUserCloth } from "../../store/slices/userCloth";
+import TypeFilter from "../TypeFilter/TypeFilter";
+import { GithubPicker } from "react-color";
 
-//   export default TodoModal
+export interface IProps {
+	modal_close: (metaType: string) => void;
+}
 
-// export interface IProps {
-//     // name: string,
-//     // image_link?: number,
-//     // type: string,
-//     // color: string,
-//     // pattern: string
-//     // setModalOpen: (e:boolean) => void,
-// }
-
-const AddClothModal = () => {
-	const navigate = useNavigate();
-
-	// const closeModal = () => {
-	//     props.setModalOpen(false);
-	// };
-
-	const [name, setName] = useState<string>("");
-	const [type, setType] = useState<string>("");
-	const [color, setColor] = useState<string>("");
-	const [pattern, setPattern] = useState<string>("");
+const AddClothModal = (props: IProps) => {
+	const [metaType, setMetaType] = useState<string | null>(null); // 상의, 하의, 아우터
+	const [type, setType] = useState<string | null>(null);
+	const [color, setColor] = useState<string | null>(null);
+	const [colorHex, setColorHex] = useState<string>("");
+	const [pattern, setPattern] = useState<string | null>(null);
 	const [fileImage, setFileImage] = useState("");
-	const [submitted, setSubmitted] = useState<boolean>(false);
+	const [file, setFile] = useState<File>();
+	// const [submitted, setSubmitted] = useState<boolean>(false);
+
 	const dispatch = useDispatch<AppDispatch>();
 
+	const COLOROPTIONS = [
+		"#0e0e0e",
+		"#9c9c9b",
+		"#011e66",
+		"#2508ff",
+		"#1f4582",
+		"#b5cbde",
+		"#242d42",
+		"",
+		"#5b5a34",
+		"#06b002",
+		"#7f290c",
+		"#ff0000",
+		"#fe2900",
+		"#feea00",
+		"#f1c276",
+		"#feffed",
+		"#ffffff",
+		"#570070",
+		"#ff00a1",
+		"#00c4ab",
+		"rainbow",
+	];
+	const COLORREF = [
+		"블랙",
+		"그레이",
+		"네이비",
+		"블루",
+		"데님",
+		"연청",
+		"진청",
+		"청",
+		"카키",
+		"그린",
+		"브라운",
+		"레드",
+		"오렌지",
+		"옐로우",
+		"베이지",
+		"아이보리",
+		"화이트",
+		"퍼플",
+		"핑크",
+		"민트",
+		"기타색상",
+	];
+
+	const PatternOptions = [
+		{ value: "Pattern" },
+		{ value: "None" },
+		{ value: "로고" },
+		{ value: "스트라이프" },
+		{ value: "체크" },
+		{ value: "자수" },
+	];
+
+	const MetaTypeOptions = [
+		{ value: "옷 종류" },
+		{ value: "상의" },
+		{ value: "하의" },
+		{ value: "아우터" },
+	];
+
+	// useEffect(() => {
+	// 	alert(color)
+	// }, [color]);
+
 	const clickAddClothHandler = async () => {
+		if (metaType && file && type && color && pattern) {
+			const data = {
+				name: metaType,
+				image: file,
+				type: type,
+				color: color,
+				pattern: pattern,
+			};
+			await dispatch(createUserCloth(data));
+			props.modal_close(metaType);
+		} else {
+			if (!fileImage) alert("옷 사진을 업로드해주세요.");
+			else if (!metaType || !type || !color || !pattern)
+				alert("정보를 모두 입력해주세요.");
+		}
+		// setSubmitted(true);
+		// window.location.reload();
+	};
+
+	const saveFileImage = async (e: any) => {
+		const uploadedImage = e.target.files[0];
+		setFileImage(URL.createObjectURL(uploadedImage));
+		setFile(uploadedImage);
+
 		const data = {
-			name: name,
-			image_link: fileImage,
-			type: type,
-			color: color,
-			pattern: pattern,
+			image: uploadedImage,
 		};
-		const result = await dispatch(createUserCloth(data));
-		console.log(result);
-
-		// if (result.type === `${createUserCloth.typePrefix}/fulfilled`) {
-		// 	setSubmitted(true);
-		// } else {
-		// 	alert("Error on create UserCloth");
-		// }
+		const result = await dispatch(classifyColor(data));
+		setColor(result.payload.color);
 	};
 
-	
-
-	const saveFileImage = (e: any) => {
-		setFileImage(URL.createObjectURL(e.target.files[0]));
+	const clickMetaTypeOptionHandler = (value: string) => {
+		if (value == "옷 종류") {
+			setMetaType(null);
+		} else {
+			setMetaType(value);
+		}
 	};
 
-	// if (submitted) {
-	// 	navigate("/closet/");
-	// }
+	const clickTypeOptionHandler = (value: string) => {
+		if (
+			value == "상의 종류" ||
+			value == "하의 종류" ||
+			value == "아우터 종류"
+		) {
+			setType(null);
+		} else setType(value);
+	};
+
+	// const clickColorOptionHandler = (value: string) => {
+	// 	if (value == "Color") {
+	// 		setColor(null);
+	// 	} else setColor(value);
+	// };
+
+	const colorHandler = (color: any) => {
+		setColorHex(color.hex);
+		const colorIdx = COLOROPTIONS.findIndex((item) => item == color.hex);
+		setColor(COLORREF[colorIdx]);
+	};
+
+	const clickPatternOptionHandler = (value: string) => {
+		if (value == "Pattern") {
+			setPattern(null);
+		} else setPattern(value);
+	};
 
 	return (
 		<div className="AddClothModal">
@@ -81,7 +169,7 @@ const AddClothModal = () => {
 					<div className="UploadedClothPreviewDiv">
 						{fileImage ? (
 							fileImage && (
-								<img id="uploaded-image-preview" src={fileImage} height="400" />
+								<img id="uploaded-image-preview" src={fileImage} height="400" width="600px"/>
 							)
 						) : (
 							<div className="UploadedClothTempDiv"></div>
@@ -98,49 +186,53 @@ const AddClothModal = () => {
 				<div className="CenterDiv"></div>
 				<div className="UploadedClothInfoDiv">
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Name</text>
-						<br></br>
-						<input
-							type="text"
-							id="cloth-info-input"
-							data-testid="cloth-info-input-name"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-						/>
+						<text id="UploadedClothInfoDiv-text">▶ TYPE</text>
+						<select
+							id="meta-type-select"
+							data-testid="meta-type-select"
+							onChange={(e) => clickMetaTypeOptionHandler(e.target.value)}
+						>
+							{MetaTypeOptions.map((option, index) => (
+								<option key={index} value={option.value}>
+									{option.value}
+								</option>
+							))}
+						</select>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Type</text>
-						<br></br>
-						<input
-							type="text"
-							id="cloth-info-input"
-							data-testid="cloth-info-input-type"
-							value={type}
-							onChange={(e) => setType(e.target.value)}
-						/>
+						<text id="UploadedClothInfoDiv-text">▶ TYPE DETAIL</text>
+						<TypeFilter
+							metaType={metaType}
+							selectHandler={clickTypeOptionHandler}
+						></TypeFilter>
 					</div>
+
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Color</text>
-						<br></br>
-						<input
-							type="text"
-							id="cloth-info-input"
+						<text id="UploadedClothInfoDiv-text">▶ COLOR</text>
+						<GithubPicker
 							data-testid="cloth-info-input-color"
-							value={color}
-							onChange={(e) => setColor(e.target.value)}
+							color={colorHex}
+							colors={COLOROPTIONS}
+							onChange={colorHandler}
 						/>
+						<text>{color}</text>
 					</div>
+
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">Pattern</text>
-						<br></br>
-						<input
-							type="text"
-							id="cloth-info-input"
-							data-testid="cloth-info-input-pattern"
-							value={pattern}
-							onChange={(e) => setPattern(e.target.value)}
-						/>
+						<text id="UploadedClothInfoDiv-text">▶ PATTERN</text>
+						<select
+							id="pattern-select"
+							data-testid="pattern-select"
+							onChange={(e) => clickPatternOptionHandler(e.target.value)}
+						>
+							{PatternOptions.map((option, index) => (
+								<option key={index} value={option.value}>
+									{option.value}
+								</option>
+							))}
+						</select>
 					</div>
+
 					<button
 						id="create-cloth-button"
 						data-testid="create-cloth-button"
@@ -155,52 +247,3 @@ const AddClothModal = () => {
 };
 
 export default AddClothModal;
-
-// const [file, setFile] = useState('');
-// const [previewURL, setPreviewURL] = useState('');
-// const [preview, setPreview] = useState();
-// // const fileRef= useRef();
-
-// const handleFileOnChange = (event: any) => {
-//     event.preventDefault();
-//     let file = event.target.files[0];
-//     let reader = new FileReader();
-
-//     reader.onloadend = (e) => {
-//         setFile(file);
-//         if (reader.result) { setPreviewURL(reader.result.toString()); }
-//     }
-//     if(file) { reader.readAsDataURL(file); }
-// }
-
-// useEffect(() => {
-//     setPreview(<img className='img_preview' src={previewURL}></img>);
-//     return () => {}
-// }, [previewURL])
-///
-
-// const [imgBase64, setImgBase64] = useState(""); // 파일 base64
-// const [imgFile, setImgFile] = useState(null);	//파일
-
-// const handleChangeFile = (event: any) => {
-//     console.log("HI")
-//     const reader = new FileReader();
-
-//     reader.onloadend = () => {
-//         const base64 = reader.result;
-//         if (base64) {
-//             console.log(base64)
-//             setImgBase64(base64.toString());
-//         }
-//     }
-//     if (event.target.files[0]) {
-//         console.log(event.target.files[0])
-//         reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
-//         setImgFile(event.target.files[0]); // 파일 상태 업데이트
-//     }
-// }
-
-// const handleFileButtonClick = (e) => {//버튼 대신 클릭하기
-//     e.preventDefault();
-//     fileRef.current.click(); // file 불러오는 버튼을 대신 클릭함
-// }

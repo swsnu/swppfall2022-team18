@@ -13,7 +13,22 @@
 	flex-direction: column;
 }
 
+#meta-type-select {
+	display: flex;
+	/* width: 100%; */
+	padding: 8px 8px;
+	/* font-size: 20px; */
+	line-height: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border: 1px solid;
+	color: inherit;
+	background-color: transparent;
+	/* margin-bottom: 30px; */
+}
+
 #AddClothModal-text {
+	margin-left: 25px;
 	font-size: 30px;
 	color: black;
 }
@@ -21,21 +36,22 @@
 .AddClothModal .AddClothModalTop {
 	display: flex;
 	flex-direction: row;
+	width: 1000px;
 }
+
 /*cashing?*/
 .AddClothModal .AddClothModalTop .UploadClothDiv {
 	display: flex;
-	width: 44%;
+	width: 600px;
 	min-width: 500px;
 	height: auto;
 	flex-direction: column;
-	margin-left: 5%;
+	margin-left: 25px;
 	margin-top: 2%;
+	margin-bottom: 1%;
 	/* border-color: black; */
-	border-radius: 40px;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
-	padding-bottom: 70px;
 }
 
 .AddClothModal .AddClothModalTop .UploadClothDiv .UploadedClothTempDiv {
@@ -43,8 +59,8 @@
 	margin-left: 40px;
 	margin-right: 65%;
 	background-color: lightgray;
-	width: 350px;
-	height: 400px;
+	width: 400px;
+	height: 500px;
 }
 
 #upload-cloth-button {
@@ -54,10 +70,9 @@
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 5px;
 	font-size: 15px;
-	opacity: 0.7;
+	margin-bottom: 2%;
 }
 
 #upload-cloth-button:hover {
@@ -66,14 +81,13 @@
 
 .AddClothModal .AddClothModalTop .UploadedClothInfoDiv {
 	display: flex;
-	width: 44%;
+	width: 500px;
 	min-width: 500px;
 	height: auto;
 	flex-direction: column;
-	margin-left: 5%;
+	margin-left: 50px;
 	margin-top: 2%;
 	/* border-color: black; */
-	border-radius: 40px;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
 	padding-bottom: 70px;
@@ -83,12 +97,15 @@
 	.AddClothModalTop
 	.UploadedClothInfoDiv
 	.UploadedClothInfoDiv-sub {
-	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+	margin-top: 0;
+	max-height: min-content;
 }
 
 #UploadedClothInfoDiv-text {
-	margin-top: 10px;
 	margin-left: 40px;
+	margin-right: 30px;
 	font-size: 20px;
 	color: black;
 }
@@ -104,10 +121,8 @@
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 5px;
 	font-size: 15px;
-	opacity: 0.7;
 }
 
 #create-cloth-button:hover {

@@ -1,6 +1,4 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter, Routes, Route, useNavigate } from 'react-router-dom';
-import { getMockStore, renderWithProviders } from '../../test-utils/mocks'
 import Signup from "./Signup"
 import axios from "axios";
 import React from "react";
@@ -24,6 +22,7 @@ describe("<Signup/>", () => {
 		jest.spyOn(axios, "post").mockResolvedValue({
 			data: { username: "test" },
 		});
+		jest.spyOn(window, "alert").mockImplementation(() => {''});
 
 		render(<Signup></Signup>);
 		const usernameInput = screen.getByTestId("username-input");
@@ -36,7 +35,7 @@ describe("<Signup/>", () => {
 		await screen.findByDisplayValue("test");
 		await screen.findAllByDisplayValue("1111");
 		fireEvent.click(signupButon);
-    
+		await waitFor(() => expect(window.alert).toBeCalledWith('회원가입이 완료되었습니다.'));
 		await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
 	});
 
@@ -59,10 +58,9 @@ describe("<Signup/>", () => {
 
     it("should handle poseSignuHandler is failed due to duplicate id", async() => {
         const mockConsoleError = jest.fn()
-        console.error = mockConsoleError
-        jest.spyOn(axios, "put").mockResolvedValue({
-			response: { data: {title: ["error"]} }
-		});
+        const err = new Error("error!")
+		console.error = mockConsoleError
+        jest.spyOn(axios, "post").mockRejectedValueOnce(err)
         render(<Signup></Signup>)
 
         const usernameInput = screen.getByTestId("username-input");
@@ -75,7 +73,6 @@ describe("<Signup/>", () => {
 		await screen.findByDisplayValue("test");
 		await screen.findAllByDisplayValue("1111");
 		fireEvent.click(signupButon);
-        // await waitFor(() => expect(mockConsoleError).toHaveBeenCalled());
     })
 
 });

@@ -9,12 +9,11 @@
 
 .Closet {
 	display: flex;
-	flex-basis: 100%;
 	flex-direction: column;
 }
 
 .Closet .Closet-header {
-	min-width: 2080px;
+	min-width: 1800px;
 }
 
 .Closet .ClosetTop {
@@ -23,33 +22,42 @@
 /*cashing?*/
 .Closet .ClosetTop .ClosetDiv {
 	display: flex;
-	/* width: 44%; */
-	min-width: 2080px;
+	width: 94%;
+	min-width: 1280px;
 	height: auto;
+	flex-wrap: wrap;
 	flex-direction: column;
-	margin-left: 5%;
+	margin-left: 3%;
 	margin-top: 2%;
 	/* border-color: black; */
-	border-radius: 40px;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
-	padding-bottom: 70px;
+	padding-bottom: 50px;
 }
 
 .Closet .ClosetTop .ClosetDiv .ClosetHead {
 	display: flex;
 	margin-top: 10px;
 	flex-direction: row;
+	
+}
+
+.Closet .ClosetTop .ClosetDiv .ClosetItems {
+	display: inline-flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin-left: 5%;
+	white-space: wrap;
+	margin-top: 20px;
 }
 
 
 #type-select {
-	margin-left: 100%;
-	margin-top: 15%;
+	/* margin-left: 100%; */
+	margin-top: 5px;
 	padding: 8px 8px;
 	line-height: 20px;
 	border: 1px solid;
-	border-radius: 4px;
 	color: inherit;
 	background-color: transparent;
 }
@@ -57,24 +65,42 @@
 #type-select:focus {
 	border-color: red;
 }
-
+#Closet-select-div {
+	margin-left: 50px;
+	margin-top: 15px;
+}
 #Closet-text-main {
 	margin-left: 2%;
 	font-size: 60px;
 	color: black;
 }
+#add-cloth-modal {
+	width: 1300px;
+	height: 800px;
+}
 
 #add-cloth-button {
-	margin-left: 80%;
+	margin-left: 2%;
 	background-color: black;
 	color: white;
+	height: fit-content;
+	margin-top: 13px;
 	border: none;
-	border-radius: 30px;
 	padding: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 	font-size: 20px;
-	opacity: 0.7;
+}
+
+#modal-close-button{
+	margin-left: 25px;
+	background-color: black;
+	color: white;
+	border: none;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 20px;
 }
 
 #add-cloth-button:hover {
@@ -95,7 +121,4 @@
 .Closet .ClosetTop .Closet-image-sub {
 	display: flex;
 	flex-direction: row;
-	align-content: left;
-	justify-content: left;
-	height: 60%;
 }
