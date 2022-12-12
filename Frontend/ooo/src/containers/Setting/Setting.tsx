@@ -93,13 +93,13 @@ export default function Setting() {
                     </div>
                     <div id='text-input'>
                         <text id='name-text'>비밀번호</text>
-                        <input id='name-input' style={{marginLeft:'4.5rem'}} data-testid="password-input" 
+                        <input type={'password'} id='name-input' style={{marginLeft:'4.5rem'}} data-testid="password-input" 
                         onChange={(event) => {setPassword(event.target.value)}}
                         value={password}></input>
                     </div>
                     <div id='text-input'>
                         <text id='name-text'>비밀번호확인</text>
-                        <input id='name-input' data-testid="password-check-input" 
+                        <input type={'password'} id='name-input' data-testid="password-check-input" 
                         onChange={(event) => {setCheckPassword(event.target.value)}}
                         value={checkPassword}></input>
                     </div>

@@ -20,15 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-secret_key_default = 'default_secret_key_default_secret_key_default_secret_key_default_secret_key_default_secret_key_default_secret_key_default_secret_key_default_secret_key_'
-SECRET_KEY = os.environ.get('SECRET_KEY', secret_key_default)
+SECRET_KEY_DEFAULT = 'default_secret_key_default_secret_key_default_secret_key_default_secret_key_default_secret_key_default_secret_key_default_secret_key_default_secret_key_'
+SECRET_KEY = os.environ.get('SECRET_KEY', SECRET_KEY_DEFAULT)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 # ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost']
 
-ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0', 'localhost', 'ec2-54-180-86-4.ap-northeast-2.compute.amazonaws.com', '54.180.86.4']
+ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0', 'localhost', 'ec2-3-37-36-47.ap-northeast-2.compute.amazonaws.com', '3.37.36.47']
 CSRF_TRUSTED_ORIGINS=["https://recommendyouroutfit.shop"]
 
 SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', 31536000))

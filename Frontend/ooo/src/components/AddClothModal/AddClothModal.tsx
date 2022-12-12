@@ -168,7 +168,7 @@ const AddClothModal = (props: IProps) => {
 					<div className="UploadedClothPreviewDiv">
 						{fileImage ? (
 							fileImage && (
-								<img id="uploaded-image-preview" src={fileImage} height="400" />
+								<img id="uploaded-image-preview" src={fileImage} height="400" width="600px"/>
 							)
 						) : (
 							<div className="UploadedClothTempDiv"></div>
@@ -199,7 +199,7 @@ const AddClothModal = (props: IProps) => {
 						</select>
 					</div>
 					<div className="UploadedClothInfoDiv-sub">
-						<text id="UploadedClothInfoDiv-text">▶ 세부 TYPE</text>
+						<text id="UploadedClothInfoDiv-text">▶ TYPE DETAIL</text>
 						<TypeFilter
 							metaType={metaType}
 							selectHandler={clickTypeOptionHandler}
@@ -207,6 +207,7 @@ const AddClothModal = (props: IProps) => {
 					</div>
 
 					<div className="UploadedClothInfoDiv-sub">
+						<text id="UploadedClothInfoDiv-text">▶ COLOR</text>
 						<GithubPicker
 							data-testid="cloth-info-input-color"
 							color={colorHex}

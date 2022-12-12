@@ -11,9 +11,6 @@
 	display: flex;
 	flex-basis: 100%;
 	flex-direction: column;
-	width: 200px;
-	height: 100px;
-	flex-direction: column;
 }
 
 #type-select {
@@ -22,8 +19,9 @@
 	padding: 8px 8px;
 	/* font-size: 20px; */
 	line-height: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 	border: 1px solid;
-	border-radius: 4px;
 	color: inherit;
 	background-color: transparent;
 	/* margin-bottom: 30px; */
@@ -40,7 +38,6 @@
 	font-size: 20px;
 	line-height: 20px;
 	border: 1px solid;
-	border-radius: 4px;
 	color: inherit;
 	background-color: transparent;
 	margin-bottom: 30px;
@@ -57,8 +54,8 @@
 	font-size: 20px;
 	line-height: 20px;
 	border: 1px solid;
-	border-radius: 4px;
 	color: inherit;
+	margin-top: 5px;
 	background-color: transparent;
 }
 
@@ -67,14 +64,13 @@
 }
 
 #done-button {
-	margin-top: 30px;
+	display: inline;
+	margin-top: 15px;
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 10px;
 	font-size: 40px;
-	opacity: 0.7;
 }
 
 #done-button:hover {

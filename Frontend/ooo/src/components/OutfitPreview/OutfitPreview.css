@@ -5,12 +5,10 @@
 	justify-content: center;
 	align-content: center;
 	background-color: #f8f8f8;
-	border-radius: 20px;
 }
 
 .OutfitPreview:hover {
 	background-color: #e3e3e3;
-	border-radius: 20px;
 }
 
 .OutfitPreview .OutfitImage {
@@ -24,8 +22,8 @@
 }
 
 #outfit-img {
-	width: 100%;
-	height: 100%;
+	width: 300px;
+	height: 500px;
 	object-fit: scale-down;
 }
 
@@ -45,7 +43,6 @@
 	text-overflow: ellipsis;
 	font-size: 10px;
 	font-weight: 100;
-	margin-bottom: 10%;
 }
 
 #name-label{

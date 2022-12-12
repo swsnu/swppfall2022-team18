@@ -18,7 +18,7 @@ const SampleClothModal = (props: Iprops) => {
 
 	const clickPurchaseButtonHander = () => {
 		if (props.sampleCloth_link as string){
-			navigate("/Redirect", { state: { url: props.sampleCloth_link } });
+			window.open(props.sampleCloth_link,'_blank')
 		}
 		else{
 			navigate('*');

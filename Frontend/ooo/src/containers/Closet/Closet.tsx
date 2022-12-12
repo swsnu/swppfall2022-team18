@@ -224,7 +224,6 @@ export default function Closet() {
 							isOpen={addClothModalOpen}
 							// onRequestClose={() => setAddClothModalOpen(false)}
 						>
-
 							<div id="close-buton-div">
 								<button
 									id="modal-close-button"

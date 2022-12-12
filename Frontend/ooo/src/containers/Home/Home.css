@@ -20,6 +20,7 @@
 
 .Home .HomeTop {
 	display: flex;
+	width: 100%;
 	flex-direction: row;
 }
 /*cashing?*/
@@ -32,7 +33,6 @@
 	margin-left: 3%;
 	margin-top: 2%;
 	/* border-color: black; */
-	border-radius: 40px;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
 }
@@ -48,7 +48,6 @@
 	flex-direction: row;
 	align-content: center;
 	margin-top: 5%;
-	display: flex;
 	justify-content: left;
 }
 
@@ -70,10 +69,8 @@
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 10px;
 	font-size: 40px;
-	opacity: 0.7;
 }
 
 #more-button:hover {
@@ -82,13 +79,13 @@
 
 .Home .HomeTop .TodayOutfit {
 	display: flex;
-	width: 38%;
+	width: 43%;
 	min-width: 720px;
 	height: auto;
 	flex-direction: column;
 	margin-top: 2%;
-	margin-left: 2%;
-	border-radius: 40px;
+	margin-left: 20px;
+	margin-right: 3%;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
 }
@@ -155,10 +152,8 @@
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 10px;
 	font-size: 30px;
-	opacity: 0.7;
 	margin-top: 10px;
 	margin-bottom: 20px;
 }
@@ -167,25 +162,21 @@
 	opacity: 1;
 }
 
-#add-cloth-text {
-	width: 500px;
-	font-size: 30px;
-}
-
 .Home .HomeBottom {
 	display: flex;
+	width: 100%;
 	flex-direction: row;
 }
 
 .Home .HomeBottom .OutfitDiv {
 	display: flex;
-	width: 95%;
+	width: 100%;
 	min-width: 1770px;
 	flex-direction: column;
 	margin-left: 3%;
 	margin-top: 2%;
+	margin-right: 3%;
 	padding-bottom: 100px;
-	border-radius: 40px;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
 }
@@ -207,10 +198,8 @@
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 10px;
 	font-size: 40px;
-	opacity: 0.7;
 }
 
 #outfit-more-button:hover {

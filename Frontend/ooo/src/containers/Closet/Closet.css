@@ -30,7 +30,6 @@
 	margin-left: 3%;
 	margin-top: 2%;
 	/* border-color: black; */
-	border-radius: 40px;
 	box-shadow: gray;
 	box-shadow: 1px 1px 10px 0px;
 	padding-bottom: 50px;
@@ -55,12 +54,10 @@
 
 #type-select {
 	/* margin-left: 100%; */
-	margin-left: 40px;
-	margin-top: 15%;
+	margin-top: 5px;
 	padding: 8px 8px;
 	line-height: 20px;
 	border: 1px solid;
-	border-radius: 4px;
 	color: inherit;
 	background-color: transparent;
 }
@@ -68,37 +65,42 @@
 #type-select:focus {
 	border-color: red;
 }
-
+#Closet-select-div {
+	margin-left: 50px;
+	margin-top: 15px;
+}
 #Closet-text-main {
 	margin-left: 2%;
 	font-size: 60px;
 	color: black;
+}
+#add-cloth-modal {
+	width: 1300px;
+	height: 800px;
 }
 
 #add-cloth-button {
 	margin-left: 2%;
 	background-color: black;
 	color: white;
+	height: fit-content;
+	margin-top: 13px;
 	border: none;
-	border-radius: 30px;
 	padding: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 	font-size: 20px;
-	opacity: 0.7;
 }
 
 #modal-close-button{
-	margin-left: 95%;
+	margin-left: 25px;
 	background-color: black;
 	color: white;
 	border: none;
-	border-radius: 30px;
 	padding: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 	font-size: 20px;
-	opacity: 0.7;
 }
 
 #add-cloth-button:hover {
