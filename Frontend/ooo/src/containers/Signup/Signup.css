@@ -20,6 +20,7 @@
     flex-basis: 100%;
     flex-direction: column;
     justify-content: center;
+    min-width: 1800px;
     align-content: center;
     background-color: black;
     opacity: 0.8;

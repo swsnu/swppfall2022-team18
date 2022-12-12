@@ -75,7 +75,7 @@ export default function Home() {
 							<div className="Closet-item-box" data-testid="ClosetItem">
 								{userClothes.userClothes.length !== 0 ? (
 									userClothes.userClothes.map((cloth, index) => {
-										while (index < 6) {
+										while (index < 3) {
 											return (
 												<ClosetItem
 													key={index}

@@ -66,77 +66,54 @@ export default function Setting() {
 		checkPw();
 	}, [checkPassword, password]);
 
-	return (
-		<div className="Setting">
-			<div className="Setting-header" data-testid="Header">
-				<Header
-					clickInfoHandler={() => {
-						navigate("/setting");
-					}}
-					clickLogoutHandler={async () => {
-						await logoutUser().catch((error) => console.log(error));
-						setIsSending(!isSending);
-					}}
-					clickHeaderHandler={() => {
-						navigate("/home");
-					}}
-				></Header>
-			</div>
-			<div className="Setting-bottom">
-				<div className="Setting-right">
-					<text id="myinfo-text">내 정보 설정</text>
-					<div id="text-input">
-						<text id="name-text">아이디</text>
-						<input id="name-input" defaultValue={name} disabled={true}></input>
-					</div>
-					<div id="text-input">
-						<text id="name-text">비밀번호</text>
-						<input
-							id="name-input"
-							data-testid="password-input"
-							onChange={(event) => {
-								setPassword(event.target.value);
-							}}
-							value={password}
-						></input>
-					</div>
-					<div id="text-input">
-						<text id="name-text">비밀번호확인</text>
-						<input
-							id="name-input"
-							data-testid="password-check-input"
-							onChange={(event) => {
-								setCheckPassword(event.target.value);
-							}}
-							value={checkPassword}
-						></input>
-					</div>
-					<div id="text-input">
-						<text>{errMsg}</text>
-					</div>
-					<div id="text-input">
-						<button
-							id="deleteButton"
-							data-testid="delete-button"
-							onClick={() => {
-								clickWithdrawBtnHandler();
-							}}
-						>
-							회원탈퇴
-						</button>
-						<button
-							id="okButton"
-							data-testid="ok"
-							disabled={errMsg === "" ? false : true}
-							onClick={() => {
-								clickEditBtnHandler();
-							}}
-						>
-							수정
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+
+    return (
+        <div className="Setting">
+            <div className="Setting-header"
+                data-testid='Header'>
+                <Header
+                    clickInfoHandler={() => {
+                        navigate("/setting");
+                    }}
+                    clickLogoutHandler={async() => {
+                        await logoutUser().catch((error) => console.log(error))
+                        setIsSending(!isSending)
+                    }}
+                    clickHeaderHandler={() => {
+                        navigate("/home");
+                    }}
+                ></Header>
+            </div>
+            <div className="Setting-bottom">
+                <div className="Setting-right">
+                    <text id='myinfo-text'>내 정보 설정</text>
+                    <div id='text-input'>
+                        <text id='name-text'>아이디</text>
+                        <input id='name-input' style={{marginLeft:'6.5rem'}} defaultValue={name} disabled={true}></input>
+                    </div>
+                    <div id='text-input'>
+                        <text id='name-text'>비밀번호</text>
+                        <input id='name-input' style={{marginLeft:'4.5rem'}} data-testid="password-input" 
+                        onChange={(event) => {setPassword(event.target.value)}}
+                        value={password}></input>
+                    </div>
+                    <div id='text-input'>
+                        <text id='name-text'>비밀번호확인</text>
+                        <input id='name-input' data-testid="password-check-input" 
+                        onChange={(event) => {setCheckPassword(event.target.value)}}
+                        value={checkPassword}></input>
+                    </div>
+                    <div id='text-input'>
+                        <text>{errMsg}</text>
+                    </div>
+                    <div id='text-input'>
+                        <button id='deleteButton' data-testid="delete-button" onClick={() => {clickWithdrawBtnHandler()}}>회원탈퇴</button>
+                        <button id='okButton' data-testid="ok"
+                        disabled={errMsg === "" ? false : true}
+                        onClick={() => {clickEditBtnHandler()}}>수정</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
