@@ -48,6 +48,11 @@ export default function Home() {
 		getData();
 	}, []);
 
+	const clickOutfitImageHandler = (outfit_id: number) => {
+		const navigateLink = "/outfit/" + outfit_id + "/";
+		navigate(navigateLink);
+	};
+
 	if (Loading) {
 		return <div>Loading..</div>;
 	} else {
@@ -122,14 +127,18 @@ export default function Home() {
 											data-testid="today-outfit-img"
 										></img>
 									</div>
-									<div className="TodayOutfit-lable"
-									data-testid = 'TodayOutfit-lable'>
+									<div
+										className="TodayOutfit-lable"
+										data-testid="TodayOutfit-lable"
+									>
 										<text id="name-label">▶ 코디 설명</text>
-										<text id="today-outfit-info-text">{userClothes.recommendOutfit.outfit_info}</text>
+										<text id="today-outfit-info-text">
+											{userClothes.recommendOutfit.outfit_info}
+										</text>
 										<text id="name-label">▶ 구성 옷</text>
-										{
-											userClothes.recommendOutfit.userclothes.map((value, index) => {
-												return(
+										{userClothes.recommendOutfit.userclothes.map(
+											(value, index) => {
+												return (
 													<div key={index}>
 														<text id="today-cloth-name">{value.name}</text>
 													</div>
@@ -142,11 +151,18 @@ export default function Home() {
 									</div>
 								</div>
 							) : (
-								<div style={{display: 'flex',
-									flexWrap: 'nowrap',
-									justifyContent: 'center',
-									alignItems: 'flex-end'}}>
-									<div className="TodayOutfit-image" style={{paddingLeft:'250px', width:'fit-content'}}>
+								<div
+									style={{
+										display: "flex",
+										flexWrap: "nowrap",
+										justifyContent: "center",
+										alignItems: "flex-end",
+									}}
+								>
+									<div
+										className="TodayOutfit-image"
+										style={{ paddingLeft: "250px", width: "fit-content" }}
+									>
 										<text id="add-cloth-text"> 옷 추가해보세요! </text>
 									</div>
 								</div>
@@ -179,7 +195,11 @@ export default function Home() {
 						<div className="OutfitImage" data-testid="OutfitPreview">
 							{outfit.outfits.map((outfit, index) => {
 								return (
-									<div key={index} className="OutfitPreviewItem">
+									<div
+										key={index}
+										className="OutfitPreviewItem"
+										onClick={() => clickOutfitImageHandler(outfit.id)}
+									>
 										<OutfitPreview
 											key={index}
 											source_url={outfit.image_link.toString()}
