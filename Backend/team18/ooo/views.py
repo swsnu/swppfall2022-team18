@@ -29,11 +29,6 @@ type_tree =  [
     '카디건', '패딩 베스트', '아노락 재킷','베스트', '플리스/뽀글이', '사파리/헌팅 재킷',
     '트레이닝 재킷', '나일론/코치 재킷', '스타디움 재킷', '기타 아우터']]]
 
-def index():
-    '''
-    test
-    '''
-    return HttpResponse("Hello, world")
 
 @csrf_exempt
 def signup(request):
