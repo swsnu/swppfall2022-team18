@@ -131,7 +131,7 @@ describe("<AddClothModal />", () => {
 		const selectElement = screen.getAllByRole("combobox", {})[1];
 		userEvent.selectOptions(selectElement, "None");
 		const defaultOption = screen.getByRole("option", {
-			name: "Pattern",
+			name: "패턴 종류",
 		}) as HTMLOptionElement;
 		const selectedOption = screen.getByRole("option", {
 			name: "None",
@@ -144,9 +144,9 @@ describe("<AddClothModal />", () => {
 	it("should handle PatternOptionHandler branch", () => {
 		render(addClothModal);
 		const selectElement = screen.getAllByRole("combobox", {})[1];
-		userEvent.selectOptions(selectElement, "Pattern");
+		userEvent.selectOptions(selectElement, "패턴 종류");
 		const defaultOption = screen.getByRole("option", {
-			name: "Pattern",
+			name: "패턴 종류",
 		}) as HTMLOptionElement;
 		expect(defaultOption.selected).toBeTruthy();
 	});
@@ -196,7 +196,7 @@ describe("<AddClothModal />", () => {
 		const selectElement = screen.getAllByRole("combobox", {})[1];
 		userEvent.selectOptions(selectElement, "None");
 		const defaultOption = screen.getByRole("option", {
-			name: "Pattern",
+			name: "패턴 종류",
 		}) as HTMLOptionElement;
 		const selectedOption = screen.getByRole("option", {
 			name: "None",
