@@ -7,7 +7,6 @@ import { classifyColor, createUserCloth } from "../../store/slices/userCloth";
 import TypeFilter from "../TypeFilter/TypeFilter";
 import ColorFilter from "../ColorFilter/ColorFilter";
 import PatternFilter from "../PatternFilter/PatternFilter";
-import { GithubPicker } from "react-color";
 
 export interface IProps {
 	modal_close: (metaType: string) => void;

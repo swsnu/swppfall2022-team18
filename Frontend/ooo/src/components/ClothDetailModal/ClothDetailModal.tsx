@@ -15,13 +15,6 @@ import PatternFilter from "../PatternFilter/PatternFilter";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const MetaTypeOptions = [
-	{ value: "옷 종류" },
-	{ value: "상의" },
-	{ value: "하의" },
-	{ value: "아우터" },
-];
-
 export interface IProps {
 	id: string;
 	image: string;

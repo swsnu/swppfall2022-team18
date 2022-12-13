@@ -4,7 +4,6 @@ import { useState } from "react";
 import TypeFilter from "../TypeFilter/TypeFilter";
 import ColorFilter from "../ColorFilter/ColorFilter";
 import PatternFilter from "../PatternFilter/PatternFilter";
-import { GithubPicker } from "react-color";
 
 export interface IProps {
 	clickDoneHandler: (
@@ -19,7 +18,6 @@ const FilterModal = (props: IProps) => {
 	const [color, setColor] = useState<string | null>(null);
 	const [pattern, setPattern] = useState<string | null>(null);
 	const [metaType, setMetaType] = useState<string | null>(null);
-	const [colorHex, setColorHex] = useState<string>("");
 
 	const MetaTypeOptions = [
 		{ value: "옷 종류" },
