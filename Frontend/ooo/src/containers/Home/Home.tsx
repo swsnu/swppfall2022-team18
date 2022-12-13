@@ -11,7 +11,7 @@ import { selectUserCloth } from "../../store/slices/userCloth";
 import { selectOutfit } from "../../store/slices/outfit";
 import { fetchUserClothes } from "../../store/slices/userCloth";
 import { fetchOutfits } from "../../store/slices/outfit";
-import { fetchRecommendOutfit } from "../../store/slices/userCloth";
+import { fetchRecommendOutfit, addWearDate } from "../../store/slices/userCloth";
 
 export default function Home() {
 	const navigate = useNavigate();
@@ -52,6 +52,22 @@ export default function Home() {
 		const navigateLink = "/outfit/" + outfit_id + "/";
 		navigate(navigateLink);
 	};
+
+	const dateFormat = (date: any) => {
+		return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+	};
+
+	const wearButtonHandler = () => {
+		const wearDateStr = dateFormat(new Date());
+		userClothes?.recommendOutfit?.userclothes.map((value, index) => {
+			const data = {
+				id: Number(value.id),
+				dates: String(wearDateStr),
+			};
+			const result = dispatch(addWearDate(data));
+		})
+		alert('오늘 입은 옷으로 등록되었습니다');
+	}
 
 	if (Loading) {
 		return <div>Loading..</div>;
@@ -145,7 +161,7 @@ export default function Home() {
 												);
 											}
 										)}
-										<button id="wear-button" data-testid="wear-button">
+										<button id="wear-button" data-testid="wear-button" onClick={wearButtonHandler}>
 											오늘 입기
 										</button>
 									</div>
@@ -163,7 +179,7 @@ export default function Home() {
 										className="TodayOutfit-image"
 										style={{ paddingLeft: "250px", width: "fit-content" }}
 									>
-										<text id="add-cloth-text"> 옷 추가해보세요! </text>
+										<text id="add-cloth-text"> 옷장에 옷을 추가해보세요! </text>
 									</div>
 								</div>
 							)}
