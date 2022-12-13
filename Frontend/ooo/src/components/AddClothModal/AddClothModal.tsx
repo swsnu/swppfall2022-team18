@@ -169,7 +169,7 @@ const AddClothModal = (props: IProps) => {
 					<div className="UploadedClothPreviewDiv">
 						{fileImage ? (
 							fileImage && (
-								<img id="uploaded-image-preview" src={fileImage} height="400" width="600px"/>
+								<img id="uploaded-image-preview" src={fileImage} height="400" width="500px"/>
 							)
 						) : (
 							<div className="UploadedClothTempDiv"></div>
