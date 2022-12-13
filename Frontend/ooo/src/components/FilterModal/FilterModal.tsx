@@ -2,6 +2,8 @@ import React from "react";
 import "./FilterModal.css";
 import { useState } from "react";
 import TypeFilter from "../TypeFilter/TypeFilter";
+import ColorFilter from "../ColorFilter/ColorFilter";
+import PatternFilter from "../PatternFilter/PatternFilter";
 import { GithubPicker } from "react-color";
 
 export interface IProps {
@@ -19,67 +21,11 @@ const FilterModal = (props: IProps) => {
 	const [metaType, setMetaType] = useState<string | null>(null);
 	const [colorHex, setColorHex] = useState<string>("");
 
-	const PatternOptions = [
-		{ value: "Pattern" },
-		{ value: "None" },
-		{ value: "로고" },
-		{ value: "스트라이프" },
-		{ value: "체크" },
-		{ value: "자수" },
-	];
-
 	const MetaTypeOptions = [
 		{ value: "옷 종류" },
 		{ value: "상의" },
 		{ value: "하의" },
 		{ value: "아우터" },
-	];
-
-	const COLOROPTIONS = [
-		"#0e0e0e",
-		"#9c9c9b",
-		"#011e66",
-		"#2508ff",
-		"#1f4582",
-		"#b5cbde",
-		"#242d42",
-		"",
-		"#5b5a34",
-		"#06b002",
-		"#7f290c",
-		"#ff0000",
-		"#fe2900",
-		"#feea00",
-		"#f1c276",
-		"#feffed",
-		"#ffffff",
-		"#570070",
-		"#ff00a1",
-		"#00c4ab",
-		"rainbow",
-	];
-	const COLORREF = [
-		"블랙",
-		"그레이",
-		"네이비",
-		"블루",
-		"데님",
-		"연청",
-		"진청",
-		"청",
-		"카키",
-		"그린",
-		"브라운",
-		"레드",
-		"오렌지",
-		"옐로우",
-		"베이지",
-		"아이보리",
-		"화이트",
-		"퍼플",
-		"핑크",
-		"민트",
-		"기타색상",
 	];
 
 	const clickMetaTypeOptionHandler = (value: string) => {
@@ -100,22 +46,28 @@ const FilterModal = (props: IProps) => {
 		} else setType(value);
 	};
 
-	// const clickColorOptionHandler = (value: string) => {
-	// 	if (value == "Color") {
-	// 		setColor(null);
-	// 	} else setColor(value);
-	// };
-
-	const clickPatternOptionHandler = (value: string) => {
-		if (value == "Pattern") {
-			setPattern(null);
-		} else setPattern(value);
+	const clickColorOptionHandler = (value: string | null) => {
+		console.log("check");
+		console.log(value);
+		if (value == "") {
+			setColor(null);
+		} else if (value == null) {
+			setColor(null);
+		} else setColor(value);
 	};
 
-	const colorHandler = (color: any) => {
-		setColorHex(color.hex);
-		const colorIdx = COLOROPTIONS.findIndex((item) => item == color.hex);
-		setColor(COLORREF[colorIdx]);
+	// const colorHandler = (color: any) => {
+	// 	setColorHex(color.hex);
+	// 	const colorIdx = COLOROPTIONS.findIndex((item) => item == color.hex);
+	// 	setColor(COLORREF[colorIdx]);
+	// };
+
+	const clickPatternOptionHandler = (value: string | null) => {
+		if (value == "패턴 종류") {
+			setPattern(null);
+		} else if (value == null) {
+			setPattern(null);
+		} else setPattern(value);
 	};
 
 	return (
@@ -141,32 +93,20 @@ const FilterModal = (props: IProps) => {
 					selectHandler={clickTypeOptionHandler}
 				></TypeFilter>
 			</div>
-			<div style={{marginBottom:'5px'}}>
-				<text style={{paddingBottom:'5px'}}>COLOR</text>
-				<GithubPicker
-					data-testid="color-select"
-					color={colorHex}
-					colors={COLOROPTIONS}
-					onChange={colorHandler}
-				/>
+			<div style={{ marginBottom: "5px" }}>
+				<text style={{ paddingBottom: "5px" }}>COLOR</text>
+				<ColorFilter
+					selectHandler={clickColorOptionHandler}
+					color={color}
+				></ColorFilter>
 				<text>{color}</text>
 			</div>
 			<div>
 				<text>PATTERN</text>
-				<select
-					id="pattern-select"
-					onChange={(e) => clickPatternOptionHandler(e.target.value)}
-				>
-					{PatternOptions.map((option, index) => (
-						<option
-							key={index}
-							value={option.value}
-							// onClick={() => clickPatternOptionHandler(option.value)}
-						>
-							{option.value}
-						</option>
-					))}
-				</select>
+				<PatternFilter
+					selectHandler={clickPatternOptionHandler}
+					pattern={pattern}
+				></PatternFilter>
 			</div>
 			<button
 				id="done-button"
