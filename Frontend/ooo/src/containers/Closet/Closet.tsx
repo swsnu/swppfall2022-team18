@@ -121,6 +121,8 @@ export default function Closet() {
 		const getData = async () => {
 			setIsLoading(true);
 			dispatch(fetchUserClothes());
+			//change to
+			//await dispatch(fetchUserClothes());
 			setIsLoading(false);
 		};
 		getData();

@@ -168,11 +168,6 @@ export const userClothSlice = createSlice({
 		// 	);
 		// 	state.selectedUserCloth = target ?? null;
 		// },
-		initState: (
-			(state)=>{
-				state= initialState
-			}
-		),
 		createUserCloth: (
 			state,
 			action: PayloadAction<{

@@ -1,0 +1,24 @@
+@font-face {
+	font-family: "Kreon";
+	src: url("../../assets/fonts/Kreon/static/Kreon-Regular.ttf")
+		format("opentype");
+}
+* {
+	font-family: "Kreon";
+}
+
+#pattern-select {
+	display: block;
+	/* width: 100%; */
+	padding: 8px 8px;
+	/* font-size: 10px; */
+	line-height: 20px;
+	border: 1px solid;
+	color: inherit;
+	background-color: transparent;
+	/* margin-bottom: 30px; */
+}
+
+#pattern-select:focus {
+	border-color: red;
+}

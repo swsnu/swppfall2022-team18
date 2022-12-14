@@ -146,7 +146,6 @@ export default function Outfit() {
 	};
 
 	const clickNextPageHandler = () => {
-		console.log(page);
 		const currentPage = page;
 		setPage(currentPage + 1);
 	};
@@ -258,8 +257,9 @@ export default function Outfit() {
 									x
 								</button>
 							</div>
-						) : <></>
-						}
+						) : (
+							<></>
+						)}
 						{filters.color != null ? (
 							<div className="now-color-filter-div">
 								색 : {filters.color}
@@ -288,13 +288,15 @@ export default function Outfit() {
 						) : (
 							<></>
 						)}
-						{filters.pattern === null && filters.color===null && filters.type===null?
-						<div>
-							<p>None</p>
-						</div>
-						:
-						<></>
-						}
+						{filters.pattern === null &&
+						filters.color === null &&
+						filters.type === null ? (
+							<div>
+								<p>None</p>
+							</div>
+						) : (
+							<></>
+						)}
 					</div>
 				</div>
 				<Modal id="filter-modal" isOpen={modalOpen}>
@@ -355,49 +357,36 @@ export default function Outfit() {
 					</div>
 					<div className="page-buttons-div">
 						<div id="first-page-button-div">
-							{page == 1 ? (
-								<div></div>
-							) : (
-								<div>
-									<button
-										id="first-page-button"
-										data-testid="first-page-button"
-										onClick={() => clickFirstPageHandler()}
-									>
-										≪
-									</button>
-								</div>
-							)}
+							<button
+								id="first-page-button"
+								data-testid="first-page-button"
+								onClick={() => clickFirstPageHandler()}
+								disabled={page == 1}
+							>
+								≪
+							</button>
 						</div>
 						<div id="before-page-button-div">
-							{page == 1 ? (
-								<div></div>
-							) : (
-								<div>
-									<button
-										id="before-page-button"
-										data-testid="before-page-button"
-										onClick={() => clickBeforePageHandler()}
-									>
-										＜
-									</button>
-								</div>
-							)}
+							<button
+								id="before-page-button"
+								data-testid="before-page-button"
+								onClick={() => clickBeforePageHandler()}
+								disabled={page == 1}
+							>
+								＜
+							</button>
 						</div>
 						<div id="next-page-button-div">
-							{isLast == true ? (
-								<div></div>
-							) : (
-								<div>
-									<button
-										id="next-page-button"
-										data-testid="next-page-button"
-										onClick={() => clickNextPageHandler()}
-									>
-										＞
-									</button>
-								</div>
-							)}
+							<div>
+								<button
+									id="next-page-button"
+									data-testid="next-page-button"
+									onClick={() => clickNextPageHandler()}
+									disabled={isLast == true}
+								>
+									＞
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>

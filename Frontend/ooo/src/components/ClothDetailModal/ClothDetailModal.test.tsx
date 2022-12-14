@@ -196,7 +196,7 @@ describe("<ClothDetaillModal />", () => {
 		const selectElement = screen.getAllByRole("combobox", {})[0];
 		userEvent.selectOptions(selectElement, "None");
 		const defaultOption = screen.getByRole("option", {
-			name: "Pattern",
+			name: "패턴 종류",
 		}) as HTMLOptionElement;
 		const selectedOption = screen.getByRole("option", {
 			name: "None",
@@ -211,10 +211,10 @@ describe("<ClothDetaillModal />", () => {
 		const editButton = screen.getByText("Edit Cloth");
 		fireEvent.click(editButton);
 		const selectElement = screen.getAllByRole("combobox", {})[0];
-		userEvent.selectOptions(selectElement, "Pattern");
+		userEvent.selectOptions(selectElement, "패턴 종류");
 		const defaultOption = screen.getByRole("option", {
-			name: "Pattern",
+			name: "패턴 종류",
 		}) as HTMLOptionElement;
-		expect(defaultOption.selected).toBeTruthy();
+		expect(defaultOption.selected).toBeFalsy();
 	});
 });
