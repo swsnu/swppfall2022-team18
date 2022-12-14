@@ -78,7 +78,7 @@ const ClothDetailModal = (cloth: IProps) => {
 	};
 
 	const dateFormat = (date: any) => {
-		return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+		return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	};
 
 	const setWearDateHandler = (clickedDate: any) => {

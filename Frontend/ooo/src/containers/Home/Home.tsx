@@ -22,7 +22,7 @@ export default function Home() {
 	const userClothes = useSelector(selectUserCloth);
 	const outfit = useSelector(selectOutfit);
 	const [Loading, setLoading] = useState(false);
-	const [todaySelect, setTodaySelect] = useState(false);
+	const [wearToday, setWearToday] = useState(false);
 	//for logout
 	const [isSending, setIsSending] = useState(false);
 	const checkLoginned = () => {
@@ -53,7 +53,33 @@ export default function Home() {
 			setLoading(false);
 		};
 		getData();
+		// checkTodaySelect();
 	}, []);
+
+	useEffect(() => {
+		const checkTodaySelect = () => {
+			const todayUserClothes = userClothes.recommendOutfit?.userclothes;
+			console.log("todaycheck");
+			console.log(todayUserClothes);
+			let todayCheck = true;
+			const today_data = dateFormat(new Date());
+			if (todayUserClothes == null) return;
+			else {
+				for (const uc of todayUserClothes) {
+					const clothDates = uc.dates;
+					console.log(clothDates);
+					console.log('["' + String(today_data) + '"]');
+					if (String(clothDates) != '["' + String(today_data) + '"]') {
+						console.log("diff");
+						todayCheck = false;
+					}
+				}
+				setWearToday(todayCheck);
+				console.log(todayCheck);
+			}
+		};
+		checkTodaySelect();
+	}, [userClothes]);
 
 	const clickOutfitImageHandler = (outfit_id: number) => {
 		const navigateLink = "/outfit/" + outfit_id + "/";
@@ -61,10 +87,10 @@ export default function Home() {
 	};
 
 	const dateFormat = (date: any) => {
-		return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+		return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	};
 
-	const wearButtonHandler = () => {
+	const wearButtonHandler = (add: boolean) => {
 		const wearDateStr = dateFormat(new Date());
 		userClothes?.recommendOutfit?.userclothes.map((value, index) => {
 			const data = {
@@ -73,8 +99,13 @@ export default function Home() {
 			};
 			const result = dispatch(addWearDate(data));
 		});
-		setTodaySelect(true);
-		alert("오늘 입은 옷으로 등록되었습니다");
+		if (add) {
+			alert("오늘 입은 옷으로 등록되었습니다");
+			setWearToday(true);
+		} else {
+			alert("오늘 입은 옷이 취소되었습니다");
+			setWearToday(false);
+		}
 	};
 
 	if (Loading) {
@@ -169,14 +200,23 @@ export default function Home() {
 												);
 											}
 										)}
-										<button
-											id="wear-button"
-											data-testid="wear-button"
-											onClick={wearButtonHandler}
-											disabled={todaySelect == true}
-										>
-											{todaySelect == true ? "오늘 입기" : "오늘 입기"}
-										</button>
+										{wearToday ? (
+											<button
+												id="wear-button"
+												data-testid="wear-button"
+												onClick={() => wearButtonHandler(false)}
+											>
+												오늘 입기 취소
+											</button>
+										) : (
+											<button
+												id="wear-button"
+												data-testid="wear-button"
+												onClick={() => wearButtonHandler(true)}
+											>
+												오늘 입기
+											</button>
+										)}
 									</div>
 								</div>
 							) : (

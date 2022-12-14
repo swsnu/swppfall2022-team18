@@ -269,9 +269,6 @@ class SigninUserCase(TestCase):
         )
         self.assertEqual(response.status_code, 401)
 
-        response = client.put('/api/ooo/outfit/')
-        self.assertEqual(response.status_code, 405)
-
         #after login
         response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
                     content_type='application/json')
@@ -459,9 +456,6 @@ class SigninUserCase(TestCase):
         )
         self.assertEqual(response.status_code, 401)
 
-        response = client.put('/api/ooo/outfit/')
-        self.assertEqual(response.status_code, 405)
-
         #after login
         response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
                     content_type='application/json')
@@ -644,9 +638,6 @@ class SigninUserCase(TestCase):
         response = client.get('/api/ooo/outfit/1/')
         self.assertEqual(response.status_code, 401)
 
-        response = client.put('/api/ooo/outfit/1/')
-        self.assertEqual(response.status_code, 405)
-
         #after login
         response = client.post('/api/ooo/user/signin/', json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
                     content_type='application/json')
@@ -668,9 +659,6 @@ class SigninUserCase(TestCase):
         #before login
         response = client.get('/api/ooo/outfit/samplecloth/1/')
         self.assertEqual(response.status_code, 401)
-
-        response = client.put('/api/ooo/outfit/samplecloth/1/')
-        self.assertEqual(response.status_code, 405)
 
         #after login
         response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
@@ -697,9 +685,6 @@ class SigninUserCase(TestCase):
         #before login
         response = client.get('/api/ooo/outfit/today/')
         self.assertEqual(response.status_code, 401)
-
-        response = client.put('/api/ooo/outfit/today/')
-        self.assertEqual(response.status_code, 405)
 
         #after login
         response = client.post('/api/ooo/user/signin/', json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
