@@ -202,6 +202,7 @@ export const outfitSlice = createSlice({
 			} else {
 				state.userCloth = null;
 			}
+			// state.userCloth = action.payload.usercloth;
 			state.sampleCloth = action.payload.samplecloth;
 		});
 	},

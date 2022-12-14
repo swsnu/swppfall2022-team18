@@ -34,7 +34,7 @@ def login_check_dec(func):
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
         else:
-            return func(request)
+            return func(request, *args, **kwargs)
     return wrapper
 
 @csrf_exempt

@@ -120,9 +120,10 @@ export default function Closet() {
 	useEffect(() => {
 		const getData = async () => {
 			setIsLoading(true);
-			await dispatch(fetchUserClothes());
+			// await dispatch(fetchUserClothes());
+			dispatch(fetchUserClothes());
 			//change to
-			//await dispatch(fetchUserClothes());
+			//await
 			setIsLoading(false);
 		};
 		getData();

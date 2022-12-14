@@ -44,24 +44,15 @@ export default function Home() {
 		//closet list, outfitlist 받아오는 것
 		const getData = async () => {
 			setLoading(true);
-			await dispatch(fetchUserClothes());
-			await dispatch(fetchOutfits());
-			await dispatch(fetchRecommendOutfit());
+			// await dispatch(fetchUserClothes());
+			// await dispatch(fetchOutfits());
+			// await dispatch(fetchRecommendOutfit());
+			dispatch(fetchUserClothes());
+			dispatch(fetchOutfits());
+			dispatch(fetchRecommendOutfit());
 			setLoading(false);
 		};
-		const todayCheck = () => {
-			const today = dateFormat(new Date());
-			const wearDate =
-				userClothes.recommendOutfit?.userclothes[0].dates.split(",");
-			if (wearDate != undefined) {
-				const lastDay = wearDate[wearDate.length - 1];
-				if (today === lastDay) {
-					setTodaySelect(true);
-				}
-			}
-		};
 		getData();
-		todayCheck();
 	}, []);
 
 	const clickOutfitImageHandler = (outfit_id: number) => {

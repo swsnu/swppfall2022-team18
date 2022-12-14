@@ -24,6 +24,13 @@ const OutfitDetail = () => {
 	const outfitState = useSelector(selectOutfit);
 	const userClothHave = useSelector(selectOutfit).userCloth;
 
+	// const sleep = (ms: number) => {
+	// 	const wakeUpTime = Date.now() + ms;
+	// 	while (Date.now() < wakeUpTime) {
+	// 		//
+	// 	}
+	// };
+
 	useEffect(() => {
 		dispatch(fetchOutfit(Number(id)));
 	}, []);
@@ -39,17 +46,17 @@ const OutfitDetail = () => {
 
 	const clickClothHandler = async (id: number) => {
 		//use modal
-
 		console.log(outfitState.sampleCloth);
 		console.log(outfitState.userCloth);
 		setTimeout(() => {
 			console.log("Check");
 			if (userClothHave === null) {
 				setUserHave(false);
+			} else if (userClothHave.id === -1) {
+				setUserHave(false);
 			} else {
 				setUserHave(true);
 			}
-			setModalOpen(true);
 		}, 100);
 	};
 
@@ -126,6 +133,7 @@ const OutfitDetail = () => {
 										onClick={async () => {
 											await dispatch(fetchSampleCloth(sc.id));
 											clickClothHandler(sc.id);
+											setModalOpen(true);
 										}}
 										alt="로딩 중"
 									></img>
@@ -137,15 +145,15 @@ const OutfitDetail = () => {
 				<Modal id="sample-modal" isOpen={modalOpen} ariaHideApp={false}>
 					<SampleClothModal
 						userHave={userHave}
-						userCloth_url={
-							outfitState.userCloth === null
-								? ""
-								: outfitState.userCloth.image_link
-						}
 						sampleCloth_url={
 							outfitState.sampleCloth === null
 								? ""
 								: outfitState.sampleCloth.image_link
+						}
+						userCloth_url={
+							outfitState.userCloth === null
+								? ""
+								: outfitState.userCloth.image_link
 						}
 						type={
 							outfitState.sampleCloth === null

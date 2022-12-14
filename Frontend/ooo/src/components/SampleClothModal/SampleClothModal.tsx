@@ -37,7 +37,7 @@ const SampleClothModal = (props: Iprops) => {
 					></img>
 					<text id="sample-image-title">코디 이미지</text>
 				</div>
-				{props.userHave ? (
+				{/* {props.userHave ? (
 					<>
 						<div className="userDiv">
 							<img
@@ -50,7 +50,7 @@ const SampleClothModal = (props: Iprops) => {
 					</>
 				) : (
 					<></>
-				)}
+				)} */}
 				<div className="DataDiv">
 					<button
 						id="purchase-button"
