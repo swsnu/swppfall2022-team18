@@ -18,6 +18,7 @@ export default function Home() {
 	const dispatch = useDispatch<AppDispatch>();
 	const userClothes = useSelector(selectUserCloth);
 	const outfit = useSelector(selectOutfit);
+	const [wearToday, setWearToday] = useState(false);
 	const [Loading, setLoading] = useState(false);
 	//for logout
 	const [isSending, setIsSending] = useState(false);
@@ -57,7 +58,7 @@ export default function Home() {
 		return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
 	};
 
-	const wearButtonHandler = () => {
+	const wearButtonHandler = (add: boolean) => {
 		const wearDateStr = dateFormat(new Date());
 		userClothes?.recommendOutfit?.userclothes.map((value, index) => {
 			const data = {
@@ -66,7 +67,14 @@ export default function Home() {
 			};
 			const result = dispatch(addWearDate(data));
 		})
-		alert('오늘 입은 옷으로 등록되었습니다');
+		if (add) {
+			alert('오늘 입은 옷으로 등록되었습니다');
+			setWearToday(true);
+		}
+		else {
+			alert('오늘 입은 옷이 취소되었습니다');
+			setWearToday(false);
+		}
 	}
 
 	if (Loading) {
@@ -161,9 +169,16 @@ export default function Home() {
 												);
 											}
 										)}
-										<button id="wear-button" data-testid="wear-button" onClick={wearButtonHandler}>
-											오늘 입기
-										</button>
+										{wearToday ? (
+												<button id="wear-button" data-testid="wear-button" onClick={() => wearButtonHandler(false)}>
+													오늘 입기 취소
+												</button>
+											) : (
+												<button id="wear-button" data-testid="wear-button" onClick={() => wearButtonHandler(true)}>
+													오늘 입기
+												</button>
+											)
+										}
 									</div>
 								</div>
 							) : (
