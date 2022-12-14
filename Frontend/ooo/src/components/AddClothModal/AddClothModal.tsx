@@ -181,7 +181,7 @@ const AddClothModal = (props: IProps) => {
 								onChange={colorHandler}
 							/>
 						</div> */}
-						<text>{color}</text>
+						<text style={{marginLeft:'5px', fontSize:'10px'}}>{color}</text>
 					</div>
 
 					<div className="UploadedClothInfoDiv-sub">
