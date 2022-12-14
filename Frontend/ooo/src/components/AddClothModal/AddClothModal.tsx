@@ -181,7 +181,7 @@ const AddClothModal = (props: IProps) => {
 								onChange={colorHandler}
 							/>
 						</div> */}
-						<text style={{marginLeft:'5px', fontSize:'10px'}}>{color}</text>
+						<text id = 'ai_recommend_color'>{color}</text>
 					</div>
 
 					<div className="UploadedClothInfoDiv-sub">
