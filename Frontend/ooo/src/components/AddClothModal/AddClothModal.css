@@ -102,6 +102,11 @@
 	padding-bottom: 70px;
 }
 
+#ai_recommend_color{
+	padding-left: 50px;
+	font-size: 15px;
+}
+
 .AddClothModal
 	.AddClothModalTop
 	.UploadedClothInfoDiv
