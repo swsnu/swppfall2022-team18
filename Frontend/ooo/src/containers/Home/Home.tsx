@@ -11,7 +11,10 @@ import { selectUserCloth } from "../../store/slices/userCloth";
 import { selectOutfit } from "../../store/slices/outfit";
 import { fetchUserClothes } from "../../store/slices/userCloth";
 import { fetchOutfits } from "../../store/slices/outfit";
-import { fetchRecommendOutfit, addWearDate } from "../../store/slices/userCloth";
+import {
+	fetchRecommendOutfit,
+	addWearDate,
+} from "../../store/slices/userCloth";
 
 export default function Home() {
 	const navigate = useNavigate();
@@ -19,6 +22,7 @@ export default function Home() {
 	const userClothes = useSelector(selectUserCloth);
 	const outfit = useSelector(selectOutfit);
 	const [Loading, setLoading] = useState(false);
+	const [todaySelect, setTodaySelect] = useState(false);
 	//for logout
 	const [isSending, setIsSending] = useState(false);
 	const checkLoginned = () => {
@@ -40,12 +44,24 @@ export default function Home() {
 		//closet list, outfitlist 받아오는 것
 		const getData = async () => {
 			setLoading(true);
-			dispatch(fetchUserClothes());
-			dispatch(fetchOutfits());
-			dispatch(fetchRecommendOutfit());
+			await dispatch(fetchUserClothes());
+			await dispatch(fetchOutfits());
+			await dispatch(fetchRecommendOutfit());
 			setLoading(false);
 		};
+		const todayCheck = () => {
+			const today = dateFormat(new Date());
+			const wearDate =
+				userClothes.recommendOutfit?.userclothes[0].dates.split(",");
+			if (wearDate != undefined) {
+				const lastDay = wearDate[wearDate.length - 1];
+				if (today === lastDay) {
+					setTodaySelect(true);
+				}
+			}
+		};
 		getData();
+		todayCheck();
 	}, []);
 
 	const clickOutfitImageHandler = (outfit_id: number) => {
@@ -65,9 +81,10 @@ export default function Home() {
 				dates: String(wearDateStr),
 			};
 			const result = dispatch(addWearDate(data));
-		})
-		alert('오늘 입은 옷으로 등록되었습니다');
-	}
+		});
+		setTodaySelect(true);
+		alert("오늘 입은 옷으로 등록되었습니다");
+	};
 
 	if (Loading) {
 		return <div>Loading..</div>;
@@ -161,8 +178,13 @@ export default function Home() {
 												);
 											}
 										)}
-										<button id="wear-button" data-testid="wear-button" onClick={wearButtonHandler}>
-											오늘 입기
+										<button
+											id="wear-button"
+											data-testid="wear-button"
+											onClick={wearButtonHandler}
+											disabled={todaySelect == true}
+										>
+											{todaySelect == true ? "오늘 입기" : "오늘 입기"}
 										</button>
 									</div>
 								</div>

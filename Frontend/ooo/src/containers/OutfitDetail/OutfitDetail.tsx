@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
 import { AppDispatch } from "../../store";
@@ -23,25 +23,35 @@ const OutfitDetail = () => {
 	const [selectedCloth, setSelectedCloth] = useState(0);
 	const [userHave, setUserHave] = useState(false);
 	const outfitState = useSelector(selectOutfit);
+	const userClothHave = useSelector(selectOutfit).userCloth;
 
 	useEffect(() => {
 		dispatch(fetchOutfit(Number(id)));
 	}, []);
 
+	useEffect(() => {
+		console.log("rerender");
+		console.log(userHave);
+		console.log(userClothHave);
+	}, [userClothHave]);
+
 	const clickPurchaseButtonHander = (purchase_link: string) => {
-		window.open(purchase_link,'_blank')
+		window.open(purchase_link, "_blank");
 	};
 
 	const clickClothHandler = async (id: number) => {
 		//use modal
-		setModalOpen(true);
 		await dispatch(fetchSampleCloth(id));
 		setSelectedCloth(id);
-		if (outfitState.userCloth === null) {
-			setUserHave(false);
-		} else {
-			setUserHave(true);
-		}
+		setTimeout(() => {
+			console.log("Check");
+			if (userClothHave === null) {
+				setUserHave(false);
+			} else {
+				setUserHave(true);
+			}
+			setModalOpen(true);
+		}, 100);
 	};
 
 	const [isSending, setIsSending] = useState(false);

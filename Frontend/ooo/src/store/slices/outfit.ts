@@ -155,6 +155,7 @@ export const fetchSampleCloth = createAsyncThunk(
 		// } else {
 		// 	return null;
 		// }
+		console.log(response.data);
 		return response.data;
 	}
 );
@@ -198,6 +199,8 @@ export const outfitSlice = createSlice({
 		builder.addCase(fetchSampleCloth.fulfilled, (state, action) => {
 			if (action.payload.usercloth.id !== -1) {
 				state.userCloth = action.payload.usercloth;
+			} else {
+				state.userCloth = null;
 			}
 			state.sampleCloth = action.payload.samplecloth;
 		});
