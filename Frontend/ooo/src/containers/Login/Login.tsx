@@ -76,6 +76,7 @@ export default function Login() {
 								id="pw-input"
 								data-testid="pw-input"
 								value={password}
+								type={'password'}
 								placeholder="비밀번호"
 								onChange={(event) => setPassword(event.target.value)}
 							/>

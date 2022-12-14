@@ -137,3 +137,8 @@
 #create-cloth-button:hover {
 	opacity: 1;
 }
+
+#ai_color {
+	margin-left: 5px;
+	font-size: 15px;
+}

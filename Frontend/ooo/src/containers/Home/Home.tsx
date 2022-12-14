@@ -156,7 +156,7 @@ export default function Home() {
 											(value, index) => {
 												return (
 													<div key={index}>
-														<text id="today-cloth-name">{value.name}</text>
+														<text id="today-cloth-name">{value.type}</text>
 													</div>
 												);
 											}
