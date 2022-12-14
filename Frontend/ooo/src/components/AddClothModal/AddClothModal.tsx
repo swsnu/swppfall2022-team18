@@ -123,7 +123,7 @@ const AddClothModal = (props: IProps) => {
 									id="uploaded-image-preview"
 									src={fileImage}
 									height="400"
-									width="600px"
+									width="500px"
 								/>
 							)
 						) : (
