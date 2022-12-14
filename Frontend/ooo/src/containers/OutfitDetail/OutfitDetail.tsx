@@ -20,7 +20,6 @@ const OutfitDetail = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
 	const [modalOpen, setModalOpen] = useState(false);
-	const [selectedCloth, setSelectedCloth] = useState(0);
 	const [userHave, setUserHave] = useState(false);
 	const outfitState = useSelector(selectOutfit);
 	const userClothHave = useSelector(selectOutfit).userCloth;
@@ -32,7 +31,6 @@ const OutfitDetail = () => {
 	useEffect(() => {
 		console.log("rerender");
 		console.log(userHave);
-		console.log(userClothHave);
 	}, [userClothHave]);
 
 	const clickPurchaseButtonHander = (purchase_link: string) => {
@@ -41,8 +39,9 @@ const OutfitDetail = () => {
 
 	const clickClothHandler = async (id: number) => {
 		//use modal
-		await dispatch(fetchSampleCloth(id));
-		setSelectedCloth(id);
+
+		console.log(outfitState.sampleCloth);
+		console.log(outfitState.userCloth);
 		setTimeout(() => {
 			console.log("Check");
 			if (userClothHave === null) {
@@ -124,7 +123,10 @@ const OutfitDetail = () => {
 										id="samplecloth-img"
 										data-testid="samplecloth-image"
 										src={sc.image_link}
-										onClick={() => clickClothHandler(sc.id)}
+										onClick={async () => {
+											await dispatch(fetchSampleCloth(sc.id));
+											clickClothHandler(sc.id);
+										}}
 										alt="로딩 중"
 									></img>
 								</div>
@@ -177,7 +179,6 @@ const OutfitDetail = () => {
 							data-testid="modal-close-button"
 							onClick={() => {
 								setModalOpen(false);
-								setSelectedCloth(-1);
 								setUserHave(false);
 							}}
 						>
