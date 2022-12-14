@@ -58,6 +58,18 @@
 	background-color: lightgray;
 	width: 400px;
 	height: 500px;
+	text-align: center;
+	display: table;
+}
+
+.AddClothModal
+	.AddClothModalTop
+	.UploadClothDiv
+	.UploadedClothTempDiv
+	.UploadedClothTempDiv-text {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
 }
 
 #upload-cloth-button {

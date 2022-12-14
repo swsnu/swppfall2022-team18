@@ -29,7 +29,6 @@ type_tree =  [
     '카디건', '패딩 베스트', '아노락 재킷','베스트', '플리스/뽀글이', '사파리/헌팅 재킷',
     '트레이닝 재킷', '나일론/코치 재킷', '스타디움 재킷', '기타 아우터']]]
 
-
 @csrf_exempt
 def signup(request):
     '''
@@ -255,7 +254,9 @@ def closet_item(request, cloth_id):
         return HttpResponse('Unauthorized', status=401)
 
     try:
-        target_item_obj = UserCloth.objects.get(id=cloth_id)
+        target_item_obj = UserCloth.objects.select_related(
+            'closet', 'label_set'
+        ).get(id=cloth_id)
         json_dec = json.decoder.JSONDecoder()
         if target_item_obj.dates == '':
             dates_history = []
@@ -480,7 +481,8 @@ def outfit_list(request):
 
             samplecloth_list = []
             for labelset in labelset_list:
-                sampleclothes = list(SampleCloth.objects.filter(label_set=labelset))
+                sampleclothes = list(SampleCloth.objects.select_related(
+                    'label_set').filter(label_set=labelset))
                 samplecloth_list = samplecloth_list + sampleclothes
 
             if using_labelset:
@@ -523,9 +525,11 @@ def outfit_list(request):
             #No userHave, recommend filter
 
             if using_labelset:
-                samplecloth_list = SampleCloth.objects.filter(label_set = filter_labelset)
+                samplecloth_list = SampleCloth.objects.select_related(
+                    'label_set').filter(label_set = filter_labelset)
             else:
-                samplecloth_list = SampleCloth.objects.all()
+                samplecloth_list = SampleCloth.objects.select_related(
+                    'label_set').all()
                 if filter_type:
                     samplecloth_list = [x for x in samplecloth_list if x.type == filter_type]
                 if filter_color:
@@ -609,7 +613,8 @@ def outfit(request, outfit_id):
         except Outfit.DoesNotExist:
             return HttpResponseNotFound()
 
-        sample_cloth_list = SampleCloth.objects.filter(outfit=outfit_item)
+        sample_cloth_list = SampleCloth.objects.select_related(
+                    'label_set').filter(outfit=outfit_item)
 
         outfit_serialize = OutfitSerializer(outfit_item)
 
@@ -663,7 +668,8 @@ def sample_cloth(request, samplecloth_id):
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
         try:
-            samplecloth = SampleCloth.objects.get(id=samplecloth_id)
+            samplecloth = SampleCloth.objects.select_related(
+                    'label_set').get(id=samplecloth_id)
         except SampleCloth.DoesNotExist:
             return HttpResponseNotFound()
         
@@ -767,7 +773,8 @@ def today_outfit(request):
 
         samplecloth_list = []
         for labelset in labelset_list:
-            sampleclothes = list(SampleCloth.objects.filter(label_set=labelset))
+            sampleclothes = list(SampleCloth.objects.select_related(
+                    'label_set').filter(label_set=labelset))
             samplecloth_list = samplecloth_list + sampleclothes
 
         
@@ -791,7 +798,8 @@ def today_outfit(request):
             for cloth in outfit_cloth_list:
                 if not cloth in samplecloth_list:
                     can_recommend = False
-            check_samplecloth_cnt = SampleCloth.objects.filter(outfit=outfit_item)
+            check_samplecloth_cnt = SampleCloth.objects.select_related(
+                    'label_set').filter(outfit=outfit_item)
             if len(check_samplecloth_cnt) < 2:
                 can_recommend = False
             if can_recommend:
