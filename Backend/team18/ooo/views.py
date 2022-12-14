@@ -762,7 +762,7 @@ def today_outfit(request):
                 # print("day print",today)
                 # print(last_day)
                 # print(today - last_day)
-                if (today - last_day) > three_day and (today - last_day) != zero_day:
+                if (today - last_day) > three_day:
                     clean_usercloth_list.append(usercloth)
 
         labelset_list = []
