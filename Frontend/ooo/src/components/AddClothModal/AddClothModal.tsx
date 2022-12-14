@@ -123,11 +123,16 @@ const AddClothModal = (props: IProps) => {
 									id="uploaded-image-preview"
 									src={fileImage}
 									height="400"
-									width="600px"
+									width="500px"
 								/>
 							)
 						) : (
-							<div className="UploadedClothTempDiv"></div>
+							<div className="UploadedClothTempDiv">
+								<pre className="UploadedClothTempDiv-text"><b>
+									옷이 가운데에 위치하도록 사진을 찍어주세요{"\n"}
+									AI가 업로드한 옷 색깔을 예측해드립니다
+								</b></pre>
+							</div>
 						)}
 					</div>
 					<input
