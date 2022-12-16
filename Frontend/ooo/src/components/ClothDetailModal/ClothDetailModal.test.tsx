@@ -215,6 +215,6 @@ describe("<ClothDetaillModal />", () => {
 		const defaultOption = screen.getByRole("option", {
 			name: "패턴 종류",
 		}) as HTMLOptionElement;
-		expect(defaultOption.selected).toBeFalsy();
+		expect(defaultOption.selected).toBeTruthy();
 	});
 });
