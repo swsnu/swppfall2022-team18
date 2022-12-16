@@ -118,13 +118,12 @@ const ClothDetailModal = (cloth: IProps) => {
 	};
 
 	const clickTypeOptionHandler = (value: string) => {
-		console.log(value);
 		if (
 			value == "상의 종류" ||
 			value == "하의 종류" ||
 			value == "아우터 종류"
 		) {
-			setType(type);
+			setType('type');
 		} else setType(value);
 	};
 
@@ -141,7 +140,7 @@ const ClothDetailModal = (cloth: IProps) => {
 	const clickPatternOptionHandler = (value: string | null) => {
 		console.log(value);
 		if (value == "패턴 종류") {
-			setPattern(pattern);
+			setPattern('pattern');
 		} else if (value == null) {
 			setPattern("");
 		} else setPattern(value);
