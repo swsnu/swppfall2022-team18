@@ -30,11 +30,11 @@ type_tree =  [
     '트레이닝 재킷', '나일론/코치 재킷', '스타디움 재킷', '기타 아우터']]]
 
 def login_check_dec(func):
+    ''' login decorator '''
     def wrapper(request, *args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
-        else:
-            return func(request, *args, **kwargs)
+        return func(request, *args, **kwargs)
     return wrapper
 
 @csrf_exempt
