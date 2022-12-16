@@ -269,9 +269,6 @@ class SigninUserCase(TestCase):
         )
         self.assertEqual(response.status_code, 401)
 
-        response = client.put('/api/ooo/outfit/')
-        self.assertEqual(response.status_code, 405)
-
         #after login
         response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
                     content_type='application/json')
@@ -333,6 +330,9 @@ class SigninUserCase(TestCase):
         )
         # self.assertEqual(response.status_code, 200) 원래 이거임
         self.assertEqual(response.status_code, 400)
+
+        response = client.put('/api/ooo/outfit/')
+        self.assertEqual(response.status_code, 405)
 
     
     def test_closet_item(self):
@@ -458,9 +458,6 @@ class SigninUserCase(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, 401)
-
-        response = client.put('/api/ooo/outfit/')
-        self.assertEqual(response.status_code, 405)
 
         #after login
         response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
@@ -635,6 +632,9 @@ class SigninUserCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
+        response = client.put('/api/ooo/outfit/')
+        self.assertEqual(response.status_code, 405)
+
     
     def test_outfit(self):
         """test outfit"""
@@ -643,9 +643,6 @@ class SigninUserCase(TestCase):
         #before login
         response = client.get('/api/ooo/outfit/1/')
         self.assertEqual(response.status_code, 401)
-
-        response = client.put('/api/ooo/outfit/1/')
-        self.assertEqual(response.status_code, 405)
 
         #after login
         response = client.post('/api/ooo/user/signin/', json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
@@ -660,6 +657,9 @@ class SigninUserCase(TestCase):
         response = client.get('/api/ooo/outfit/10/')
         self.assertEqual(response.status_code, 404)
 
+        response = client.put('/api/ooo/outfit/1/')
+        self.assertEqual(response.status_code, 405)
+
 
     
     def test_sample_cloth(self):
@@ -668,9 +668,6 @@ class SigninUserCase(TestCase):
         #before login
         response = client.get('/api/ooo/outfit/samplecloth/1/')
         self.assertEqual(response.status_code, 401)
-
-        response = client.put('/api/ooo/outfit/samplecloth/1/')
-        self.assertEqual(response.status_code, 405)
 
         #after login
         response = client.post('/api/ooo/user/signin/',  json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
@@ -688,6 +685,9 @@ class SigninUserCase(TestCase):
         #get samplecloth 10 (doesn't exsit)
         response = client.get('/api/ooo/outfit/samplecloth/10/')
         self.assertEqual(response.status_code, 404)
+
+        response = client.put('/api/ooo/outfit/samplecloth/1/')
+        self.assertEqual(response.status_code, 405)
     
     
     
@@ -697,9 +697,6 @@ class SigninUserCase(TestCase):
         #before login
         response = client.get('/api/ooo/outfit/today/')
         self.assertEqual(response.status_code, 401)
-
-        response = client.put('/api/ooo/outfit/today/')
-        self.assertEqual(response.status_code, 405)
 
         #after login
         response = client.post('/api/ooo/user/signin/', json.dumps({"body":{'username': 'testuser2', 'password': '1234'}}),
@@ -742,4 +739,7 @@ class SigninUserCase(TestCase):
 
         response = client.get('/api/ooo/outfit/today/')
         self.assertEqual(response.status_code, 404) 
+
+        response = client.put('/api/ooo/outfit/today/')
+        self.assertEqual(response.status_code, 405)
         

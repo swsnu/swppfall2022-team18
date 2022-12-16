@@ -29,6 +29,14 @@ type_tree =  [
     '카디건', '패딩 베스트', '아노락 재킷','베스트', '플리스/뽀글이', '사파리/헌팅 재킷',
     '트레이닝 재킷', '나일론/코치 재킷', '스타디움 재킷', '기타 아우터']]]
 
+def login_check_dec(func):
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponse('Unauthorized', status=401)
+        else:
+            return func(request, *args, **kwargs)
+    return wrapper
+
 @csrf_exempt
 def signup(request):
     '''
@@ -80,15 +88,12 @@ def signout(request):
         return HttpResponse('Unauthorized', status=401)
     return HttpResponseNotAllowed(['GET'], status=405)
 
-
+@login_check_dec
 def userinfo(request):
     '''
     userinfo : for edit user infomation
 
     '''
-    if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized', status=401)
-    
     user = User.objects.get(username = request.user.username)
     if request.method == 'GET':
         data = {'username': request.user.username,}
@@ -143,8 +148,6 @@ def classify_color(request):
     }
 
     if request.method == 'POST':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
         try:
             image_link = request.FILES.get('image')
 
@@ -170,19 +173,15 @@ def classify_color(request):
     return HttpResponseNotAllowed(['POST'], status=405)
 
 #@csrf_exempt
+@login_check_dec
 def closets(request):
     '''
     closet : get or create user's closet items
     '''
-    if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized', status=401)
     user = User.objects.get(id=request.user.id)
     user_closet = Closet.objects.get(user=user)
 
     if request.method == 'GET':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-
         closet_item_list = list(
             UserCloth.objects.filter(closet=user_closet))
         json_closet_list = []
@@ -201,8 +200,6 @@ def closets(request):
             json_closet_list.append(json_closet)
         return JsonResponse(json_closet_list, safe=False)
     if request.method == 'POST':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
         try:
             #req_data = json.loads(request.body.decode())["body"]
 
@@ -246,13 +243,11 @@ def closets(request):
     return HttpResponseNotAllowed(['GET', 'POST'], status=405)
 
 #@csrf_exempt
+@login_check_dec
 def closet_item(request, cloth_id):
     '''
     closet_item : get, edit or delete user's closet item / post date a user wore the cloth
     '''
-    if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized', status=401)
-
     try:
         target_item_obj = UserCloth.objects.select_related(
             'closet', 'label_set'
@@ -266,9 +261,6 @@ def closet_item(request, cloth_id):
         return HttpResponseNotFound()
 
     if request.method == 'GET':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-
         try:
             target_item_dict = UserCloth.objects.filter(id=cloth_id).values()[0]
         except UserCloth.DoesNotExist:
@@ -290,9 +282,6 @@ def closet_item(request, cloth_id):
         return JsonResponse(json_closet)
 
     if request.method == 'POST':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-
         try:
             req_data = json.loads(request.body.decode())["body"]
             dates = req_data['dates']
@@ -324,9 +313,6 @@ def closet_item(request, cloth_id):
         return JsonResponse(json_closet, status=200)
 
     if request.method == 'PUT':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-
         try:
             req_data = json.loads(request.body.decode())["body"]
 
@@ -364,9 +350,6 @@ def closet_item(request, cloth_id):
         return JsonResponse(json_closet, status=200)
 
     if request.method == 'DELETE':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-
         try:
             target_item_obj.delete()
             return HttpResponse(status=200)
@@ -388,15 +371,13 @@ def token(request):
 # @ensure_csrf_cookie
 #@csrf_exempt
 # @ensure_csrf_cookie
+@login_check_dec
 def outfit_list(request):
     '''
         filter outfit
     '''
     
     if request.method == 'GET':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-        
         cursor = int(request.GET.get('cursor', '99999999999999').replace('/',''))
         page_size = int(request.GET.get('pageSize', '3').replace('/',''))
         all_outfits = list(Outfit.objects.all().order_by("-popularity"))
@@ -440,9 +421,6 @@ def outfit_list(request):
         return JsonResponse(content, status=200)
 
     if request.method == 'POST':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-
         try:
             req_data = json.loads(request.body.decode())["body"]
             cursor = int(req_data["cursor"])
@@ -600,14 +578,12 @@ def outfit_list(request):
 
 # @ensure_csrf_cookie
 #@csrf_exempt
+@login_check_dec
 def outfit(request, outfit_id):
     """
         get all outfit 
     """
     if request.method == 'GET':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-
         try:
             outfit_item = Outfit.objects.get(id=outfit_id)
         except Outfit.DoesNotExist:
@@ -657,6 +633,7 @@ def outfit(request, outfit_id):
 
 # @ensure_csrf_cookie
 #@csrf_exempt
+@login_check_dec
 def sample_cloth(request, samplecloth_id):
 
     '''
@@ -665,8 +642,6 @@ def sample_cloth(request, samplecloth_id):
     '''
 
     if request.method == 'GET':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
         try:
             samplecloth = SampleCloth.objects.select_related(
                     'label_set').get(id=samplecloth_id)
@@ -730,14 +705,12 @@ def sample_cloth(request, samplecloth_id):
 
 # @ensure_csrf_cookie
 #@csrf_exempt
+@login_check_dec
 def today_outfit(request):
     '''
     recommend today_outfit by check usercloth tags and wear dates
     '''
     if request.method == 'GET':
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-
         users_closet = Closet.objects.get(user=request.user)
         usercloth_list = list(UserCloth.objects.filter(closet=users_closet))
         
@@ -762,7 +735,7 @@ def today_outfit(request):
                 # print("day print",today)
                 # print(last_day)
                 # print(today - last_day)
-                if (today - last_day) > three_day:
+                if (today - last_day) > three_day or (today - last_day) == zero_day:
                     clean_usercloth_list.append(usercloth)
 
         labelset_list = []
