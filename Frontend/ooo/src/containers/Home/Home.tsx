@@ -20,6 +20,8 @@ export default function Home() {
 	const outfit = useSelector(selectOutfit);
 	const [wearToday, setWearToday] = useState(false);
 	const [Loading, setLoading] = useState(false);
+
+	
 	//for logout
 	const [isSending, setIsSending] = useState(false);
 	const checkLoginned = () => {
